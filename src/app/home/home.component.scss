@@ -1,0 +1,35 @@
+$textColor: rgb(255,215,0);
+
+@font-face {
+    font-family: 'Compacta Bold';
+    src: url('src/assets/fonts/Compacta Bold.otf') format("opentype");
+}
+
+#homeContainer {
+    min-height: calc(100vh - 115px);
+
+    .row {
+        min-height: calc(100vh - 115px);
+    }
+
+    svg {
+        display: block;
+        margin: auto;
+    }
+
+    .character {
+        margin-top: 25px;
+    }
+
+    svg:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+
+    text {
+        font-family: 'Compacta Bold';
+        font-size: 50px;
+        fill: $textColor;
+    }
+    
+}
