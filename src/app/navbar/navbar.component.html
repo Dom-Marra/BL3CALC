@@ -1,10 +1,15 @@
 <div id="navbar">
-    <img id="navbarImg" />
-    <ul id="navbarLinks">
+    <div id="navbarImg"></div>
+    <ul [@openClose]="navState">
         <li>Amara</li>
         <li>FL4K</li>
         <li>Moze</li>
         <li>Zane</li>
     </ul>
+    <div id="menu" (click) = "toggleMenuIcon()">
+        <div id="barTop"></div>
+        <div id="barMid"></div>
+        <div id="barBot"></div>
+    </div>
 
 </div>
