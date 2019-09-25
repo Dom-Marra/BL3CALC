@@ -4,7 +4,7 @@ $textColor: rgb(255,215,0);
 
 @font-face {
     font-family: 'Compacta Bold';
-    src: url('../../../fonts/Compacta Bold.otf') format("opentype");
+    src: url('src/assets/fonts/Compacta Bold.otf') format("opentype");
 }
 
 #navbar {
@@ -20,10 +20,10 @@ $textColor: rgb(255,215,0);
 
     #navbarImg {
         display: inline-block;
-        background-image: url('images/navimg.png');
+        background-image: url('src/assets/images/navimg.png');
         background-repeat: no-repeat;
         height: 95%;
-        min-width: 90px;
+        min-width: 80px;
         background-size: contain;
         margin-left: 20px;
         margin-right: 20px;
@@ -35,7 +35,9 @@ $textColor: rgb(255,215,0);
 
     ul {
         display: inline-block;
+        margin: 0;
         padding-left: 0;
+        z-index: 1;
     }
 
     li {
