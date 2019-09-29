@@ -1,0 +1,111 @@
+//tree css
+.skillTreeContainer {
+    height: 600px;
+    width: 300px;
+}
+
+.tree {
+
+    .topBorder {
+        stroke: black;
+        stroke-width: 4px;
+        fill: none;
+        paint-order: stroke fill;
+    }
+
+    .middleBorder {
+        stroke-width: 3px;
+        fill: none;
+        paint-order: stroke fill;
+    }
+
+    .mainBack {
+        stroke: black;
+        stroke-width: 1px;
+        paint-order: stroke fill;
+    }
+    
+    .mainFront {
+        stroke-width: 3px;
+        stroke: black;
+        paint-order: stroke fill;
+    }
+
+    text {
+        font-family: 'Compacta Bold';
+        font-size: 28px;
+        font-style: italic;
+    }
+
+    &.red {
+
+        .middleBorder {
+            stroke: rgb(93, 41, 11);
+        }
+
+        .mainBack {
+            fill: rgb(93, 41, 11);
+        }
+
+        .mainFront {
+            fill: url(#redFill);
+        }
+
+        text {
+            fill: rgb(246, 221, 155);
+        }
+    }
+
+    &.blue {
+
+        .topBorder {
+            stroke: rgb(18, 49, 81);
+        }
+    
+        .middleBorder {
+            stroke: rgb(57, 133, 199);
+        }
+    
+        .mainBack {
+            fill: rgb(14, 34, 56);
+            stroke: rgb(3, 12, 22);
+        }
+        
+        .mainFront {
+            fill: url(#blueFill);
+        }
+    
+        text {
+            fill: rgb(175, 219, 254);
+        }
+    
+
+    }
+
+    &.green {
+
+        .middleBorder {
+            stroke: rgb(120, 167, 72);
+        }
+    
+        .mainBack {
+            fill: rgb(61, 93, 23);
+        }
+        
+        .mainFront {
+            fill: url(#greenFill);
+        }
+    
+        text {
+            fill: rgb(246, 221, 155);
+        }
+
+    }
+
+}
+
+@media not screen and (min-width: 768px) { 
+    .skillTreeContainer {
+        max-width: 75vw;
+    }
+}
