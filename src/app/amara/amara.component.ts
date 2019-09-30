@@ -14,7 +14,8 @@ export class AmaraComponent implements OnInit {
   }
   
   /**
-   * 
+   * Moves right carousel item to the current position, the
+   * left item to the next position, and current item to the previous position
    */
   next() {
     var current = document.getElementsByClassName('active')[0];
@@ -28,8 +29,9 @@ export class AmaraComponent implements OnInit {
     prev.className = ' carouselItem right';
   }
 
-  /**
-   * 
+   /**
+   * Moves left carousel item to the current position, the
+   * right item to the previous position, and current item to the next position
    */
   previous() {
     var current = document.getElementsByClassName('active')[0];
