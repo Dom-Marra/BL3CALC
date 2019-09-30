@@ -25,36 +25,27 @@ body {
     }
 }
 
-/* Carousel Styles */
-.carouselContainer {
-    width: 600px;
-    height: 100%;
-    display: inline-block;
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    min-height: calc(100vh - 90px);
 }
 
+/* Carousel Styles */
 .carousel  {
-    width: 600px;
-    margin: auto;
-    min-height: 700px;
-    width: 100%;
-}
-.carouselTrack {
-    position: relative;
-    height: 100%;
-    margin: 0;
-    padding: 0;
     display: flex;
     justify-content: center;
-    align-content: center;
+    height: 80vh;
+    width: 60vh;
 }
 
+/* Buttons and their container*/
 .carouselButtons {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
+    position: absolute;
     margin: auto;
-    top: 75px;
-    margin-bottom: 10px;
+    width: calc(40vh + 90px);
     z-index: 3;
 
     .nextItem, 
@@ -78,10 +69,19 @@ body {
     }
 }
 
+/* Contains all of the trees for the carousel */
+.carouselTrack {
+    height: 80vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* Contains a single tree for the carousel */
 .carouselItem {
     position: absolute;
     z-index: 1;
-    display: inline-block;
     list-style: none;
     margin: none;
     transition: .5s;
@@ -94,40 +94,44 @@ body {
     }
 
     &.left {
-        margin-left: -170px;
+        margin-left: -10vh;
         transform: scale(0.8);
     }
 
     &.right {
-        margin-left: 170px;
+        margin-left: 10vh;
         transform: scale(0.8);
     }
 }
 
-@media not screen and (min-width: 1200px) {
-    .carouselContainer {
-        min-height: 100vh;
+@media not screen and (min-width: 130vh) {
+    .carousel {
+        margin-top: 50px;
         width: 100%;
         overflow: hidden;
-        display: block;
     }
 }
 
-@media not screen and (min-width: 728px) { 
+@media not screen and (min-width: 768px) { 
 
-    .carouselItem { 
+    .carousel {
+        height: calc(75vw * 2);
+        margin-bottom: 50px;
 
-        &.left,
-        &.right {
-            visibility: hidden;
-            transition: 0s;
-            margin-left: 0px;
-            transform: scale(1);
+        .carouselItem { 
+
+            &.left,
+            &.right {
+                visibility: hidden;
+                transition: 0s;
+                margin-left: 0px;
+                transform: scale(1);
+            }
         }
     }
 
     .carouselButtons { 
-        max-width: 95%;
+        width: calc(75vw + 80px);
         margin: auto;
     }
 }
