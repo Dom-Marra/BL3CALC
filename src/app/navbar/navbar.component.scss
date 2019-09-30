@@ -27,6 +27,7 @@ $textColor: rgb(255,215,0);
         background-size: contain;
         margin-left: 20px;
         margin-right: 20px;
+        outline: none;
     }
     
     #navbarImg:hover {
@@ -49,6 +50,7 @@ $textColor: rgb(255,215,0);
         color: $textColor;
         height: 90px;
         line-height: 90px;
+        outline: none;
     }
 
     li:hover {
