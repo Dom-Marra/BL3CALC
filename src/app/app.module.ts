@@ -11,6 +11,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { AmaraComponent } from './amara/amara.component';
 import { SkilltreeComponent } from './skilltree/skilltree.component';
+import { StatsComponent } from './stats/stats.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SkilltreeComponent } from './skilltree/skilltree.component';
     FooterComponent,
     HomeComponent,
     AmaraComponent,
-    SkilltreeComponent
+    SkilltreeComponent,
+    StatsComponent
   ],
   imports: [
     BrowserModule,
