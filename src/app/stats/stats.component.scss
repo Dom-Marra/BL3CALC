@@ -1,0 +1,51 @@
+$textColor: rgb(255,215,0);
+$base: rgba(0, 0, 0, 0.5);
+
+.stats {
+    position: relative;
+    width: 50vw;
+    height: 80vh;
+    background: $base;
+    
+    &:before {
+     content: "";
+     position: absolute;
+     left: 0; 
+     right: 0;
+     bottom: 100%;
+     border-bottom: 40px solid $base;
+     border-left: 40px solid transparent;
+    }
+
+    &:after {
+        content: "";
+        position: absolute;
+        left: 0; 
+        right: 0;
+        top: 100%;
+        border-top: 40px solid $base;
+        border-right: 40px solid transparent;
+    }
+
+    .heading {
+        text-align: center;
+        font-size: 70px;
+        position: relative;
+        top: -45px;
+        font-family: 'Compacta Bold';
+        text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
+        color: $textColor;
+    }
+
+
+}
+
+@media not screen and (min-width: 130vh) {
+
+    .stats {
+        width: 95vw;
+        margin-top: 45px;
+        margin-bottom: 45px;
+    }
+
+}
