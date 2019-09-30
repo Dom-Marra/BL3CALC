@@ -3,6 +3,9 @@ $textColor: rgb(255,215,0);
 svg {
     display: block;
     margin: auto;
+    min-width: 300px;
+    max-width: 400px;
+    outline: none;
 }
 
 .character {
@@ -19,3 +22,14 @@ text {
     font-size: 50px;
     fill: $textColor;
 }
+
+@media not screen and (min-width: 992px) {
+    .character {
+        
+        svg {
+            max-height: 350px;
+            max-width: 300px;
+            overflow: visible;
+        }
+    }
+} 
