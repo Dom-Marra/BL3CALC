@@ -26,8 +26,10 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
   }
 
-  //Toggles between open and closed for nav menu
-  //toggles class for menu button for its animation
+  /**
+   * Toggles between open and closed for nav menu
+   *  toggles class for menu button for its animation
+   */
   toggleMenuIcon() {
     document.getElementById('menu').classList.toggle('activated');
     this.navState === 'closed' ? this.navState = 'open' : this.navState = 'closed';
