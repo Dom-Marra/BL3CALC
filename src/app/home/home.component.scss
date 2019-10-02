@@ -3,9 +3,18 @@ $textColor: rgb(255,215,0);
 svg {
     display: block;
     margin: auto;
-    min-width: 300px;
-    max-width: 400px;
+    max-height: 75vh;
     outline: none;
+    
+    polygon:nth-child(1) {
+        fill: rgba(0, 0, 0, 0.6); 
+        stroke: black;
+        paint-order: stroke fill;
+    }
+
+    polygon:nth-child(2) {
+        fill: black;
+    }
 }
 
 .character {
