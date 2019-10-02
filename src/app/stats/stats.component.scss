@@ -5,6 +5,7 @@ $base: rgba(0, 0, 0, 0.5);
     position: relative;
     width: 50vw;
     height: 80vh;
+    max-height: calc(80vh - 110px);
     background: $base;
     
     &:before {
@@ -27,14 +28,43 @@ $base: rgba(0, 0, 0, 0.5);
         border-right: 40px solid transparent;
     }
 
-    .heading {
-        text-align: center;
-        font-size: 70px;
+    .statsNav {
         position: relative;
-        top: -45px;
+        top: -40px;
+        display: flex;
+        justify-content: flex-start;
+        height: 70px;
         font-family: 'Compacta Bold';
         text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
         color: $textColor;
+
+        .heading {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 0);
+            text-align: center;
+            line-height: 1;
+            font-size: 70px;
+        }
+
+        .characterLevel {
+            font-size: 50px;
+            padding-left: 40px;
+        }
+    }
+
+    .info {
+        width: 90%;
+        margin: auto;
+        margin-top: -45px;
+        height: 100%;
+        font-size: 25px;
+        color: white;
+        font-family: Impact;
+    }
+
+    .characterLevel {
+        
     }
 
 
@@ -43,9 +73,23 @@ $base: rgba(0, 0, 0, 0.5);
 @media not screen and (min-width: 130vh) {
 
     .stats {
+        max-height: 100%;
         width: 95vw;
         margin-top: 45px;
         margin-bottom: 45px;
+
+        .statsNav {
+    
+            .heading {
+                font-size: 15vw;
+            }
+    
+            .characterLevel {
+                font-size: 10vw;
+            }
+        }
     }
+
+
 
 }
