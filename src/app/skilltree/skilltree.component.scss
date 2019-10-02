@@ -32,11 +32,23 @@
         paint-order: stroke fill;
     }
 
-    text {
+    .treeName,
+    .points {
         font-family: 'Compacta Bold';
+    }
+
+
+    .treeName {
         font-size: 28px;
         font-style: italic;
     }
+
+    .points {
+        text-shadow: 3px 3px 4px black;
+        font-size: 18px;
+        fill: white;
+    }
+    
 
     &.red {
 
@@ -52,8 +64,17 @@
             fill: url(#redFill);
         }
 
-        text {
-            fill: rgb(246, 221, 155);
+        .treeName {
+            fill: rgb(255, 238, 190);
+        }
+
+        .skill.activated {
+            image {
+                filter: url(#activatedRed);
+            }
+            .points {
+                fill: rgb(255, 211, 120);
+            }
         }
     }
 
@@ -76,11 +97,18 @@
             fill: url(#blueFill);
         }
     
-        text {
+        .treeName {
             fill: rgb(175, 219, 254);
         }
-    
 
+        .skill.activated {
+            image {
+                filter: url(#activatedBlue);
+            }
+            .points {
+                fill: cyan;
+            }
+        }
     }
 
     &.green {
@@ -97,10 +125,38 @@
             fill: url(#greenFill);
         }
     
-        text {
+        .treeName {
             fill: rgb(246, 221, 155);
         }
 
+        .skill.activated {
+            image {
+                filter: url(#activatedGreen);
+            }
+            .points {
+                fill: rgb(205, 255, 147);
+            }
+        }
+
+    }
+
+    .skill.activated:hover {
+        filter: none;
+    }
+
+    .skill:hover,
+    .skill.activated:hover {
+
+        cursor: pointer;
+
+        image {
+            filter: url(#highlight);
+        }
+
+        .points {
+            fill: yellow;
+        }
+        
     }
 
 }
