@@ -9,18 +9,18 @@
             
             <ul class="carouselTrack">
                 <li class="carouselItem left">
-                    <app-skilltree treeName='Mystic Assualt' color='blue' index='0'></app-skilltree>
+                    <app-skilltree treeName='Mystic Assualt' color='blue' index='0' [skills]="blueSkills" [pointModification]="validatePointModification"></app-skilltree>
                 </li>
                 <li class="carouselItem active">
-                    <app-skilltree treeName='Brawl' color='green' index='1'></app-skilltree>
+                    <app-skilltree treeName='Brawl' color='green' index='1' [skills]="greenSkills" [pointModification]="validatePointModification"></app-skilltree>
                 </li>
                 <li class="carouselItem right">
-                    <app-skilltree treeName='Fist of the Elements' color='red' index='2'></app-skilltree>
+                    <app-skilltree treeName='Fist of the Elements' color='red' index='2' [skills]="redSkills" [pointModification]="validatePointModification"></app-skilltree>
                 </li>
             </ul>
         </div>
     
-        <app-stats></app-stats>
+        <app-stats [allocatedPoints]="allocatedPoints"></app-stats>
     </div>
         
     
