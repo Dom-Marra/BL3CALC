@@ -7,10 +7,10 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class StatsComponent implements OnInit {
 
-  private readonly CHARACTER_OFFSET:number = 2;
+  private readonly CHARACTER_OFFSET:number = 2;         //Number to add to character allocation to show correct level
 
   @Input()
-  allocatedPoints: number;
+  allocatedPoints: number;                              //Points allocated in tree
 
   constructor() { 
     
