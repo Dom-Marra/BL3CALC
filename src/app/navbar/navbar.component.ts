@@ -19,7 +19,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 
 export class NavbarComponent implements OnInit {
 
-  private navState = 'closed'; //current state of the navbar when in mobile, used for animations
+  private navState = 'closed';            //current state of the navbar when in mobile, used for animations
 
   constructor() { }
 
