@@ -140,7 +140,12 @@
 
     }
 
-    .skill.activated:hover {
+    .disabled {
+        filter: url(#skillDisabled);
+    }
+
+    .skill.activated:hover,
+    .skill.disabled:hover {
         filter: none;
     }
 

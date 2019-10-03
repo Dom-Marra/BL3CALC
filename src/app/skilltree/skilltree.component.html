@@ -51,11 +51,6 @@
                         0 1 0 0 0
                         0 0 0 0 0
                         0 0 0 1 0" />
-                <feComponentTransfer>
-                    <feFuncR type="linear" slope="3"/>
-                    <feFuncG type="linear" slope="3"/>
-                    <feFuncB type="linear" slope="3"/>
-                </feComponentTransfer>
         </filter>
         <filter *ngIf="color == 'blue'" id="activatedBlue">
                 <feColorMatrix type="matrix"
@@ -93,8 +88,16 @@
                     <feFuncB type="linear" slope="2"/>
                 </feComponentTransfer>
         </filter>
+        <filter id="skillDisabled">
+            <feColorMatrix type="matrix"
+            values="0.5 0 0 0 0
+                    0 0.5 0 0 0
+                    0 0 0.5 0 0
+                    0 0 0 1 0" />
+        </filter>
         
-        <g [class.activated]="skill.allocatedPoints > skill.MIN_POINTS" 
+        <g [class.activated]="skill.getAllocated() > skill.MIN_POINTS"
+           [class.disabled]="allocatedPoints < skill.getPreReq()" 
             class="skill doNotSelect" *ngFor="let skill of skills" 
             (click)="addPoint(skill)" (contextmenu)="removePoint(skill)" oncontextmenu="return false;">
 
