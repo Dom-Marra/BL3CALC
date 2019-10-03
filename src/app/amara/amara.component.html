@@ -9,18 +9,18 @@
             
             <ul class="carouselTrack">
                 <li class="carouselItem left">
-                    <app-skilltree treeName='Mystic Assualt' color='blue' index='0' [skills]="blueSkills" [pointModification]="validatePointModification"></app-skilltree>
+                    <app-skilltree treeName='Mystic Assualt' color='blue' index='0' [skills]="amara.getBlueSkills()" [character]="amara"></app-skilltree>
                 </li>
                 <li class="carouselItem active">
-                    <app-skilltree treeName='Brawl' color='green' index='1' [skills]="greenSkills" [pointModification]="validatePointModification"></app-skilltree>
+                    <app-skilltree treeName='Brawl' color='green' index='1' [skills]="amara.getGreenSkills()" [character]="amara"></app-skilltree>
                 </li>
                 <li class="carouselItem right">
-                    <app-skilltree treeName='Fist of the Elements' color='red' index='2' [skills]="redSkills" [pointModification]="validatePointModification"></app-skilltree>
+                    <app-skilltree treeName='Fist of the Elements' color='red' index='2' [skills]="amara.getRedSkills()" [character]="amara"></app-skilltree>
                 </li>
             </ul>
         </div>
     
-        <app-stats [allocatedPoints]="allocatedPoints"></app-stats>
+        <app-stats [allocatedPoints]="amara.getAllocatedPoints()"></app-stats>
     </div>
         
     
