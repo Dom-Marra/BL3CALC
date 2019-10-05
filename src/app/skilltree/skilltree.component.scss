@@ -1,30 +1,51 @@
 //tree css
 .skillTreeContainer {
-    height: 80vh;
-    width: calc(80vh / 2);
+    max-height: 870px;
+    max-width: 500px;
+    height: 870px;
+    width: 500px;
     display: inline-block;
 }
 
 .tree {
 
-    .topBorder {
+    .topBorder,
+    .leftSkillBorder,
+    .rightSkillBorder {
         stroke: black;
         stroke-width: 4px;
         fill: none;
         paint-order: stroke fill;
     }
 
-    .middleBorder {
+    .middleBorder,
+    .leftSkillMidBorder,
+    .rightSkillMidBorder {
         stroke-width: 3px;
         fill: none;
         paint-order: stroke fill;
     }
 
-    .mainBack {
+    .mainBack,
+    .leftSkillMain,
+    .rightSkillMain {
         stroke: black;
         stroke-width: 1px;
         paint-order: stroke fill;
     }
+
+    .rightSkillBorder,
+    .leftSkillBorder {
+        stroke-dasharray: 72,97,80,0;
+    }
+    
+    .rightSkillMain, 
+    .rightSkillMidBorder,
+    .leftSkillMain, 
+    .leftSkillMidBorder {
+        stroke-dasharray: 74,93,80,0;
+    }
+    
     
     .mainFront {
         stroke-width: 3px;
@@ -51,11 +72,15 @@
     
 
     &.red {
-
+        
+        .rightSkillMidBorder,
+        .leftSkillMidBorder,
         .middleBorder {
-            stroke: rgb(93, 41, 11);
+            stroke: rgb(195, 121, 71);
         }
 
+        .rightSkillMain,
+        .leftSkillMain,
         .mainBack {
             fill: rgb(93, 41, 11);
         }
@@ -80,14 +105,20 @@
 
     &.blue {
 
+        .rightSkillBorder,
+        .leftSkillBorder,
         .topBorder {
             stroke: rgb(18, 49, 81);
         }
-    
+
+        .rightSkillMidBorder,
+        .leftSkillMidBorder,
         .middleBorder {
             stroke: rgb(57, 133, 199);
         }
-    
+
+        .rightSkillMain,
+        .leftSkillMain,
         .mainBack {
             fill: rgb(14, 34, 56);
             stroke: rgb(3, 12, 22);
@@ -113,10 +144,14 @@
 
     &.green {
 
+        .rightSkillMidBorder,
+        .leftSkillMidBorder,
         .middleBorder {
-            stroke: rgb(120, 167, 72);
+            stroke: rgb(149, 203, 94);
         }
     
+        .rightSkillMain,
+        .leftSkillMain,
         .mainBack {
             fill: rgb(61, 93, 23);
         }
@@ -168,7 +203,7 @@
 
 @media not screen and (min-width: 768px) { 
     .skillTreeContainer {
-        width: 75vw;
-        height: auto;
+        width: 95vw;
+        height: calc(95vw * 1.8);
     }
 }
