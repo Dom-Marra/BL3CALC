@@ -4,8 +4,7 @@ $base: rgba(0, 0, 0, 0.5);
 .stats {
     position: relative;
     width: 50vw;
-    height: 80vh;
-    max-height: calc(80vh - 110px);
+    height: 790px;
     background: $base;
     
     &:before {
