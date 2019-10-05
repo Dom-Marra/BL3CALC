@@ -1,0 +1,110 @@
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 870px;
+    margin-top: 25px;
+}
+
+/* Carousel Styles */
+.carousel  {
+    display: flex;
+    justify-content: center;
+    height: 870px;
+    width: 500px;
+}
+
+/* Buttons and their container*/
+.carouselButtons {
+    position: absolute;
+    top: 50px;
+    margin: auto;
+    width: 85%;
+    z-index: 3;
+
+    .nextItem, 
+    .prevItem {
+        background: none;
+        border: none;
+        outline: none;
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 35px;
+        height: 45px;
+    }
+
+    .nextItem {
+        background-image: url('src/assets/images/skilltree/next.png');
+        float: right;
+    }
+
+    .prevItem {
+        background-image: url('src/assets/images/skilltree/prev.png');
+    }
+}
+
+/* Contains all of the trees for the carousel */
+.carouselTrack {
+    height: 80vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* Contains a single tree for the carousel */
+.carouselItem {
+    position: absolute;
+    z-index: 1;
+    list-style: none;
+    margin: none;
+    transition: .5s;
+    opacity: 0.8;
+
+    &.active {
+        z-index: 2;
+        opacity: 1;
+
+    }
+
+    &.left {
+        margin-left: -10vh;
+        transform: scale(0.8);
+    }
+
+    &.right {
+        margin-left: 10vh;
+        transform: scale(0.8);
+    }
+}
+
+@media not screen and (min-width: 130vh) {
+    .carousel {
+        width: 100%;
+        overflow: hidden;
+    }
+}
+
+@media not screen and (min-width: 768px) { 
+
+    .carousel {
+        height: calc(95vw * 1.8);
+
+        .carouselItem { 
+
+            &.left,
+            &.right {
+                visibility: hidden;
+                transition: 0s;
+                margin-left: 0px;
+                transform: scale(1);
+            }
+        }
+    }
+
+    .carouselButtons { 
+        width: calc(75vw + 80px);
+        margin: auto;
+    }
+}
