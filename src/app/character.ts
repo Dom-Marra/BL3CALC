@@ -12,17 +12,29 @@ export interface Character {
      * @returns 
      *        Boolean whether the allocated points can be modified or not
      */
-    validateModification(modification: number): Boolean;
+    validateModification(modification: number, skillType: number): Boolean;
     
     /**
-     * Adds point into amara
+     * Adds point into a specific skill type allocation
+     * 
+     * @param skillType
+     *              0 = normal skills
+     *              1 = action skills
+     *              2 = action skill mods
+     *              3 = other skills (pets, elementals, etc...)
     */
-    addPoint(): void;
+    addPoint(skillType: number): void;
     
     /**
-    * removes point from amara
+    * removes point from a specific skill type allocation
+    * 
+    * @param skillType
+    *              0 = normal skills
+    *              1 = action skills
+    *              2 = action skill mods
+    *              3 = other skills (pets, elementals, etc...)
     */
-    removePoint(): void;
+    removePoint(skillType: number): void;
     
     /**
     * Retrieves skills that belong to the blue tree
@@ -49,10 +61,17 @@ export interface Character {
     getGreenSkills(): Skill[];
     
     /**
-     * Retrieves number of allocated points in amara
+     * Retrieves number of allocated points of a skill type 
+     * 
+     * @param skillType
+     *              0 = normal skills
+     *              1 = action skills
+     *              2 = action skill mods
+     *              3 = other skills (pets, elementals, etc...)
      * 
      * @returns
-     *          number of points
+     *          number of points of a skill type
      */
-    getAllocatedPoints(): number;
+    getAllocatedPoints(skillType: number): number;
+
 }

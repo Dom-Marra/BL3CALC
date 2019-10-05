@@ -9,8 +9,12 @@ import { Character } from '../character'
 })
 export class SkilltreeComponent implements OnInit {
 
-  private readonly MAX_POINTS: number = 25;   //Maximum number of skill points for animation
-  private readonly MIN_POINTS: number = 0;    //Min number of skill points for animaiton
+  private readonly MAX_POINTS: number = 25;           //Maximum number of skill points for animation
+  private readonly MIN_POINTS: number = 0;            //Min number of skill points for animaiton
+  private readonly POINTS_PER_PREREQ: number = 5;     //The amount of points needed to get to the next pre-req
+  private readonly MAX_ANIMATION_COUNT: number = 15;  //Max times an animation can run
+  private readonly MAIN_GRAD_OFFSET_FACTOR = 0.22     //The amount the main gradient will increase/decrease
+  private readonly SECONDARY_GRAD_OFFSET_FACTOR = 2;  //The amount that the secondar gradient offsets from main
 
   private allocatedPoints: number = 0;        //Allocated points on the tree
   private addCount = 0;                       //Counter for addition animation
@@ -45,7 +49,6 @@ export class SkilltreeComponent implements OnInit {
     tree[this.index].classList.add(this.color);
   }
 
-
   /**
    * Adds a point to the skill tree
    * 
@@ -63,20 +66,22 @@ export class SkilltreeComponent implements OnInit {
     if (!skill.validateModification(pointsToModify, this.allocatedPoints)) return false; 
 
     //Do not add point if character has none remaining
-    if(!this.character.validateModification(pointsToModify)) return false; 
+    if(!this.character.validateModification(pointsToModify, skill.getOtherSkillType())) return false; 
     
     //Increase allocation of skill point and character
     skill.addPoint();
-    this.character.addPoint();
+    this.character.addPoint(skill.getOtherSkillType());
 
-    //Trigger animation for point addition
-    if (this.allocatedPoints < this.MAX_POINTS) {
-      this.incrementGradient(); 
+    //Trigger animation for point addition if skill type is normal
+    if (skill.getOtherSkillType() == 0) {
+      if (this.allocatedPoints < this.MAX_POINTS) {
+        this.incrementGradient(); 
+      }
+      
+      //increment allocated points on the tree
+      this.allocatedPoints++; 
     }
 
-    //increment allocated points on the tree
-    this.allocatedPoints++; 
-    
     //point addition successful
     return true;
   }
@@ -102,19 +107,21 @@ export class SkilltreeComponent implements OnInit {
     if (!skill.validateModification(pointsToModify, this.allocatedPoints)) return false; 
 
     //Do not remove point if character has max remaining
-    if(!this.character.validateModification(pointsToModify)) return false; 
+    if(!this.character.validateModification(pointsToModify, skill.getOtherSkillType())) return false; 
     
     //Decrease allocation on skill point and character
     skill.removePoint();
-    this.character.removePoint();
+    this.character.removePoint(skill.getOtherSkillType());
     
-    //Trigger animation for removal of point
-    if (this.allocatedPoints > this.MIN_POINTS && this.allocatedPoints <= this.MAX_POINTS) {
-      this.decrementGradient(); 
-    }
+    //Trigger animation for removal of point if skill type is normal
+    if (skill.getOtherSkillType() == 0) {
+      if (this.allocatedPoints > this.MIN_POINTS && this.allocatedPoints <= this.MAX_POINTS) {
+        this.decrementGradient(); 
+      }
 
-    //decrement allocated points on the tree
-    this.allocatedPoints--; 
+      //decrement allocated points on the tree
+      this.allocatedPoints--; 
+    }
 
     //point removal successful
     return true;
@@ -133,36 +140,42 @@ export class SkilltreeComponent implements OnInit {
    */
   validateRequiredPoints(skill: Skill): Boolean {
 
-    var requiredPoints = skill.getPreReq(); //base points needed on the tree
+    if (skill.getOtherSkillType() > 0) return true;
+
+    var requiredSkill = skill;              //Highest pre-req skill
     var extraPoints = 0;                    //Any extra points that might be able to be de-allocated
     var requiredForPreReq = false;          //Skill may be required as a pre-req to another
 
     //Traverse through skills
-    this.skills.forEach(nextSkill => {
+    this.skills.forEach(currentSkill => {
 
       //Analyze when when a skill has an allocation more than 0
-      if (nextSkill.getAllocated() > 0) {
+      if (currentSkill.getAllocated() > 0) {
 
         //Re-assign required amount of points when the nextSkill has a higher amount
-        if (nextSkill.getPreReq() > requiredPoints) requiredPoints = nextSkill.getPreReq();
+        if (currentSkill.getPreReq() > skill.getPreReq()) requiredSkill = currentSkill;
 
-        //This skill and skills before have their allocation added to extra points
-        if (nextSkill.getPreReq() <= skill.getPreReq()) extraPoints += nextSkill.getAllocated();
+        //Increment extra points if the current skill shares the same pre-req or is less
+        if (currentSkill.getPreReq() <= skill.getPreReq()) extraPoints += currentSkill.getAllocated();
 
-        //If the nextSkill has a difference of 5 of skill then, skill is a pre-req 
-        if (nextSkill.getPreReq() - skill.getPreReq() == 5) requiredForPreReq = true;
+        //Skill is a pre-req if the difference between it and the current is 5
+        if (currentSkill.getPreReq() - skill.getPreReq() == this.POINTS_PER_PREREQ) requiredForPreReq = true;
 
       }
 
     });
 
-    //Allocated points less than required and the skill pre-req is not the same
-    //as the required points amount then a point cannot be removed
-    if (this.allocatedPoints - 1 <= requiredPoints && skill.getPreReq() != requiredPoints) return false;
-    
+    //Check that the skill pre-req is not the same as the requiredSkill pre-req
+    if (skill.getPreReq() !=  requiredSkill.getPreReq()) {
+
+      //The total allocated points minus the requiredSkills points minus 1 point
+      //is less than what is needed for the requiredSkill then point removal failure
+      if (this.allocatedPoints - requiredSkill.getAllocated() - 1 <  requiredSkill.getPreReq()) return false;
+    }
+
     //The skill is a pre-req and removing a point accross all extra points is less than
-    //a pre-req amount per stage (5) then a point cannot be removed
-    if (requiredForPreReq && extraPoints - 1 < skill.getPreReq() + 5) return false;
+    //the next pre-req amount then point removal failure
+    if (requiredForPreReq && (extraPoints - 1 < skill.getPreReq() + this.POINTS_PER_PREREQ)) return false;
     
     //point can be removed
     return true;
@@ -178,24 +191,24 @@ export class SkilltreeComponent implements OnInit {
     var grad = document.getElementById(this.color + 'Fill');      //Linear gradient component
     var gradChildren = grad.children;                             //children of gradient component
     var mainGrad = gradChildren[0];                               //Main gradient
-    var gradEffect = gradChildren[1];                             //Bottom effect of gradient
+    var secondaryGrad = gradChildren[1];                          //Bottom effect of main gradient
 
-    //Increase offset of main gradient by 0.22 each time this function is called
-    var mainOffset = parseFloat(mainGrad.getAttribute('offset')) + .22;
+    //Increase offset of main gradient by 0.22% each time this function is called
+    var mainOffset = parseFloat(mainGrad.getAttribute('offset')) + this.MAIN_GRAD_OFFSET_FACTOR;
 
-    //effect offset is always 2% higher than the main
-    var effectOffset = mainOffset + 2;
+    //secondary offset is always 2% higher than the main
+    var secondaryOffset = mainOffset + this.SECONDARY_GRAD_OFFSET_FACTOR;
 
     //Adjust the gradients with their new offsets
     mainGrad.setAttribute('offset', mainOffset + '%');
-    gradEffect.setAttribute('offset', effectOffset + '%');
+    secondaryGrad.setAttribute('offset', secondaryOffset + '%');
 
     //Increase animation counter each time the function is called
     this.addCount++;
 
     //Stop animation once counter reaches animation finish
     //reset counter
-    if (this.addCount < 15) {
+    if (this.addCount < this.MAX_ANIMATION_COUNT) {
       requestAnimationFrame(this.incrementGradient.bind(this));
     } else {
       this.addCount = 0;
@@ -209,30 +222,30 @@ export class SkilltreeComponent implements OnInit {
    */
   decrementGradient() {
 
-   var grad = document.getElementById(this.color + 'Fill');      //Linear gradient component
+   var grad = document.getElementById(this.color + 'Fill');       //Linear gradient component
     var gradChildren = grad.children;                             //children of gradient component
     var mainGrad = gradChildren[0];                               //Main gradient
-    var gradEffect = gradChildren[1];                             //Bottom effect of gradient
+    var secondaryGrad = gradChildren[1];                          //Bottom effect of main gradient
 
-    //Increase offset of main gradient by 0.22 each time this function is called
-    var mainOffset = parseFloat(mainGrad.getAttribute('offset')) - .22;
+    //Increase offset of main gradient by 0.22% each time this function is called
+    var mainOffset = parseFloat(mainGrad.getAttribute('offset')) - this.MAIN_GRAD_OFFSET_FACTOR;
 
-    //effect offset is always 2% higher than the main
-    var effectOffset = mainOffset + 2;
+    //secondary offset is always 2% higher than the main
+    var secondaryOffset = mainOffset + this.SECONDARY_GRAD_OFFSET_FACTOR;
 
     //Adjust the gradients with their new offsets
     mainGrad.setAttribute('offset', mainOffset + '%');
-    gradEffect.setAttribute('offset', effectOffset + '%');
+    secondaryGrad.setAttribute('offset', secondaryOffset + '%');
 
     //Increase animation counter each time the function is called
-    this.addCount++;
+    this.removeCount++;
 
     //Stop animation once counter reaches animation finish
     //reset counter
-    if (this.addCount < 15) {
+    if (this.removeCount < this.MAX_ANIMATION_COUNT) {
       requestAnimationFrame(this.decrementGradient.bind(this));
     } else {
-      this.addCount = 0;
+      this.removeCount = 0;
     }
   }
 
