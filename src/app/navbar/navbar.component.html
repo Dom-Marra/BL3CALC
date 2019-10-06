@@ -1,15 +1,11 @@
-<div id="navbar">
-    <div id="navbarImg" routerLink="/home"></div>
+<div (window:resize)="onResize()" id="navbar">
+    <div id="home" routerLink="/home">BL3CALC</div>
     <ul [@openClose]="navState">
         <li routerLink="/amara">Amara</li>
         <li>FL4K</li>
         <li>Moze</li>
         <li>Zane</li>
     </ul>
-    <div id="menu" (click) = "toggleMenuIcon()">
-        <div id="barTop"></div>
-        <div id="barMid"></div>
-        <div id="barBot"></div>
-    </div>
+    <i id="menu" (click) = "toggleMenuIcon()" class="fa fa-bars"></i>
 
 </div>

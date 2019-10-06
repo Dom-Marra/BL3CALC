@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationStart } from '@angular/router';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { Navigation } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-navbar',
@@ -21,9 +23,28 @@ export class NavbarComponent implements OnInit {
 
   private navState = 'closed';            //current state of the navbar when in mobile, used for animations
 
-  constructor() { }
+  constructor(private router: Router) { 
+
+    //On router event
+    this.router.events.subscribe(e => {
+
+      //If the event is a url change and nav is open, then close it
+      if (e instanceof NavigationStart) {
+        if (this.navState == 'open') this.toggleMenuIcon();
+      }
+    });
+  }
 
   ngOnInit() {
+  }
+
+  /**
+   * Closes nav if its open when window is resized passed 768px
+   */
+  onResize() {
+    if (window.innerWidth > 768) {
+      if (this.navState == 'open') this.toggleMenuIcon();
+    }
   }
 
   /**
@@ -31,7 +52,9 @@ export class NavbarComponent implements OnInit {
    *  toggles class for menu button for its animation
    */
   toggleMenuIcon() {
-    document.getElementById('menu').classList.toggle('activated');
+    document.getElementById('menu').classList.toggle('fa-bars');
+    document.getElementById('menu').classList.toggle('fa-times');
+    document.body.style.overflow = document.body.style.overflow == 'hidden' ? 'auto' : 'hidden';
     this.navState === 'closed' ? this.navState = 'open' : this.navState = 'closed';
   }
 
