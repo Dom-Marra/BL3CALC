@@ -3,6 +3,15 @@ import { Character } from './character'
 
 export class Amara implements Character {
 
+  //Path for red tree header image
+  public readonly redTreeHeader: string = "assets/images/amara/RedTreeHeader.png";
+
+  //Path for blue tree header imag
+  public readonly blueTreeHeader: string = "assets/images/amara/BlueTreeHeader.png";
+
+  //Path for green tree header image
+  public readonly greenTreeHeader: string = "assets/images/amara/GreenTreeHeader.png";
+
   //Skills for red skill tree
 
   //Action skills

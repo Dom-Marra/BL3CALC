@@ -3,19 +3,19 @@
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    min-height: 870px;
-    margin-top: 25px;
+    width: 80%;
+    margin: auto;
+    height: 100%;
 }
 
 /* Carousel Styles */
 .carousel  {
+    margin-top: 5vh;
     display: flex;
     justify-content: center;
-    height: 870px;
-    width: 500px;
+    height: 90vh;
+    width: 40vw;
 }
-
-    
 
 .nextItem, 
 .prevItem {
@@ -26,25 +26,26 @@
     outline: none;
     background-size: contain;
     background-repeat: no-repeat;
-    width: 35px;
-    height: 45px;
-    top: 50px;
+    width: 4vh;
+    height: 4vh;
+    top: 6vh;
 }
 
 .nextItem {
     background-image: url('src/assets/images/skilltree/next.png');
-    left: 180px;
+    left: 20vh;
 }
 
 .prevItem {
     background-image: url('src/assets/images/skilltree/prev.png');
-    right: 180px;
+    right: 20vh;
 }
 
 
 /* Contains all of the trees for the carousel */
 .carouselTrack {
-    height: 80vh;
+    height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     display: flex;
@@ -78,24 +79,20 @@
 }
 
 @media not screen and (min-width: 130vh) {
+
     .carousel {
+        height: 95vh;
         width: 100%;
-        overflow: hidden;
     }
 }
 
 @media not screen and (min-width: 768px) { 
 
     .carousel {
-        max-height: 896px;
-        height: calc(95vw * 1.8);
 
-        .nextItem { 
-            left: 35vw;
-        }
-
-        .prevItem {
-            right: 35vw;
+        .nextItem, 
+        .prevItem { 
+            top: 50px;
         }
 
         .carouselItem { 
@@ -108,10 +105,5 @@
                 transform: scale(1);
             }
         }
-    }
-
-    .carouselButtons { 
-        width: calc(75vw + 80px);
-        margin: auto;
     }
 }

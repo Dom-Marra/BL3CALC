@@ -9,13 +9,13 @@
                 <button class="prevItem" (click)='previous()'></button>
                 <button class="nextItem" (click)='next()'></button>
                 <li class="carouselItem left">
-                    <app-skilltree treeName='Mystic Assualt' color='blue' index='0' [skills]="amara.getBlueSkills()" [character]="amara"></app-skilltree>
+                    <app-skilltree treeName='Mystic Assualt' color='blue' index='0' [header]="amara.blueTreeHeader" [skills]="amara.getBlueSkills()" [character]="amara"></app-skilltree>
                 </li>
                 <li class="carouselItem active">
-                    <app-skilltree treeName='Brawl' color='green' index='1' [skills]="amara.getGreenSkills()" [character]="amara"></app-skilltree>
+                    <app-skilltree treeName='Brawl' color='green' index='1' [header]="amara.greenTreeHeader" [skills]="amara.getGreenSkills()" [character]="amara"></app-skilltree>
                 </li>
                 <li class="carouselItem right">
-                    <app-skilltree treeName='Fist of the Elements' color='red' index='2' [skills]="amara.getRedSkills()" [character]="amara"></app-skilltree>
+                    <app-skilltree treeName='Fist of the Elements' color='red' [header]="amara.redTreeHeader" index='2' [skills]="amara.getRedSkills()" [character]="amara"></app-skilltree>
                 </li>
             </ul>
         </div>

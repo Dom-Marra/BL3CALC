@@ -30,6 +30,9 @@ export class SkilltreeComponent implements OnInit {
   index: number;                              //Index of the tree
 
   @Input()
+  header: string;                             //Path for image for the tree header
+
+  @Input()
   skills: Array<Skill>;                       //Skills for the tree
 
   @Input()
@@ -39,6 +42,7 @@ export class SkilltreeComponent implements OnInit {
 
   ngOnInit() {
     this.setColor();
+    console.log(this.header);
   }
 
   /**

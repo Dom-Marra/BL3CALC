@@ -1,53 +1,35 @@
-$textColor: rgb(255,215,0);
-$base: rgba(0, 0, 0, 0.5);
+@import "../../styles.scss";
+
 
 .stats {
     position: relative;
-    width: 50vw;
-    height: 790px;
-    background: $base;
-    
-    &:before {
-     content: "";
-     position: absolute;
-     left: 0; 
-     right: 0;
-     bottom: 100%;
-     border-bottom: 40px solid $base;
-     border-left: 40px solid transparent;
-    }
-
-    &:after {
-        content: "";
-        position: absolute;
-        left: 0; 
-        right: 0;
-        top: 100%;
-        border-top: 40px solid $base;
-        border-right: 40px solid transparent;
-    }
+    width: 30vw;
+    height: 85vh;
+    background: $primary-color;
+    border: 1px solid $secondary-color;
+    border-radius: 1vh;
 
     .statsNav {
+        @include borderlands-text;
         position: relative;
-        top: -40px;
         display: flex;
         justify-content: flex-start;
-        height: 70px;
-        font-family: 'Compacta Bold';
-        text-shadow: 2px 0 0 black, -2px 0 0 black, 0 2px 0 black, 0 -2px 0 black, 1px 1px black, -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black;
-        color: $textColor;
+        height: 60px;
+        background-color: $primary-accent-color;
+        border-radius: 1vh 1vh 0 0;
 
         .heading {
             position: absolute;
             left: 50%;
             transform: translate(-50%, 0);
             text-align: center;
-            line-height: 1;
-            font-size: 70px;
+            line-height: 60px;
+            font-size: 50px;
         }
 
         .characterLevel {
-            font-size: 50px;
+            font-size: 35px;
+            line-height: 60px;
             padding-left: 40px;
         }
     }
@@ -67,7 +49,7 @@ $base: rgba(0, 0, 0, 0.5);
 
     .stats {
         max-height: 100%;
-        width: 95vw;
+        width: 50vw;
         margin-top: 45px;
         margin-bottom: 45px;
     }
@@ -76,16 +58,17 @@ $base: rgba(0, 0, 0, 0.5);
 @media not screen and (min-width: 768px) { 
 
     .stats {
+        width: 75vw;
         .statsNav {
-    
+
             .heading {
-                
-                font-size: 15vw;
+                font-size: 10vw;
             }
     
             .characterLevel {
-                font-size: 10vw;
+                font-size: 7vw;
             }
+
         }
     }
     

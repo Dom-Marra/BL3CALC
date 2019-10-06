@@ -19,23 +19,25 @@
         </linearGradient>
 
         
-        <g attr.id="tree{{index}}" transform="scale(.85) translate(27, 53)">
-                <polygon  points="2,18 17,2 52,2 67,18
-                                232,18 248,2 283,2 298,18 
-                                298,674 280,694 
-                                20,694 2,674" class="topBorder"></polygon>
-                <polygon points="2,18 17,2 52,2 67,18
-                                232,18 248,2 283,2 298,18 
-                                298,674 280,694 
-                                20,694 2,674" class="middleBorder"></polygon>
-                <polygon points="2,18 17,2 52,2 67,18
-                                232,18 248,2 283,2 298,18 
-                                298,674 280,694 
-                                20,694 2,674" class="mainBack"></polygon>
-                <polygon points="12,56 17,50 42,50 50,58 
-                                250,58 258,50 283,50 288,56 
-                                288,630 273,645 
-                                27, 645, 12,630" class="mainFront"></polygon>
+        <g transform="scale(.85) translate(27, 53)">
+            <polygon  points="2,18 17,2 52,2 67,18
+                            232,18 248,2 283,2 298,18 
+                            298,674 280,694 
+                            20,694 2,674" class="topBorder"></polygon>
+            <polygon points="2,18 17,2 52,2 67,18
+                            232,18 248,2 283,2 298,18 
+                            298,674 280,694 
+                            20,694 2,674" class="middleBorder"></polygon>
+            <polygon points="2,18 17,2 52,2 67,18
+                            232,18 248,2 283,2 298,18 
+                            298,674 280,694 
+                            20,694 2,674" class="mainBack"></polygon>
+            <polygon points="12,56 17,50 42,50 50,58 
+                            250,58 258,50 283,50 288,56 
+                            288,630 273,645 
+                            27, 645, 12,630" class="mainFront"></polygon>
+            <image width="110%" x="-5%" y="-10%"attr.href="{{header}}" ></image>
+            <text class="treeName doNotSelect" x="50%" y="96.5%" dominant-baseline="middle" text-anchor="middle">{{treeName}}</text>
         </g>
 
         <filter id="highlight">
@@ -177,8 +179,6 @@
                 </g>
                 
             </g>
-
-            <text class="treeName doNotSelect" x="50%" y="96.5%" dominant-baseline="middle" text-anchor="middle">{{treeName}}</text>
         </g>
         
     </svg>

@@ -2,11 +2,12 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 export class Skill {
     private readonly MIN_POINTS: number = 0;            //min number of points that can be allocated in the skill
-    private readonly NORMAL_SKILL_CASE: number = 0;
+    private readonly NORMAL_SKILL_CASE: number = 0;     //Case if skill is normal
     private readonly ACTION_SKILL_CASE: number = 1;     //Case if action skill
     private readonly ACTION_MOD_CASE: number = 2;       //Case if action skill modifier
     private readonly OTHER_CASE: number = 3;            //Case if other (pet, elemental type ...)
 
+    //Paths for box images for each type of skill
     private readonly NORMAL_SKILL_BOX: string = "assets/images/skilltree/skillBox.png"; 
     private readonly ACTION_SKILL_BOX: string = "assets/images/skilltree/actionSkillBox.png"; 
     private readonly ACTION_SKILL_MOD_BOX: string = "assets/images/skilltree/actionSkillModBox.png"; 
@@ -17,9 +18,9 @@ export class Skill {
     private position: Array<number>;                //position on the tree [y, x]
     private maxPoints: number;                      //max number of points that can be allocated in the skill
     private preReq: number;                         //number of points required on the tree to allocate into this
-    private requiredActiveSkill: Skill = null;             //Required active skill to allocate active skill mod
-    private otherSkillType: number = 0;
-    private skillBoxPath: string = "";
+    private requiredActiveSkill: Skill = null;      //Required active skill to allocate active skill mod
+    private otherSkillType: number = 0;             //Defines if the skill is normal, action, action mod, or other
+    private skillBoxPath: string = "";              //The path for the box image behind the skill
 
     
     constructor(path: string, position: Array<number>, maxPoints: number, preReq: number, otherSkillType?: number, activeSkill?: Skill){
@@ -28,6 +29,8 @@ export class Skill {
         this.maxPoints = maxPoints;               
         this.preReq = preReq;
 
+
+        //Assign variables based on skill type
         switch (otherSkillType) {
             case this.ACTION_SKILL_CASE: {
                 this.otherSkillType = otherSkillType;
