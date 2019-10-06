@@ -1,7 +1,9 @@
+@import "../../styles.scss";
+
 #footer {
     position: absolute;
     height: 100px;
-    background-color: rgb(24, 24, 24);
+    background-color: $secondary-color;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
     bottom: -100px;
