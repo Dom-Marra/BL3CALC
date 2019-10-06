@@ -2,12 +2,12 @@
 
     <div class="flex">
         <div class="carousel">
-            <div class="carouselButtons">
-                    <button class="prevItem" (click)='previous()'></button>
-                    <button class="nextItem" (click)='next()'></button>
-            </div>
+            
+            
             
             <ul class="carouselTrack">
+                <button class="prevItem" (click)='previous()'></button>
+                <button class="nextItem" (click)='next()'></button>
                 <li class="carouselItem left">
                     <app-skilltree treeName='Mystic Assualt' color='blue' index='0' [skills]="amara.getBlueSkills()" [character]="amara"></app-skilltree>
                 </li>
