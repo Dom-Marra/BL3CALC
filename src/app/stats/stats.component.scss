@@ -70,10 +70,16 @@ $base: rgba(0, 0, 0, 0.5);
         width: 95vw;
         margin-top: 45px;
         margin-bottom: 45px;
+    }
+}
 
+@media not screen and (min-width: 768px) { 
+
+    .stats {
         .statsNav {
     
             .heading {
+                
                 font-size: 15vw;
             }
     
@@ -82,7 +88,5 @@ $base: rgba(0, 0, 0, 0.5);
             }
         }
     }
-
-
-
+    
 }
