@@ -1,4 +1,4 @@
-$textColor: rgb(255,215,0);
+@import "../../styles.scss";
 
 svg {
     display: block;
@@ -7,13 +7,21 @@ svg {
     outline: none;
     
     polygon:nth-child(1) {
-        fill: rgba(0, 0, 0, 0.6); 
-        stroke: black;
+        fill: $primary-color; 
+        stroke: transparent;
         paint-order: stroke fill;
     }
 
     polygon:nth-child(2) {
-        fill: black;
+        fill: $primary-accent-color;
+        stroke: transparent;
+        paint-order: stroke fill;
+    }
+
+    polygon:nth-child(4) {
+        fill: transparent;
+        stroke: black;
+        paint-order: stroke fill;
     }
 }
 
@@ -27,9 +35,10 @@ svg:hover {
 }
 
 text {
-    font-family: 'Compacta Bold';
+    @include borderlands-text;
+    fill: $text-color;
     font-size: 50px;
-    fill: $textColor;
+    
 }
 
 @media not screen and (min-width: 992px) {
@@ -38,7 +47,6 @@ text {
         svg {
             max-height: 350px;
             max-width: 300px;
-            overflow: visible;
         }
     }
 } 
