@@ -147,24 +147,34 @@ export class SkilltreeComponent implements OnInit {
     if (skill.getOtherSkillType() > 0) return true;
 
     var requiredSkill = skill;              //Highest pre-req skill
-    var extraPoints = 0;                    //Any extra points that might be able to be de-allocated
+    var pointsForPreReq = 0;                //Points before a pre-req be de-allocated
+    var extraPoints = 0;                    //Any extra points before the required skill
     var requiredForPreReq = false;          //Skill may be required as a pre-req to another
+    var tmpPoints = 0;                      //Points that are saved up while traversing the tree
 
     //Traverse through skills
     this.skills.forEach(currentSkill => {
 
       //Analyze when when a skill has an allocation more than 0
       if (currentSkill.getAllocated() > 0) {
-
-        //Re-assign required amount of points when the nextSkill has a higher amount
-        if (currentSkill.getPreReq() > skill.getPreReq()) requiredSkill = currentSkill;
+        
+        //Re-assign required skills when the current skill has a higher amount
+        //Add tmp points to extra
+        //reset tmp points
+        if (currentSkill.getPreReq() > requiredSkill.getPreReq()) {
+          requiredSkill = currentSkill;
+          extraPoints += tmpPoints;
+          tmpPoints = 0;
+        }
 
         //Increment extra points if the current skill shares the same pre-req or is less
-        if (currentSkill.getPreReq() <= skill.getPreReq()) extraPoints += currentSkill.getAllocated();
+        if (currentSkill.getPreReq() <= skill.getPreReq()) pointsForPreReq += currentSkill.getAllocated();
 
         //Skill is a pre-req if the difference between it and the current is 5
         if (currentSkill.getPreReq() - skill.getPreReq() == this.POINTS_PER_PREREQ) requiredForPreReq = true;
 
+        //Add current skill points to tmp points
+        tmpPoints += currentSkill.getAllocated();
       }
 
     });
@@ -172,14 +182,17 @@ export class SkilltreeComponent implements OnInit {
     //Check that the skill pre-req is not the same as the requiredSkill pre-req
     if (skill.getPreReq() !=  requiredSkill.getPreReq()) {
 
+      console.log(requiredSkill);
+      console.log(extraPoints - 1 + " " + requiredSkill.getPreReq());
+
       //The total allocated points minus the requiredSkills points minus 1 point
       //is less than what is needed for the requiredSkill then point removal failure
-      if (this.allocatedPoints - requiredSkill.getAllocated() - 1 <  requiredSkill.getPreReq()) return false;
+      if (extraPoints - 1 <  requiredSkill.getPreReq()) return false;
     }
 
     //The skill is a pre-req and removing a point accross all extra points is less than
     //the next pre-req amount then point removal failure
-    if (requiredForPreReq && (extraPoints - 1 < skill.getPreReq() + this.POINTS_PER_PREREQ)) return false;
+    if (requiredForPreReq && (pointsForPreReq - 1 < skill.getPreReq() + this.POINTS_PER_PREREQ)) return false;
     
     //point can be removed
     return true;
