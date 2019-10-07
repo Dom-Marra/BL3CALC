@@ -5,7 +5,7 @@
     align-items: center;
     width: 80%;
     margin: auto;
-    height: 100%;
+    overflow: hidden;
 }
 
 /* Carousel Styles */
@@ -79,6 +79,10 @@
 }
 
 @media not screen and (min-width: 130vh) {
+
+    .flex {
+        width: 100%;
+    }
 
     .carousel {
         height: 95vh;
