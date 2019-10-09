@@ -8,7 +8,7 @@ import { Amara } from '../amara';
 })
 export class AmaraComponent implements OnInit {
 
-  private amara = new Amara();       //Amara character
+  private amara = new Amara(1, 1, 1);       //Amara character
 
   constructor() { }
 
