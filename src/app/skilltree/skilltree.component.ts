@@ -1,5 +1,9 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { Skill } from '../skill';
+import { NormalSkill } from '../normalskill';
+import { OtherSkill } from '../otherskill';
+import { ActionSkill } from '../actionskill';
+import { ActionMod } from '../actionmod';
 import { Character } from '../character'
 
 @Component({
@@ -42,7 +46,6 @@ export class SkilltreeComponent implements OnInit {
 
   ngOnInit() {
     this.setColor();
-    console.log(this.header);
   }
 
   /**
@@ -60,7 +63,7 @@ export class SkilltreeComponent implements OnInit {
    *        skill to add
    * 
    * @returns
-   *         Boolean if adding the point was successful or not
+   *         Boolean: if adding the point was successful or not
    */
   addPoint(skill: Skill): Boolean {
 
@@ -70,14 +73,14 @@ export class SkilltreeComponent implements OnInit {
     if (!skill.validateModification(pointsToModify, this.allocatedPoints)) return false; 
 
     //Do not add point if character has none remaining
-    if(!this.character.validateModification(pointsToModify, skill.getOtherSkillType())) return false; 
+    if(!this.character.validateModification(pointsToModify, skill)) return false; 
     
-    //Increase allocation of skill point and character
+    //Increase allocation of skill and character
     skill.addPoint();
-    this.character.addPoint(skill.getOtherSkillType());
+    this.character.addPoint(skill);
 
     //Trigger animation for point addition if skill type is normal
-    if (skill.getOtherSkillType() == 0) {
+    if (skill instanceof NormalSkill) {
       if (this.allocatedPoints < this.MAX_POINTS) {
         this.incrementGradient(); 
       }
@@ -98,7 +101,7 @@ export class SkilltreeComponent implements OnInit {
    *        skill to remove
    * 
    * @returns 
-   *         Boolean if removing the point was successful or not
+   *         Boolean: if removing the point was successful or not
    */
   removePoint(skill: Skill): Boolean {
 
@@ -111,14 +114,14 @@ export class SkilltreeComponent implements OnInit {
     if (!skill.validateModification(pointsToModify, this.allocatedPoints)) return false; 
 
     //Do not remove point if character has max remaining
-    if(!this.character.validateModification(pointsToModify, skill.getOtherSkillType())) return false; 
+    if(!this.character.validateModification(pointsToModify, skill)) return false; 
     
     //Decrease allocation on skill point and character
     skill.removePoint();
-    this.character.removePoint(skill.getOtherSkillType());
+    this.character.removePoint(skill);
     
     //Trigger animation for removal of point if skill type is normal
-    if (skill.getOtherSkillType() == 0) {
+    if (skill instanceof NormalSkill) {
       if (this.allocatedPoints > this.MIN_POINTS && this.allocatedPoints <= this.MAX_POINTS) {
         this.decrementGradient(); 
       }
@@ -140,11 +143,11 @@ export class SkilltreeComponent implements OnInit {
    *        skill that needs to be validated to be de-allocated
    * 
    * @returns 
-   *         Boolean if the point can be de-allocated or not
+   *         Boolean: if the point can be de-allocated or not
    */
   validateRequiredPoints(skill: Skill): Boolean {
 
-    if (skill.getOtherSkillType() > 0) return true;
+    if (!(skill instanceof NormalSkill)) return true;
 
     var requiredSkill = skill;              //Highest pre-req skill
     var pointsForPreReq = 0;                //Points before a pre-req be de-allocated
@@ -156,7 +159,7 @@ export class SkilltreeComponent implements OnInit {
     this.skills.forEach(currentSkill => {
 
       //Analyze when when a skill has an allocation more than 0
-      if (currentSkill.getAllocated() > 0) {
+      if (currentSkill.getAllocatedPoints() > 0) {
         
         //Re-assign required skills when the current skill has a higher amount
         //Add tmp points to extra
@@ -168,22 +171,19 @@ export class SkilltreeComponent implements OnInit {
         }
 
         //Increment extra points if the current skill shares the same pre-req or is less
-        if (currentSkill.getPreReq() <= skill.getPreReq()) pointsForPreReq += currentSkill.getAllocated();
+        if (currentSkill.getPreReq() <= skill.getPreReq()) pointsForPreReq += currentSkill.getAllocatedPoints();
 
         //Skill is a pre-req if the difference between it and the current is 5
         if (currentSkill.getPreReq() - skill.getPreReq() == this.POINTS_PER_PREREQ) requiredForPreReq = true;
 
         //Add current skill points to tmp points
-        tmpPoints += currentSkill.getAllocated();
+        tmpPoints += currentSkill.getAllocatedPoints();
       }
 
     });
 
     //Check that the skill pre-req is not the same as the requiredSkill pre-req
     if (skill.getPreReq() !=  requiredSkill.getPreReq()) {
-
-      console.log(requiredSkill);
-      console.log(extraPoints - 1 + " " + requiredSkill.getPreReq());
 
       //The total allocated points minus the requiredSkills points minus 1 point
       //is less than what is needed for the requiredSkill then point removal failure
@@ -239,7 +239,7 @@ export class SkilltreeComponent implements OnInit {
    */
   decrementGradient() {
 
-   var grad = document.getElementById(this.color + 'Fill');       //Linear gradient component
+    var grad = document.getElementById(this.color + 'Fill');       //Linear gradient component
     var gradChildren = grad.children;                             //children of gradient component
     var mainGrad = gradChildren[0];                               //Main gradient
     var secondaryGrad = gradChildren[1];                          //Bottom effect of main gradient
