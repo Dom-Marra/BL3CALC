@@ -10,37 +10,29 @@ export interface Character {
      *              this should be 1 or -1, other numbers will not work
      * 
      * @returns 
-     *        Boolean whether the allocated points can be modified or not
+     *        Boolean: whether the allocated points can be modified or not
      */
-    validateModification(modification: number, skillType: number): Boolean;
+    validateModification(modification: number, skill: Skill): Boolean;
     
     /**
      * Adds point into a specific skill type allocation
      * 
-     * @param skillType
-     *              0 = normal skills
-     *              1 = action skills
-     *              2 = action skill mods
-     *              3 = other skills (pets, elementals, etc...)
+     * @param skill
     */
-    addPoint(skillType: number): void;
+    addPoint(skill: Skill): void;
     
     /**
     * removes point from a specific skill type allocation
     * 
-    * @param skillType
-    *              0 = normal skills
-    *              1 = action skills
-    *              2 = action skill mods
-    *              3 = other skills (pets, elementals, etc...)
+    * @param skill
     */
-    removePoint(skillType: number): void;
+    removePoint(skill: Skill): void;
     
     /**
     * Retrieves skills that belong to the blue tree
     * 
     * @returns
-    *          Array of skills
+    *          Array
     */
     getBlueSkills(): Skill[];
     
@@ -48,7 +40,7 @@ export interface Character {
     * Retrieves skills that belong to the red tree
     * 
     * @returns
-    *          Array of skills
+    *          Array
     */
     getRedSkills(): Skill[];
     
@@ -56,22 +48,16 @@ export interface Character {
     * Retrieves skills that belong to the green tree
     * 
     * @returns
-    *          Array of skills
+    *          Array
     */
     getGreenSkills(): Skill[];
     
     /**
-     * Retrieves number of allocated points of a skill type 
-     * 
-     * @param skillType
-     *              0 = normal skills
-     *              1 = action skills
-     *              2 = action skill mods
-     *              3 = other skills (pets, elementals, etc...)
+     * Retrieves number of allocated points in normal skills 
      * 
      * @returns
-     *          number of points of a skill type
+     *          number
      */
-    getAllocatedPoints(skillType: number): number;
+    getAllocatedPoints(): number;
 
 }
