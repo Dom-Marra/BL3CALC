@@ -24,9 +24,9 @@
                              class="skillImage" attr.src="{{actionSkills[skill] != null ? actionSkills[skill].getPath() : ''}}" />
                     </div>
 
-                    <div [class.blue]="actionMods.length > 0 ? actionMods[skill][mod + 1].getColor() == 'blue' : ''" 
-                         [class.green]="actionMods.length > 0 ? actionMods[skill][mod + 1].getColor() == 'green' : ''" 
-                         [class.red]="actionMods.length > 0 ? actionMods[skill][mod + 1].getColor() == 'red' : ''"  
+                    <div [class.blue]="actionMods[skill] != null && actionMods[skill].length > mod + 1 ? actionMods[skill][mod + 1].getColor() == 'blue' : ''" 
+                         [class.green]="actionMods[skill] != null && actionMods[skill].length > mod + 1 ? actionMods[skill][mod + 1].getColor() == 'green' : ''" 
+                         [class.red]="actionMods[skill] != null && actionMods[skill].length > mod + 1 ? actionMods[skill][mod + 1].getColor() == 'red' : ''"  
                          *ngFor="let mod of _maxActionMods" [ngStyle]="{background: 'url(assets/images/skilltree/actionSkillModBox.png)', 
                                     'background-size': 'contain', 
                                     'background-repeat': 'no-repeat',
@@ -34,11 +34,11 @@
                                     'width' : _maxActionSkills.length < 2 ? 
                                     MATH.floor(100/(_maxActionSkills.length + _maxActionMods.length + _maxOtherSkills.length)) + '%':
                                     '100%'}">
-                        <img [class.blue]="actionMods.length > 0 ? actionMods[skill][mod + 1].getColor() == 'blue' : ''" 
-                             [class.green]="actionMods.length > 0 ? actionMods[skill][mod + 1].getColor() == 'green' : ''" 
-                             [class.red]="actionMods.length > 0 ? actionMods[skill][mod + 1].getColor() == 'red' : ''" 
+                        <img [class.blue]="actionMods[skill] != null && actionMods[skill].length > mod + 1 ? actionMods[skill][mod + 1].getColor() == 'blue' : ''" 
+                             [class.green]="actionMods[skill] != null && actionMods[skill].length > mod + 1 ? actionMods[skill][mod + 1].getColor() == 'green' : ''" 
+                             [class.red]="actionMods[skill] != null && actionMods[skill].length > mod + 1 ? actionMods[skill][mod + 1].getColor() == 'red' : ''" 
                              class="skillImage" 
-                             attr.src="{{actionMods.length > 0 ?
+                             attr.src="{{actionMods[skill] != null && actionMods[skill].length > mod + 1 ?
                                         (actionMods[skill][0] == actionSkills[skill] || actionMods[skill][0] == null ?
                                         actionMods[skill][mod + 1].getPath() : '') : ''}}" />
                     </div>
