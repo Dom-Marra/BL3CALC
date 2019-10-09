@@ -50,8 +50,6 @@ export class StatsComponent implements OnInit {
     for (var i = 0; i < (maxActionMods / this._maxActionSkills.length); i++) {
       this._maxActionMods[i] = i;
     }
-
-    console.log(this._maxActionMods);
   }
 
   @Input() 
