@@ -10,8 +10,8 @@
     border-radius: 1vh;
 
     .statsNav {
-        @include borderlands-text;
         position: relative;
+        @include borderlands-text;
         display: flex;
         justify-content: flex-start;
         height: 60px;
@@ -37,11 +37,64 @@
     .info {
         width: 90%;
         margin: auto;
-        margin-top: -45px;
-        height: 100%;
-        font-size: 25px;
+        height: calc(100% - 85px);
         color: white;
-        font-family: Impact;
+        font-family: sans-serif;
+
+        .infoSection {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            height: auto;
+            width: 100%;
+            margin: auto;
+            margin-top: 25px;
+            background-color: $primary-color-accent-light;
+            border-radius: 0.5vh;
+    
+            .infoSectionHeader {
+                height: 25px;
+                width: 100%;
+                font-weight: bold;
+                background-color: $primary-accent-color;
+                border-radius: 0.5vh 0.5vh 0 0;
+
+                p {
+                    margin-left: 2%;
+                    margin-bottom: 0;
+                }
+            }
+
+            .skill {
+                margin-top: 20px;
+                margin-bottom: 20px;
+                max-height: calc(100% - 25px);
+
+                div {
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 8vh;
+                    img {
+                        height: 65%;
+                    }
+                }
+
+                
+
+                .red {
+                    filter: url(#activatedRed);
+                }
+
+                .green {
+                    filter: url(#activatedGreen);
+                }
+
+                .blue {
+                    filter: url(#activatedBlue);
+                }
+            }
+        }
     }
 }
 
@@ -58,7 +111,7 @@
 @media not screen and (min-width: 768px) { 
 
     .stats {
-        width: 75vw;
+        width: 90vw;
         .statsNav {
 
             .heading {
