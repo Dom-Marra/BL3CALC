@@ -1,7 +1,7 @@
 <div (window:resize)="onResize()" id="navbar">
     <div id="home" routerLink="/home">BL3CALC</div>
     <ul [@openClose]="navState">
-        <li routerLink="/amara">Amara</li>
+        <li routerLink="/build" [queryParams]="{character: 'amara'}">Amara</li>
         <li>FL4K</li>
         <li>Moze</li>
         <li>Zane</li>
