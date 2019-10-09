@@ -8,35 +8,38 @@ import { Character } from './character'
 export class Amara extends Character {
 
   //Path for red tree header image
-  public readonly redTreeHeader: string = "assets/images/amara/RedTreeHeader.png";
+  public readonly RED_TREE_HEADER: string = "assets/images/amara/RedTreeHeader.png";
+  public readonly RED_TREE_NAME: string = "Fist of the Elements";
 
-  //Path for blue tree header imag
-  public readonly blueTreeHeader: string = "assets/images/amara/BlueTreeHeader.png";
+  //Path for blue tree header image
+  public readonly BLUE_TREE_HEADER: string = "assets/images/amara/BlueTreeHeader.png";
+  public readonly BLUE_TREE_NAME: string = "Mystic Assualt";
 
   //Path for green tree header image
-  public readonly greenTreeHeader: string = "assets/images/amara/GreenTreeHeader.png";
+  public readonly GREEN_TREE_HEADER: string = "assets/images/amara/GreenTreeHeader.png";
+  public readonly GREEN_TREE_NAME: string = "Brawl";
 
   //Skills for red skill tree
 
   //Action skills
-  private readonly phaseGrasp = new ActionSkill('assets/images/amara/skills/PhaseGrasp.png', [-1, 1], 1, 0, "red");
-  private readonly theEternalFists = new ActionSkill('assets/images/amara/skills/TheEternalFists.png', [2, -1], 1, 10, "red");
-  private readonly tiesThatBind = new ActionSkill('assets/images/amara/skills/TiesThatBind.png', [3, 3], 1, 15, "red");
-  private readonly fistOverMatter = new ActionSkill('assets/images/amara/skills/FistOverMatter.png', [4, -1], 1, 20, "red");
+  private readonly PHASE_GRASP = new ActionSkill('assets/images/amara/skills/PhaseGrasp.png', [-1, 1], 1, 0, "red");
+  private readonly THE_ETERNAL_FISTS = new ActionSkill('assets/images/amara/skills/TheEternalFists.png', [2, -1], 1, 10, "red");
+  private readonly TIES_THAT_BIND = new ActionSkill('assets/images/amara/skills/TiesThatBind.png', [3, 3], 1, 15, "red");
+  private readonly FIST_OVER_MATTER = new ActionSkill('assets/images/amara/skills/FistOverMatter.png', [4, -1], 1, 20, "red");
 
   //Action Mods
-  private readonly soulFire = new OtherSkill('assets/images/amara/skills/SoulFire.png', [1, 3], 1, 5, "red");
-  private readonly allure = new ActionMod('assets/images/amara/skills/Allure.png', [2, 3], 1, 10, "red");
+  private readonly SOUL_FIRE = new OtherSkill('assets/images/amara/skills/SoulFire.png', [1, 3], 1, 5, "red");
+  private readonly ALLURE = new ActionMod('assets/images/amara/skills/Allure.png', [2, 3], 1, 10, "red");
 
 
   //skills list
-  private readonly redSkills = [
-    this.phaseGrasp,
-    this.theEternalFists,
-    this.tiesThatBind,
-    this.fistOverMatter,
-    this.soulFire,
-    this.allure, //BELOW HERE IS NORMAL SKILLS
+  private readonly RED_SKILLS = [
+    this.PHASE_GRASP,
+    this.THE_ETERNAL_FISTS,
+    this.TIES_THAT_BIND,
+    this.FIST_OVER_MATTER,
+    this.SOUL_FIRE,
+    this.ALLURE, //BELOW HERE IS NORMAL SKILLS
     new NormalSkill('assets/images/amara/skills/Anima.png', [0, 0], 5, 0, "red"),
     new NormalSkill('assets/images/amara/skills/SteadyHands.png', [0, 1], 3, 0, "red"),
     new NormalSkill('assets/images/amara/skills/Infusion.png', [0, 2], 5, 0, "red"),
@@ -55,23 +58,23 @@ export class Amara extends Character {
   //Skills for blue skill tree
 
   //Action skills
-  private readonly phaseCast = new ActionSkill('assets/images/amara/skills/PhaseCast.png', [-1, 1], 1, 0, "blue");
-  private readonly deliverance = new ActionSkill('assets/images/amara/skills/Deliverance.png', [2, -1], 1, 10, "blue");
-  private readonly reverberation = new ActionSkill('assets/images/amara/skills/Reverberation.png', [3, -1], 1, 15, "blue");
-  private readonly tandava = new ActionSkill('assets/images/amara/skills/Tandava.png', [4, 3], 1, 20, "blue");
+  private readonly PHASE_CAST = new ActionSkill('assets/images/amara/skills/PhaseCast.png', [-1, 1], 1, 0, "blue");
+  private readonly DELIVERANCE = new ActionSkill('assets/images/amara/skills/Deliverance.png', [2, -1], 1, 10, "blue");
+  private readonly REVERBERATION = new ActionSkill('assets/images/amara/skills/Reverberation.png', [3, -1], 1, 15, "blue");
+  private readonly TANDAVA = new ActionSkill('assets/images/amara/skills/Tandava.png', [4, 3], 1, 20, "blue");
 
   //Action Mods 
-  private readonly soulSap = new ActionMod('assets/images/amara/skills/SoulSap.png', [1, 3], 1, 5, "blue");
-  private readonly stillnessOfMind = new ActionMod('assets/images/amara/skills/StillnessOfMind.png', [2, 3], 1, 10, "blue");
+  private readonly SOUL_SAP = new ActionMod('assets/images/amara/skills/SoulSap.png', [1, 3], 1, 5, "blue");
+  private readonly STILLNESS_OF_MIND = new ActionMod('assets/images/amara/skills/StillnessOfMind.png', [2, 3], 1, 10, "blue");
 
   //skills list
-  private readonly blueSkills = [
-    this.phaseCast,
-    this.deliverance,
-    this.reverberation,
-    this.tandava,
-    this.soulSap,
-    this.stillnessOfMind, //BELOW HERE IS NORMAL SKILLS
+  private readonly BLUE_SKILLS = [
+    this.PHASE_CAST,
+    this.DELIVERANCE,
+    this.REVERBERATION,
+    this.TANDAVA,
+    this.SOUL_SAP,
+    this.STILLNESS_OF_MIND, //BELOW HERE IS NORMAL SKILLS
     new NormalSkill('assets/images/amara/skills/DoHarm.png', [0, 0], 5, 0, "blue"),
     new NormalSkill('assets/images/amara/skills/FastHands.png', [0, 1], 3, 0, "blue"),
     new NormalSkill('assets/images/amara/skills/ViolentTapestry.png', [0, 2], 5, 0, "blue"),
@@ -90,23 +93,23 @@ export class Amara extends Character {
   //Skills for green skill tree
 
   //Action skills
-  private readonly phaseSlam = new ActionSkill('assets/images/amara/skills/PhaseSlam.png', [-1, 1], 1, 0, "green");
-  private readonly fracture = new ActionSkill('assets/images/amara/skills/Fracture.png', [2, -1], 1, 10, "green");
-  private readonly downFall = new ActionSkill('assets/images/amara/skills/Downfall.png', [3, -1], 1, 15, "green");
+  private readonly PHASE_SLAM = new ActionSkill('assets/images/amara/skills/PhaseSlam.png', [-1, 1], 1, 0, "green");
+  private readonly FRACTURE = new ActionSkill('assets/images/amara/skills/Fracture.png', [2, -1], 1, 10, "green");
+  private readonly DOWNFALL = new ActionSkill('assets/images/amara/skills/Downfall.png', [3, -1], 1, 15, "green");
 
   //Action mods
-  private readonly blightTiger = new OtherSkill('assets/images/amara/skills/BlightTiger.png', [1, 3], 1, 5, "green");
-  private readonly revelation = new ActionMod('assets/images/amara/skills/Revelation.png', [2, 3], 1, 10, "green");
-  private readonly glamour = new ActionMod('assets/images/amara/skills/Glamour.png', [4, 3], 1, 20, "green");
+  private readonly BLIGHT_TIGER = new OtherSkill('assets/images/amara/skills/BlightTiger.png', [1, 3], 1, 5, "green");
+  private readonly REVELATION = new ActionMod('assets/images/amara/skills/Revelation.png', [2, 3], 1, 10, "green");
+  private readonly GLAMOUR = new ActionMod('assets/images/amara/skills/Glamour.png', [4, 3], 1, 20, "green");
   
   //skills list
-  private readonly greenSkills = [
-    this.phaseSlam,
-    this.fracture,
-    this.downFall,
-    this.blightTiger,
-    this.revelation,
-    this.glamour, //BELOW HERE IS NORMAL SKILLS
+  private readonly GREEN_SKILLS = [
+    this.PHASE_SLAM,
+    this.FRACTURE,
+    this.DOWNFALL,
+    this.BLIGHT_TIGER,
+    this.REVELATION,
+    this.GLAMOUR, //BELOW HERE IS NORMAL SKILLS
     new NormalSkill('assets/images/amara/skills/RootToRise.png', [0, 0], 5, 0, "green"),
     new NormalSkill('assets/images/amara/skills/PersonalSpace.png', [0, 1], 3, 0, "green"),
     new NormalSkill('assets/images/amara/skills/Clarity.png', [0, 2], 5, 0, "green"),
@@ -209,7 +212,7 @@ export class Amara extends Character {
    *          Array
    */
   getBlueSkills(): Skill[] {
-      return this.blueSkills
+      return this.BLUE_SKILLS;
   }
   
   /**
@@ -219,7 +222,7 @@ export class Amara extends Character {
    *          Array
    */
   getRedSkills(): Skill[] {
-      return this.redSkills;
+      return this.RED_SKILLS;
   }
 
   /**
@@ -229,7 +232,7 @@ export class Amara extends Character {
    *          Array
    */
   getGreenSkills(): Skill[] {
-      return this.greenSkills;
+      return this.GREEN_SKILLS;
   }
 
 }
