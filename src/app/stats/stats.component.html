@@ -4,6 +4,64 @@
         <p class="heading">Stats</p>
     </div>
     <div class="info">
-        
+        <div class="infoSection">
+            <div class="infoSectionHeader"><p>Equipped Skills</p></div>
+            <div *ngFor="let skill of _maxActionSkills" class="skill" [style.width]="100/_maxActionSkills.length + '%'" [style.height]="">
+
+                    <div [class.blue]="actionSkills[skill] != null ? actionSkills[skill].getColor() == 'blue' : ''" 
+                         [class.green]="actionSkills[skill] != null ? actionSkills[skill].getColor() == 'green' : ''" 
+                         [class.red]="actionSkills[skill] != null ? actionSkills[skill].getColor() == 'red' : ''" 
+                         [ngStyle]="{background: 'url(assets/images/skilltree/actionSkillBox.png)', 
+                                    'background-size': 'contain', 
+                                    'background-repeat': 'no-repeat',
+                                    'background-position': 'center',
+                                    'width' :_maxActionSkills.length < 2 ? 
+                                    MATH.floor(100/(_maxActionSkills.length + _maxActionMods.length + _maxOtherSkills.length)) + '%':
+                                               '100%'}">
+                        <img [class.blue]="actionSkills[skill] != null ? actionSkills[skill].getColor() == 'blue' : ''" 
+                             [class.green]="actionSkills[skill] != null ? actionSkills[skill].getColor() == 'green' : ''" 
+                             [class.red]="actionSkills[skill] != null ? actionSkills[skill].getColor() == 'red' : ''"  
+                             class="skillImage" attr.src="{{actionSkills[skill] != null ? actionSkills[skill].getPath() : ''}}" />
+                    </div>
+
+                    <div [class.blue]="actionMods.length > 0 ? actionMods[skill][mod + 1].getColor() == 'blue' : ''" 
+                         [class.green]="actionMods.length > 0 ? actionMods[skill][mod + 1].getColor() == 'green' : ''" 
+                         [class.red]="actionMods.length > 0 ? actionMods[skill][mod + 1].getColor() == 'red' : ''"  
+                         *ngFor="let mod of _maxActionMods" [ngStyle]="{background: 'url(assets/images/skilltree/actionSkillModBox.png)', 
+                                    'background-size': 'contain', 
+                                    'background-repeat': 'no-repeat',
+                                    'background-position': 'center',
+                                    'width' : _maxActionSkills.length < 2 ? 
+                                    MATH.floor(100/(_maxActionSkills.length + _maxActionMods.length + _maxOtherSkills.length)) + '%':
+                                    '100%'}">
+                        <img [class.blue]="actionMods.length > 0 ? actionMods[skill][mod + 1].getColor() == 'blue' : ''" 
+                             [class.green]="actionMods.length > 0 ? actionMods[skill][mod + 1].getColor() == 'green' : ''" 
+                             [class.red]="actionMods.length > 0 ? actionMods[skill][mod + 1].getColor() == 'red' : ''" 
+                             class="skillImage" 
+                             attr.src="{{actionMods.length > 0 ?
+                                        (actionMods[skill][0] == actionSkills[skill] || actionMods[skill][0] == null ?
+                                        actionMods[skill][mod + 1].getPath() : '') : ''}}" />
+                    </div>
+
+                    <div [class.blue]="otherSkills[0] != null ? otherSkills[0].getColor() == 'blue' : ''" 
+                         [class.green]="otherSkills[0] != null ? otherSkills[0].getColor() == 'green' : ''" 
+                         [class.red]="otherSkills[0] != null ? otherSkills[0].getColor() == 'red' : ''"  
+                         *ngIf="_maxOtherSkills.length > 0" [ngStyle]="{background: 'url(assets/images/skilltree/otherSkillBox.png)', 
+                                    'background-size': 'contain', 
+                                    'background-repeat': 'no-repeat',
+                                    'background-position': 'center',
+                                    'width' : _maxActionSkills.length < 2 ? 
+                                    MATH.floor(100/(_maxActionSkills.length + _maxActionMods.length + _maxOtherSkills.length)) + '%':
+                                    '100%'}">
+                        <img [class.blue]="otherSkills[0] != null ? otherSkills[0].getColor() == 'blue' : ''" 
+                             [class.green]="otherSkills[0] != null ? otherSkills[0].getColor() == 'green' : ''" 
+                             [class.red]="otherSkills[0] != null ? otherSkills[0].getColor() == 'red' : ''" 
+                             class="skillImage"
+                             attr.src="{{(otherSkills[0] != null) ?
+                                        otherSkills[0].getPath() : ''}}" />
+                    </div>
+                    
+            </div>
+        </div>
     </div>
 </div>
