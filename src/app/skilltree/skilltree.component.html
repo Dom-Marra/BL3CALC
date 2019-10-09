@@ -39,130 +39,67 @@
             <image width="110%" x="-5%" y="-10%"attr.href="{{header}}" ></image>
             <text class="treeName doNotSelect" x="50%" y="96.5%" dominant-baseline="middle" text-anchor="middle">{{treeName}}</text>
         </g>
-
-        <filter id="highlight">
-                <feGaussianBlur stdDeviation="3" result="blurred" />
-                <feFlood flood-color="yellow" result="glowColor" />
-                <feComposite in="glowColor" in2="blurred" operator="in" result="glow" />
-                <feMerge>
-                    <feMergeNode in="glow"/>
-                    <feMergeNode in="SourceGraphic"/>
-                </feMerge>
-                <feColorMatrix type="matrix"
-                result="highlight"
-                values="1 0 0 0 0
-                        0 1 0 0 0
-                        0 0 0 0 0
-                        0 0 0 1 0" />
-        </filter>
-        <filter *ngIf="color == 'blue'" id="activatedBlue">
-                <feColorMatrix type="matrix"
-                values="0 0 0 0 0
-                        0 1 0 0 0
-                        0 0 1 0 0
-                        0 0 0 1 0" />
-                <feComponentTransfer>
-                    <feFuncR type="linear" slope="2"/>
-                    <feFuncG type="linear" slope="2"/>
-                    <feFuncB type="linear" slope="2"/>
-                </feComponentTransfer>
-        </filter>
-        <filter *ngIf="color == 'red'" id="activatedRed">
-                <feColorMatrix type="matrix"
-                values="0.99 0 0 0 0
-                        0 0.58 0 0 0
-                        0 0 0.17 0 0
-                        0 0 0 1 0" />
-                <feComponentTransfer>
-                    <feFuncR type="linear" slope="2"/>
-                    <feFuncG type="linear" slope="2"/>
-                    <feFuncB type="linear" slope="2"/>
-                </feComponentTransfer>
-        </filter>
-        <filter *ngIf="color == 'green'" id="activatedGreen">
-                <feColorMatrix type="matrix"
-                values="0.42 0 0 0 0
-                        0 0.77 0 0 0
-                        0 0 0.06 0 0
-                        0 0 0 1 0" />
-                <feComponentTransfer>
-                    <feFuncR type="linear" slope="2"/>
-                    <feFuncG type="linear" slope="2"/>
-                    <feFuncB type="linear" slope="2"/>
-                </feComponentTransfer>
-        </filter>
-        <filter id="skillDisabled">
-            <feColorMatrix type="matrix"
-            values="0.5 0 0 0 0
-                    0 0.5 0 0 0
-                    0 0 0.5 0 0
-                    0 0 0 1 0" />
-        </filter>
         
        
         <g transform="scale(0.85) translate(27 51)">
-            <g [class.activated]="skill.getAllocated() > skill.MIN_POINTS"
+            <g [class.activated]="skill.getAllocatedPoints() > skill.MIN_POINTS"
                 [class.disabled]="allocatedPoints < skill.getPreReq()" 
                 class="skill doNotSelect" *ngFor="let skill of skills" 
                 (click)="addPoint(skill)" (contextmenu)="removePoint(skill)" oncontextmenu="return false;">
 
-                <g *ngIf="skill.getPosition()[1] == -1" attr.transform="scale(0.85) translate(0, {{90 + skill.getPosition()[0] * 116}})">
+                <g *ngIf="skill.getPosition()[1] == -1" attr.transform="scale(0.85) translate(1, {{90 + skill.getPosition()[0] * 115}})">
                     <polygon
                         class="rightSkillBorder"
-                        points="-67,12 -55,0 3,0 2,91 -55,91 -67,79"
+                        points="-67,12 -55,0 3,0 2,81 -55,81 -67,69"
                     />
                     <polygon
                         class="rightSkillMidBorder"
-                        points="-67,12 -55,0 3,0 2,91 -55,91 -67,79"
+                        points="-67,12 -55,0 3,0 2,81 -55,81 -67,69"
                     />
                     <polygon
                         class="rightSkillMain"
-                        points="-67,12 -55,0 3,0 2,91 -55,91 -67,79"
+                        points="-67,12 -55,0 3,0 2,81 -55,81 -67,69"
                     />
                 </g>
-
-                <g *ngIf="skill.getPosition()[1] == 3" attr.transform="scale(0.85) translate(50, {{90 + skill.getPosition()[0] * 116}})">
+                
+                <g *ngIf="skill.getPosition()[1] == 3" attr.transform="scale(0.85) translate(49, {{90 + skill.getPosition()[0] * 115}})">
                     <polygon
                         class="rightSkillBorder"
-                        points="370,12 358,0 300,0 300,91 358,91 370,79"
+                        points="370,12 358,0 300,0 300,81 358,81 370,69"
                     />
                     <polygon
                         class="rightSkillMidBorder"
-                        points="370,12 358,0 300,0 300,91 358,91 370,79"
+                        points="370,12 358,0 300,0 300,81 358,81 370,69"
                     />
                     <polygon
                         class="rightSkillMain"
-                        points="370,12 358,0 300,0 300,91 358,91 370,79"
+                        points="370,12 358,0 300,0 300,81 358,81 370,69"
                     />
                 </g>
 
                 
-                <image  attr.height="{{skill.getOtherSkillType() == 2 
-                                    || skill.getOtherSkillType() == 0 ? 9.5 : 10.5}}%" 
+                <image height="10%" width="22.5%" 
                         attr.x="{{skill.getPosition()[1] < 0 ? 
                             -18 :
                             (skill.getPosition()[1] < 3 ? 
-                            11.25 + (skill.getPosition()[1] * 27) :
+                            12 + (skill.getPosition()[1] * 27) :
                             94)}}%" 
-                        attr.y="{{skill.getOtherSkillType() == 2 ? 
-                            12.5 + (skill.getPosition()[0] * 14.1) :
-                            11.5 + (skill.getPosition()[0] * 14.1)}}%" 
+                        attr.y="{{
+                            11 + (skill.getPosition()[0] * 14)}}%" 
                         attr.href="{{skill.getSkillBoxPath()}}" />
 
-                <image attr.height="{{skill.getOtherSkillType() == 0 ? 6.5 : 7}}%" 
+                <image width="15.5%" 
                        attr.x="{{skill.getPosition()[1] < 0 ? 
-                                -14:
+                                -14.5:
                                 (skill.getPosition()[1] < 3 ? 
-                                15.25 + (skill.getPosition()[1] * 27) :
-                                97.5)}}%"
-                        attr.y="{{skill.getOtherSkillType() == 0 ? 
-                            13 + (skill.getPosition()[0] * 14.1) :
-                            13 + (skill.getPosition()[0] * 14.2)}}%"
+                                16 + (skill.getPosition()[1] * 27) :
+                                98)}}%"
+                        attr.y="{{12.65 + (skill.getPosition()[0] * 14)}}%"
                        attr.href="{{skill.path}}" />
 
 
                        
-                <g *ngIf="skill.getOtherSkillType() == 0">
+                <g *ngIf="(skill.getPosition()[1] >= 0 && skill.getPosition()[1] < 3  && skill.getPosition()[0] >= 0 )">
                     <image height="3.5%" 
                            attr.x="{{25 + (skill.getPosition()[1] * 27)}}%" 
                            attr.y="{{19 + (skill.getPosition()[0] * 14.1)}}%" 
@@ -172,14 +109,7 @@
                           attr.y="{{21.6 + (skill.getPosition()[0] * 14.1)}}%"
                           text-anchor="middle">{{skill.allocatedPoints}}/{{skill.maxPoints}}</text>
                 </g>
-    
-
-                <g>
-
-                </g>
-                
             </g>
         </g>
-        
     </svg>
 </div>
