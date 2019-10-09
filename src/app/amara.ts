@@ -5,7 +5,7 @@ import { ActionSkill } from './actionskill';
 import { ActionMod } from './actionmod';
 import { Character } from './character'
 
-export class Amara implements Character {
+export class Amara extends Character {
 
   //Path for red tree header image
   public readonly redTreeHeader: string = "assets/images/amara/RedTreeHeader.png";
@@ -123,54 +123,10 @@ export class Amara implements Character {
     new NormalSkill('assets/images/amara/skills/Blitz.png', [5, 1], 1, 25, "green")
   ]
 
-  public readonly MAX_NORMAL_SKILL_POINTS = 48;         //Max points that can be allocated for normal skills
-  public readonly MAX_ACTION_SKILL_POINTS = 1;          //Max points that can be allocated for action skills
-  public readonly MAX_ACTION_MOD_POINTS = 1;            //Max points that can be allocated for action mods
-  public readonly MAX_OTHER_SKILL_POINTS = 1;           //Max points that can be allocated for other skills
-  public readonly MIN_POINTS = 0;                       //Min points that can be allocated
-
-  private allocatedNormalSkillPoints = 0;              //number of points allocated in normal skills
-  private allocatedActionSkillPoints = 0;              //number of points allocated in action skills
-  private allocatedActionModPoints = 0;                //number of points allocated in action mods
-  private allocatedOtherSkillPoints = 0;               //number of points allocated in other skills
-
-  private actionSkills: Array<ActionSkill> = [];       //Action skills that have been allocated
-  private actionMods: Array<Array<Skill>> = [];      //Action mods that have been allocated, and their respective action skill mapped to it (if any)
-  private otherSkills: Array<OtherSkill> = [];         //Other skills that have been allocated
-
-   /**
-   * Checks if the character can have a point added or removed from it
-   * 
-   * @param modification
-   *              number of points to add or remove from this character
-   *              this should be 1 or -1, other numbers will not work
-   * 
-   * @returns 
-   *        Boolean whether the allocated points can be modified or not
-   */
-  validateModification = (modification: number, skill: Skill) => {
-
-    //Invalid number return false
-    if (modification < -1 || modification > 1 || modification == 0) return false;
-
-    //At max points and modification is addition return false
-    if (((this.allocatedNormalSkillPoints == this.MAX_NORMAL_SKILL_POINTS && skill instanceof NormalSkill)
-      || (this.allocatedActionSkillPoints == this.MAX_ACTION_SKILL_POINTS && skill instanceof ActionSkill)
-      || (this.allocatedActionModPoints == this.MAX_ACTION_MOD_POINTS && skill instanceof ActionMod)
-      || (this.allocatedOtherSkillPoints == this.MAX_OTHER_SKILL_POINTS && skill instanceof OtherSkill))
-       && modification > 0) return false;
-
-    //At min points and modification is subtraction return false
-    if (((this.allocatedNormalSkillPoints == this.MIN_POINTS && skill instanceof NormalSkill) 
-      || (this.allocatedActionSkillPoints == this.MIN_POINTS && skill instanceof ActionSkill) 
-      || (this.allocatedActionModPoints == this.MIN_POINTS && skill instanceof ActionMod)
-      || (this.allocatedOtherSkillPoints == this.MIN_POINTS && skill instanceof OtherSkill))
-      && modification < 0) return false;
-
-    //modification successful
-    return true;
-  }
-
+  constructor(maxActionSkillPoints: number, maxActionModPoints: number, maxOtherSkillPoints: number) {
+    super(maxActionSkillPoints, maxActionModPoints, maxOtherSkillPoints);
+}
+  
  
   /**
    * Adds point into a specific skill type allocation
@@ -181,28 +137,28 @@ export class Amara implements Character {
   addPoint(skill: Skill): boolean {
 
     //Increment allocation of normal skills if skill is normal
-    if (skill instanceof NormalSkill) this.allocatedNormalSkillPoints++;
+    if (skill instanceof NormalSkill) this.setAllocatedNormalSkillPoints(this.getAllocatedNormalSkillPoints() + 1);
 
 
     //Increment allocation of action skills if skill is action skill
     //Add action skill to action skill array
     if (skill instanceof ActionSkill) {
-      this.allocatedActionSkillPoints++;
-      this.actionSkills.push(skill);
+      this.setAllocatedActionSkillPoints(this.getAllocatedActionSkillPoints() + 1);
+      this.getActionSkills().push(skill);
     } 
 
     //Increment allocation of action mod if skill is action mod
     //Add action mod to action mod array
     if (skill instanceof ActionMod) {
-      this.actionMods.push([skill.getRequiredActionSkill(), skill]);
-      this.allocatedActionModPoints++;
+      this.setAllocatedActionModPoints(this.getAllocatedActionModPoints() + 1);
+      this.getActionMods().push([skill.getRequiredActionSkill(), skill]);
     }
 
     //Increment allocation of other skill if skill is other skill
     //Add other skill to other skill array
     if (skill instanceof OtherSkill) {
-      this.otherSkills.push(skill);
-      this.allocatedOtherSkillPoints++
+      this.setAllocatedOtherSkillPoints(this.getAllocatedOtherSkillPoints() + 1);
+      this.getOtherSkills().push(skill);
     };
     
     return true;
@@ -217,30 +173,30 @@ export class Amara implements Character {
   removePoint(skill: Skill) {
 
     //Reduce normal skill allocation if the skill type is normal
-    if (skill instanceof NormalSkill) this.allocatedNormalSkillPoints--;
+    if (skill instanceof NormalSkill) this.setAllocatedNormalSkillPoints(this.getAllocatedNormalSkillPoints() - 1);
 
     //Reduce action skill allocation if the skill type is action 
     //remove action skill from action skill array
     if (skill instanceof ActionSkill)  {
-      var index = this.actionSkills.indexOf(skill);
-      this.allocatedActionSkillPoints--;
-      this.actionSkills.splice(index, 1);
+      this.setAllocatedActionSkillPoints(this.getAllocatedActionSkillPoints() - 1);
+      var index = this.getActionSkills().indexOf(skill);
+      this.getActionSkills().splice(index, 1);
     } 
 
     //Reduce action mod allocation if the skill type is action mod
     //Remove action mod from action mod array
     if (skill instanceof ActionMod) {
-      var index = this.actionMods.indexOf([skill.getRequiredActionSkill(), skill]);
-      this.actionMods.splice(index, 1)
-      this.allocatedActionModPoints--;
+      this.setAllocatedActionModPoints(this.getAllocatedActionModPoints() - 1);
+      var index = this.getActionMods().indexOf([skill.getRequiredActionSkill(), skill]);
+      this.getActionMods().splice(index, 1)
     }
 
     //Reduce other skill allocation if the skill type is other
     //Remove other skill from other skill array 
     if (skill instanceof OtherSkill) {
-       var index = this.otherSkills.indexOf(skill);
-       this.otherSkills.splice(index, 1);
-       this.allocatedOtherSkillPoints--;
+      this.setAllocatedOtherSkillPoints(this.getAllocatedOtherSkillPoints() - 1);
+       var index = this.getOtherSkills().indexOf(skill);
+       this.getOtherSkills().splice(index, 1);
     } 
 
     return true;
@@ -274,46 +230,6 @@ export class Amara implements Character {
    */
   getGreenSkills(): Skill[] {
       return this.greenSkills;
-  }
-
-  /**
-   * Retrieves number of allocated points of normal skills 
-   * 
-   * @returns
-   *          number
-   */
-  getAllocatedPoints(): number {
-      return this.allocatedNormalSkillPoints;
-  }
-
-  /**
-   * Retruns the allocated action skills
-   * 
-   * @returns
-   *          Array<ActionSkill>
-   */
-  getActionSkills(): Array<ActionSkill> {
-    return this.actionSkills;
-  }
-
-  /**
-   * Returns the allocated action mods mapped to their respective action skill (if any)
-   * 
-   * @returns
-   *         Array<Array<Skill>>
-   */
-  getActionMods(): Array<Array<Skill>> {
-    return this.actionMods;
-  }
-
-  /**
-   * Retruns the allocated other skills
-   * 
-   * @returns
-   *          Array<OtherSkill>
-   */
-  getOtherSkills(): Array<OtherSkill> {
-    return this.otherSkills;
   }
 
 }
