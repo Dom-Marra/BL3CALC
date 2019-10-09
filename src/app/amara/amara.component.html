@@ -80,13 +80,13 @@
             </ul>
         </div>
     
-        <app-stats [allocatedPoints]="amara.getAllocatedPoints()"
+        <app-stats [allocatedPoints]="amara.getAllocatedNormalSkillPoints()"
                    [actionSkills]="amara.getActionSkills()"
                    [actionMods]="amara.getActionMods()"
                    [otherSkills]="amara.getOtherSkills()"
-                   [maxActionSkills]="amara.MAX_ACTION_SKILL_POINTS"
-                   [maxActionMods]="amara.MAX_ACTION_MOD_POINTS"
-                   [maxOtherSkills]="amara.MAX_OTHER_SKILL_POINTS"></app-stats>
+                   [maxActionSkills]="amara.getMaxActionSkillPoints()"
+                   [maxActionMods]="amara.getMaxActionModPoints()"
+                   [maxOtherSkills]="amara.getMaxOtherSkillPoints()"></app-stats>
     </div>
         
     
