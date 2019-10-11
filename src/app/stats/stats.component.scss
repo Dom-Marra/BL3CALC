@@ -65,7 +65,7 @@
                 }
             }
 
-            .skill {
+            .equippedSkill {
                 margin-top: 20px;
                 margin-bottom: 20px;
                 max-height: calc(100% - 25px);
@@ -76,11 +76,11 @@
                     align-items: center;
                     height: 8vh;
                     img {
-                        height: 65%;
+                        position: absolute;
+                        display: inline-block;
+                        height: 5vh;
                     }
                 }
-
-                
 
                 .red {
                     filter: url(#activatedRed);
@@ -97,6 +97,36 @@
         }
     }
 }
+
+@supports (-ms-ime-align: auto) { 
+
+    .stats {
+        .info {
+            .infoSection {
+        
+    
+                .equippedSkill {
+    
+                    .red {
+                        filter: sepia(100%) saturate(1000%) hue-rotate(350deg) brightness(0.8);
+                        -webkit-filter: sepia(100%) saturate(1000%) hue-rotate(350deg) brightness(0.8);
+                    }
+    
+                    
+                    .green {
+                        filter: sepia(100%) saturate(1000%) hue-rotate(45deg) brightness(0.8);
+                        -webkit-filter: sepia(100%)  saturate(1000%) hue-rotate(45deg) brightness(0.8);
+                    }
+    
+                    .blue {
+                        filter: sepia(100%) saturate(1000%) hue-rotate(120deg) brightness(0.7);
+                        -webkit-filter: sepia(100%)  saturate(1000%) hue-rotate(120deg) brightness(0.7);
+                    }
+                }
+            }
+        }
+    }
+ }
 
 @media not screen and (min-width: 130vh) {
 
