@@ -36,12 +36,15 @@ export class BuildComponent implements OnInit {
 
     //current becomes prev
     current.className = ' carouselItem left';
+    current.setAttribute('style', 'z-index: 1');
 
     //next becomes current
     next.className = ' carouselItem active';
+    next.setAttribute('style', 'z-index: 2');
 
     //prev becomes next
     prev.className = ' carouselItem right';
+    prev.setAttribute('style', 'z-index: 0');
   }
 
    /**
@@ -55,12 +58,15 @@ export class BuildComponent implements OnInit {
 
     //current becomes next
     current.className = ' carouselItem right';
+    current.setAttribute('style', 'z-index: 1');
 
     //prev becomes current
     prev.className = ' carouselItem active';
+    prev.setAttribute('style', 'z-index: 2');
 
     //next becomes prev
     next.className = ' carouselItem left';
+    next.setAttribute('style', 'z-index: 0');
 
   }
 }
