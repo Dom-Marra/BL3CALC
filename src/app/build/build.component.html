@@ -1,7 +1,7 @@
 <div class="mainContainer">
 
     <div class="flex">
-        <svg style="height: 0; width: 0; position: absolute">
+        <svg xmlns="http://www.w3.org/2000/svg" style="height: 0; width: 0; position: absolute">
                     <filter id="highlight">
                             <feGaussianBlur stdDeviation="3" result="blurred" />
                             <feFlood flood-color="yellow" result="glowColor" />
@@ -11,6 +11,7 @@
                                 <feMergeNode in="SourceGraphic"/>
                             </feMerge>
                             <feColorMatrix type="matrix"
+                            color-interpolation-filters="sRGB"
                             result="highlight"
                             values="1 0 0 0 0
                                     0 1 0 0 0
@@ -19,6 +20,7 @@
                     </filter>
                     <filter id="activatedBlue">
                             <feColorMatrix type="matrix"
+                            color-interpolation-filters="sRGB"
                             values="0 0 0 0 0
                                     0 1 0 0 0
                                     0 0 1 0 0
@@ -31,6 +33,7 @@
                     </filter>
                     <filter id="activatedRed">
                             <feColorMatrix type="matrix"
+                            color-interpolation-filters="sRGB"
                             values="0.99 0 0 0 0
                                     0 0.58 0 0 0
                                     0 0 0.17 0 0
@@ -43,31 +46,29 @@
                     </filter>
                     <filter id="activatedGreen">
                             <feColorMatrix type="matrix"
+                            color-interpolation-filters="sRGB"
                             values="0.42 0 0 0 0
                                     0 0.77 0 0 0
                                     0 0 0.06 0 0
                                     0 0 0 1 0" />
                             <feComponentTransfer>
-                                <feFuncR type="linear" slope="1"/>
-                                <feFuncG type="linear" slope="1"/>
-                                <feFuncB type="linear" slope="1"/>
+                                <feFuncR type="linear" slope="1.5"/>
+                                <feFuncG type="linear" slope="1.5"/>
+                                <feFuncB type="linear" slope="1.5"/>
                             </feComponentTransfer>
                     </filter>
                     <filter id="skillDisabled">
-                        <feColorMatrix type="matrix"
-                        values="0.5 0 0 0 0
-                                0 0.5 0 0 0
-                                0 0 0.5 0 0
-                                0 0 0 1 0" />
+                        <feComponentTransfer>
+                            <feFuncR type="linear" slope="0.5"/>
+                            <feFuncG type="linear" slope="0.5"/>
+                            <feFuncB type="linear" slope="0.5"/>
+                        </feComponentTransfer>
                     </filter>
         </svg>
         <div class="carousel">
-            
-            
-            
             <ul class="carouselTrack">
-                <button class="prevItem" (click)='previous()'></button>
-                <button class="nextItem" (click)='next()'></button>
+                <button class="prevItem" aria-label="Previous Skill Tree" (click)='previous()'></button>
+                <button class="nextItem" aria-label="Next Skill Tree"  (click)='next()'></button>
                 <li class="carouselItem left">
                     <app-skilltree [treeName]='character.BLUE_TREE_NAME' color='blue' index='0' [header]="character.BLUE_TREE_HEADER" [skills]="character.getBlueSkills()" [character]="character"></app-skilltree>
                 </li>

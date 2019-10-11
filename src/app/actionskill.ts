@@ -44,6 +44,6 @@ export class ActionSkill extends Skill {
      *          string
      */
     getSkillBoxPath(): string {
-        return "assets/images/skilltree/actionSkillBox.png";
+        return "assets/images/skilltree/actionSkillBox.webp";
     }
 }

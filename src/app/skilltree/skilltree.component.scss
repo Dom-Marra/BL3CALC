@@ -175,36 +175,43 @@
         }
 
     }
-
-    .disabled {
-
-        image, text {
-            filter: url(#skillDisabled);
+    
+    .skill.activated:hover {
+        image, .points {
+            filter: none;
         }
-        
     }
     
-    .skill.activated:hover,
-    .skill.disabled:hover {
-        filter: none;
-    }
-
     .skill:hover,
     .skill.activated:hover {
-
+    
         cursor: pointer;
-
+    
         image {
             filter: url(#highlight);
         }
-
+    
         .points {
             fill: yellow;
         }
         
     }
-
 }
+
+.disabled {
+    filter: url(#skillDisabled);
+}
+
+
+
+@-moz-document url-prefix() {
+    .tree {
+        .disabled {
+            filter: brightness(0.7);
+        }
+    }
+ }
+
 
 @media not screen and (min-width: 130vh) { 
     .skillTreeContainer {

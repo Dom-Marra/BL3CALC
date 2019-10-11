@@ -53,7 +53,7 @@ export class ActionMod extends Skill {
      *          string
      */
     getSkillBoxPath(): string {
-        return "assets/images/skilltree/actionSkillModBox.png";
+        return "assets/images/skilltree/actionSkillModBox.webp";
     }
 
     /**

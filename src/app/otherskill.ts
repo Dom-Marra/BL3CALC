@@ -44,7 +44,7 @@ export class OtherSkill extends Skill {
      *          string
      */
     getSkillBoxPath(): string {
-        return "assets/images/skilltree/otherSkillBox.png";
+        return "assets/images/skilltree/otherSkillBox.webp";
     }
 
 }

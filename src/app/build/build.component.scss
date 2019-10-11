@@ -32,12 +32,12 @@
 }
 
 .nextItem {
-    background-image: url('src/assets/images/skilltree/next.png');
+    background-image: url('src/assets/images/skilltree/next.webp');
     left: 20vh;
 }
 
 .prevItem {
-    background-image: url('src/assets/images/skilltree/prev.png');
+    background-image: url('src/assets/images/skilltree/prev.webp');
     right: 20vh;
 }
 
@@ -55,26 +55,24 @@
 /* Contains a single tree for the carousel */
 .carouselItem {
     position: absolute;
-    z-index: 1;
     list-style: none;
     margin: none;
-    transition: .5s;
     opacity: 0.8;
 
     &.active {
         z-index: 2;
         opacity: 1;
-
+        transition: transform 0.3s linear;
     }
 
     &.left {
-        margin-left: -10vh;
-        transform: scale(0.8);
+        transform: translateX(-12vh) scale(0.8);
+        transition: transform 0.35s linear;
     }
 
     &.right {
-        margin-left: 10vh;
-        transform: scale(0.8);
+        transform: translateX(12vh) scale(0.8);
+        transition: transform 0.35s linear;
     }
 }
 
