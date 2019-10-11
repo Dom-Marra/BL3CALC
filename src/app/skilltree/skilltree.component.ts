@@ -1,9 +1,6 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { Skill } from '../skill';
 import { NormalSkill } from '../normalskill';
-import { OtherSkill } from '../otherskill';
-import { ActionSkill } from '../actionskill';
-import { ActionMod } from '../actionmod';
 import { Character } from '../character'
 
 @Component({
@@ -16,13 +13,15 @@ export class SkilltreeComponent implements OnInit {
   private readonly MAX_POINTS: number = 25;           //Maximum number of skill points for animation
   private readonly MIN_POINTS: number = 0;            //Min number of skill points for animaiton
   private readonly POINTS_PER_PREREQ: number = 5;     //The amount of points needed to get to the next pre-req
-  private readonly MAX_ANIMATION_COUNT: number = 15;  //Max times an animation can run
-  private readonly MAIN_GRAD_OFFSET_FACTOR = 0.22     //The amount the main gradient will increase/decrease
-  private readonly SECONDARY_GRAD_OFFSET_FACTOR = 2;  //The amount that the secondar gradient offsets from main
+  private readonly MAX_ANIMATION_COUNT: number = 5;  //Max times an animation can run
+  private readonly MAIN_GRAD_OFFSET_FACTOR = 0.0066;     //The amount the main gradient will increase/decrease
+  private readonly SECONDARY_GRAD_OFFSET_FACTOR = 0.02;  //The amount that the secondar gradient offsets from main
 
   private allocatedPoints: number = 0;        //Allocated points on the tree
   private addCount = 0;                       //Counter for addition animation
   private removeCount = 0;                    //Counter for removal animation
+  private mainOff = 0.155;                    //Main gradient offset
+  private secondOff = 0.175;                  //secondary gradient offset
 
   @Input()
   treeName: string;                           //Name of the tree
@@ -119,6 +118,8 @@ export class SkilltreeComponent implements OnInit {
     //Decrease allocation on skill point and character
     skill.removePoint();
     this.character.removePoint(skill);
+
+    
     
     //Trigger animation for removal of point if skill type is normal
     if (skill instanceof NormalSkill) {
@@ -200,25 +201,12 @@ export class SkilltreeComponent implements OnInit {
 
 
   /**
-   * Gets the two gradients that show the progression of the
-   * skill tree and increments them for a portion of one point
+   * Increments the two gradients that show skill allocation progress
    */
   incrementGradient() {
-    
-    var grad = document.getElementById(this.color + 'Fill');      //Linear gradient component
-    var gradChildren = grad.children;                             //children of gradient component
-    var mainGrad = gradChildren[0];                               //Main gradient
-    var secondaryGrad = gradChildren[1];                          //Bottom effect of main gradient
 
-    //Increase offset of main gradient by 0.22% each time this function is called
-    var mainOffset = parseFloat(mainGrad.getAttribute('offset')) + this.MAIN_GRAD_OFFSET_FACTOR;
-
-    //secondary offset is always 2% higher than the main
-    var secondaryOffset = mainOffset + this.SECONDARY_GRAD_OFFSET_FACTOR;
-
-    //Adjust the gradients with their new offsets
-    mainGrad.setAttribute('offset', mainOffset + '%');
-    secondaryGrad.setAttribute('offset', secondaryOffset + '%');
+    this.mainOff += this.MAIN_GRAD_OFFSET_FACTOR;
+    this.secondOff = this.mainOff + this.SECONDARY_GRAD_OFFSET_FACTOR;
 
     //Increase animation counter each time the function is called
     this.addCount++;
@@ -230,29 +218,17 @@ export class SkilltreeComponent implements OnInit {
     } else {
       this.addCount = 0;
     }
+
   }
 
 
-  /**
-   * Gets the two gradients that show the progression of the
-   * skill tree and decrements them for a portion of one point.
+ /**
+   * Decrements the two gradients that show skill allocation progress
    */
   decrementGradient() {
 
-    var grad = document.getElementById(this.color + 'Fill');       //Linear gradient component
-    var gradChildren = grad.children;                             //children of gradient component
-    var mainGrad = gradChildren[0];                               //Main gradient
-    var secondaryGrad = gradChildren[1];                          //Bottom effect of main gradient
-
-    //Increase offset of main gradient by 0.22% each time this function is called
-    var mainOffset = parseFloat(mainGrad.getAttribute('offset')) - this.MAIN_GRAD_OFFSET_FACTOR;
-
-    //secondary offset is always 2% higher than the main
-    var secondaryOffset = mainOffset + this.SECONDARY_GRAD_OFFSET_FACTOR;
-
-    //Adjust the gradients with their new offsets
-    mainGrad.setAttribute('offset', mainOffset + '%');
-    secondaryGrad.setAttribute('offset', secondaryOffset + '%');
+    this.mainOff -= this.MAIN_GRAD_OFFSET_FACTOR;
+    this.secondOff = this.mainOff + this.SECONDARY_GRAD_OFFSET_FACTOR;
 
     //Increase animation counter each time the function is called
     this.removeCount++;
@@ -265,5 +241,5 @@ export class SkilltreeComponent implements OnInit {
       this.removeCount = 0;
     }
   }
-
+  
 }
