@@ -3,6 +3,11 @@
     src: url('src/assets/fonts/Compacta Bold.otf') format("opentype");
 }
 
+@font-face {
+    font-family: 'Teko';
+    src: url('src/assets/fonts/Teko-Medium.ttf') format("truetype");
+}
+
 $primary-color: rgb(34, 34, 34);
 $primary-accent-color: rgb(22, 22, 22);
 $primary-color-accent-light: rgb(46, 46, 46);
@@ -31,10 +36,7 @@ body, html {
 }
 
 body {
-    //background-image: url('https://steamuserimages-a.akamaihd.net/ugc/876370675542495788/929AFB77E3C6162EA9156010450926DB7AA92928/');
-    background-image: url('src/assets/images/background.webp');
-    background-size: cover;
-    background-position: top;
+    background: radial-gradient(rgb(15, 61, 107), rgb(0, 0, 0) );
 }
 
 .doNotSelect {
@@ -44,6 +46,38 @@ body {
        -moz-user-select: none; 
         -ms-user-select: none; 
             user-select: none; 
+}
+
+.flex {
+    display: flex;
+}
+
+.wrapped {
+    flex-wrap: wrap;
+}
+
+.inline-flex {
+    display: inline-flex;
+}
+
+.vertical-align-center {
+    align-items: center;
+}
+
+.horizontal-align-between {
+    justify-content: space-between;
+}
+
+.horizontal-align-around {
+    justify-content: space-around;
+}
+
+.horizontal-align- {
+    justify-content: flex-start;
+}
+
+.horizontal-align-center {
+    justify-content: center;
 }
 
 /* Container that holds the elements for each page */

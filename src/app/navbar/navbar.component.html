@@ -1,4 +1,4 @@
-<div (window:resize)="onResize()" id="navbar">
+<div (window:resize)="onResize()" id="navbar" class="flex vertical-align-center">
     <div id="home" routerLink="/home">BL3CALC</div>
     <ul [@openClose]="navState">
         <li routerLink="/build" [queryParams]="{character: 'amara'}">Amara</li>
