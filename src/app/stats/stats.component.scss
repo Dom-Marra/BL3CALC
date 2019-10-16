@@ -1,6 +1,5 @@
 @import "../../styles.scss";
 
-
 .stats {
     position: relative;
     width: 30vw;
@@ -9,7 +8,7 @@
     border: 1px solid $secondary-color;
     border-radius: 1vh;
 
-    .statsNav {
+    .stats-nav {
         position: relative;
         @include borderlands-text;
         display: flex;
@@ -27,7 +26,7 @@
             font-size: 50px;
         }
 
-        .characterLevel {
+        .character-level {
             font-size: 35px;
             line-height: 60px;
             padding-left: 40px;
@@ -35,27 +34,28 @@
     }
 
     .info {
-        width: 90%;
+        position: relative;
+        width: 100%;
         margin: auto;
         height: calc(100% - 85px);
         color: white;
-        font-family: sans-serif;
+        font-family: 'Teko';
+        font-size: 20px;
 
-        .infoSection {
+        .info-section {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             height: auto;
-            width: 100%;
+            width: 90%;
             margin: auto;
             margin-top: 25px;
             background-color: $primary-color-accent-light;
             border-radius: 0.5vh;
     
-            .infoSectionHeader {
+            .info-section-header {
                 height: 25px;
                 width: 100%;
-                font-weight: bold;
                 background-color: $primary-accent-color;
                 border-radius: 0.5vh 0.5vh 0 0;
 
@@ -65,7 +65,7 @@
                 }
             }
 
-            .equippedSkill {
+            .equipped-skill{
                 margin-top: 20px;
                 margin-bottom: 20px;
                 max-height: calc(100% - 25px);
@@ -75,37 +75,61 @@
                     justify-content: center;
                     align-items: center;
                     height: 8vh;
-                    img {
+                    .skill-image {
                         position: absolute;
                         display: inline-block;
                         height: 5vh;
                     }
+
+                    .skill-image:hover {
+                        cursor: pointer;
+                    }
+
                 }
 
                 .red {
-                    filter: url(#activatedRed);
+                    filter: url(#activated-red);
                 }
 
                 .green {
-                    filter: url(#activatedGreen);
+                    filter: url(#activated-green);
                 }
 
                 .blue {
-                    filter: url(#activatedBlue);
+                    filter: url(#activated-blue);
+                }
+            }
+
+            .stats-table {
+                margin-top: 14px;
+                margin-bottom: 14px;
+                font-size: 14px;
+                font-family: Verdana;
+                width: 95%;
+                border-spacing: 7px;
+
+                .value {
+                    width: 25%;
+                    text-align: center;
                 }
             }
         }
     }
+
+    
+    
+    
 }
+
 
 @supports (-ms-ime-align: auto) { 
 
     .stats {
         .info {
-            .infoSection {
+            .info-section {
         
     
-                .equippedSkill {
+                .equipped-skill{
     
                     .red {
                         filter: sepia(100%) saturate(1000%) hue-rotate(350deg) brightness(0.8);
@@ -142,13 +166,13 @@
 
     .stats {
         width: 90vw;
-        .statsNav {
+        .stats-nav {
 
             .heading {
                 font-size: 10vw;
             }
     
-            .characterLevel {
+            .character-level {
                 font-size: 7vw;
             }
 
