@@ -1,11 +1,12 @@
 import { Skill } from './skill';
+import { SkillEffects } from './skill';
 
 export class ActionMod extends Skill {
 
     private requiredActionSkill: Skill = null;      //Required active skill to allocate active skill mod
 
-    constructor(path: string, position: Array<number>, maxPoints: number, preReq: number, color: string, requiredActionSkill?: Skill) { 
-        super(path, position, maxPoints, preReq, color);
+    constructor(path: string, position: Array<number>, maxPoints: number, preReq: number, color: string, skillEffects?: SkillEffects, requiredActionSkill?: Skill) { 
+        super(path, position, maxPoints, preReq, color, skillEffects);
         this.requiredActionSkill = requiredActionSkill;
     }  
     

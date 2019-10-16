@@ -1,5 +1,44 @@
+export interface SkillEffects {
+    name: string;
+    description: string;
+    effects: Array<{
+        name: String,
+        type?: {
+            accuracy?: boolean,
+            actionSkillDmg?: boolean,
+            bonusDmg?: boolean,
+            bonusElementalDmg?: boolean,
+            chargeTime?: boolean,
+            criticalHitDmg?: boolean,
+            dmgIncrease?: boolean,
+            dmgReduction?: boolean,
+            elementalDmg?: boolean,
+            elementalDmgReduction?: boolean,
+            fireRate?: boolean,
+            gunDmg?: boolean,
+            handling?: boolean,
+            healthRegen?: boolean,
+            lifeSteal?: boolean,
+            maxHealth?: boolean,
+            meleeDmg?: boolean,
+            modeSwitchSpeed?: boolean,
+            movementSpeed?: boolean,
+            reloadSpeed?: boolean,
+            shieldRegenDelay?: boolean,
+            shockDmg?: boolean,
+            splashDmg?: boolean,
+            splashDmgReduction?: boolean,
+            statusEffectChance?: boolean,
+            statusEffectDmg?: boolean,
+            statusEffectDuration?: boolean,
+            weaponSwapSpeed?: boolean
+        } 
+        value?: any, 
+        values?:Array<any>}>;
+}
+
 export abstract class Skill {
-    public readonly MIN_POINTS: number = 0;            //min number of points that can be allocated in the skill
+    public readonly MIN_POINTS: number = 0;         //min number of points that can be allocated in the skill
     
     private allocatedPoints: number = 0;            //number of points allocated into the skill
     private path: string;                           //Image path
@@ -7,14 +46,17 @@ export abstract class Skill {
     private maxPoints: number;                      //max number of points that can be allocated in the skill
     private preReq: number;                         //number of points required on the tree to allocate into this
     private color: string;                          //The color group this skill belongs to 
+    private skillEffects: SkillEffects;
 
 
-    constructor(path: string, position: Array<number>, maxPoints: number, preReq: number, color: string) {
+    constructor(path: string, position: Array<number>, maxPoints: number, preReq: number, color: string, skillEffects: SkillEffects) {
         this.path = path;                   
         this.position = position;            
         this.maxPoints = maxPoints;               
         this.preReq = preReq;
         this.color = color;
+        this.skillEffects = skillEffects;
+        
     }
 
     /**
@@ -88,6 +130,16 @@ export abstract class Skill {
      */
     getColor(): string {
         return this.color;
+    }
+
+    /**
+     * Returns the description of the skill, which includes its name and effects
+     * 
+     * @returns
+     *          SkillEffects
+     */
+    getSkillEffects(): SkillEffects {
+        return this.skillEffects;
     }
 
     /**

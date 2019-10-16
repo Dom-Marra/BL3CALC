@@ -1,9 +1,10 @@
 import { Skill } from './skill';
+import { SkillEffects } from './skill';
 
 export class OtherSkill extends Skill {
 
-    constructor(path: string, position: Array<number>, maxPoints: number, preReq: number, color: string) {
-        super(path, position, maxPoints, preReq, color);
+    constructor(path: string, position: Array<number>, maxPoints: number, preReq: number, color: string, skillEffects?: SkillEffects) {
+        super(path, position, maxPoints, preReq, color, skillEffects);
     }
 
     /**
