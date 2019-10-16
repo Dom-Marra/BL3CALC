@@ -1,6 +1,5 @@
-
 //tree css
-.skillTreeContainer {
+.skill-tree-container {
     height: 90vh;
     width: 30vw;
     display: inline-block;
@@ -10,57 +9,51 @@
     
     overflow: visible;
 
-    .topBorder,
-    .leftSkillBorder,
-    .rightSkillBorder {
+    .top-border,
+    .special-skill-border {
         stroke: black;
         stroke-width: 4px;
         fill: none;
         paint-order: stroke fill;
     }
 
-    .middleBorder,
-    .leftSkillMidBorder,
-    .rightSkillMidBorder {
+    .middle-border,
+    .special-skill-mid-border {
         stroke-width: 3px;
         fill: none;
         paint-order: stroke fill;
     }
 
-    .mainBack,
-    .leftSkillMain,
-    .rightSkillMain {
+    .main-back,
+    .special-skill-main {
         stroke: black;
         stroke-width: 1px;
         paint-order: stroke fill;
     }
 
-    .rightSkillBorder,
-    .leftSkillBorder {
+    .special-skill-border {
         stroke-dasharray: 68,92,80,0;
     }
     
-    .rightSkillMain, 
-    .rightSkillMidBorder,
-    .leftSkillMain, 
-    .leftSkillMidBorder {
+    .special-skill-main, 
+    .special-skill-mid-border {
         stroke-dasharray: 72,87,80,0;
     }
     
     
-    .mainFront {
+    .main-front {
         stroke-width: 3px;
         stroke: black;
         paint-order: stroke fill;
     }
 
-    .treeName,
+    .tree-name,
     .points {
-        font-family: 'Compacta Bold';
+        font-family: 'Teko';
     }
 
 
-    .treeName {
+    .tree-name {
         font-size: 28px;
         font-style: italic;
     }
@@ -74,29 +67,27 @@
 
     &.red {
         
-        .rightSkillMidBorder,
-        .leftSkillMidBorder,
-        .middleBorder {
+        .special-skill-mid-border,
+        .middle-border {
             stroke: rgb(195, 121, 71);
         }
 
-        .rightSkillMain,
-        .leftSkillMain,
-        .mainBack {
+        .special-skill-main,
+        .main-back {
             fill: rgb(93, 41, 11);
         }
 
-        .mainFront {
-            fill: url(#redFill);
+        .main-front {
+            fill: url(#red-fill);
         }
 
-        .treeName {
+        .tree-name {
             fill: rgb(255, 238, 190);
         }
 
         .skill.activated {
             image {
-                filter: url(#activatedRed);
+                filter: url(#activated-red);
             }
             .points {
                 fill: rgb(255, 211, 120);
@@ -106,36 +97,33 @@
 
     &.blue {
 
-        .rightSkillBorder,
-        .leftSkillBorder,
-        .topBorder {
+        .special-skill-border,
+        .top-border {
             stroke: rgb(18, 49, 81);
         }
 
-        .rightSkillMidBorder,
-        .leftSkillMidBorder,
-        .middleBorder {
+        .special-skill-mid-border,
+        .middle-border {
             stroke: rgb(57, 133, 199);
         }
 
-        .rightSkillMain,
-        .leftSkillMain,
-        .mainBack {
+        .special-skill-main,
+        .main-back {
             fill: rgb(14, 34, 56);
             stroke: rgb(3, 12, 22);
         }
         
-        .mainFront {
-            fill: url(#blueFill);
+        .main-front {
+            fill: url(#blue-fill);
         }
     
-        .treeName {
+        .tree-name {
             fill: rgb(175, 219, 254);
         }
 
         .skill.activated {
             image {
-                filter: url(#activatedBlue);
+                filter: url(#activated-blue);
             }
             .points {
                 fill: cyan;
@@ -145,35 +133,39 @@
 
     &.green {
 
-        .rightSkillMidBorder,
-        .leftSkillMidBorder,
-        .middleBorder {
+        .special-skill-mid-border,
+        .middle-border {
             stroke: rgb(149, 203, 94);
         }
     
-        .rightSkillMain,
-        .leftSkillMain,
-        .mainBack {
+        .special-skill-main,
+        .main-back {
             fill: rgb(61, 93, 23);
         }
         
-        .mainFront {
-            fill: url(#greenFill);
+        .main-front {
+            fill: url(#green-fill);
         }
     
-        .treeName {
+        .tree-name {
             fill: rgb(246, 221, 155);
         }
 
         .skill.activated {
             image {
-                filter: url(#activatedGreen);
+                filter: url(#activated-green);
             }
             .points {
                 fill: rgb(205, 255, 147);
             }
         }
 
+    }
+
+    .skill-description {
+        visibility: hidden;
+        position: absolute;
+        overflow: visible;
     }
     
     .skill.activated:hover {
@@ -194,12 +186,17 @@
         .points {
             fill: yellow;
         }
+
+        .skill-description {
+            visibility: visible;
+            z-index: 4;
+        }
         
     }
 }
 
 .disabled {
-    filter: url(#skillDisabled);
+    filter: url(#skill-disabled);
 }
 
 
@@ -214,14 +211,14 @@
 
 
 @media not screen and (min-width: 130vh) { 
-    .skillTreeContainer {
+    .skill-tree-container {
         height: 95vh;
         width: 95vw;
     }
 }
 
 @media not screen and (min-width: 768px) { 
-    .skillTreeContainer {
+    .skill-tree-container {
         width: 95vw;
     }
 }
