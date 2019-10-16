@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Skill } from '../skill';
 import { NormalSkill } from '../normalskill';
 import { Character } from '../character'
@@ -10,12 +10,12 @@ import { Character } from '../character'
 })
 export class SkilltreeComponent implements OnInit {
 
-  private readonly MAX_POINTS: number = 25;           //Maximum number of skill points for animation
-  private readonly MIN_POINTS: number = 0;            //Min number of skill points for animaiton
-  private readonly POINTS_PER_PREREQ: number = 5;     //The amount of points needed to get to the next pre-req
-  private readonly MAX_ANIMATION_COUNT: number = 5;  //Max times an animation can run
-  private readonly MAIN_GRAD_OFFSET_FACTOR = 0.0066;     //The amount the main gradient will increase/decrease
-  private readonly SECONDARY_GRAD_OFFSET_FACTOR = 0.02;  //The amount that the secondar gradient offsets from main
+  private readonly MAX_POINTS: number = 25;               //Maximum number of skill points for animation
+  private readonly MIN_POINTS: number = 0;                //Min number of skill points for animaiton
+  private readonly POINTS_PER_PREREQ: number = 5;         //The amount of points needed to get to the next pre-req
+  private readonly MAX_ANIMATION_COUNT: number = 5;       //Max times an animation can run
+  private readonly MAIN_GRAD_OFFSET_FACTOR = 0.0066;      //The amount the main gradient will increase/decrease
+  private readonly SECONDARY_GRAD_OFFSET_FACTOR = 0.02;   //The amount that the secondar gradient offsets from main
 
   private allocatedPoints: number = 0;        //Allocated points on the tree
   private addCount = 0;                       //Counter for addition animation
@@ -40,6 +40,8 @@ export class SkilltreeComponent implements OnInit {
 
   @Input()
   character: Character;                       //Character that the tree belongs to
+
+  @Output() hovered = new EventEmitter<Array<any>>();
 
   constructor() { }
 
@@ -148,6 +150,7 @@ export class SkilltreeComponent implements OnInit {
    */
   validateRequiredPoints(skill: Skill): Boolean {
 
+    //Non-normal skills can be removed regardless
     if (!(skill instanceof NormalSkill)) return true;
 
     var requiredSkill = skill;              //Highest pre-req skill
@@ -156,8 +159,13 @@ export class SkilltreeComponent implements OnInit {
     var requiredForPreReq = false;          //Skill may be required as a pre-req to another
     var tmpPoints = 0;                      //Points that are saved up while traversing the tree
 
-    //Traverse through skills
-    this.skills.forEach(currentSkill => {
+    //order the skills based by their pre-req amount
+    var skillsOrdered = this.skills.sort((a, b) => {
+      return a.getPreReq() - b.getPreReq();
+    });
+
+    //Traverse through ordered skill list
+    skillsOrdered.forEach(currentSkill => {
 
       //Analyze when when a skill has an allocation more than 0
       if (currentSkill.getAllocatedPoints() > 0) {
@@ -177,14 +185,18 @@ export class SkilltreeComponent implements OnInit {
         //Skill is a pre-req if the difference between it and the current is 5
         if (currentSkill.getPreReq() - skill.getPreReq() == this.POINTS_PER_PREREQ) requiredForPreReq = true;
 
-        //Add current skill points to tmp points
-        tmpPoints += currentSkill.getAllocatedPoints();
+        //Add current skill points to tmp points when its a normal skill
+        if (currentSkill instanceof NormalSkill) {
+          tmpPoints += currentSkill.getAllocatedPoints();
+        }
       }
 
     });
 
     //Check that the skill pre-req is not the same as the requiredSkill pre-req
     if (skill.getPreReq() !=  requiredSkill.getPreReq()) {
+
+      console.log(extraPoints - 1 + " " +  requiredSkill.getPreReq());
 
       //The total allocated points minus the requiredSkills points minus 1 point
       //is less than what is needed for the requiredSkill then point removal failure
@@ -240,6 +252,10 @@ export class SkilltreeComponent implements OnInit {
     } else {
       this.removeCount = 0;
     }
+  }
+
+  showToolTip(skill: Skill, event: any) {
+    this.hovered.emit([skill, event]);
   }
   
 }
