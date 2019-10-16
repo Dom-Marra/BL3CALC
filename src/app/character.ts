@@ -23,6 +23,7 @@ export abstract class Character {
     private actionSkills: Array<ActionSkill> = [];       //Action skills that have been allocated
     private actionMods: Array<Array<Skill>> = [];        //Action mods that have been allocated, and their respective action skill mapped to it (if any)
     private otherSkills: Array<OtherSkill> = [];         //Other skills that have been allocated
+    private normalSkills: Array<NormalSkill> = [];        //Normal Skills that have been allocated
 
     constructor(maxActionSkillPoints: number, maxActionModPoints: number, maxOtherSkillPoints: number) {
         this.maxActionModPoints = maxActionModPoints;
@@ -163,6 +164,16 @@ export abstract class Character {
      */
     getOtherSkills(): Array<OtherSkill> {
         return this.otherSkills;
+    }
+
+    /**
+     * Retruns the allocated normal skills
+     * 
+     * @returns
+     *          Array<OtherSkill>
+     */
+    getNormalSkills(): Array<NormalSkill> {
+        return this.normalSkills;
     }
 
     /**
