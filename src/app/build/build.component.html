@@ -1,6 +1,5 @@
 <div class="mainContainer">
-
-    <div class="flex">
+    <div class="flex wrapped horizontal-align-around vertical-align-center" id="build-container">
         <svg xmlns="http://www.w3.org/2000/svg" style="height: 0; width: 0; position: absolute">
                     <filter id="highlight">
                             <feGaussianBlur stdDeviation="3" result="blurred" />
@@ -18,7 +17,7 @@
                                     0 0 0 0 0
                                     0 0 0 1 0" />
                     </filter>
-                    <filter id="activatedBlue">
+                    <filter id="activated-blue">
                             <feColorMatrix type="matrix"
                             color-interpolation-filters="sRGB"
                             values="0 0 0 0 0
@@ -31,7 +30,7 @@
                                 <feFuncB type="linear" slope="1"/>
                             </feComponentTransfer>
                     </filter>
-                    <filter id="activatedRed">
+                    <filter id="activated-red">
                             <feColorMatrix type="matrix"
                             color-interpolation-filters="sRGB"
                             values="0.99 0 0 0 0
@@ -44,7 +43,7 @@
                                 <feFuncB type="linear" slope="2"/>
                             </feComponentTransfer>
                     </filter>
-                    <filter id="activatedGreen">
+                    <filter id="activated-green">
                             <feColorMatrix type="matrix"
                             color-interpolation-filters="sRGB"
                             values="0.42 0 0 0 0
@@ -57,7 +56,7 @@
                                 <feFuncB type="linear" slope="1.5"/>
                             </feComponentTransfer>
                     </filter>
-                    <filter id="skillDisabled">
+                    <filter id="skill-disabled">
                         <feComponentTransfer>
                             <feFuncR type="linear" slope="0.5"/>
                             <feFuncG type="linear" slope="0.5"/>
@@ -65,18 +64,18 @@
                         </feComponentTransfer>
                     </filter>
         </svg>
-        <div class="carousel">
-            <ul class="carouselTrack">
-                <button class="prevItem" aria-label="Previous Skill Tree" (click)='previous()'></button>
-                <button class="nextItem" aria-label="Next Skill Tree"  (click)='next()'></button>
-                <li class="carouselItem left">
-                    <app-skilltree [treeName]='character.BLUE_TREE_NAME' color='blue' index='0' [header]="character.BLUE_TREE_HEADER" [skills]="character.getBlueSkills()" [character]="character"></app-skilltree>
+        <div class="carousel  flex horizontal-align-center">
+            <ul class="carousel-track flex horizontal-align-center">
+                <button class="prev-item" aria-label="Previous Skill Tree" (click)='previous()'></button>
+                <button class="next-item" aria-label="Next Skill Tree"  (click)='next()'></button>
+                <li class="carousel-item left">
+                    <app-skilltree [treeName]='character.BLUE_TREE_NAME' color='blue' index='0' [header]="character.BLUE_TREE_HEADER" [skills]="character.getBlueSkills()" [character]="character" (hovered)="onHovered($event)"></app-skilltree>
                 </li>
-                <li class="carouselItem active">
-                    <app-skilltree [treeName]='character.GREEN_TREE_NAME' color='green' index='1' [header]="character.GREEN_TREE_HEADER" [skills]="character.getGreenSkills()" [character]="character"></app-skilltree>
+                <li class="carousel-item active">
+                    <app-skilltree [treeName]='character.GREEN_TREE_NAME' color='green' index='1' [header]="character.GREEN_TREE_HEADER" [skills]="character.getGreenSkills()" [character]="character" (hovered)="onHovered($event)"></app-skilltree>
                 </li>
-                <li class="carouselItem right">
-                    <app-skilltree [treeName]='character.RED_TREE_NAME' color='red' index='2' [header]="character.RED_TREE_HEADER" [skills]="character.getRedSkills()" [character]="character"></app-skilltree>
+                <li class="carousel-item right">
+                    <app-skilltree [treeName]='character.RED_TREE_NAME' color='red' index='2' [header]="character.RED_TREE_HEADER" [skills]="character.getRedSkills()" [character]="character" (hovered)="onHovered($event)"></app-skilltree>
                 </li>
             </ul>
         </div>
@@ -85,10 +84,16 @@
                    [actionSkills]="character.getActionSkills()"
                    [actionMods]="character.getActionMods()"
                    [otherSkills]="character.getOtherSkills()"
+                   [normalSkills]="character.getNormalSkills()"
+                   [normalSkillPoints]="character.getAllocatedNormalSkillPoints()"
                    [maxActionSkills]="character.getMaxActionSkillPoints()"
                    [maxActionMods]="character.getMaxActionModPoints()"
-                   [maxOtherSkills]="character.getMaxOtherSkillPoints()"></app-stats>
-    </div>
+                   [maxOtherSkills]="character.getMaxOtherSkillPoints()"
+                   (hovered)="onHovered($event)"></app-stats>
+
+        <div style="width: 100%;">
+            <app-tooltip [emmitValues]="emmitValues" style="display: block;"></app-tooltip>
+        </div>
         
-    
+    </div>
 </div>
