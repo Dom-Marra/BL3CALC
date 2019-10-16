@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Amara } from '../amara';
 import { Character } from '../character';
+import { Skill } from '../skill';
 
 @Component({
   selector: 'app-build',
@@ -11,6 +12,7 @@ import { Character } from '../character';
 export class BuildComponent implements OnInit {
 
   private character: Character;
+  private emmitValues: Array<any>;
 
   constructor(private router: ActivatedRoute) { }
 
@@ -22,7 +24,11 @@ export class BuildComponent implements OnInit {
           this.character = new Amara(1, 1, 1);
         }
       }
-    })
+    });
+  }
+
+  onHovered(emmitValues: Array<any>) {
+    this.emmitValues = emmitValues;
   }
   
   /**
@@ -35,15 +41,15 @@ export class BuildComponent implements OnInit {
     var prev = document.getElementsByClassName('left')[0];          //next tree presented
 
     //current becomes prev
-    current.className = ' carouselItem left';
+    current.className = ' carousel-item left';
     current.setAttribute('style', 'z-index: 1');
 
     //next becomes current
-    next.className = ' carouselItem active';
+    next.className = ' carousel-item active';
     next.setAttribute('style', 'z-index: 2');
 
     //prev becomes next
-    prev.className = ' carouselItem right';
+    prev.className = ' carousel-item right';
     prev.setAttribute('style', 'z-index: 0');
   }
 
@@ -57,15 +63,15 @@ export class BuildComponent implements OnInit {
     var next = document.getElementsByClassName('right')[0];         //next tree presented
 
     //current becomes next
-    current.className = ' carouselItem right';
+    current.className = ' carousel-item right';
     current.setAttribute('style', 'z-index: 1');
 
     //prev becomes current
-    prev.className = ' carouselItem active';
+    prev.className = ' carousel-item active';
     prev.setAttribute('style', 'z-index: 2');
 
     //next becomes prev
-    next.className = ' carouselItem left';
+    next.className = ' carousel-item left';
     next.setAttribute('style', 'z-index: 0');
 
   }
