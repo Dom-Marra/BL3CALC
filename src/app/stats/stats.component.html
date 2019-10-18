@@ -7,11 +7,11 @@
         <div class="info-section">
             <div class="info-section-header"><p>Equipped Skills</p></div>
             <div *ngFor="let skill of _maxActionSkills" class="equipped-skill" [style.width]="100/_maxActionSkills.length + '%'">
-
+                
                     <div
-                         [class.blue]="actionSkills[skill] != null ? actionSkills[skill].getColor() == 'blue' : ''" 
-                         [class.green]="actionSkills[skill] != null ? actionSkills[skill].getColor() == 'green' : ''" 
-                         [class.red]="actionSkills[skill] != null ? actionSkills[skill].getColor() == 'red' : ''" 
+                         [class.blue]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'blue' : ''" 
+                         [class.green]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'green' : ''" 
+                         [class.red]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'red' : ''" 
                          [ngStyle]="{background: 'url(assets/images/skilltree/actionSkillBox.webp)', 
                                     'background-size': 'contain', 
                                     'background-repeat': 'no-repeat',
@@ -19,40 +19,39 @@
                                     'min-width' :_maxActionSkills.length < 2 ? 
                                     MATH.floor(100/(_maxActionSkills.length + _maxActionMods.length + _maxOtherSkills.length)) + '%':
                                                '100%'}">
-                        <img (mouseenter)="showToolTip(actionSkills[skill], $event)"
+                        <img (mouseenter)="showToolTip(equippedSkills[skill].actionSkill, $event)"
                              (mouseleave)="showToolTip(null, null)"
-                             *ngIf="actionSkills[skill] != null "
-                             [class.blue]="actionSkills[skill] != null ? actionSkills[skill].getColor() == 'blue' : ''" 
-                             [class.green]="actionSkills[skill] != null ? actionSkills[skill].getColor() == 'green' : ''" 
-                             [class.red]="actionSkills[skill] != null ? actionSkills[skill].getColor() == 'red' : ''"  
-                             class="skill-image" attr.src="{{actionSkills[skill] != null ? actionSkills[skill].getPath() : ''}}" alt="Skill Image"/>
+                             *ngIf="equippedSkills[skill].actionSkill != null "
+                             [class.blue]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'blue' : ''" 
+                             [class.green]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'green' : ''" 
+                             [class.red]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'red' : ''"  
+                             class="skill-image" attr.src="{{equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getPath() : ''}}" alt="Skill Image"/>
                     </div>
 
-                    <div [class.blue]="actionMods[skill] != null && actionMods[skill].length > mod + 1 ? actionMods[skill][mod + 1].getColor() == 'blue' : ''" 
-                         [class.green]="actionMods[skill] != null && actionMods[skill].length > mod + 1 ? actionMods[skill][mod + 1].getColor() == 'green' : ''" 
-                         [class.red]="actionMods[skill] != null && actionMods[skill].length > mod + 1 ? actionMods[skill][mod + 1].getColor() == 'red' : ''"  
-                         *ngFor="let mod of _maxActionMods" [ngStyle]="{background: 'url(assets/images/skilltree/actionSkillModBox.webp)', 
+                    <div [class.blue]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'blue' : ''" 
+                         [class.green]="equippedSkills[skill].actionMods[mod] != null  ? equippedSkills[skill].actionMods[mod].getColor() == 'green' : ''" 
+                         [class.red]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'red' : ''"  
+                         *ngFor="let mod of _maxActionMods" 
+                         [ngStyle]="{background: 'url(assets/images/skilltree/actionSkillModBox.webp)', 
                                     'background-size': 'contain', 
                                     'background-repeat': 'no-repeat',
                                     'background-position': 'center',
                                     'min-width' : _maxActionSkills.length < 2 ? 
                                     MATH.floor(100/(_maxActionSkills.length + _maxActionMods.length + _maxOtherSkills.length)) + '%':
                                     '100%'}">
-                        <img (mouseenter)="showToolTip(actionMods[skill][mod + 1], $event)"
+                        <img (mouseenter)="showToolTip(equippedSkills[skill].actionMods[mod], $event)"
                              (mouseleave)="showToolTip(null, null)"
-                             *ngIf="actionMods[skill] != null && actionMods[skill].length > mod + 1"
-                             [class.blue]="actionMods[skill] != null && actionMods[skill].length > mod + 1 ? actionMods[skill][mod + 1].getColor() == 'blue' : ''" 
-                             [class.green]="actionMods[skill] != null && actionMods[skill].length > mod + 1 ? actionMods[skill][mod + 1].getColor() == 'green' : ''" 
-                             [class.red]="actionMods[skill] != null && actionMods[skill].length > mod + 1 ? actionMods[skill][mod + 1].getColor() == 'red' : ''" 
+                             *ngIf="equippedSkills[skill].actionMods[mod] != null"
+                             [class.blue]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'blue' : ''" 
+                             [class.green]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'green' : ''" 
+                             [class.red]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'red' : ''" 
                              class="skill-image" 
-                             attr.src="{{actionMods[skill] != null && actionMods[skill].length > mod + 1 ?
-                                        (actionMods[skill][0] == actionSkills[skill] || actionMods[skill][0] == null ?
-                                        actionMods[skill][mod + 1].getPath() : '') : ''}}" alt="Skill Image"/>
+                             attr.src="{{equippedSkills[skill].actionMods[mod].getPath()}}" alt="Skill Image"/>
                     </div>
 
-                    <div [class.blue]="otherSkills[0] != null ? otherSkills[0].getColor() == 'blue' : ''" 
-                         [class.green]="otherSkills[0] != null ? otherSkills[0].getColor() == 'green' : ''" 
-                         [class.red]="otherSkills[0] != null ? otherSkills[0].getColor() == 'red' : ''"  
+                    <div [class.blue]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'blue' : ''" 
+                         [class.green]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'green' : ''" 
+                         [class.red]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'red' : ''"  
                          *ngIf="_maxOtherSkills.length > 0" [ngStyle]="{background: 'url(assets/images/skilltree/otherSkillBox.webp)', 
                                     'background-size': 'contain', 
                                     'background-repeat': 'no-repeat',
@@ -60,15 +59,15 @@
                                     'min-width' : _maxActionSkills.length < 2 ? 
                                     MATH.floor(100/(_maxActionSkills.length + _maxActionMods.length + _maxOtherSkills.length)) + '%':
                                     '100%'}">
-                        <img (mouseenter)="showToolTip(otherSkills[0], $event)"
+                        <img (mouseenter)="showToolTip(equippedSkills[skill].otherSkill, $event)"
                              (mouseleave)="showToolTip(null, null)"
-                             *ngIf="otherSkills[0] != null"
-                             [class.blue]="otherSkills[0] != null ? otherSkills[0].getColor() == 'blue' : ''" 
-                             [class.green]="otherSkills[0] != null ? otherSkills[0].getColor() == 'green' : ''" 
-                             [class.red]="otherSkills[0] != null ? otherSkills[0].getColor() == 'red' : ''" 
+                             *ngIf="equippedSkills[skill].otherSkill != null"
+                             [class.blue]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'blue' : ''" 
+                             [class.green]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'green' : ''" 
+                             [class.red]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'red' : ''" 
                              class="skill-image"
-                             attr.src="{{(otherSkills[0] != null) ?
-                                        otherSkills[0].getPath() : ''}}"  alt="Skill Image"/>
+                             attr.src="{{(equippedSkills[skill].otherSkill != null) ?
+                                        equippedSkills[skill].otherSkill.getPath() : ''}}"  alt="Skill Image"/>
                     </div>
                     
             </div>
@@ -84,124 +83,124 @@
                         Value
                     </th>
                 </tr>
-                <tr *ngIf="offensiveStats.accuracy > 0">
+                <tr *ngIf="offensiveStats.accuracy != 0">
                     <td>
                         Accuracy
                     </td>
                     <td class="value">    
-                        {{offensiveStats.accuracy.toFixed(2)}}%
+                        {{offensiveStats.accuracy}}%
                     </td>
                 </tr>
-                <tr *ngIf="offensiveStats.actionSkillDmg > 0">
+                <tr *ngIf="offensiveStats.actionSkillDmg != 0">
                     <td>
                         Action Skill Damage
                     </td>
                     <td class="value">    
-                        {{offensiveStats.actionSkillDmg.toFixed(2)}}%
+                        {{offensiveStats.actionSkillDmg}}%
                     </td>
                 </tr>
-                <tr *ngIf="offensiveStats.bonusDmg > 0">
+                <tr *ngIf="offensiveStats.bonusDmg != 0">
                     <td>
                         Bonus Damage
                     </td>
                     <td class="value">    
-                        {{offensiveStats.bonusDmg.toFixed(2)}}%
+                        {{offensiveStats.bonusDmg}}%
                     </td>
                 </tr>
-                <tr *ngIf="offensiveStats.bonusElementalDmg > 0">
+                <tr *ngIf="offensiveStats.bonusElementalDmg != 0">
                     <td>
                         Bonus Elemental Damage
                     </td>
                     <td class="value">    
-                        {{offensiveStats.bonusElementalDmg.toFixed(2)}}%
+                        {{offensiveStats.bonusElementalDmg}}%
                     </td>
                 </tr>
-                <tr *ngIf="offensiveStats.criticalHitDmg > 0">
+                <tr *ngIf="offensiveStats.criticalHitDmg != 0">
                     <td>
                         Critical Hit Damage
                     </td>
                     <td class="value">    
-                        {{offensiveStats.criticalHitDmg.toFixed(2)}}%
+                        {{offensiveStats.criticalHitDmg}}%
                     </td>
                 </tr>
-                <tr *ngIf="offensiveStats.elementalDmg > 0">
+                <tr *ngIf="offensiveStats.elementalDmg != 0">
                     <td>
                         Elemental Damage
                     </td>
                     <td class="value">    
-                        {{offensiveStats.elementalDmg.toFixed(2)}}%
+                        {{offensiveStats.elementalDmg}}%
                     </td>
                 </tr>
-                <tr *ngIf="offensiveStats.fireRate > 0">
+                <tr *ngIf="offensiveStats.fireRate != 0">
                     <td>
                         Fire Rate
                     </td>
                     <td class="value">    
-                        {{offensiveStats.fireRate.toFixed(2)}}%
+                        {{offensiveStats.fireRate}}%
                     </td>
                 </tr>
-                <tr *ngIf="offensiveStats.gunDmg > 0">
+                <tr *ngIf="offensiveStats.gunDmg != 0">
                     <td>
                         Gun Damage
                     </td>
                     <td class="value">    
-                        {{offensiveStats.gunDmg.toFixed(2)}}%
+                        {{offensiveStats.gunDmg}}%
                     </td>
                 </tr>
-                <tr *ngIf="offensiveStats.handling > 0">
+                <tr *ngIf="offensiveStats.handling != 0">
                     <td>
                         Handling
                     </td>
                     <td class="value">    
-                        {{offensiveStats.handling.toFixed(2)}}%
+                        {{offensiveStats.handling}}%
                     </td>
                 </tr>
-                <tr *ngIf="offensiveStats.dmgIncrease > 0">
+                <tr *ngIf="offensiveStats.dmgIncrease != 0">
                     <td>
                         Increased Damage
                     </td>
                     <td class="value">    
-                        {{offensiveStats.dmgIncrease.toFixed(2)}}%
+                        {{offensiveStats.dmgIncrease}}%
                     </td>
                 </tr>
-                <tr *ngIf="offensiveStats.meleeDmg > 0">
+                <tr *ngIf="offensiveStats.meleeDmg != 0">
                     <td>
                         Melee Damage
                     </td>
                     <td class="value">    
-                        {{offensiveStats.meleeDmg.toFixed(2)}}%
+                        {{offensiveStats.meleeDmg}}%
                     </td>
                 </tr>
-                <tr *ngIf="offensiveStats.shockDmg > 0">
+                <tr *ngIf="offensiveStats.shockDmg != 0">
                     <td>
                         Shock Damage
                     </td>
                     <td class="value">    
-                        {{offensiveStats.shockDmg.toFixed(2)}}%
+                        {{offensiveStats.shockDmg}}%
                     </td>
                 </tr>
-                <tr *ngIf="offensiveStats.splashDmg > 0">
+                <tr *ngIf="offensiveStats.splashDmg != 0">
                     <td>
                         Splash Damage
                     </td>
                     <td class="value">    
-                        {{offensiveStats.splashDmg.toFixed(2)}}%
+                        {{offensiveStats.splashDmg}}%
                     </td>
                 </tr>
-                <tr *ngIf="offensiveStats.statusEffectDmg > 0">
+                <tr *ngIf="offensiveStats.statusEffectDmg != 0">
                     <td>
                         Status Effect Damage
                     </td>
                     <td class="value">    
-                        {{offensiveStats.statusEffectDmg.toFixed(2)}}%
+                        {{offensiveStats.statusEffectDmg}}%
                     </td>
                 </tr>
-                <tr *ngIf="offensiveStats.statusEffectDuration > 0">
+                <tr *ngIf="offensiveStats.statusEffectDuration != 0">
                     <td>
                         Status Effect Duration
                     </td>
                     <td class="value">    
-                        {{offensiveStats.statusEffectDuration.toFixed(2)}}%
+                        {{offensiveStats.statusEffectDuration}}%
                     </td>
                 </tr>
             </table>
@@ -218,60 +217,60 @@
                         Value
                     </th>
                 </tr>
-                <tr *ngIf="defensiveStats.dmgReduction > 0">
+                <tr *ngIf="defensiveStats.dmgReduction != 0">
                     <td>
                         Damage Reduction
                     </td>
                     <td class="value">    
-                        {{defensiveStats.dmgReduction.toFixed(2)}}%
+                        {{defensiveStats.dmgReduction}}%
                     </td>
                 </tr>
-                <tr *ngIf="defensiveStats.elementalDmgReduction > 0">
+                <tr *ngIf="defensiveStats.elementalDmgReduction != 0">
                     <td>
                         Elemental Damage Reduction
                     </td>
                     <td class="value">    
-                        {{defensiveStats.elementalDmgReduction.toFixed(2)}}%
+                        {{defensiveStats.elementalDmgReduction}}%
                     </td>
                 </tr>
-                <tr *ngIf="defensiveStats.healthRegen > 0">
+                <tr *ngIf="defensiveStats.healthRegen != 0">
                     <td>
                         Health Regen
                     </td>
                     <td class="value">    
-                        {{defensiveStats.healthRegen.toFixed(2)}}%
+                        {{defensiveStats.healthRegen}}%
                     </td>
                 </tr>
-                <tr *ngIf="defensiveStats.lifeSteal > 0">
+                <tr *ngIf="defensiveStats.lifeSteal != 0">
                     <td>
                         Life Steal
                     </td>
                     <td class="value">    
-                        {{defensiveStats.lifeSteal.toFixed(2)}}%
+                        {{defensiveStats.lifeSteal}}%
                     </td>
                 </tr>
-                <tr *ngIf="defensiveStats.maxHealth > 0">
+                <tr *ngIf="defensiveStats.maxHealth != 0">
                     <td>
                         Max Health
                     </td>
                     <td class="value">    
-                        {{defensiveStats.maxHealth.toFixed(2)}}%
+                        {{defensiveStats.maxHealth}}%
                     </td>
                 </tr>
-                <tr *ngIf="defensiveStats.shieldRegenDelay > 0">
+                <tr *ngIf="defensiveStats.shieldRegenDelay != 0">
                     <td>
                         Shield Regen Delay
                     </td>
                     <td class="value">    
-                        {{defensiveStats.shieldRegenDelay.toFixed(2)}}%
+                        {{defensiveStats.shieldRegenDelay}}%
                     </td>
                 </tr>
-                <tr *ngIf="defensiveStats.splashDmgReduction > 0">
+                <tr *ngIf="defensiveStats.splashDmgReduction != 0">
                     <td>
                         Splash Damage Reduction
                     </td>
                     <td class="value">    
-                        {{defensiveStats.splashDmgReduction.toFixed(2)}}%
+                        {{defensiveStats.splashDmgReduction}}%
                     </td>
                 </tr>
             </table>
@@ -288,60 +287,60 @@
                         Value
                     </th>
                 </tr>
-                <tr *ngIf="utilityStats.chargeTime > 0">
+                <tr *ngIf="utilityStats.chargeTime != 0">
                     <td>
                         Charge Time
                     </td>
                     <td class="value">    
-                        {{utilityStats.chargeTime.toFixed(2)}}%
+                        {{utilityStats.chargeTime}}%
                     </td>
                 </tr>
-                <tr *ngIf="utilityStats.handling > 0">
+                <tr *ngIf="utilityStats.handling != 0">
                     <td>
                         Handling
                     </td>
                     <td class="value">    
-                        {{utilityStats.handling.toFixed(2)}}%
+                        {{utilityStats.handling}}%
                     </td>
                 </tr>
-                <tr *ngIf="utilityStats.modeSwitchSpeed > 0">
+                <tr *ngIf="utilityStats.modeSwitchSpeed != 0">
                     <td>
                         Mode Switch Speed
                     </td>
                     <td class="value">    
-                        {{utilityStats.modeSwitchSpeed.toFixed(2)}}%
+                        {{utilityStats.modeSwitchSpeed}}%
                     </td>
                 </tr>
-                <tr *ngIf="utilityStats.movementSpeed > 0">
+                <tr *ngIf="utilityStats.movementSpeed != 0">
                     <td>
                         Movement Speed
                     </td>
                     <td class="value">    
-                        {{utilityStats.movementSpeed.toFixed(2)}}%
+                        {{utilityStats.movementSpeed}}%
                     </td>
                 </tr>
-                <tr *ngIf="utilityStats.reloadSpeed > 0">
+                <tr *ngIf="utilityStats.reloadSpeed != 0">
                     <td>
                         Reload Speed
                     </td>
                     <td class="value">    
-                        {{utilityStats.reloadSpeed.toFixed(2)}}%
+                        {{utilityStats.reloadSpeed}}%
                     </td>
                 </tr>
-                <tr *ngIf="utilityStats.statusEffectChance > 0">
+                <tr *ngIf="utilityStats.statusEffectChance != 0">
                     <td>
                         Status Effect Chance
                     </td>
                     <td class="value">    
-                        {{utilityStats.statusEffectChance.toFixed(2)}}%
+                        {{utilityStats.statusEffectChance}}%
                     </td>
                 </tr>
-                <tr *ngIf="utilityStats.weaponSwapSpeed > 0">
+                <tr *ngIf="utilityStats.weaponSwapSpeed != 0">
                     <td>
                         Weapon Swap Speed
                     </td>
                     <td class="value">    
-                        {{utilityStats.weaponSwapSpeed.toFixed(2)}}%
+                        {{utilityStats.weaponSwapSpeed}}%
                     </td>
                 </tr>
             </table>
