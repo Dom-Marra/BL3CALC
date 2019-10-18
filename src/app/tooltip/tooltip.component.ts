@@ -11,7 +11,11 @@ export class TooltipComponent implements OnInit {
   private skill: Skill;
   private event: Event;
 
+
   @Input()
+  /**
+   * Sets values for the skill and the event
+   */
   set emmitValues(emmitValues: Array<any>) {
     if (emmitValues != null) {
       this.skill = emmitValues[0];
@@ -27,6 +31,9 @@ export class TooltipComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * Sets position of the tooltip on the screen
+   */
   setPosition() {
     var tooltip = document.getElementById('tooltip');
     var body = document.body;
@@ -55,6 +62,9 @@ export class TooltipComponent implements OnInit {
     } 
   }
 
+  /**
+   * Checks if the skill is normal
+   */
   isNormalSkill(skill: Skill) {
     return skill instanceof NormalSkill;
   }
