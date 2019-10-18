@@ -81,11 +81,8 @@
         </div>
     
         <app-stats [allocatedPoints]="character.getAllocatedNormalSkillPoints()"
-                   [actionSkills]="character.getActionSkills()"
-                   [actionMods]="character.getActionMods()"
-                   [otherSkills]="character.getOtherSkills()"
-                   [normalSkills]="character.getNormalSkills()"
-                   [normalSkillPoints]="character.getAllocatedNormalSkillPoints()"
+                   [equippedSkills]="character.getEquippedSkills()"
+                   [allocatedSkills]="character.getAllocatedSkills()"
                    [maxActionSkills]="character.getMaxActionSkillPoints()"
                    [maxActionMods]="character.getMaxActionModPoints()"
                    [maxOtherSkills]="character.getMaxOtherSkillPoints()"
