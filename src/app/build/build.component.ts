@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Amara } from '../amara';
 import { Character } from '../character';
-import { Skill } from '../skill';
 
 @Component({
   selector: 'app-build',
@@ -27,6 +26,11 @@ export class BuildComponent implements OnInit {
     });
   }
 
+  /**
+   * Updates values for tooltip
+   * @param emmitValues 
+   *                    Array, first value has to be the skill, then next is the event
+   */
   onHovered(emmitValues: Array<any>) {
     this.emmitValues = emmitValues;
   }
