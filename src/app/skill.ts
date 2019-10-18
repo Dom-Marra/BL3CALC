@@ -46,7 +46,7 @@ export abstract class Skill {
     private maxPoints: number;                      //max number of points that can be allocated in the skill
     private preReq: number;                         //number of points required on the tree to allocate into this
     private color: string;                          //The color group this skill belongs to 
-    private skillEffects: SkillEffects;
+    private skillEffects: SkillEffects;             //The effects of the skill
 
 
     constructor(path: string, position: Array<number>, maxPoints: number, preReq: number, color: string, skillEffects: SkillEffects) {
