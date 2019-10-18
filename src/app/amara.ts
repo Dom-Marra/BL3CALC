@@ -666,41 +666,38 @@ export class Amara extends Character {
    * @param skill 
    *              Skill to be allocated
    */
-  addPoint(skill: Skill): boolean {
+  addPoint(skill: Skill, position?: number): boolean {
+
+     //If the skill is already in the array then don't add it
+     if (!this.getAllocatedSkills().includes(skill)) {
+      this.getAllocatedSkills().push(skill);
+     }
 
     //Increment allocation of normal skills if skill is normal
-    //Add normal skill to normal skill array
-    if (skill instanceof NormalSkill) {
-      this.setAllocatedNormalSkillPoints(this.getAllocatedNormalSkillPoints() + 1);
-
-      //If the skill is already in the array then don't add it
-      if (!this.getNormalSkills().includes(skill)) {
-        this.getNormalSkills().push(skill);
-      }
-    }
+    if (skill instanceof NormalSkill) this.setAllocatedNormalSkillPoints(this.getAllocatedNormalSkillPoints() + 1);
 
 
     //Increment allocation of action skills if skill is action skill
-    //Add action skill to action skill array
+    //Add action skill to equipped skills
     if (skill instanceof ActionSkill) {
       this.setAllocatedActionSkillPoints(this.getAllocatedActionSkillPoints() + 1);
-      this.getActionSkills().push(skill);
+      this.getEquippedSkills()[0].actionSkill = skill;
     } 
 
     //Increment allocation of action mod if skill is action mod
-    //Add action mod to action mod array
+    //Add action mod to equipped skills action mod array
     if (skill instanceof ActionMod) {
       this.setAllocatedActionModPoints(this.getAllocatedActionModPoints() + 1);
-      this.getActionMods().push([skill.getRequiredActionSkill(), skill]);
+      this.getEquippedSkills()[0].actionMods[this.getAllocatedActionModPoints() - 1] = skill;
     }
 
     //Increment allocation of other skill if skill is other skill
-    //Add other skill to other skill array
+    //Add other skill to equipped skills
     if (skill instanceof OtherSkill) {
       this.setAllocatedOtherSkillPoints(this.getAllocatedOtherSkillPoints() + 1);
-      this.getOtherSkills().push(skill);
+      this.getEquippedSkills()[0].otherSkill = skill;
     };
-    
+
     return true;
   }
 
@@ -712,42 +709,37 @@ export class Amara extends Character {
    */
   removePoint(skill: Skill) {
 
+    var index = this.getAllocatedSkills().indexOf(skill);
+
+    //Only remove id the allocated points = 0
+    if (this.getAllocatedSkills()[index].getAllocatedPoints() == 0) {
+      this.getAllocatedSkills().splice(index, 1);
+    }
+
+
     //Reduce normal skill allocation if the skill type is normal
-    //remove normal skill from normal skill array
-    if (skill instanceof NormalSkill) {
-      this.setAllocatedNormalSkillPoints(this.getAllocatedNormalSkillPoints() - 1)
-      var index = this.getNormalSkills().indexOf(skill);
-
-
-      //Only remove id the allocated points = 0
-      if (this.getNormalSkills()[index].getAllocatedPoints() == 0) {
-        this.getNormalSkills().splice(index, 1);
-      }
-      
-    };
+    if (skill instanceof NormalSkill) this.setAllocatedNormalSkillPoints(this.getAllocatedNormalSkillPoints() - 1);
 
     //Reduce action skill allocation if the skill type is action 
-    //remove action skill from action skill array
+    //remove action skill from equipped skills
     if (skill instanceof ActionSkill)  {
       this.setAllocatedActionSkillPoints(this.getAllocatedActionSkillPoints() - 1);
-      var index = this.getActionSkills().indexOf(skill);
-      this.getActionSkills().splice(index, 1);
+      this.getEquippedSkills()[0].actionSkill = null;
     } 
 
     //Reduce action mod allocation if the skill type is action mod
-    //Remove action mod from action mod array
+    //Remove action mod from equipped skills action mod array
     if (skill instanceof ActionMod) {
       this.setAllocatedActionModPoints(this.getAllocatedActionModPoints() - 1);
-      var index = this.getActionMods().indexOf([skill.getRequiredActionSkill(), skill]);
-      this.getActionMods().splice(index, 1)
+      var index: number = this.getEquippedSkills()[0].actionMods.indexOf(skill);
+      this.getEquippedSkills()[0].actionMods.splice(index, 1)
     }
 
     //Reduce other skill allocation if the skill type is other
-    //Remove other skill from other skill array 
+    //Remove other skill from equipped skills
     if (skill instanceof OtherSkill) {
       this.setAllocatedOtherSkillPoints(this.getAllocatedOtherSkillPoints() - 1);
-       var index = this.getOtherSkills().indexOf(skill);
-       this.getOtherSkills().splice(index, 1);
+      this.getEquippedSkills()[0].otherSkill = null;
     } 
 
     return true;
