@@ -41,7 +41,7 @@ export class SkilltreeComponent implements OnInit {
   @Input()
   character: Character;                       //Character that the tree belongs to
 
-  @Output() hovered = new EventEmitter<Array<any>>();
+  @Output() hovered = new EventEmitter<Array<any>>();   //Event emmiter for tooltip hover
 
   constructor() { }
 
@@ -254,6 +254,15 @@ export class SkilltreeComponent implements OnInit {
     }
   }
 
+  
+  /**
+   * Emits notification to show tooltoip on skill hover
+   * 
+   * @param skill 
+   *              skill to display
+   * @param event 
+   *              event that triggered this
+   */
   showToolTip(skill: Skill, event: any) {
     this.hovered.emit([skill, event]);
   }
