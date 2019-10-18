@@ -20,10 +20,11 @@ export abstract class Character {
     private allocatedActionModPoints = 0;                //number of points allocated in action mods
     private allocatedOtherSkillPoints = 0;               //number of points allocated in other skills
 
-    private actionSkills: Array<ActionSkill> = [];       //Action skills that have been allocated
-    private actionMods: Array<Array<Skill>> = [];        //Action mods that have been allocated, and their respective action skill mapped to it (if any)
-    private otherSkills: Array<OtherSkill> = [];         //Other skills that have been allocated
-    private normalSkills: Array<NormalSkill> = [];        //Normal Skills that have been allocated
+    private equippedSkills: Array<{                      //Action skills, action mods, and other skills allocated
+        actionSkill?: ActionSkill;
+        actionMods?: Array<ActionMod>;
+        otherSkill?: OtherSkill;}> = [{actionMods: []}];
+    private allocatedSkills: Array<Skill> = [];          //All skills allocated
 
     constructor(maxActionSkillPoints: number, maxActionModPoints: number, maxOtherSkillPoints: number) {
         this.maxActionModPoints = maxActionModPoints;
@@ -137,43 +138,23 @@ export abstract class Character {
     }
 
     /**
-     * Retruns the allocated action skills
+     * Returns the equipped skills
      * 
      * @returns
-     *          Array<ActionSkill>
+     *          EquippedSkills
      */
-    getActionSkills() {
-        return this.actionSkills;
+    getEquippedSkills(): Array<any> {
+        return this.equippedSkills;
     }
 
     /**
-     * Returns the allocated action mods mapped to their respective action skill (if any)
+     * Returns the allocated skills
      * 
      * @returns
-     *         Array<Array<Skill>>
+     *          Array<Skill>
      */
-    getActionMods(): Array<Array<Skill>> {
-        return this.actionMods;
-    }
-
-    /**
-     * Retruns the allocated other skills
-     * 
-     * @returns
-     *          Array<OtherSkill>
-     */
-    getOtherSkills(): Array<OtherSkill> {
-        return this.otherSkills;
-    }
-
-    /**
-     * Retruns the allocated normal skills
-     * 
-     * @returns
-     *          Array<OtherSkill>
-     */
-    getNormalSkills(): Array<NormalSkill> {
-        return this.normalSkills;
+    getAllocatedSkills(): Array<Skill> {
+        return this.allocatedSkills;
     }
 
     /**
