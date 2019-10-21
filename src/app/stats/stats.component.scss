@@ -11,8 +11,6 @@
     .stats-nav {
         position: relative;
         @include borderlands-text;
-        display: flex;
-        justify-content: flex-start;
         height: 60px;
         background-color: $primary-accent-color;
         border-radius: 1vh 1vh 0 0;
@@ -24,6 +22,19 @@
             text-align: center;
             line-height: 60px;
             font-size: 50px;
+            pointer-events: none;
+        }
+
+        .non-active {
+            font-size: 35px;
+            left: 90%;
+            transform: translate(-90%, 0);
+            cursor: pointer;
+            pointer-events: all;
+        }
+
+        .non-active:hover {
+            color: darken($color: $text-color, $amount: 20%);
         }
 
         .character-level {
@@ -43,9 +54,6 @@
         font-size: 20px;
 
         .info-section {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
             height: auto;
             width: 90%;
             margin: auto;
@@ -116,6 +124,102 @@
         }
     }
 
+    #configs {
+        color: white;
+        width: 95%;
+        margin: auto;
+        margin-top: 25px;
+        display: none;
+
+        .config {
+            display: block;
+            margin-left: 50px;
+            margin-top: 14px;
+            padding-bottom: 14px;
+            font-size: 14px;
+            font-family: Verdana;
+            width: fit-content;
+            line-height: 28px;
+            
+            .input-header {
+                display: inline-block;
+                padding: 0;
+                margin: 0;
+                cursor: pointer;
+                &:hover {
+                    ~.checkbox {
+                        filter: brightness(0.7);
+                    }
+                }
+            }
+
+            input.check-input {
+                position: absolute;
+                height: 0;
+                width: 0;
+                visibility: hidden;
+            }
+
+            .checkbox {
+                position: absolute;
+                left: 8%;
+                height: 28px;
+                width: 28px;
+                background-color: $primary-accent-color;
+                cursor: pointer;
+                &:hover {
+                    filter: brightness(0.7);
+                    cursor: pointer;
+                }
+            }
+
+            .checkbox:after {
+                content: "";
+                position: relative;
+                top: 5px;
+                left: 9px;
+                width: 8px;
+                height: 14px;
+                border: solid $primary-color;
+                border-width: 0 3px 3px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+                display: none;
+            }
+              
+            input:checked ~ .checkbox:after {
+                display: block;
+            }
+
+            input:checked ~ .checkbox {
+                background-color: $text-color;
+                border: 1px solid black;
+            }
+
+            .num-input {
+                color: white;
+                margin-left: 14px;
+                height: 28px;
+                max-width: 80px;
+                background-color: $primary-color-accent-light;
+                border: none;
+                border-bottom: 2px solid $primary-accent-color;
+                outline: none;
+                text-align: center;
+            }
+
+            .num-input:focus {
+                border-bottom: 2px solid $text-color;
+            }
+
+            .num-input:disabled {
+                visibility: hidden;
+            }
+
+        }
+        
+    }
     
     
     
@@ -172,7 +276,7 @@
                 font-size: 10vw;
             }
     
-            .character-level {
+            .character-level, .non-active {
                 font-size: 7vw;
             }
 
