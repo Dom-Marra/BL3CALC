@@ -9,6 +9,33 @@ export abstract class Character {
     public readonly MIN_POINTS = 0;                       //Min points that can be allocated
     public readonly MAX_NORMAL_SKILL_POINTS = 48;         //Max points that can be allocated for normal skills
 
+    private conditionals = {                              //Situations that affects the character
+        usedActionSkill: {
+            active: false,
+            header: "Used Action Skill?"
+        },
+        dealtMeleeDmg: {
+            active: false,
+            header: "Dealt melee damage?"
+        },
+        activateKillSkills: {
+            active: false,
+            header: "Activate kill skills?"
+        },
+        enemeyDamagedByAS: {
+            active: false,
+            header: "Dealt elemental Damage?"
+        },
+        dealtEleDmgWithElementalWeapon: {
+            active: false,
+            header: "Enemey is damaged by action skill?"
+        },
+        dealtElementalDmg: {
+            active: false,
+            header: "Dealt elemental damage with your weapon?"
+        },
+    }
+
 
     private maxActionSkillPoints = 1;                      //Max points that can be allocated for action skills
     private maxActionModPoints = 1;                        //Max points that can be allocated for action mods
@@ -185,6 +212,17 @@ export abstract class Character {
      */
     getMaxActionModPoints(): number {
         return this.maxActionModPoints;
+    }
+
+    /**
+     * Returns the a set of objects that correspond to situations that if true
+     * effect the character
+     * 
+     * @returns
+     *          any
+     */
+    getConditionals(): any {
+        return this.conditionals;
     }
 
     /**
