@@ -1,10 +1,11 @@
 <div class="stats">
-    <div class="stats-nav">
+    <div class="stats-nav flex horizontal-align-start">
         <p class="character-level">Lvl: {{allocatedPoints + CHARACTER_OFFSET}}</p>
-        <p class="heading">Stats</p>
+        <p class="heading" id="statsToggle" (click)="toggleStats()">Stats</p>
+        <p class="heading non-active" id="configToggle" (click)="toggleConfig()">Config</p>
     </div>
-    <ngx-simplebar class="info">
-        <div class="info-section">
+    <ngx-simplebar class="info" id="stats-container">
+        <div class="info-section flex wrapped horizontal-align-center">
             <div class="info-section-header"><p>Equipped Skills</p></div>
             <div *ngFor="let skill of _maxActionSkills" class="equipped-skill" [style.width]="100/_maxActionSkills.length + '%'">
                 
@@ -72,7 +73,7 @@
                     
             </div>
         </div>
-        <div class="info-section">
+        <div class="info-section flex wrapped horizontal-align-center">
             <div class="info-section-header"><p>Offensive Stats</p></div>
             <table class="stats-table">
                 <tr>
@@ -206,7 +207,7 @@
             </table>
         </div>
 
-        <div class="info-section">
+        <div class="info-section flex wrapped horizontal-align-center">
             <div class="info-section-header"><p>Defensive Stats</p></div>
             <table class="stats-table">
                 <tr>
@@ -276,7 +277,7 @@
             </table>
         </div>
 
-        <div class="info-section">
+        <div class="info-section flex wrapped horizontal-align-center">
             <div class="info-section-header"><p>Utility Stats</p></div>
             <table class="stats-table">
                 <tr>
@@ -344,6 +345,28 @@
                     </td>
                 </tr>
             </table>
+        </div>
+    </ngx-simplebar>
+    <ngx-simplebar class="info" id="configs">
+        <div class="info-section doNotSelect">
+            <div class="info-section-header"><p>Configurations</p></div>
+            <div *ngFor="let conditional of conditionals" class="config">
+                <label><p class="input-header">{{conditional[0].header}}</p>
+                    <input class="check-input" 
+                           type="checkbox" 
+                           (change)="conditional[0].active = !conditional[0].active" 
+                           [checked]="conditional[0].active">
+                    <input  *ngIf="conditional[0].requiresNumberField" 
+                            [disabled]="!conditional[0].active"
+                            class="num-input" 
+                            type="text" 
+                            (input)="validateInput($event)" 
+                            (change)="valueChange(conditional[0], $event)" 
+                            attr.max="{{conditional[0].maxValue}}"
+                            placeholder="Amount"/>
+                    <span class="checkbox"></span>
+                </label>
+            </div>
         </div>
     </ngx-simplebar>
 </div>
