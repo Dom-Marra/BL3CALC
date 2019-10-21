@@ -31,8 +31,12 @@ export interface SkillEffects {
             statusEffectChance?: boolean,
             statusEffectDmg?: boolean,
             statusEffectDuration?: boolean,
-            weaponSwapSpeed?: boolean
-        } 
+            weaponSwapSpeed?: boolean,
+            extraType?: any
+        },
+        conditional?: { active: boolean },
+        getActiveValueMulti?: Function,
+        getNotActiveValueMulti?: Function,
         value?: any, 
         values?:Array<any>}>;
 }
