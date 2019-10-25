@@ -7,13 +7,13 @@ svg {
     outline: none;
     
     polygon:nth-child(1) {
-        fill: $primary-color; 
+        fill: rgba($primary-color, 0.3); 
         stroke: transparent;
         paint-order: stroke fill;
     }
 
     polygon:nth-child(2) {
-        fill: $primary-accent-color;
+        fill: rgba($primary-accent-color, 0.5);
         stroke: transparent;
         paint-order: stroke fill;
     }
@@ -23,6 +23,22 @@ svg {
         stroke: black;
         paint-order: stroke fill;
     }
+}
+
+.page-heading {
+    
+    @include borderlands-text;
+    fill: $text-color;
+    font-size: 60px;
+    text-align: center;
+    margin-top: 25px;
+}
+
+#character-select {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 .character {
@@ -48,5 +64,9 @@ text {
             max-height: 350px;
             max-width: 300px;
         }
+    }
+
+    .page-heading {
+        margin-top: 0px;
     }
 } 
