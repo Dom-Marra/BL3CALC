@@ -69,23 +69,17 @@ export abstract class Character {
    * @returns 
    *        Boolean whether the allocated points can be modified or not
    */
-    validateModification = (modification: number, skill: Skill) => {
+    validateModification(modification: number, skill: Skill) {
 
         //Invalid number return false
         if (modification < -1 || modification > 1 || modification == 0) return false;
 
         //At max points and modification is addition return false
-        if (((this.allocatedNormalSkillPoints == this.MAX_NORMAL_SKILL_POINTS && skill instanceof NormalSkill)
-        || (this.allocatedActionSkillPoints == this.getMaxActionSkillPoints() && skill instanceof ActionSkill)
-        || (this.allocatedActionModPoints == this.getMaxActionModPoints() && skill instanceof ActionMod)
-        || (this.allocatedOtherSkillPoints == this.getMaxOtherSkillPoints() && skill instanceof OtherSkill))
+        if (this.allocatedNormalSkillPoints == this.MAX_NORMAL_SKILL_POINTS && skill instanceof NormalSkill
         && modification > 0) return false;
 
         //At min points and modification is subtraction return false
-        if (((this.allocatedNormalSkillPoints == this.MIN_POINTS && skill instanceof NormalSkill) 
-        || (this.allocatedActionSkillPoints == this.MIN_POINTS && skill instanceof ActionSkill) 
-        || (this.allocatedActionModPoints == this.MIN_POINTS && skill instanceof ActionMod)
-        || (this.allocatedOtherSkillPoints == this.MIN_POINTS && skill instanceof OtherSkill))
+        if (this.allocatedNormalSkillPoints == this.MIN_POINTS && skill instanceof NormalSkill
         && modification < 0) return false;
 
         //modification successful
