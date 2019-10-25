@@ -193,13 +193,28 @@
         }
         
     }
+
+    .tree-reset {
+
+        rect {
+            fill: rgb(158, 45, 45);
+            stroke: darken($color: rgb(158, 45, 45), $amount: 15%);
+        }
+
+        rect:hover {
+            cursor: pointer;
+            fill: lighten($color: rgb(158, 45, 45), $amount: 15%);
+        }
+        
+        text {
+            fill: white;
+        }
+    }
 }
 
 .disabled {
     filter: url(#skill-disabled);
 }
-
-
 
 @-moz-document url-prefix() {
     .tree {
