@@ -64,6 +64,10 @@ body {
     align-items: center;
 }
 
+.vertical-align-start {
+    align-items: flex-start;
+}
+
 .horizontal-align-between {
     justify-content: space-between;
 }
@@ -80,15 +84,17 @@ body {
     justify-content: center;
 }
 
+.horizontal-align-evenly {
+    justify-content: space-evenly;
+}
+
+
 /* Container that holds the elements for each page */
 .mainContainer {
     min-height: calc(100vh - 60px);
 
     padding-top: 25px;
     padding-bottom: 25px;
-    .row {
-        min-height: calc(100vh - 60px);
-    }
 }
 
 
