@@ -153,11 +153,25 @@ export class StatsComponent implements OnInit, DoCheck {
         });
       });
 
-      //If skill was removed, remove that entry from the skilldiffer array
-      //And update the stats
+      //If a skill was removed, remove that entry from the skilldiffer array and update stats
+      //Index offset is only used when a bulk of skills is removed (Tree resets)
+      var indexOffset = 0; 
       skillsChange.forEachRemovedItem(skill => {
-        skillDiffer.splice(skill.previousIndex, 1);
-        this.updateStatBySkill(skill.item, 1);
+        const removedSkill = skillDiffer.splice(skill.previousIndex - indexOffset, 1);
+
+        //The value used to update the stats with
+        var valueToSub;
+
+        //Traverse through the records of the removed skills until allocated points is reached
+        //If the previous allocated points is greater than 0 use it, otherwise use 1
+        for (let [key, value] of removedSkill[0][0]._records) {
+          if (key == "allocatedPoints") {
+            valueToSub = value.previousValue > 0 ? value.previousValue : 1;
+            this.updateStatBySkill(skill.item, valueToSub);
+          }
+        }
+
+        indexOffset++;
 
         //Traverse the skill effects
         skill.item.getSkillEffects().effects.forEach(effect => {
@@ -197,8 +211,10 @@ export class StatsComponent implements OnInit, DoCheck {
               if (changedItem.key == "active") {
                 this.updateStatByEffect(skill, effect, changedItem.previousValue);
               } else if (changedItem.key == "currentValue") {
-                this.updateStatByEffect(skill, effect, null, changedItem.previousValue);
-              } 
+                this.updateStatByEffect(skill, effect, null, changedItem.previousValue, effect.conditional.effectiveness);
+              } else if (changedItem.key == "effectiveness") {
+                this.updateStatByEffect(skill, effect, null, effect.conditional.currentValue, changedItem.previousValue);
+              }
             })
           }
 
@@ -364,8 +380,10 @@ export class StatsComponent implements OnInit, DoCheck {
    *             old active value of the conditional
    * @param oldConditionalValue 
    *             old value of the conditional
+   * @param oldEffectiveness
+   *             old effectiveness value of the effect if it has any
    */
-  updateStatByEffect(skill: Skill, effect: any, oldConditional?: boolean, oldConditionalValue?: number) {
+  updateStatByEffect(skill: Skill, effect: any, oldConditional?: boolean, oldConditionalValue?: number, oldEffectiveness?: number) {
     var value = this.calculateValue(skill, effect, null); 
     var valueToSub = 0;                                   
 
@@ -373,6 +391,13 @@ export class StatsComponent implements OnInit, DoCheck {
     if (oldConditional != null || oldConditionalValue != null) {
       valueToSub = this.calculateValue(skill, effect, null, oldConditional, oldConditionalValue);
     }
+
+    if (oldEffectiveness) {
+      value *= effect.conditional.effectiveness;
+      valueToSub *= oldEffectiveness;
+    }
+
+    
 
     this.updateStat(value, valueToSub, effect);
   } 
@@ -441,7 +466,7 @@ export class StatsComponent implements OnInit, DoCheck {
    */
   updateStat(value: number, valueToSub: number, effect: any) {
     if (effect.type.extraType != null) {
-      effect.type.extraType(value);
+      effect.type.extraType(value - valueToSub);
     } else if (effect.type.accuracy) {
       this.offensiveStats.accuracy = (parseFloat(this.offensiveStats.accuracy) + value - valueToSub).toFixed(2);
     } else if (effect.type.actionSkillDmg) {
