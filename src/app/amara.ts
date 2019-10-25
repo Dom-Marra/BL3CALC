@@ -3,7 +3,7 @@ import { NormalSkill } from './normalskill';
 import { OtherSkill } from './otherskill';
 import { ActionSkill } from './actionskill';
 import { ActionMod } from './actionmod';
-import { Character } from './character'
+import { Character } from './character';
 
 export class Amara extends Character {
 
@@ -26,10 +26,11 @@ export class Amara extends Character {
       header: "Consumed rush stacks?",
       requiresNumberField: true,
       setCurrentValue: (value: number) => {
-        this.extraConditionals.rushStacksConsumed.currentValue = value * this.extraConditionals.rushStacksConsumed.effectiveness;
+        this.extraConditionals.rushStacksConsumed.currentValue = value;
       },
       currentValue: 0,
       maxValue: 0,
+      occurances: 0,
       effectiveness: 1
     },
     rushStacks: {
@@ -37,10 +38,10 @@ export class Amara extends Character {
       header: "Using rush stacks?",
       requiresNumberField: true,
       setCurrentValue: (value: number) => {
-        this.extraConditionals.rushStacks.currentValue = value * this.extraConditionals.rushStacks.effectiveness;
+        this.extraConditionals.rushStacks.currentValue = value;
       },
-      maxValue: 0,
       currentValue: 0,
+      maxValue: 0,
       effectiveness: 1
     },
     samsaraStacks: {
@@ -72,24 +73,39 @@ export class Amara extends Character {
   //Extra stat types that are specific to amara and require specific calculations
   private extraType = {
     rushStackEffectiveness: (effectValue: number) => {
-      let oldValueRushStack: number = this.extraConditionals.rushStacks.currentValue / this.extraConditionals.rushStacks.effectiveness;
-      let oldValueRushCons: number = this.extraConditionals.rushStacksConsumed.currentValue / this.extraConditionals.rushStacksConsumed.effectiveness;
-
-      this.extraConditionals.rushStacks.effectiveness = 1 + (effectValue/100);
-      this.extraConditionals.rushStacks.setCurrentValue(oldValueRushStack);
-      
-      this.extraConditionals.rushStacksConsumed.effectiveness = 1 + (effectValue/100);
-      this.extraConditionals.rushStacksConsumed.setCurrentValue(oldValueRushCons);
+      this.extraConditionals.rushStacks.effectiveness += (effectValue/100);
+      this.extraConditionals.rushStacksConsumed.effectiveness += (effectValue/100);
     },
     maxRushStacks: (stackSize: number) => {
-      this.extraConditionals.rushStacks.maxValue = stackSize;
-      this.extraConditionals.rushStacksConsumed.maxValue = stackSize;
+      if (stackSize < 0) {
+        this.extraConditionals.rushStacksConsumed.occurances--;
+      }
+
+      if (this.extraConditionals.rushStacksConsumed.occurances == 0) {
+        this.extraConditionals.rushStacksConsumed.maxValue += stackSize;
+        this.extraConditionals.rushStacks.maxValue += stackSize;
+      }
+
+      if (stackSize > 0) {
+        this.extraConditionals.rushStacksConsumed.occurances++;
+      } 
+    },
+    increaseMaxRushStacks: (stackSize: number) => {
+      this.extraConditionals.rushStacks.maxValue += stackSize;
+      this.extraConditionals.rushStacksConsumed.maxValue += stackSize;
+
+      if (this.extraConditionals.rushStacks.currentValue > (this.extraConditionals.rushStacks.maxValue * this.extraConditionals.rushStacks.effectiveness)) {
+        this.extraConditionals.rushStacks.setCurrentValue(this.extraConditionals.rushStacks.maxValue);
+      }
+      if (this.extraConditionals.rushStacksConsumed.currentValue > (this.extraConditionals.rushStacksConsumed.maxValue * this.extraConditionals.rushStacksConsumed.effectiveness)) {
+        this.extraConditionals.rushStacksConsumed.setCurrentValue(this.extraConditionals.rushStacksConsumed.maxValue);
+      }
     },
     maxSamsaraStacks: (stackSize: number) => {
-      this.extraConditionals.samsaraStacks.maxValue = stackSize > 0 ? stackSize : 0;
+      this.extraConditionals.samsaraStacks.maxValue += stackSize;
     },
     maxMindfulnessStacks: (stackSize: number) => {
-      this.extraConditionals.mindfulnessStacks.maxValue = stackSize > 0 ? stackSize : 0;
+      this.extraConditionals.mindfulnessStacks.maxValue += stackSize;
     }
   }
 
@@ -357,6 +373,12 @@ export class Amara extends Character {
                     value:"+15%"},
                     {name:"Damage",
                     value:"-25%"}]});
+  private readonly SHOCKRA = new OtherSkill('assets/images/amara/skills/Shockra.webp', null, 1, 0, "blue",
+                  {name:"SHOCKRA", 
+                  description:"Converts your Action Skill to Shock Damage.",
+                  effects:[
+                    {name:"Converts to Shock Damage"}]});
+                    
 
   //skills list
   private readonly BLUE_SKILLS = [
@@ -401,8 +423,9 @@ export class Amara extends Character {
                     values:["+16%", "+28%", "+36%",]}]}),
     new NormalSkill('assets/images/amara/skills/ViolentTapestry.webp', [0, 2], 5, 0, "blue",
                   {name:"VIOLENT TAPESTRY", 
-                  description:"Killing an enemy grants Amara a stack of Rush. Activating her Action Skill consumes all Rush stacks.<br /><br />" +
-                  "For every stack of Rush consumed, Amara's Action Skill Damage is temporarily increased.",
+                  description:"Applying a Status Effect grants Amara a stack of Rush. Activating " + 
+                  "her action skill consumes all Rush stacks.<br /><br />" +
+                  "For every stack of Rush consumed, Amara's Status Effect Chance is temporarily increased.",
                   effects:[
                     {name:"Max Rush Stacks",
                     type: {extraType: this.extraType.maxRushStacks},
@@ -504,12 +527,11 @@ export class Amara extends Character {
                     value:"8 seconds"}]}),
     new NormalSkill('assets/images/amara/skills/Wrath.webp', [3, 2], 3, 15, "blue",
                   {name:"WRATH", 
-                  description:"Amara gains increased Gun Damage. This effect is increased" +
+                  description:"Amara gains increased Gun Damage. This effect is increased " +
                   "after she activates her action skill for a few seconds.",
                   effects:[
                     {name:"Gun Damage", 
                     type: {gunDmg: true},
-                    conditional: this.getConditionals().usedActionSkill,
                     values:["+6.7%", "+13.3%", "+20.0%"]},
                     {name:"Gun Damage", 
                     type: {gunDmg: true},
@@ -536,10 +558,11 @@ export class Amara extends Character {
                   {name:"AVATAR", 
                   description:"Amara's Action Skill can be activated while it's cooling down. " +
                   "This skill may only be used once per completed cooldown.<br /><br />" +
-                  "Additionally, increases Amara's Max Rush Stacks..<br /><br />" +
+                  "Additionally, increases Amara's Max Rush Stacks.<br /><br />" +
                   "Additionally, if Amara's Action Skill kills an enemy, it refunds half of her Rush stacks.",
                   effects:[
                     {name:"Bonus Rush Stacks", 
+                    type: {extraType: this.extraType.increaseMaxRushStacks},
                     value:"+10"}]})
   ]
 
@@ -795,7 +818,7 @@ export class Amara extends Character {
 
   constructor(maxActionSkillPoints: number, maxActionModPoints: number, maxOtherSkillPoints: number) {
     super(maxActionSkillPoints, maxActionModPoints, maxOtherSkillPoints);
-
+    this.addPoint(this.SHOCKRA);
     
   }
 
@@ -810,7 +833,7 @@ export class Amara extends Character {
    * @param skill 
    *              Skill to be allocated
    */
-  addPoint(skill: Skill, position?: number): boolean {
+  addPoint(skill: Skill): boolean {
 
      //If the skill is already in the array then don't add it
      if (!this.getAllocatedSkills().includes(skill)) {
@@ -824,6 +847,11 @@ export class Amara extends Character {
     //Increment allocation of action skills if skill is action skill
     //Add action skill to equipped skills
     if (skill instanceof ActionSkill) {
+      if (this.getAllocatedActionSkillPoints() == this.getMaxActionSkillPoints())  {
+        this.getEquippedSkills()[0].actionSkill.removePoint();
+        this.removePoint(this.getEquippedSkills()[0].actionSkill);
+      } 
+
       this.setAllocatedActionSkillPoints(this.getAllocatedActionSkillPoints() + 1);
       this.getEquippedSkills()[0].actionSkill = skill;
     } 
@@ -831,6 +859,11 @@ export class Amara extends Character {
     //Increment allocation of action mod if skill is action mod
     //Add action mod to equipped skills action mod array
     if (skill instanceof ActionMod) {
+      if (this.getAllocatedActionModPoints() == this.getMaxActionModPoints())  {
+        this.getEquippedSkills()[0].actionMods[this.getAllocatedActionModPoints() - 1].removePoint();
+        this.removePoint(this.getEquippedSkills()[0].actionMods[this.getAllocatedActionModPoints() - 1]);
+      } 
+
       this.setAllocatedActionModPoints(this.getAllocatedActionModPoints() + 1);
       this.getEquippedSkills()[0].actionMods[this.getAllocatedActionModPoints() - 1] = skill;
     }
@@ -838,6 +871,11 @@ export class Amara extends Character {
     //Increment allocation of other skill if skill is other skill
     //Add other skill to equipped skills
     if (skill instanceof OtherSkill) {
+      if (this.getAllocatedOtherSkillPoints() == this.getMaxOtherSkillPoints())  {
+        this.getEquippedSkills()[0].otherSkill.removePoint();
+        this.removePoint(this.getEquippedSkills()[0].otherSkill);
+      } 
+
       this.setAllocatedOtherSkillPoints(this.getAllocatedOtherSkillPoints() + 1);
       this.getEquippedSkills()[0].otherSkill = skill;
     };
@@ -883,7 +921,7 @@ export class Amara extends Character {
     //Remove other skill from equipped skills
     if (skill instanceof OtherSkill) {
       this.setAllocatedOtherSkillPoints(this.getAllocatedOtherSkillPoints() - 1);
-      this.getEquippedSkills()[0].otherSkill = null;
+      this.getEquippedSkills()[0].otherSkill = this.SHOCKRA;
     } 
 
     return true;
