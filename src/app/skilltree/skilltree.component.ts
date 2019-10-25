@@ -196,8 +196,6 @@ export class SkilltreeComponent implements OnInit {
     //Check that the skill pre-req is not the same as the requiredSkill pre-req
     if (skill.getPreReq() !=  requiredSkill.getPreReq()) {
 
-      console.log(extraPoints - 1 + " " +  requiredSkill.getPreReq());
-
       //The total allocated points minus the requiredSkills points minus 1 point
       //is less than what is needed for the requiredSkill then point removal failure
       if (extraPoints - 1 <  requiredSkill.getPreReq()) return false;
@@ -252,6 +250,21 @@ export class SkilltreeComponent implements OnInit {
     } else {
       this.removeCount = 0;
     }
+  }
+
+  reset() {
+    this.skills.sort(function(a, b) {
+      return a.getPreReq() - b.getPreReq();
+    });
+
+    for (var i = this.skills.length - 1; i >= 0; i--) {
+      if (this.skills[i].getAllocatedPoints() > 0) {
+        for (var j = this.skills[i].getAllocatedPoints(); j > 0; j--) {
+          this.removePoint(this.skills[i]);
+        }
+      }
+    }
+
   }
 
   
