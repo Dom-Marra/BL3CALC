@@ -363,7 +363,8 @@
                             (input)="validateInput($event)" 
                             (change)="valueChange(conditional[0], $event)" 
                             attr.max="{{conditional[0].maxValue}}"
-                            placeholder="Amount"/>
+                            placeholder="Amount"
+                            [value]="conditional[0].currentValue"/>
                     <span class="checkbox"></span>
                 </label>
             </div>
