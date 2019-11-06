@@ -1,3 +1,5 @@
+@import "../../styles.scss";
+
 //tree css
 .skill-tree-container {
     height: 90vh;
@@ -175,10 +177,17 @@
     }
     
     .skill:hover,
-    .skill.activated:hover {
-    
+    .skill.activated:hover,
+    .skill.disabled:hover {
+        filter: none;
         cursor: pointer;
-    
+
+        &:not(.disabled) {
+            .left-right-select {
+                display: inline-block;
+            }
+        }
+        
         image {
             filter: url(#highlight);
         }
@@ -191,7 +200,6 @@
             visibility: visible;
             z-index: 4;
         }
-        
     }
 
     .tree-reset {
@@ -210,16 +218,43 @@
             fill: white;
         }
     }
+
+    .left-right-select {
+        display: none;
+
+        rect {
+            fill: $primary-color;
+            stroke: $primary-accent-color;
+        }
+
+        text {
+            fill: white;
+            font-size: 80%;
+        }
+    }
+
+    .left-right-select:hover {
+        rect {
+            fill: lighten($color: $primary-color, $amount: 15%);
+        }
+    }
 }
 
 .disabled {
-    filter: url(#skill-disabled);
+    image, text {
+        filter: url(#skill-disabled);
+    }
 }
 
+
 @-moz-document url-prefix() {
-    .tree {
-        .disabled {
-            filter: brightness(0.7);
+    .skill-tree-container {
+        .tree {
+            .disabled {
+                image, text {
+                    filter: brightness(0.7);
+                }
+            }
         }
     }
  }
