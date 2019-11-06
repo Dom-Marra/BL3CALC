@@ -84,124 +84,12 @@
                         Value
                     </th>
                 </tr>
-                <tr *ngIf="offensiveStats.accuracy != 0">
-                    <td>
-                        Accuracy
+                <tr *ngFor="let stat of offensiveStats | keyvalue">
+                    <td *ngIf="stat.value.value != 0">
+                        {{stat.value.header}}
                     </td>
-                    <td class="value">    
-                        {{offensiveStats.accuracy}}%
-                    </td>
-                </tr>
-                <tr *ngIf="offensiveStats.actionSkillDmg != 0">
-                    <td>
-                        Action Skill Damage
-                    </td>
-                    <td class="value">    
-                        {{offensiveStats.actionSkillDmg}}%
-                    </td>
-                </tr>
-                <tr *ngIf="offensiveStats.bonusDmg != 0">
-                    <td>
-                        Bonus Damage
-                    </td>
-                    <td class="value">    
-                        {{offensiveStats.bonusDmg}}%
-                    </td>
-                </tr>
-                <tr *ngIf="offensiveStats.bonusElementalDmg != 0">
-                    <td>
-                        Bonus Elemental Damage
-                    </td>
-                    <td class="value">    
-                        {{offensiveStats.bonusElementalDmg}}%
-                    </td>
-                </tr>
-                <tr *ngIf="offensiveStats.criticalHitDmg != 0">
-                    <td>
-                        Critical Hit Damage
-                    </td>
-                    <td class="value">    
-                        {{offensiveStats.criticalHitDmg}}%
-                    </td>
-                </tr>
-                <tr *ngIf="offensiveStats.elementalDmg != 0">
-                    <td>
-                        Elemental Damage
-                    </td>
-                    <td class="value">    
-                        {{offensiveStats.elementalDmg}}%
-                    </td>
-                </tr>
-                <tr *ngIf="offensiveStats.fireRate != 0">
-                    <td>
-                        Fire Rate
-                    </td>
-                    <td class="value">    
-                        {{offensiveStats.fireRate}}%
-                    </td>
-                </tr>
-                <tr *ngIf="offensiveStats.gunDmg != 0">
-                    <td>
-                        Gun Damage
-                    </td>
-                    <td class="value">    
-                        {{offensiveStats.gunDmg}}%
-                    </td>
-                </tr>
-                <tr *ngIf="offensiveStats.handling != 0">
-                    <td>
-                        Handling
-                    </td>
-                    <td class="value">    
-                        {{offensiveStats.handling}}%
-                    </td>
-                </tr>
-                <tr *ngIf="offensiveStats.dmgIncrease != 0">
-                    <td>
-                        Increased Damage
-                    </td>
-                    <td class="value">    
-                        {{offensiveStats.dmgIncrease}}%
-                    </td>
-                </tr>
-                <tr *ngIf="offensiveStats.meleeDmg != 0">
-                    <td>
-                        Melee Damage
-                    </td>
-                    <td class="value">    
-                        {{offensiveStats.meleeDmg}}%
-                    </td>
-                </tr>
-                <tr *ngIf="offensiveStats.shockDmg != 0">
-                    <td>
-                        Shock Damage
-                    </td>
-                    <td class="value">    
-                        {{offensiveStats.shockDmg}}%
-                    </td>
-                </tr>
-                <tr *ngIf="offensiveStats.splashDmg != 0">
-                    <td>
-                        Splash Damage
-                    </td>
-                    <td class="value">    
-                        {{offensiveStats.splashDmg}}%
-                    </td>
-                </tr>
-                <tr *ngIf="offensiveStats.statusEffectDmg != 0">
-                    <td>
-                        Status Effect Damage
-                    </td>
-                    <td class="value">    
-                        {{offensiveStats.statusEffectDmg}}%
-                    </td>
-                </tr>
-                <tr *ngIf="offensiveStats.statusEffectDuration != 0">
-                    <td>
-                        Status Effect Duration
-                    </td>
-                    <td class="value">    
-                        {{offensiveStats.statusEffectDuration}}%
+                    <td class="value" *ngIf="stat.value.value != 0">    
+                        {{stat.value.value}}%
                     </td>
                 </tr>
             </table>
@@ -218,60 +106,12 @@
                         Value
                     </th>
                 </tr>
-                <tr *ngIf="defensiveStats.dmgReduction != 0">
-                    <td>
-                        Damage Reduction
+                <tr *ngFor="let stat of defensiveStats | keyvalue">
+                    <td *ngIf="stat.value.value != 0">
+                        {{stat.value.header}}
                     </td>
-                    <td class="value">    
-                        {{defensiveStats.dmgReduction}}%
-                    </td>
-                </tr>
-                <tr *ngIf="defensiveStats.elementalDmgReduction != 0">
-                    <td>
-                        Elemental Damage Reduction
-                    </td>
-                    <td class="value">    
-                        {{defensiveStats.elementalDmgReduction}}%
-                    </td>
-                </tr>
-                <tr *ngIf="defensiveStats.healthRegen != 0">
-                    <td>
-                        Health Regen
-                    </td>
-                    <td class="value">    
-                        {{defensiveStats.healthRegen}}%
-                    </td>
-                </tr>
-                <tr *ngIf="defensiveStats.lifeSteal != 0">
-                    <td>
-                        Life Steal
-                    </td>
-                    <td class="value">    
-                        {{defensiveStats.lifeSteal}}%
-                    </td>
-                </tr>
-                <tr *ngIf="defensiveStats.maxHealth != 0">
-                    <td>
-                        Max Health
-                    </td>
-                    <td class="value">    
-                        {{defensiveStats.maxHealth}}%
-                    </td>
-                </tr>
-                <tr *ngIf="defensiveStats.shieldRegenDelay != 0">
-                    <td>
-                        Shield Regen Delay
-                    </td>
-                    <td class="value">    
-                        {{defensiveStats.shieldRegenDelay}}%
-                    </td>
-                </tr>
-                <tr *ngIf="defensiveStats.splashDmgReduction != 0">
-                    <td>
-                        Splash Damage Reduction
-                    </td>
-                    <td class="value">    
-                        {{defensiveStats.splashDmgReduction}}%
+                    <td class="value" *ngIf="stat.value.value != 0">    
+                        {{stat.value.value}}%
                     </td>
                 </tr>
             </table>
@@ -288,60 +128,34 @@
                         Value
                     </th>
                 </tr>
-                <tr *ngIf="utilityStats.chargeTime != 0">
-                    <td>
-                        Charge Time
+                <tr *ngFor="let stat of utilityStats | keyvalue">
+                    <td *ngIf="stat.value.value != 0">
+                        {{stat.value.header}}
                     </td>
-                    <td class="value">    
-                        {{utilityStats.chargeTime}}%
-                    </td>
-                </tr>
-                <tr *ngIf="utilityStats.handling != 0">
-                    <td>
-                        Handling
-                    </td>
-                    <td class="value">    
-                        {{utilityStats.handling}}%
+                    <td class="value" *ngIf="stat.value.value != 0">    
+                        {{stat.value.value}}%
                     </td>
                 </tr>
-                <tr *ngIf="utilityStats.modeSwitchSpeed != 0">
-                    <td>
-                        Mode Switch Speed
-                    </td>
-                    <td class="value">    
-                        {{utilityStats.modeSwitchSpeed}}%
-                    </td>
+            </table>
+        </div>
+
+        <div class="info-section flex wrapped horizontal-align-center">
+            <div class="info-section-header"><p>Extra Stats</p></div>
+            <table class="stats-table">
+                <tr>
+                    <th>
+                        Stat
+                    </th>
+                    <th class="value">
+                        Value
+                    </th>
                 </tr>
-                <tr *ngIf="utilityStats.movementSpeed != 0">
-                    <td>
-                        Movement Speed
+                <tr *ngFor="let stat of characterSpecificStats | keyvalue">
+                    <td *ngIf="stat.value.value != 0">
+                        {{stat.value.header}}
                     </td>
-                    <td class="value">    
-                        {{utilityStats.movementSpeed}}%
-                    </td>
-                </tr>
-                <tr *ngIf="utilityStats.reloadSpeed != 0">
-                    <td>
-                        Reload Speed
-                    </td>
-                    <td class="value">    
-                        {{utilityStats.reloadSpeed}}%
-                    </td>
-                </tr>
-                <tr *ngIf="utilityStats.statusEffectChance != 0">
-                    <td>
-                        Status Effect Chance
-                    </td>
-                    <td class="value">    
-                        {{utilityStats.statusEffectChance}}%
-                    </td>
-                </tr>
-                <tr *ngIf="utilityStats.weaponSwapSpeed != 0">
-                    <td>
-                        Weapon Swap Speed
-                    </td>
-                    <td class="value">    
-                        {{utilityStats.weaponSwapSpeed}}%
+                    <td class="value" *ngIf="stat.value.value != 0">    
+                        {{stat.value.value.toFixed(2)}}<span *ngIf="stat.value.valueType == 'percent'">%</span>
                     </td>
                 </tr>
             </table>
@@ -350,8 +164,9 @@
     <ngx-simplebar class="info" id="configs">
         <div class="info-section doNotSelect">
             <div class="info-section-header"><p>Configurations</p></div>
-            <div *ngFor="let conditional of conditionals" class="config">
-                <label><p class="input-header">{{conditional[0].header}}</p>
+            <div [hidden]="conditional[0].header == null" *ngFor="let conditional of conditionals" class="config">
+                <label *ngIf="conditional[0].header != null">
+                    <p class="input-header">{{conditional[0].header}}</p>
                     <input class="check-input" 
                            type="checkbox" 
                            (change)="conditional[0].active = !conditional[0].active" 
