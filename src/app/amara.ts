@@ -25,32 +25,26 @@ export class Amara extends Character {
       active: false,
       header: "Consumed rush stacks?",
       requiresNumberField: true,
-      setCurrentValue: (value: number) => {
-        this.extraConditionals.rushStacksConsumed.currentValue = value;
-      },
       currentValue: 0,
       maxValue: 0,
-      occurances: 0,
-      effectiveness: 1
+      occurances: 0
     },
     rushStacks: {
       active: false,
       header: "Using rush stacks?",
       requiresNumberField: true,
-      setCurrentValue: (value: number) => {
-        this.extraConditionals.rushStacks.currentValue = value;
-      },
       currentValue: 0,
-      maxValue: 0,
+      maxValue: 0
+    },
+    rushStackEffectiveness: {
+      active: true,
+      stateChangeable: false,
       effectiveness: 1
     },
     samsaraStacks: {
       active: false,
       header: "Using samsara stacks?",
       requiresNumberField: true,
-      setCurrentValue: (value: number) => { 
-        this.extraConditionals.samsaraStacks.currentValue = value;
-      },
       currentValue: 0,
       maxValue: 0,
     },
@@ -58,9 +52,6 @@ export class Amara extends Character {
       active: false,
       header: "Using mindfulness stacks?",
       requiresNumberField: true,
-      setCurrentValue: (value: number) => { 
-        this.extraConditionals.mindfulnessStacks.currentValue = value;
-      },
       currentValue: 0,
       maxValue: 0
     },
@@ -71,48 +62,76 @@ export class Amara extends Character {
   }
 
   //Extra stat types that are specific to amara and require specific calculations
-  private extraType = {
-    rushStackEffectiveness: (effectValue: number) => {
-      this.extraConditionals.rushStacks.effectiveness += (effectValue/100);
-      this.extraConditionals.rushStacksConsumed.effectiveness += (effectValue/100);
-    },
-    maxRushStacks: (stackSize: number) => {
-      if (stackSize < 0) {
-        this.extraConditionals.rushStacksConsumed.occurances--;
+  private extraTypes = {
+    rushStackEffectiveness: {
+      header: "Rush Stack Effectiveness",
+      value: 0,
+      valueType: "percent",
+      setFunc: (effectValue: number) => {
+        this.getExtraTypes().rushStackEffectiveness.value += effectValue;
+        this.getExtraCond().rushStackEffectiveness.effectiveness += (effectValue/100);
       }
+    },
+    maxRushStacks: {
+      header: "Max Rush Stacks",
+      value: 0,
+      valueType: "flat",
+      setFunc: (stackSize: number) => {
+        if (stackSize < 0) {
+          this.getExtraCond().rushStacksConsumed.occurances--;
+        }
 
-      if (this.extraConditionals.rushStacksConsumed.occurances == 0) {
-        this.extraConditionals.rushStacksConsumed.maxValue += stackSize;
-        this.extraConditionals.rushStacks.maxValue += stackSize;
-      }
+        if (this.getExtraCond().rushStacksConsumed.occurances == 0) {
+          this.getExtraTypes().maxRushStacks.value += stackSize;
 
-      if (stackSize > 0) {
-        this.extraConditionals.rushStacksConsumed.occurances++;
-      } 
-    },
-    increaseMaxRushStacks: (stackSize: number) => {
-      this.extraConditionals.rushStacks.maxValue += stackSize;
-      this.extraConditionals.rushStacksConsumed.maxValue += stackSize;
+          this.getExtraCond().rushStacksConsumed.maxValue += stackSize;
+          this.getExtraCond().rushStacks.maxValue += stackSize;
+        }
 
-      if (this.extraConditionals.rushStacks.currentValue > (this.extraConditionals.rushStacks.maxValue * this.extraConditionals.rushStacks.effectiveness)) {
-        this.extraConditionals.rushStacks.setCurrentValue(this.extraConditionals.rushStacks.maxValue);
-      }
-      if (this.extraConditionals.rushStacksConsumed.currentValue > (this.extraConditionals.rushStacksConsumed.maxValue * this.extraConditionals.rushStacksConsumed.effectiveness)) {
-        this.extraConditionals.rushStacksConsumed.setCurrentValue(this.extraConditionals.rushStacksConsumed.maxValue);
+        if (stackSize > 0) {
+          this.getExtraCond().rushStacksConsumed.occurances++;
+        } 
       }
     },
-    maxSamsaraStacks: (stackSize: number) => {
-      this.extraConditionals.samsaraStacks.maxValue += stackSize;
+    increaseMaxRushStacks: {
+      setFunc: (stackSize: number) => {
+        this.getExtraTypes().maxRushStacks.value += stackSize;
+
+        this.getExtraCond().rushStacks.maxValue += stackSize;
+        this.getExtraCond().rushStacksConsumed.maxValue += stackSize;
+
+        if (this.getExtraCond().rushStacks.currentValue > (this.getExtraCond().rushStacks.maxValue * this.getExtraCond().rushStacks.effectiveness)) {
+          this.getExtraCond().rushStacks.currentValue = this.getExtraCond().rushStacks.maxValue;
+        }
+        if (this.getExtraCond().rushStacksConsumed.currentValue > (this.getExtraCond().rushStacksConsumed.maxValue * this.getExtraCond().rushStackEffectiveness.effectiveness)) {
+          this.getExtraCond().rushStacksConsumed.currentValue = this.getExtraCond().rushStacksConsumed.maxValue;
+        }
+      }
     },
-    maxMindfulnessStacks: (stackSize: number) => {
-      this.extraConditionals.mindfulnessStacks.maxValue += stackSize;
+    maxSamsaraStacks: {
+      header: "Max Samsara Stacks",
+      value: 0,
+      valueType: "flat",
+      setFunc: (stackSize: number) => {
+        this.getExtraTypes().maxSamsaraStacks.value += stackSize;
+        this.getExtraCond().samsaraStacks.maxValue += stackSize; 
+      }
+    },
+    maxMindfulnessStacks: {
+      header: "Max Mindfulness Stacks",
+      value: 0,
+      valueType: "flat",
+      setFunc: (stackSize: number) => {
+        this.getExtraTypes().maxMindfulnessStacks.value += stackSize;
+        this.getExtraCond().mindfulnessStacks.maxValue += stackSize; 
+      }
     }
   }
 
   //Skills for red skill tree
 
   //Action skills
-  private readonly PHASE_GRASP = new ActionSkill('assets/images/amara/skills/PhaseGrasp.webp', [-1, 1], 1, 0, "red",
+  private phaseGrasp = new ActionSkill('assets/images/amara/skills/PhaseGrasp.webp', [-1, 1], 1, 0, "red",
                   {name:"PHASEGRASP", 
                   description:"Amara summons a giant fist that bursts from the ground and locks " + 
                   "the targeted enemy in place for a few seconds.<br /><br />" +
@@ -124,7 +143,7 @@ export class Amara extends Character {
                     value:"16 seconds"},
                     {name:"Grasp Immune Damage",
                     value:28}]});
-  private readonly THE_ETERNAL_FISTS = new ActionSkill('assets/images/amara/skills/TheEternalFists.webp', [2, -1], 1, 10, "red",
+  private theEternalFists = new ActionSkill('assets/images/amara/skills/TheEternalFists.webp', [2, -1], 1, 10, "red",
                   {name:"THE ETERNAL FIST", 
                   description:"Amara summons a giant fist that bursts from the ground and locks " + 
                   "the targeted enemy in place for a few seconds.<br /><br />" +
@@ -136,7 +155,7 @@ export class Amara extends Character {
                     value:"20 seconds"},
                     {name:"Grasp Immune Damage",
                     value:28}]});
-  private readonly TIES_THAT_BIND = new ActionSkill('assets/images/amara/skills/TiesThatBind.webp', [3, 3], 1, 15, "red",
+  private tiesThatBind = new ActionSkill('assets/images/amara/skills/TiesThatBind.webp', [3, 3], 1, 15, "red",
                   {name:"TIES THAT BIND", 
                   description:"Amara summons a giant fist that bursts from the ground " + 
                   "and locks the targeted enemy in place for a few seconds. <br /><br />" +
@@ -149,7 +168,7 @@ export class Amara extends Character {
                     value:"18 seconds"},
                     {name:"Grasp Immune Damage",
                     value:34}]});
-  private readonly FIST_OVER_MATTER = new ActionSkill('assets/images/amara/skills/FistOverMatter.webp', [4, -1], 1, 20, "red",
+  private fistOverMatter = new ActionSkill('assets/images/amara/skills/FistOverMatter.webp', [4, -1], 1, 20, "red",
                   {name:"FIST OVER MATTER", 
                   description:"Amara summons a giant fist that bursts from the ground and " + 
                   "locks the targeted enemy in place for a few seconds.<br /><br />" +
@@ -164,30 +183,30 @@ export class Amara extends Character {
                     value:39}]});
 
   //Action Mods
-  private readonly SOUL_FIRE = new OtherSkill('assets/images/amara/skills/SoulFire.webp', [1, 3], 1, 5, "red",
+  private soulFire = new OtherSkill('assets/images/amara/skills/SoulFire.webp', [1, 3], 1, 5, "red",
                   {name:"SOULFIRE", 
                   description:"Converts Amara's Action Skill to Incendiary Damage.",
                   effects:[
                     {name:"Converts to Incendiary Damage"}]});
-  private readonly ALLURE = new ActionMod('assets/images/amara/skills/Allure.webp', [2, 3], 1, 10, "red",
+  private allure = new ActionMod('assets/images/amara/skills/Allure.webp', [2, 3], 1, 10, "red",
                   {name:"ALLURE", 
                   description:"Amara's Action Skill creates a singularity that pulls in enemies.",
                   effects:[
                     {name:"Action Skill Damage",
-                    type: {actionSkillDmg: true},
+                    type: [{actionSkillDmg: true}],
                     value:"-20%"},
                     {name:"Duration",
                     value:"2.5 seconds"}]});
 
 
   //skills list
-  private readonly RED_SKILLS = [
-    this.PHASE_GRASP,
-    this.THE_ETERNAL_FISTS,
-    this.TIES_THAT_BIND,
-    this.FIST_OVER_MATTER,
-    this.SOUL_FIRE,
-    this.ALLURE, //BELOW HERE IS NORMAL SKILLS
+  private redSkills = [
+    this.phaseGrasp,
+    this.theEternalFists,
+    this.tiesThatBind,
+    this.fistOverMatter,
+    this.soulFire,
+    this.allure, //BELOW HERE IS NORMAL SKILLS
     new NormalSkill('assets/images/amara/skills/Anima.webp', [0, 0], 5, 0, "red",
                   {name:"ANIMA", 
                   description:"Amara's Status Effects deal increased damage over time and have " + 
@@ -196,20 +215,20 @@ export class Amara extends Character {
                     {name:"Action Skill Status Effect Damage",
                     values:["+8%", "+16%", "+24%", "+32%", "+40%"]},
                     {name:"Status Effect Damage",
-                    type: {statusEffectDmg: true}, 
+                    type: [{statusEffectDmg: true}], 
                     values:["+4%", "+8%", "+12%", "+16%", "+20%"]},
                     {name:"Status Effect Duration:", 
-                    type: {statusEffectDuration: true}, 
+                    type: [{statusEffectDuration: true}], 
                     values:["+20%", "+40%", "+60%", "+80%", "+100%"]}]}),
     new NormalSkill('assets/images/amara/skills/SteadyHands.webp', [0, 1], 3, 0, "red",
                   {name:"STEADY HAND(S)", 
                   description:"Amara gains increased Weapon Handling and Accuracy.",
                   effects:[
                     {name:"Handling",
-                    type: {handling: true}, 
+                    type: [{handling: true}], 
                     values:["+14%", "+24%", "+32%"]},
                     {name:"Accuracy", 
-                    type: {accuracy: true},
+                    type: [{accuracy: true}],
                     values:["+13%", "+23%", "+31%"]}]}),
     new NormalSkill('assets/images/amara/skills/Infusion.webp', [0, 2], 5, 0, "red",
                   {name:"INFUSION", 
@@ -222,17 +241,17 @@ export class Amara extends Character {
                   description:"Amara deals increased Elemental Damage. Shock damage is further increased.",
                   effects:[
                     {name:"Shock Damage",
-                    type: {shockDmg: true},
+                    type: [{shockDmg: true}],
                     values:["+4.0%", "+8.0%", "+12.0%",  "+16.0%", "+20.0%"]},
                     {name:"Elemental Damage", 
-                    type: {elementalDmg: true},
+                    type: [{elementalDmg: true}],
                     values:["+6.0%", "+12.0%", "+18.0%", "+24.0%", "+30.0%"]}]}),
     new NormalSkill('assets/images/amara/skills/IlluminatedFist.webp', [1, 1], 1, 5, "red",
                   {name:"ILLUMINATED FIST", 
                   description:"Amara gains increased Melee Damage and her Melee Damage is converted to her Action Skill Element.",
                   effects:[
                     {name:"Melee Damage",
-                    type: {meleeDmg: true},
+                    type: [{meleeDmg: true}],
                     value:"+75.0%"}]}),
     new NormalSkill('assets/images/amara/skills/Wildfire.webp', [1, 2], 5, 5, "red",
                   {name:"WILDFIRE", 
@@ -241,7 +260,7 @@ export class Amara extends Character {
                     {name:"Spread Chance",
                     values:["8%", "16%", "24%", "32%", "40%"]},
                     {name:"Elemental Damage", 
-                    type: {elementalDmg: true},
+                    type: [{elementalDmg: true}],
                     values:["+6.0%","+12.0%","+18.0%","+24.0%", "+30.0%"]}]}),
     new NormalSkill('assets/images/amara/skills/Dread.webp', [2, 1], 1, 10, "red",
                   {name:"DREAD", 
@@ -249,8 +268,8 @@ export class Amara extends Character {
                   "Whenever any player kills a Grasped enemy, their current weapon is instantly reloaded.",
                   effects:[
                     {name:"Gun Damage",
-                    type: {gunDmg: true},
-                    conditional: this.extraConditionals.graspedAnEnemy,
+                    type: [{gunDmg: true}],
+                    conditional: this.getExtraCond().graspedAnEnemy,
                     value:"+15%"},
                     {name:"Duration",
                     value:"8 seconds"}]}),
@@ -289,7 +308,7 @@ export class Amara extends Character {
                   description:"Amara gains Life Steal whenever she deals Elemental Damage with her weapon.",
                   effects:[
                     {name:"Life Steal",
-                    type: {lifeSteal: true},
+                    type: [{lifeSteal: true}],
                     conditional: this.getConditionals().dealtEleDmgWithElementalWeapon,
                     values:["4% of damage dealt", "8% of damage dealt", "12% of damage dealt", "16% of damage dealt", "20% of damage dealt"]}]}),
     new NormalSkill('assets/images/amara/skills/Conflux.webp', [4, 2], 5, 20, "red",
@@ -304,14 +323,14 @@ export class Amara extends Character {
                   description:"Amara's guns deal Bonus Elemental Damage, based on her Action Skill Element.",
                   effects:[
                     {name:"Bonus Elemental Damage",
-                    type: {bonusElementalDmg: true},
+                    type: [{bonusElementalDmg: true}],
                     value:"18.0% of Damage Dealt"}]})
   ]
   
   //Skills for blue skill tree
 
   //Action skills
-  private readonly PHASE_CAST = new ActionSkill('assets/images/amara/skills/PhaseCast.webp', [-1, 1], 1, 0, "blue",
+  private phaseCast = new ActionSkill('assets/images/amara/skills/PhaseCast.webp', [-1, 1], 1, 0, "blue",
                   {name:"PHASECAST", 
                   description:"Amara sends forward an Astral Projection of herself, dealing " + 
                   "damage to everything in its path.",
@@ -320,7 +339,7 @@ export class Amara extends Character {
                     value:"28 seconds"},
                     {name:"Damage",
                     value:92}]});
-  private readonly DELIVERANCE = new ActionSkill('assets/images/amara/skills/Deliverance.webp', [2, -1], 1, 10, "blue",
+  private deliverance = new ActionSkill('assets/images/amara/skills/Deliverance.webp', [2, -1], 1, 10, "blue",
                   {name:"DELIVERANCE", 
                   description:"Amara sends forward an Astral Projection of herself, dealing damage to everything in its path.<br /><br />" +
                   "Whenever Amara's Astral Projection damages an enemy or object, it releases homing Elemental Projectiles " + 
@@ -332,7 +351,7 @@ export class Amara extends Character {
                     value:86},
                     {name:"Elemental Projectiles",
                     value:"3 per enemy hit"}]});
-  private readonly REVERBERATION = new ActionSkill('assets/images/amara/skills/Reverberation.webp', [3, -1], 1, 15, "blue",
+  private reverberation = new ActionSkill('assets/images/amara/skills/Reverberation.webp', [3, -1], 1, 15, "blue",
                   {name:"REVERBERATION", 
                   description:"Amara sends forward an Astral Projection of herself, " + 
                   "dealing damage to everything in its path..<br /><br />" +
@@ -344,7 +363,7 @@ export class Amara extends Character {
                     value:"+50% per enemy hit"},
                     {name:"Damage",
                     value:86}]});
-  private readonly TANDAVA = new ActionSkill('assets/images/amara/skills/Tandava.webp', [4, 3], 1, 20, "blue",
+  private tandava = new ActionSkill('assets/images/amara/skills/Tandava.webp', [4, 3], 1, 20, "blue",
                   {name:"TANDAVA", 
                   description:"Amara sends forward an Astral Projection of herself. " + 
                   "When it hits a target, it explodes, damaging all nearby enemies.",
@@ -355,13 +374,13 @@ export class Amara extends Character {
                     value:91}]});
 
   //Action Mods 
-  private readonly SOUL_SAP = new ActionMod('assets/images/amara/skills/SoulSap.webp', [1, 3], 1, 5, "blue",
+  private soulSap = new ActionMod('assets/images/amara/skills/SoulSap.webp', [1, 3], 1, 5, "blue",
                   {name:"SOUL SAP", 
                   description:"A portion of all damage dealt by Amara's Action Skill is returned to her or a nearby ally as health.",
                   effects:[
                     {name:"Life Steal",
                     value:"30% of Skill damage dealt"}]});
-  private readonly STILLNESS_OF_MIND = new ActionMod('assets/images/amara/skills/StillnessOfMind.webp', [2, 3], 1, 10, "blue",
+  private stillnessOfMind = new ActionMod('assets/images/amara/skills/StillnessOfMind.webp', [2, 3], 1, 10, "blue",
                   {name:"STILLNESS OF MIND", 
                   description:"Enemies damaged by Amara's Action Skill become phaselocked until " + 
                   "they are damaged or the duration ends. However, Action Skill Cooldown is increased.<br /><br />" +
@@ -373,7 +392,7 @@ export class Amara extends Character {
                     value:"+15%"},
                     {name:"Damage",
                     value:"-25%"}]});
-  private readonly SHOCKRA = new OtherSkill('assets/images/amara/skills/Shockra.webp', null, 1, 0, "blue",
+  private shockra = new OtherSkill('assets/images/amara/skills/Shockra.webp', null, 1, 0, "blue",
                   {name:"SHOCKRA", 
                   description:"Converts your Action Skill to Shock Damage.",
                   effects:[
@@ -381,30 +400,34 @@ export class Amara extends Character {
                     
 
   //skills list
-  private readonly BLUE_SKILLS = [
-    this.PHASE_CAST,
-    this.DELIVERANCE,
-    this.REVERBERATION,
-    this.TANDAVA,
-    this.SOUL_SAP,
-    this.STILLNESS_OF_MIND, //BELOW HERE IS NORMAL SKILLS
+  private blueSkills = [
+    this.phaseCast,
+    this.deliverance,
+    this.reverberation,
+    this.tandava,
+    this.soulSap,
+    this.stillnessOfMind, //BELOW HERE IS NORMAL SKILLS
     new NormalSkill('assets/images/amara/skills/DoHarm.webp', [0, 0], 5, 0, "blue",
                   {name:"DO HARM", 
                   description:"Killing an enemy grants Amara a stack of Rush. Activating her Action Skill consumes all Rush stacks." +
                   "For every stack of Rush consumed, Amara's Action Skill Damage is temporarily increased.",
                   effects:[
                     {name:"Max Rush Stacks",
-                    type: {extraType: this.extraType.maxRushStacks},
+                    type: [{extraType: this.getExtraTypes().maxRushStacks}],
                     value:10},
                     {name:"Action Skill Damage", 
-                    type: {actionSkillDmg: true},
-                    conditional: this.extraConditionals.rushStacksConsumed,
-                    getActiveValueMulti: () => {
-                      if (this.extraConditionals.rushStacks.active && this.extraConditionals.rushStacksConsumed.active) {
-                        this.extraConditionals.rushStacks.active = false;
+                    type: [{actionSkillDmg: true}],
+                    conditionals: [this.getExtraCond().rushStackEffectiveness, this.getExtraCond().rushStacksConsumed],
+                    getActiveValueMultis: [
+                      null,
+                      () => {
+                        if (this.getExtraCond().rushStacks.active && this.getExtraCond().rushStacksConsumed.active) {
+                          this.getExtraCond().rushStacks.active = false;
+                        }
+                        
+                        return this.getExtraCond().rushStacksConsumed.currentValue * this.getExtraCond().rushStackEffectiveness.effectiveness;
                       }
-                      return this.extraConditionals.rushStacksConsumed.currentValue;
-                    },
+                    ],
                     values:["+0.9% per stack consumed", "+1.8% per stack consumed", "+2.7% per stack consumed", "+3.6% per stack consumed", "+4.5% per stack consumed"]},
                     {name:"Duration", 
                     value:"20 seconds"}]}),
@@ -413,13 +436,13 @@ export class Amara extends Character {
                   description:"Amara's Reload Speed, Weapon Swap Speed, and Mode Switch Speed are improved.",
                   effects:[
                     {name:"Reload Speed",
-                    type: {reloadSpeed: true},
+                    type: [{reloadSpeed: true}],
                     values:["+7%", "+14%", "+19%",]},
                     {name:"Weapon Swap Speed", 
-                    type: {weaponSwapSpeed: true},
+                    type: [{weaponSwapSpeed: true}],
                     values:["+16%", "+28%", "+36%",]},
                     {name:"Mode Switch Speed:", 
-                    type: {modeSwitchSpeed: true},
+                    type: [{modeSwitchSpeed: true}],
                     values:["+16%", "+28%", "+36%",]}]}),
     new NormalSkill('assets/images/amara/skills/ViolentTapestry.webp', [0, 2], 5, 0, "blue",
                   {name:"VIOLENT TAPESTRY", 
@@ -428,17 +451,20 @@ export class Amara extends Character {
                   "For every stack of Rush consumed, Amara's Status Effect Chance is temporarily increased.",
                   effects:[
                     {name:"Max Rush Stacks",
-                    type: {extraType: this.extraType.maxRushStacks},
+                    type: [{extraType: this.getExtraTypes().maxRushStacks}],
                     value:10},
                     {name:"Effect Chance", 
-                    type: {statusEffectChance: true},
-                    conditional: this.extraConditionals.rushStacksConsumed,
-                    getActiveValueMulti: () => {
-                      if (this.extraConditionals.rushStacks.active && this.extraConditionals.rushStacksConsumed.active) {
-                        this.extraConditionals.rushStacks.active = false;
+                    type: [{statusEffectChance: true}],
+                    conditionals: [this.getExtraCond().rushStackEffectiveness, this.getExtraCond().rushStacksConsumed],
+                    getActiveValueMultis: [
+                      null,
+                      () => {
+                        if (this.getExtraCond().rushStacks.active && this.getExtraCond().rushStacksConsumed.active) {
+                          this.getExtraCond().rushStacks.active = false;
+                        }
+                        return this.getExtraCond().rushStacksConsumed.currentValue * this.getExtraCond().rushStackEffectiveness.effectiveness;
                       }
-                      return this.extraConditionals.rushStacksConsumed.currentValue;
-                    },
+                    ],
                     values:["+0.6% per stack consumed", "+1.2% per stack consumed", "+1.8% per stack consumed", "+2.4% per stack consumed", "+3.0% per stack consumed"]},
                     {name:"Duration", 
                     value:"20 seconds"}]}),
@@ -448,24 +474,30 @@ export class Amara extends Character {
                   "After consuming Rush stacks, this bonus is increased for a few seconds.",
                   effects:[
                     {name:"Reload Speed", 
-                    type: {reloadSpeed: true},
-                    conditional: this.extraConditionals.rushStacks,
-                    getActiveValueMulti: () => {
-                      if (this.extraConditionals.rushStacks.active && this.extraConditionals.rushStacksConsumed.active) {
-                        this.extraConditionals.rushStacksConsumed.active = false;
+                    type: [{reloadSpeed: true}],
+                    conditionals: [this.getExtraCond().rushStackEffectiveness, this.getExtraCond().rushStacks],
+                    getActiveValueMultis: [
+                      null,
+                      () => {
+                        if (this.getExtraCond().rushStacks.active && this.getExtraCond().rushStacksConsumed.active) {
+                          this.getExtraCond().rushStacksConsumed.active = false;
+                        }
+                        return this.getExtraCond().rushStacks.currentValue * this.getExtraCond().rushStackEffectiveness.effectiveness;
                       }
-                      return this.extraConditionals.rushStacks.currentValue;
-                    },
+                    ],
                     values:["+0.4% per stack", "+0.8% per stack", "+1.2% per stack", "+1.6% per stack", "+2.0% per stack"]},
                     {name:"Reload Speed", 
-                    type: {reloadSpeed: true},
-                    conditional: this.extraConditionals.rushStacksConsumed,
-                    getActiveValueMulti: () => {
-                      if (this.extraConditionals.rushStacks.active && this.extraConditionals.rushStacksConsumed.active) {
-                        this.extraConditionals.rushStacks.active = false;
+                    type: [{reloadSpeed: true}],
+                    conditionals: [this.getExtraCond().rushStackEffectiveness ,this.getExtraCond().rushStacksConsumed],
+                    getActiveValueMultis: [
+                      null,
+                      () => {
+                        if (this.getExtraCond().rushStacks.active && this.getExtraCond().rushStacksConsumed.active) {
+                          this.getExtraCond().rushStacks.active = false;
+                        }
+                        return this.getExtraCond().rushStacksConsumed.currentValue * this.getExtraCond().rushStackEffectiveness.effectiveness;
                       }
-                      return this.extraConditionals.rushStacksConsumed.currentValue;
-                    },
+                    ],
                     values:["+0.6% after action skill use", "+1.2% after action skill use", "+1.8% after action skill use", "+2.3% after action skill use", "+2.9% after action skill use"]},
                     {name:"Duration",
                     value:"8 seconds"}]}),
@@ -475,11 +507,11 @@ export class Amara extends Character {
                   "a few seconds after activating her Action Skill.",
                   effects:[
                     {name:"Accuracy", 
-                    type: {accuracy: true},
+                    type: [{accuracy: true}],
                     conditional: this.getConditionals().usedActionSkill,
                     values:["+17%", "+29%", "+38%"]},
                     {name:"Critical Hit Damage", 
-                    type: {criticalHitDmg: true},
+                    type: [{criticalHitDmg: true}],
                     conditional: this.getConditionals().usedActionSkill,
                     values:["+9%", "+18%", "+27%"]},
                     {name:"Duration", 
@@ -509,10 +541,10 @@ export class Amara extends Character {
                   description:"Amara gains improved Fire Rate and Charge Time.",
                   effects:[
                     {name:"Fire Rate", 
-                    type: {fireRate: true},
+                    type: [{fireRate: true}],
                     values:["+4%", "+8%", "+12%"]},
                     {name:"Charge Time", 
-                    type: {chargeTime: true},
+                    type: [{chargeTime: true}],
                     values:["+21%", "+34%", "+44%"]}]}),
     new NormalSkill('assets/images/amara/skills/LaidBare.webp', [3, 1], 3, 15, "blue",
                   {name:"LAID BARE", 
@@ -520,7 +552,7 @@ export class Amara extends Character {
                   "after being damaged by Amara's Action Skill.",
                   effects:[
                     {name:"Damage Increase", 
-                    type: {dmgIncrease: true},
+                    type: [{dmgIncrease: true}],
                     conditional: this.getConditionals().enemyDamagedByAS,
                     values:["+8.3%", "+16.7%", "+25.0%"]},
                     {name:"Duration", 
@@ -531,10 +563,10 @@ export class Amara extends Character {
                   "after she activates her action skill for a few seconds.",
                   effects:[
                     {name:"Gun Damage", 
-                    type: {gunDmg: true},
+                    type: [{gunDmg: true}],
                     values:["+6.7%", "+13.3%", "+20.0%"]},
                     {name:"Gun Damage", 
-                    type: {gunDmg: true},
+                    type: [{gunDmg: true}],
                     conditional: this.getConditionals().usedActionSkill,
                     values:["+6.7% after action skill use", "+13.3% after action skill use", "+20.0% after action skill use"]},
                     {name:"Duration",
@@ -552,7 +584,7 @@ export class Amara extends Character {
                   description:"Amara's Rush stacks gain increased effectiveness",
                   effects:[
                     {name:"Rush Stack Effectiveness", 
-                    type: {extraType: this.extraType.rushStackEffectiveness},
+                    type: [{extraType: this.getExtraTypes().rushStackEffectiveness}],
                     values:["+10%", "+20%", "+30%"]}]}),
     new NormalSkill('assets/images/amara/skills/Avatar.webp', [5, 1], 1, 25, "blue",
                   {name:"AVATAR", 
@@ -562,13 +594,13 @@ export class Amara extends Character {
                   "Additionally, if Amara's Action Skill kills an enemy, it refunds half of her Rush stacks.",
                   effects:[
                     {name:"Bonus Rush Stacks", 
-                    type: {extraType: this.extraType.increaseMaxRushStacks},
+                    type: [{extraType: this.getExtraTypes().increaseMaxRushStacks}],
                     value:"+10"}]})
   ]
 
   //Skills for green skill tree
   //Action skills
-  private readonly PHASE_SLAM = new ActionSkill('assets/images/amara/skills/PhaseSlam.webp', [-1, 1], 1, 0, "green",
+  private phaseSlam = new ActionSkill('assets/images/amara/skills/PhaseSlam.webp', [-1, 1], 1, 0, "green",
                   {name:"PHASESLAM", 
                   description:"Amara leaps into the air and Slams the ground, " +
                   "dealing damage to all nearby enemies and knocking them up.",
@@ -577,7 +609,7 @@ export class Amara extends Character {
                     value:"35 seconds"},
                     {name:"Damage",
                     value:98}]});
-  private readonly FRACTURE = new ActionSkill('assets/images/amara/skills/Fracture.webp', [2, -1], 1, 10, "green",
+  private fracture = new ActionSkill('assets/images/amara/skills/Fracture.webp', [2, -1], 1, 10, "green",
                   {name:"FRACTURE", 
                   description:"Amara summons a line of fists that erupt from the ground, " + 
                   "dealing damage to enemies in front of Amara.",
@@ -586,7 +618,7 @@ export class Amara extends Character {
                     value:"28 seconds"},
                     {name:"Damage",
                     value:88}]});
-  private readonly DOWNFALL = new ActionSkill('assets/images/amara/skills/Downfall.webp', [3, -1], 1, 15, "green",
+  private downfall = new ActionSkill('assets/images/amara/skills/Downfall.webp', [3, -1], 1, 15, "green",
                   {name:"DOWNFALL", 
                   description:"Amara leaps into the air and shoots an Elemental Beam " + 
                   "below her briefly, followed by a Slam.",
@@ -599,21 +631,21 @@ export class Amara extends Character {
                     value:"14/second"}]});
 
   //Action mods
-  private readonly BLIGHT_TIGER = new OtherSkill('assets/images/amara/skills/BlightTiger.webp', [1, 3], 1, 5, "green",
+  private blightTiger = new OtherSkill('assets/images/amara/skills/BlightTiger.webp', [1, 3], 1, 5, "green",
                   {name:"BLIGHT TIGER", 
                   description:"Converts Amara's Action Skill to Corrosive Damage.",
                   effects:[{name:"Converts to Corrosive Damage"}]});
-  private readonly REVELATION = new ActionMod('assets/images/amara/skills/Revelation.webp', [2, 3], 1, 10, "green",
+  private revelation = new ActionMod('assets/images/amara/skills/Revelation.webp', [2, 3], 1, 10, "green",
                   {name:"REVELATION", 
                   description:"Amara's Action Skill now creates a Nova when it damages " + 
                   "enemies, dealing damage to all nearby enemies.",
                   effects:[
                     {name:"Action Skill Damage",
-                    type: {actionSkillDmg: true},
+                    type: [{actionSkillDmg: true}],
                     value:"-15%"},
                     {name:"Nova Damage",
                     value:18}]});
-  private readonly GLAMOUR = new ActionMod('assets/images/amara/skills/Glamour.webp', [4, 3], 1, 20, "green",
+  private glamour = new ActionMod('assets/images/amara/skills/Glamour.webp', [4, 3], 1, 20, "green",
                   {name:"GLAMOUR", 
                   description:"Enemies damaged by Amara's action skill become confused and temporarily " + 
                   "attack their allies. However, Action Skill Cooldown is increased.<br /><br />" +
@@ -627,19 +659,19 @@ export class Amara extends Character {
                     value:"-30%"}]});
   
   //skills list
-  private readonly GREEN_SKILLS = [
-    this.PHASE_SLAM,
-    this.FRACTURE,
-    this.DOWNFALL,
-    this.BLIGHT_TIGER,
-    this.REVELATION,
-    this.GLAMOUR, //BELOW HERE IS NORMAL SKILLS
+  private greenSkills = [
+    this.phaseSlam,
+    this.fracture,
+    this.downfall,
+    this.blightTiger,
+    this.revelation,
+    this.glamour, //BELOW HERE IS NORMAL SKILLS
     new NormalSkill('assets/images/amara/skills/RootToRise.webp', [0, 0], 5, 0, "green",
                   {name:"ROOT TO RISE", 
                   description:"Amara gains increased Max Health.",
                   effects:[
                     {name:"Max Health",
-                    type: {maxHealth: true},
+                    type: [{maxHealth: true}],
                       values:["+8%", "+16%", "+24%", "+32%", "+40%"]}]}),
     new NormalSkill('assets/images/amara/skills/PersonalSpace.webp', [0, 1], 3, 0, "green",
                     {name:"PERSONAL SPACE", 
@@ -647,7 +679,7 @@ export class Amara extends Character {
                     "on the distance to her target. The closer the target, the greater the bonus.",
                     effects:[
                       {name:"Bonus Damage",
-                      type: {bonusDmg: true},
+                      type: [{bonusDmg: true}],
                       values:["up to 12.0% of damage dealt", "up to 24.0% of damage dealt", "up to 36.0% of damage dealt"]}]}),
     new NormalSkill('assets/images/amara/skills/Clarity.webp', [0, 2], 5, 0, "green",
                   {name:"CLARITY", 
@@ -656,7 +688,7 @@ export class Amara extends Character {
                   "After using an Action Skill, this bonus is doubled for a few seconds.",
                   effects:[
                     {name:"Health Regeneration",
-                    type: {healthRegen: true},
+                    type: [{healthRegen_missingHealth: true}],
                     conditional: this.getConditionals().usedActionSkill,
                     getNotActiveValueMulti: () => { return 0.5 },
                     values:["up to +1.00% Missing Health/sec","up to +2.00% Missing Health/sec","up to +3.00% Missing Health/sec", "up to +4.00% Missing Health/sec", "up to +5.00% Missing Health/sec"]},
@@ -667,10 +699,10 @@ export class Amara extends Character {
                   description:"Amara deals increased Splash Damage, and takes reduced Splash Damage.",
                   effects:[
                     {name:"Splash Damage",
-                    type: {splashDmg: true},
+                    type: [{splashDmg: true}],
                     values:["+4%", "+8%", "+12%", "+16%", "+20%"]},
                     {name:"Splash Damage Reduction",
-                    type: {splashDmgReduction: true},
+                    type: [{splashDmgReduction: true}],
                     values:["+12%", "+21%", "+28%", "+35%", "+40%"]}]}),
     new NormalSkill('assets/images/amara/skills/Samsara.webp', [1, 1], 3, 5, "green",
                   {name:"SAMSARA", 
@@ -679,21 +711,21 @@ export class Amara extends Character {
                   "increased Gun Damage and Health Regeneration for a few seconds. Stacks decay after a few seconds.",
                   effects:[
                     {name:"Gun Damage",
-                    type: {gunDmg: true},
-                    conditional: this.extraConditionals.samsaraStacks,
+                    type: [{gunDmg: true}],
+                    conditional: this.getExtraCond().samsaraStacks,
                     getActiveValueMulti: () => {
-                      return this.extraConditionals.samsaraStacks.currentValue;
+                      return this.getExtraCond().samsaraStacks.currentValue;
                     },
                     values:["+1.7% per enemy damaged", "+3.3% per enemy damaged", "+5.0% per enemy damaged"]},
                     {name:"Health Regeneration",
-                    type: {healthRegen: true},
-                    conditional: this.extraConditionals.samsaraStacks,
+                    type: [{healthRegen_maxHealth: true}],
+                    conditional: this.getExtraCond().samsaraStacks,
                     getActiveValueMulti: () => {
-                      return this.extraConditionals.samsaraStacks.currentValue;
+                      return this.getExtraCond().samsaraStacks.currentValue;
                     },
                     values:["+1.7% of Max Health / sec. per stack", "+3.3% of Max Health / sec. per stack", "+5.0% of Max Health / sec. per stack"]},
                     {name:"Max Samsara Stacks",
-                    type: {extraType: this.extraType.maxSamsaraStacks},
+                    type: [{extraType: this.getExtraTypes().maxSamsaraStacks}],
                     value: 5},
                     {name:"Duration",
                     value: "20 seconds"}]}),
@@ -703,7 +735,7 @@ export class Amara extends Character {
                   "Amara's arms remain active and grant her Damage Reduction.",
                   effects:[
                     {name:"Damage Reduction",
-                    type: {dmgReduction: true},
+                    type: [{dmgReduction: true}],
                     conditional: this.getConditionals().usedActionSkill,
                     values:["+12.0%", "+21.0%", "+28.0%", "+35.0%", "+40.0%"]},
                     {name:"Duration",
@@ -716,21 +748,21 @@ export class Amara extends Character {
                   "Speed. Stacks decay after a few seconds.",
                   effects:[
                     {name:"Shield Regeneration Delay",
-                    type: {shieldRegenDelay: true},
-                    conditional: this.extraConditionals.mindfulnessStacks,
+                    type: [{shieldRegenDelay: true}],
+                    conditional: this.getExtraCond().mindfulnessStacks,
                     getActiveValueMulti: () => {
-                      return this.extraConditionals.mindfulnessStacks.currentValue;
+                      return this.getExtraCond().mindfulnessStacks.currentValue;
                     },
                     values:["-9.0%", "-17.0%", "-23.0%"]},
                     {name:"Movement Speed",
-                    type: {movementSpeed: true},
-                    conditional: this.extraConditionals.mindfulnessStacks,
+                    type: [{movementSpeed: true}],
+                    conditional: this.getExtraCond().mindfulnessStacks,
                     getActiveValueMulti: () => {
-                      return this.extraConditionals.mindfulnessStacks.currentValue;
+                      return this.getExtraCond().mindfulnessStacks.currentValue;
                     },
                     values:["1.4%", "2.8%", "4.2%"]},
                     {name: "Max Mindfulness Stacks",
-                    type: {extraType: this.extraType.maxMindfulnessStacks},
+                    type: [{extraType: this.getExtraTypes().maxMindfulnessStacks}],
                     value: 25},
                     {name: "Duration",
                     value: "5 seconds"}]}),
@@ -740,7 +772,7 @@ export class Amara extends Character {
                   "Additionally, for a few seconds after using her Action Skill, Amara gains increased Melee Range.",
                   effects:[
                     {name:"Melee Damage",
-                    type: {meleeDmg: true},
+                    type: [{meleeDmg: true}],
                     conditional: this.getConditionals().usedActionSkill,
                     value:"+100%"},
                     {name:"Duration",
@@ -753,7 +785,7 @@ export class Amara extends Character {
                   "grants all allies increased Movement Speed for a few seconds.",
                     effects:[
                     {name:"Team Movement Speed",
-                    type: {movementSpeed: true},
+                    type: [{movementSpeed: true}],
                     conditional: this.getConditionals().activateKillSkills,
                     values:["+3.3%", "+6.7%", "+10.0%"]},
                     {name:"Duration",
@@ -764,10 +796,10 @@ export class Amara extends Character {
                   "Damage Resistance to her Action Skill Element.",
                   effects:[
                     {name:"Max Health",
-                    type: {maxHealth: true},
+                    type: [{maxHealth: true}],
                     values:["+5.0%", "+10.0%", "+15.0%", "+20.0%", "+25.0%"]},
                     {name:"Elemental Damage Reduction",
-                    type: {elementalDmgReduction: true},
+                    type: [{elementalDmgReduction: true}],
                     values: ["+12.0%", "+21.0%", "+28.0%", "+35.0%", "+40.0%"]}]}),
     new NormalSkill('assets/images/amara/skills/DoUntoOthers.webp', [4, 0], 1, 20, "green",
                   {name:"DO UNTO OTHERS", 
@@ -783,11 +815,11 @@ export class Amara extends Character {
                   "increased Action Skill Damage and increased Gun Damage for a few seconds.",
                   effects:[
                     {name:"Gun Damage",
-                    type: {gunDmg: true},
+                    type: [{gunDmg: true}],
                     conditional: this.getConditionals().dealtMeeleDmg,
                     values:["+3%", "+6%", "+9%", "+12%", "+15%"]},
                     {name:"Action Skill Damage",
-                    type: {actionSkillDmg: true},
+                    type: [{actionSkillDmg: true}],
                     conditional: this.getConditionals().dealtMeeleDmg,
                     values:["+15%", "+30%", "+45%", "+60%", "+75%"]},
                     {name: "Duration",
@@ -810,7 +842,7 @@ export class Amara extends Character {
                   "If a Blitz melee attack kills an enemy, Blitz's cooldown is immediately reset.",
                   effects:[
                     {name:"Melee Damage",
-                    type: {meleeDmg: true},
+                    type: [{meleeDmg: true}],
                     value:"+100%"},
                     {name: "Cooldown",
                     value:"8 seconds"}]})
@@ -818,22 +850,17 @@ export class Amara extends Character {
 
   constructor(maxActionSkillPoints: number, maxActionModPoints: number, maxOtherSkillPoints: number) {
     super(maxActionSkillPoints, maxActionModPoints, maxOtherSkillPoints);
-    this.addPoint(this.SHOCKRA);
+    this.addPoint(this.shockra);
     
   }
 
-  getExtraCond() {
-    return this.extraConditionals;
-  }
-  
- 
   /**
    * Adds point into a specific skill type allocation
    * 
    * @param skill 
    *              Skill to be allocated
    */
-  addPoint(skill: Skill): boolean {
+  addPoint(skill: Skill) {
 
      //If the skill is already in the array then don't add it
      if (!this.getAllocatedSkills().includes(skill)) {
@@ -844,43 +871,47 @@ export class Amara extends Character {
     if (skill instanceof NormalSkill) this.setAllocatedNormalSkillPoints(this.getAllocatedNormalSkillPoints() + 1);
 
 
-    //Increment allocation of action skills if skill is action skill
-    //Add action skill to equipped skills
+    //Action skill
     if (skill instanceof ActionSkill) {
-      if (this.getAllocatedActionSkillPoints() == this.getMaxActionSkillPoints())  {
+
+      //Check to see if an action skill is allocated already
+      //If there is remove a point from its allocation and remove it from equipped skills
+      if (this.getEquippedSkills()[0].actionSkill != skill && this.getEquippedSkills()[0].actionSkill != null)  {
         this.getEquippedSkills()[0].actionSkill.removePoint();
         this.removePoint(this.getEquippedSkills()[0].actionSkill);
       } 
 
-      this.setAllocatedActionSkillPoints(this.getAllocatedActionSkillPoints() + 1);
+      //Add action skill to equipped skills
       this.getEquippedSkills()[0].actionSkill = skill;
     } 
 
-    //Increment allocation of action mod if skill is action mod
-    //Add action mod to equipped skills action mod array
+    //Action mod
     if (skill instanceof ActionMod) {
-      if (this.getAllocatedActionModPoints() == this.getMaxActionModPoints())  {
-        this.getEquippedSkills()[0].actionMods[this.getAllocatedActionModPoints() - 1].removePoint();
-        this.removePoint(this.getEquippedSkills()[0].actionMods[this.getAllocatedActionModPoints() - 1]);
+      
+      //Check to see if an action mod is allocated already
+      //If there is remove a point from its allocation and remove it from equipped skills
+      if (this.getEquippedSkills()[0].actionMods[0] != skill && this.getEquippedSkills()[0].actionMods[0] != null)  {
+        this.getEquippedSkills()[0].actionMods[0].removePoint();
+        this.removePoint(this.getEquippedSkills()[0].actionMods[0]);
       } 
 
-      this.setAllocatedActionModPoints(this.getAllocatedActionModPoints() + 1);
-      this.getEquippedSkills()[0].actionMods[this.getAllocatedActionModPoints() - 1] = skill;
+      //Add action mod to equipped skills action mod array
+      this.getEquippedSkills()[0].actionMods[0] = skill;
     }
 
-    //Increment allocation of other skill if skill is other skill
-    //Add other skill to equipped skills
+    //Other skill
     if (skill instanceof OtherSkill) {
-      if (this.getAllocatedOtherSkillPoints() == this.getMaxOtherSkillPoints())  {
+
+      //Check to see if an other skill is allocated already
+      //If there is remove a point from its allocation and remove it from equipped skills
+      if (this.getEquippedSkills()[0].otherSkill != skill && this.getEquippedSkills()[0].otherSkill != null)  {
         this.getEquippedSkills()[0].otherSkill.removePoint();
         this.removePoint(this.getEquippedSkills()[0].otherSkill);
       } 
-
-      this.setAllocatedOtherSkillPoints(this.getAllocatedOtherSkillPoints() + 1);
+      
+      //Add other skill to equipped skills
       this.getEquippedSkills()[0].otherSkill = skill;
     };
-
-    return true;
   }
 
   /**
@@ -893,7 +924,7 @@ export class Amara extends Character {
 
     var index = this.getAllocatedSkills().indexOf(skill);
 
-    //Only remove id the allocated points = 0
+    //Only remove if the allocated points = 0
     if (this.getAllocatedSkills()[index].getAllocatedPoints() == 0) {
       this.getAllocatedSkills().splice(index, 1);
     }
@@ -902,31 +933,23 @@ export class Amara extends Character {
     //Reduce normal skill allocation if the skill type is normal
     if (skill instanceof NormalSkill) this.setAllocatedNormalSkillPoints(this.getAllocatedNormalSkillPoints() - 1);
 
-    //Reduce action skill allocation if the skill type is action 
     //remove action skill from equipped skills
     if (skill instanceof ActionSkill)  {
-      this.setAllocatedActionSkillPoints(this.getAllocatedActionSkillPoints() - 1);
       this.getEquippedSkills()[0].actionSkill = null;
     } 
 
-    //Reduce action mod allocation if the skill type is action mod
     //Remove action mod from equipped skills action mod array
     if (skill instanceof ActionMod) {
-      this.setAllocatedActionModPoints(this.getAllocatedActionModPoints() - 1);
       var index: number = this.getEquippedSkills()[0].actionMods.indexOf(skill);
       this.getEquippedSkills()[0].actionMods.splice(index, 1)
     }
 
-    //Reduce other skill allocation if the skill type is other
     //Remove other skill from equipped skills
     if (skill instanceof OtherSkill) {
-      this.setAllocatedOtherSkillPoints(this.getAllocatedOtherSkillPoints() - 1);
-      this.getEquippedSkills()[0].otherSkill = this.SHOCKRA;
+      this.getEquippedSkills()[0].otherSkill = this.shockra;
     } 
-
-    return true;
   }
-
+  
   /**
    * Retrieves skills that belong to the blue tree
    * 
@@ -934,7 +957,7 @@ export class Amara extends Character {
    *          Array
    */
   getBlueSkills(): Skill[] {
-      return this.BLUE_SKILLS;
+      return this.blueSkills;
   }
   
   /**
@@ -944,7 +967,7 @@ export class Amara extends Character {
    *          Array
    */
   getRedSkills(): Skill[] {
-      return this.RED_SKILLS;
+      return this.redSkills;
   }
 
   /**
@@ -954,6 +977,26 @@ export class Amara extends Character {
    *          Array
    */
   getGreenSkills(): Skill[] {
-      return this.GREEN_SKILLS;
+      return this.greenSkills;
+  }
+
+  /**
+   * Returns the extra conditionals
+   * 
+   * @returns
+   *           any
+   */
+  getExtraCond(): any {
+    return this.extraConditionals;
+  }
+
+  /**
+   * Returns the extra stat types for amara
+   * 
+   * @returns
+   *           any
+   */
+  getExtraTypes(): any {
+    return this.extraTypes;
   }
 }
