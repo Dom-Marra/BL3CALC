@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Amara } from '../amara';
 import { Character } from '../character';
+import { Fl4k } from '../fl4k';
 
 @Component({
   selector: 'app-build',
@@ -21,6 +22,10 @@ export class BuildComponent implements OnInit {
       switch(params.character) {
         case 'amara': {
           this.character = new Amara(1, 1, 1);
+          break;
+        } case 'fl4k': {
+          this.character = new Fl4k(1, 2, 1);
+          break;
         }
       }
     });
