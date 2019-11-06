@@ -2,13 +2,16 @@ export interface SkillEffects {
     name: string;
     description: string;
     effects: Array<{
-        name: String,
-        type?: {
+        name?: String,
+        names?: Array<string>,
+        type?: Array<{
             accuracy?: boolean,
             actionSkillDmg?: boolean,
+            armorDmg?: boolean,
             bonusDmg?: boolean,
             bonusElementalDmg?: boolean,
             chargeTime?: boolean,
+            corrosiveDmg?: boolean,
             criticalHitDmg?: boolean,
             dmgIncrease?: boolean,
             dmgReduction?: boolean,
@@ -17,7 +20,8 @@ export interface SkillEffects {
             fireRate?: boolean,
             gunDmg?: boolean,
             handling?: boolean,
-            healthRegen?: boolean,
+            healthRegen_maxHealth?: boolean,
+            healthRegen_missingHealth?: boolean,
             lifeSteal?: boolean,
             maxHealth?: boolean,
             meleeDmg?: boolean,
@@ -33,10 +37,13 @@ export interface SkillEffects {
             statusEffectDuration?: boolean,
             weaponSwapSpeed?: boolean,
             extraType?: any
-        },
-        conditional?: { active: boolean },
+        }>,
+        conditional?: Object,
+        conditionals?: Array<Object>,
         getActiveValueMulti?: Function,
         getNotActiveValueMulti?: Function,
+        getActiveValueMultis?: Array<Function>,
+        getNotActiveValueMultis?: Array<Function>,
         value?: any, 
         values?:Array<any>}>;
 }
