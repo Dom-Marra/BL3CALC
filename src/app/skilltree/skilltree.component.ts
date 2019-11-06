@@ -2,6 +2,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Skill } from '../skill';
 import { NormalSkill } from '../normalskill';
 import { Character } from '../character'
+import { Router, NavigationStart } from '@angular/router';
+import { ActionMod } from '../actionmod';
+import { ActionSkill } from '../actionskill';
 
 @Component({
   selector: 'app-skilltree',
@@ -43,7 +46,17 @@ export class SkilltreeComponent implements OnInit {
 
   @Output() hovered = new EventEmitter<Array<any>>();   //Event emmiter for tooltip hover
 
-  constructor() { }
+  constructor(private router: Router) { 
+
+    //On router event
+    this.router.events.subscribe(e => {
+      //When new route reset tree
+      if (e instanceof NavigationStart) {
+        this.reset();
+      }
+    });
+    
+  }
 
   ngOnInit() {
     this.setColor();
@@ -62,11 +75,12 @@ export class SkilltreeComponent implements OnInit {
    * 
    * @param skill
    *        skill to add
-   * 
+   * @param pos
+   *        position of skill in equipped skills (only applies to action mods and action skills)
    * @returns
-   *         Boolean: if adding the point was successful or not
+   *        Boolean: if adding the point was successful or not
    */
-  addPoint(skill: Skill): Boolean {
+  addPoint(skill: Skill, pos?: number): Boolean {
 
     const pointsToModify:number = 1; //Used give back a point character
 
@@ -78,7 +92,7 @@ export class SkilltreeComponent implements OnInit {
     
     //Increase allocation of skill and character
     skill.addPoint();
-    this.character.addPoint(skill);
+    this.character.addPoint(skill, pos);
 
     //Trigger animation for point addition if skill type is normal
     if (skill instanceof NormalSkill) {
@@ -121,8 +135,6 @@ export class SkilltreeComponent implements OnInit {
     skill.removePoint();
     this.character.removePoint(skill);
 
-    
-    
     //Trigger animation for removal of point if skill type is normal
     if (skill instanceof NormalSkill) {
       if (this.allocatedPoints > this.MIN_POINTS && this.allocatedPoints <= this.MAX_POINTS) {
@@ -232,7 +244,7 @@ export class SkilltreeComponent implements OnInit {
   }
 
 
- /**
+  /**
    * Decrements the two gradients that show skill allocation progress
    */
   decrementGradient() {
@@ -252,11 +264,14 @@ export class SkilltreeComponent implements OnInit {
     }
   }
 
+  /**
+   * Resets the skills points of the tree
+   */
   reset() {
     this.skills.sort(function(a, b) {
       return a.getPreReq() - b.getPreReq();
     });
-
+    
     for (var i = this.skills.length - 1; i >= 0; i--) {
       if (this.skills[i].getAllocatedPoints() > 0) {
         for (var j = this.skills[i].getAllocatedPoints(); j > 0; j--) {
@@ -265,6 +280,42 @@ export class SkilltreeComponent implements OnInit {
       }
     }
 
+  }
+
+  /**
+   * Checks if a skills is of type action mod
+   * 
+   * @param skill 
+   *          skill to check
+   * @returns
+   *         boolean: whether the type matches
+   */
+  isActionMod(skill: Skill): Boolean {
+    return skill instanceof ActionMod;
+  }
+
+  /**
+   * Checks if a skills is of type action skill
+   * 
+   * @param skill 
+   *          skill to check
+   * @returns
+   *         boolean: whether the type matches
+   */
+  isActionSkill(skill: Skill): Boolean {
+    return skill instanceof ActionSkill;
+  }
+
+  /**
+   * Checks if a skills is of type normal
+   * 
+   * @param skill 
+   *          skill to check
+   * @returns
+   *         boolean: whether the type matches
+   */
+  isNormalSkill(skill: Skill): Boolean {
+    return skill instanceof NormalSkill;
   }
 
   
