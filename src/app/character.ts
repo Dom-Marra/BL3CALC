@@ -10,47 +10,83 @@ export abstract class Character {
     public readonly MAX_NORMAL_SKILL_POINTS = 48;         //Max points that can be allocated for normal skills
 
     private conditionals = {                              //Situations that affects the character
-        usedActionSkill: {
+        usedActionSkill: { 
             active: false,
             header: "Used Action Skill?"
         },
-        dealtMeleeDmg: {
+        dealtMeleeDmg: { //Used on Amara
             active: false,
             header: "Dealt melee damage?"
         },
-        activateKillSkills: {
+        activateKillSkills: { 
             active: false,
             header: "Activate kill skills?"
         },
-        enemeyDamagedByAS: {
+        enemyDamagedByAS: { //Used on Amara
             active: false,
             header: "Dealt elemental Damage?"
         },
-        dealtEleDmgWithElementalWeapon: {
+        dealtEleDmgWithElementalWeapon: { //Used on Amara
             active: false,
             header: "Enemey is damaged by action skill?"
         },
-        dealtElementalDmg: {
+        dealtElementalDmg: {    //Used on Amara
             active: false,
             header: "Dealt elemental damage with your weapon?"
+        },
+        reloaded: {     //Used on fl4k
+            active: false,
+            header: "Did you reload recently?"
+        },
+        moving: { //used on fl4k
+            active: false,
+            header: "Are you moving?"
+        },
+        standingStill: { //used on fl4k
+            active: false,
+            header: "Are you standing still?"
+        },
+        aboveHalfHealth: { //used on fl4k
+            active: false,
+            header: "Are you above half health?"
+        },
+        enemyNotTargetingYou: { //used on fl4k
+            active: false,
+            header: "Enemy not targeting you?"
+        },
+        noEnemiesNearby: { //used on fl4k
+            active: false,
+            header: "No enemies nearby?"
+        },
+        criticalKill: {
+            active: false,
+            header: "Killed an enemy with Crit?"
+        },
+        fightingAHuman: {  //used on fl4k
+            active: false,
+            header: "Fighting a human?"
+        },
+        fightingARobot: {  //used on fl4k
+            active: false,
+            header: "Fighting a robot?"
+        },
+        fightingABeast: {  //used on fl4k
+            active: false,
+            header: "Fighting a beast?"
         },
     }
 
 
-    private maxActionSkillPoints = 1;                      //Max points that can be allocated for action skills
-    private maxActionModPoints = 1;                        //Max points that can be allocated for action mods
-    private maxOtherSkillPoints = 1;                       //Max points that can be allocated for other skills
+    private maxActionSkillPoints = 0;                      //Max points that can be allocated for action skills
+    private maxActionModPoints = 0;                        //Max points that can be allocated for action mods
+    private maxOtherSkillPoints = 0;                       //Max points that can be allocated for other skills
   
-
     private allocatedNormalSkillPoints = 0;              //number of points allocated in normal skills
-    private allocatedActionSkillPoints = 0;              //number of points allocated in action skills
-    private allocatedActionModPoints = 0;                //number of points allocated in action mods
-    private allocatedOtherSkillPoints = 0;               //number of points allocated in other skills
 
     private equippedSkills: Array<{                      //Action skills, action mods, and other skills allocated
         actionSkill?: ActionSkill;
         actionMods?: Array<ActionMod>;
-        otherSkill?: OtherSkill;}> = [{actionMods: []}];
+        otherSkill?: OtherSkill;}> = [{actionMods: []},{actionMods: []}];
     private allocatedSkills: Array<Skill> = [];          //All skills allocated
 
     constructor(maxActionSkillPoints: number, maxActionModPoints: number, maxOtherSkillPoints: number) {
@@ -97,65 +133,11 @@ export abstract class Character {
     }
 
     /**
-     * Retrieves number of allocated points of action skills 
-     * 
-     * @returns
-     *          number
-     */
-    getAllocatedActionSkillPoints(): number {
-        return this.allocatedActionSkillPoints;
-    }
-
-    /**
-     * Retrieves number of allocated points of action mods
-     * 
-     * @returns
-     *          number
-     */
-    getAllocatedActionModPoints(): number {
-        return this.allocatedActionModPoints;
-    }
-
-    /**
-     * Retrieves number of allocated points of other skills 
-     * 
-     * @returns
-     *          number
-     */
-    getAllocatedOtherSkillPoints(): number {
-        return this.allocatedOtherSkillPoints;
-    }
-
-    /**
      * Sets the number of allocated points of normal skills 
      * 
      */
     setAllocatedNormalSkillPoints(newAmount: number) {
         this.allocatedNormalSkillPoints = newAmount;
-    }
-
-    /**
-     * Sets the number of allocated points of action skills 
-     * 
-     */
-    setAllocatedActionSkillPoints(newAmount: number) {
-       this.allocatedActionSkillPoints = newAmount;
-    }
-
-    /**
-     * Sets the number of allocated points of action mods
-     * 
-     */
-    setAllocatedActionModPoints(newAmount: number) {
-        this.allocatedActionModPoints = newAmount;
-    }
-
-    /**
-     * Sets the number of allocated points of other skills 
-     * 
-     */
-    setAllocatedOtherSkillPoints(newAmount: number)  {
-        this.allocatedOtherSkillPoints = newAmount;
     }
 
     /**
@@ -223,15 +205,21 @@ export abstract class Character {
      * Adds point into a specific skill type allocation
      * 
      * @param skill
-    */
-    abstract addPoint(skill: Skill): void;
+     *        Skill to be allocated
+     * @param pos
+     *        position of skill in equipped skills (only applies to action mods and action skills)
+     */
+    abstract addPoint(skill: Skill, pos?: number): void;
         
     /**
      * removes point from a specific skill type allocation
      * 
      * @param skill
+     *        Skill to be removed
+     * @param pos
+     *        position of skill in equipped skills (only applies to action mods and action skills)
      */
-    abstract removePoint(skill: Skill): void;
+    abstract removePoint(skill: Skill, pos?: number): void;
     
     /**
      * Retrieves skills that belong to the blue tree
@@ -256,4 +244,22 @@ export abstract class Character {
      *          Array
      */
     abstract getGreenSkills(): Skill[];
+
+     /**
+     * Returns the extra conditionals
+     * 
+     * @returns
+     *           Object
+     */
+    abstract getExtraCond(): Object;
+
+    /**
+     * Returns the extra stat types for the character
+     * 
+     * @returns
+     *           Object
+     */
+    abstract getExtraTypes(): Object;
+
+    
 }
