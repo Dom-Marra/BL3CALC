@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, DoCheck, KeyValueDiffers, IterableDiffers } from '@angular/core';
 import { Skill } from '../skill';
-import { Character } from '../character';
 
 @Component({
   selector: 'app-stats',
@@ -22,42 +21,139 @@ export class StatsComponent implements OnInit, DoCheck {
   private allocatedSkillsDiffer: any;                   //Holds IterbaleDiffer of allocates skill array
 
   private offensiveStats = {                            //Offensive stats
-    accuracy: "0",
-    actionSkillDmg: "0",
-    bonusDmg: "0",
-    bonusElementalDmg: "0",
-    criticalHitDmg: "0",
-    dmgIncrease: "0",
-    elementalDmg: "0",
-    fireRate: "0",
-    gunDmg: "0",
-    handling: "0",
-    meleeDmg: "0",
-    shockDmg: "0",
-    splashDmg: "0",
-    statusEffectDmg: "0",
-    statusEffectDuration: "0"
+    accuracy: {
+      header: "Accuracy",
+      value: "0"
+    },
+    actionSkillDmg: {
+      header: "Action Skill Damage",
+      value: "0"
+    },
+    armorDmg: {
+      header: "Armor Damage",
+      value: "0"
+    },
+    bonusDmg: {
+      header: "Bonus Damage",
+      value: "0"
+    },
+    bonusElementalDmg: {
+      header: "Bonus Elemental Damage",
+      value: "0"
+    },
+    criticalHitDmg: {
+      header: "Critical Hit Damage",
+      value: "0"
+    },
+    dmgIncrease: {
+      header: "Increased Damage",
+      value: "0"
+    },
+    elementalDmg: {
+      header: "Elemental Damage",
+      value: "0"
+    },
+    fireRate: {
+      header: "Fire Rate",
+      value: "0"
+    },
+    gunDmg: {
+      header: "Gun Damage",
+      value: "0"
+    },
+    handling: {
+      header: "Handling",
+      value: "0"
+    },
+    meleeDmg: {
+      header: "Melee Damage",
+      value: "0"
+    },
+    shockDmg: {
+      header: "Shock Damage",
+      value: "0"
+    },
+    splashDmg: {
+      header: "Splash Damage",
+      value: "0"
+    },
+    statusEffectDmg: {
+      header: "Status Effect Damage",
+      value: "0"
+    },
+    statusEffectDuration: {
+      header: "Status Effect Duration",
+      value: "0"
+    }
   };
 
   private defensiveStats = {                             //Defensive stats
-    dmgReduction: "0",
-    elementalDmgReduction: "0",
-    healthRegen: "0",
-    lifeSteal: "0",
-    maxHealth: "0",
-    shieldRegenDelay: "0",
-    splashDmgReduction: "0"
+    dmgReduction: {
+      header: "Damage Reduction",
+      value: "0"
+    },
+    elementalDmgReduction: {
+      header: "Elemental Damage Reduction",
+      value: "0"
+    },
+    healthRegen_maxHealth: {
+      header: "Health Regen (max)",
+      value: "0"
+    },
+    healthRegen_missingHealth: {
+      header: "Health Regen (missing)",
+      value: "0"
+    },
+    lifeSteal: {
+      header: "Life Steal",
+      value: "0"
+    },
+    maxHealth: {
+      header: "Max Health",
+      value: "0"
+    },
+    shieldRegenDelay: {
+      header: "Shield Regen Delay",
+      value: "0"
+    },
+    splashDmgReduction: {
+      header: "Splash Damage Reduction",
+      value: "0"
+    }
   }
 
   private utilityStats = {                                //Utility stats
-    chargeTime: "0",
-    handling: "0",
-    modeSwitchSpeed: "0",
-    movementSpeed: "0",
-    reloadSpeed: "0",
-    statusEffectChance: "0",
-    weaponSwapSpeed: "0"
+    chargeTime: {
+      header: "Charge Time",
+      value: "0"
+    },
+    handling: {
+      header: "Handling",
+      value: "0"
+    },
+    modeSwitchSpeed: {
+      header: "Mode Switch Speed",
+      value: "0"
+    },
+    movementSpeed: {
+      header: "Movement Speed",
+      value: "0"
+    },
+    reloadSpeed: {
+      header: "Reload Speed",
+      value: "0"
+    },
+    statusEffectChance: {
+      header: "Status Effect Chance",
+      value: "0"
+    },
+    weaponSwapSpeed: {
+      header: "Weapon Swap Speed",
+      value: "0"
+    }
   }
+
+  private characterSpecificStats = { }            //Stats specific per character (different stack types etc...)
 
   @Input()
   allocatedPoints: number;                        //Points allocated in tree
@@ -74,6 +170,7 @@ export class StatsComponent implements OnInit, DoCheck {
    * it is put into an array 
    */                     
   set maxActionSkills(maxActionSkills: number) {
+    this._maxActionSkills = [];
     for (var i = 0; i < maxActionSkills; i++) {
       this._maxActionSkills[i] = i;
     }
@@ -85,6 +182,7 @@ export class StatsComponent implements OnInit, DoCheck {
    * it is put into an array 
    */  
   set maxActionMods(maxActionMods: number) {
+    this._maxActionMods = [];
     for (var i = 0; i < (maxActionMods / this._maxActionSkills.length); i++) {
       this._maxActionMods[i] = i;
     }
@@ -96,8 +194,23 @@ export class StatsComponent implements OnInit, DoCheck {
    * it is put into an array 
    */  
   set maxOtherSkills(maxOtherSkills: number) {
+    this._maxOtherSkills = [];
     for (var i = 0; i < maxOtherSkills; i++) {
       this._maxOtherSkills[i] = i;
+    }
+  }
+
+  @Input()
+  /**
+   * Set extra stats based on extra stat types in the character object
+   */
+  set characterStats(characterStats: Object) {
+    this.characterSpecificStats = {};
+
+    for (var stat in characterStats) {
+      if (characterStats[stat].header != null) {
+        this.characterSpecificStats[stat] = characterStats[stat];
+      }
     }
   }
 
@@ -126,103 +239,178 @@ export class StatsComponent implements OnInit, DoCheck {
    *                  
    */
   checkForDiffer(skillsDiffer: any, skillDiffer: Array<any>, skillArray: Array<any>) {
-   
+  
     //Check if the skill array changed (had skills added or removed)
     const skillsChange = skillsDiffer.diff(skillArray);      
 
     //skill array changed
     if (skillsChange) {
+      this.skillsChangeAdded(skillsChange, skillDiffer);
+      this.skillsChangeRemoved(skillsChange, skillDiffer);
+    }
+    
+    //Check differences in skills
+    this.checkAllocatedSkill(skillArray, skillDiffer);
+    
+  }
 
-      //If skill was added, add that skill to the skilldiffer array
-      skillsChange.forEachAddedItem(skill => {
-        skillDiffer.push([this.differs.find(skill.item).create()]); 
 
-        //Get the index of last element in the skilldiffer array
-        var index = skillDiffer.length - 1;
+  /**
+   * Checks if a skill was added 
+   * 
+   * @param skillsChange 
+   *            changes of skillsDiffer
+   * @param skillDiffer 
+   *            Array that holds KeyValueDiffer of skills
+   */
+  skillsChangeAdded(skillsChange, skillDiffer) {
 
-        //Traverse the current skill effects
-        skill.item.getSkillEffects().effects.forEach(effect => {
+    //If skill was added, add that skill to the skilldiffer array
+    skillsChange.forEachAddedItem(skill => {
+      skillDiffer.push([this.differs.find(skill.item).create()]);
+      this.addEffects(skillDiffer, skill);
+    });
+  }
 
-          //If there is a conditional to the effect push into the skilldiffer array with the current skill
-          if (effect.conditional != null) {
-            skillDiffer[index].push(this.differs.find(effect.conditional).create());
+  /**
+   * Adds effects from a skill into the skillDiffer array at the position
+   * of the skill
+   * 
+   * @param skillDiffer 
+   *            Array that holds KeyValueDiffer of skills
+   * @param skill 
+   *            Skill to get effects from
+   */
+  addEffects(skillDiffer, skill) {
 
-            //Try to add the conditional to our conditional array
-            this.addConditional(effect.conditional);
-          }
-        });
+    //Get the index of last element in the skilldiffer array
+    var index = skillDiffer.length - 1;
+
+    skill.item.getSkillEffects().effects.forEach(effect => {
+
+      //If there is a conditional to the effect push into the skilldiffer array with the current skill
+      if (effect.conditional != null) {
+        skillDiffer[index].push(this.differs.find(effect.conditional).create());
+
+        //Try to add the conditional to our conditional array
+        this.addConditional(effect.conditional);
+
+        //Check if there is an array of conditionals
+      } else if (effect.conditionals != null) {
+        effect.conditionals.forEach(conditional => {
+          skillDiffer[index].push(this.differs.find(conditional).create());
+
+          //Try to add the conditional to our conditional array
+          this.addConditional(conditional);
+        }); 
+      }
+
+    });
+  }
+
+  /**
+   * Checks if skills were removed
+   * 
+   * @param skillsChange 
+   *            changes of skillsDiffer
+   * @param skillDiffer 
+   *            Array that holds KeyValueDiffer of skills
+   */
+  skillsChangeRemoved(skillsChange, skillDiffer) {
+    var removedSkills = [];
+
+    //If a skill was removed, remove that entry from the skilldiffer array and add it to removed skills
+    //Index offset is only used when a bulk of skills is removed (Tree resets)
+    var indexOffset = 0; 
+    skillsChange.forEachRemovedItem(skill => {
+      var oldAllocation = this.removeSkill(skillDiffer, skill, indexOffset);
+      removedSkills.push({skill: skill, oldAllocation: oldAllocation});
+      indexOffset++;
+    });
+
+    if (removedSkills.length > 0) {
+
+      removedSkills.sort((elementA, elementB) => {
+        return elementA.skill.item.getPreReq() -  elementB.skill.item.getPreReq();
       });
 
-      //If a skill was removed, remove that entry from the skilldiffer array and update stats
-      //Index offset is only used when a bulk of skills is removed (Tree resets)
-      var indexOffset = 0; 
-      skillsChange.forEachRemovedItem(skill => {
-        const removedSkill = skillDiffer.splice(skill.previousIndex - indexOffset, 1);
-
-        //The value used to update the stats with
-        var valueToSub;
-
-        //Traverse through the records of the removed skills until allocated points is reached
-        //If the previous allocated points is greater than 0 use it, otherwise use 1
-        for (let [key, value] of removedSkill[0][0]._records) {
-          if (key == "allocatedPoints") {
-            valueToSub = value.previousValue > 0 ? value.previousValue : 1;
-            this.updateStatBySkill(skill.item, valueToSub);
-          }
-        }
-
-        indexOffset++;
-
-        //Traverse the skill effects
-        skill.item.getSkillEffects().effects.forEach(effect => {
-          //Try to remove the conditional (if any) from the conditional array
-          if (effect.conditional != null) {
-            this.removeConditional(effect.conditional);
-
-            //Remove feffects based on the conditionals current value
-            //subtract one due to the update stats line done above
-            if (effect.conditional.currentValue != null && effect.conditional.currentValue > 0) {
-              this.updateStatByEffect(skill.item, effect, null, effect.conditional.currentValue - 1);
-            }
-          }
-        });
+      removedSkills.forEach(entry => {
+        this.updateStatBySkill(entry.skill.item, entry.oldAllocation);
+        this.removeEffects(entry.skill);
       });
     }
+  }
 
-    //For each skill in the skill array
-    skillArray.forEach((skill, index) => {
+  /**
+   * Removes skills from skillDiffer array
+   * 
+   * @param skillDiffer 
+   *             Array that holds KeyValueDiffer of skills
+   * @param skill 
+   *            skill entry in skillDiffer array; used to determine skill index in skillDiffer array
+   * @param indexOffset 
+   *            Offsets the skill index on skillDiffer when multple skills are removed at once
+   * @returns
+   *        The old allocated points of the removed skills
+   */
+  removeSkill(skillDiffer, skill, indexOffset): number {
+    const removedSkill = skillDiffer.splice(skill.previousIndex - indexOffset, 1);
 
-      //Index of the conditional in the skilldiff array
-      var conditionalIndex = 0;
-      skill.getSkillEffects().effects.forEach(effect => {
-        
-        if (effect.conditional != null) {
-          //Confitional to be tested if it changed
-          var effectChange = skillDiffer[index][conditionalIndex + 1];
-          //Get changes
-          var changes = effectChange.diff(effect.conditional);
-
-          //Check if there are any changes
-          if (changes) {
-            
-            //If the conditional was changed:
-            //call update stats with the skill, with previous values
-            changes.forEachChangedItem(changedItem => {
-              if (changedItem.key == "active") {
-                this.updateStatByEffect(skill, effect, changedItem.previousValue);
-              } else if (changedItem.key == "currentValue") {
-                this.updateStatByEffect(skill, effect, null, changedItem.previousValue, effect.conditional.effectiveness);
-              } else if (changedItem.key == "effectiveness") {
-                this.updateStatByEffect(skill, effect, null, effect.conditional.currentValue, changedItem.previousValue);
-              }
-            })
-          }
-
-          conditionalIndex++;
+    //Traverse through the records of the removed skills until allocated points is reached
+    //If the current allocated points is greater than 1 use it, otherwise use 1
+    for (let [key, value] of removedSkill[0][0]._records) {
+      if (key == "allocatedPoints") {
+        return value.currentValue > 1 ? value.currentValue : 1;
       }
-        
+    }
+  }
 
-      });
+  /**
+   * Removes skill effects from stats when a skill is removed
+   * 
+   * @param skill 
+   *          skill entry in skillDiffer array
+   */
+  removeEffects(skill) {
+
+    //Traverse the skill effects
+    skill.item.getSkillEffects().effects.forEach(effect => {
+      //Try to remove the conditional (if any) from the stats conditional array
+      if (effect.conditional != null) {
+        this.removeConditional(effect.conditional);
+
+        //Remove effects based on the conditionals current value
+        //subtract one due to the update stats line done above
+        if (effect.conditional.currentValue != null && effect.conditional.currentValue > 0) {
+          this.updateStatByEffect(skill.item, effect, null, effect.conditional.currentValue - 1);
+        }
+      } else if (effect.conditionals != null) {
+        effect.conditionals.forEach(conditional => {
+          this.removeConditional(conditional);
+
+          //Remove effects based on the conditionals current value
+          //subtract one due to the update stats line done above
+          if (conditional.currentValue != null && conditional.currentValue > 0) {
+            this.updateStatByEffect(skill.item, effect, null, conditional.currentValue - 1);
+          }
+        });
+      }
+    });
+
+  }
+
+  /**
+   * Checks if there are any changes to skill properties
+   * 
+   * @param skillArray 
+   *             Array of allocated skills
+   * @param skillDiffer 
+   *             Array that holds KeyValueDiffer of skills
+   */
+  checkAllocatedSkill(skillArray, skillDiffer) {
+     //For each skill in the skill array
+     skillArray.forEach((skill, index) => {
+      this.checkSkillEffects(skillDiffer, skill, index);
 
       //Skill to be tested if it changed
       var skillchange = skillDiffer[index][0]; 
@@ -244,10 +432,86 @@ export class StatsComponent implements OnInit, DoCheck {
           if (changedItem.key == 'allocatedPoints') {
             this.updateStatBySkill(skill, changedItem.previousValue);
           }
-        })
+        });
       }
-    })
+      
+    });
   }
+
+  /**
+   * Checks for differences in skill effects
+   * 
+   * @param skillDiffer 
+   *              Array that holds KeyValueDiffer of skills
+   * @param skill 
+   *              skill to check effects of
+   * @param index 
+   *              index of skill in skillDiffer array
+   */
+  checkSkillEffects(skillDiffer, skill, index) {
+    //Index of the conditional in the skilldiff array
+    var conditionalIndex = 0;
+    skill.getSkillEffects().effects.forEach(effect => {
+      
+      if (effect.conditional != null) {
+        this.checkEffectConditional(skillDiffer, index, conditionalIndex, effect, skill, effect.conditional);
+
+        conditionalIndex++;
+      } else if (effect.conditionals != null) {
+        effect.conditionals.forEach(conditional => {
+          this.checkEffectConditional(skillDiffer, index, conditionalIndex, effect, skill, conditional);
+          conditionalIndex++;
+        });
+      }
+
+    });
+
+  }
+
+  /**
+   * Checks differences in effect conditionals 
+   * 
+   * @param skillDiffer 
+   *             Array that holds KeyValueDiffer of skills
+   * @param index 
+   *             index of skill in skillDiffer array
+   * @param conditionalIndex 
+   *             index of conditional in skillDiffer array
+   * @param effect 
+   *            effect that the conditional belongs to
+   * @param skill 
+   *            skill that the effect belongs to
+   * @param conditional 
+   *            conditional that is being checked
+   */
+  checkEffectConditional(skillDiffer, index, conditionalIndex, effect, skill, conditional) {
+
+    //Confitional to be tested if it changed
+    var effectChange = skillDiffer[index][conditionalIndex + 1];
+
+    //Get changes
+    var changes = effectChange.diff(conditional);
+
+    var oldConditionalIndex = effect.conditionals != null ? effect.conditionals.indexOf(conditional) : null;
+
+    //Check if there are any changes
+    if (changes) {
+      
+      //If the conditional was changed:
+      //call update stats with the skill, with previous values
+      changes.forEachChangedItem(changedItem => {
+        if (changedItem.key == "active") {
+          this.updateStatByEffect(skill, effect, changedItem.previousValue, null, null, null, oldConditionalIndex);
+        } else if (changedItem.key == "currentValue") {
+          this.updateStatByEffect(skill, effect, null, changedItem.previousValue);
+        } else if (changedItem.key == "effectiveness") {
+            this.updateStatByEffect(skill, effect, null, null, changedItem.previousValue, changedItem.currentValue);
+        }
+      });
+    }
+  }
+
+
 
   /**
    * Adds a skill effects conditional to the current conditionals that effect the 
@@ -287,10 +551,16 @@ export class StatsComponent implements OnInit, DoCheck {
    */
   removeConditional(conditional: any) {
     //Loop through each conditional 
+    //Make the removed conditional active = false if it's able to be changed
     //If the conditional is found set the index and exit
     this.conditionals.forEach((next, index) => {
       if (next[0] == conditional) {
         if (--next[1] == 0) {
+
+          if (conditional.stateChangeable != false) {
+            conditional.active = false;
+          }
+
           this.conditionals.splice(index, 1);
           return;
         }
@@ -302,7 +572,7 @@ export class StatsComponent implements OnInit, DoCheck {
    * Update conditionals current value based on the user input
    * 
    * @param conditional
-   *                    the conditional to update
+   *              the conditional to update
    * @param event 
    *              the triggered event
    */
@@ -323,7 +593,7 @@ export class StatsComponent implements OnInit, DoCheck {
       return;
     }
 
-    conditional.setCurrentValue(insertedValue);
+    conditional.currentValue = insertedValue;
   }
 
   /**
@@ -381,23 +651,18 @@ export class StatsComponent implements OnInit, DoCheck {
    * @param oldConditionalValue 
    *             old value of the conditional
    * @param oldEffectiveness
-   *             old effectiveness value of the effect if it has any
+   *             old effectiveness value of the effect
+   * @param currentEffectiveness
+   *            current effectiveness value of the effect
    */
-  updateStatByEffect(skill: Skill, effect: any, oldConditional?: boolean, oldConditionalValue?: number, oldEffectiveness?: number) {
+  updateStatByEffect(skill: Skill, effect: any, oldConditional?: boolean, oldConditionalValue?: number, oldEffectiveness?: number, currentEffectiveness?:number, oldConditionalIndex?: number) {
     var value = this.calculateValue(skill, effect, null); 
     var valueToSub = 0;                                   
-
-    //Provide old condtional or old conditional value if its provided
-    if (oldConditional != null || oldConditionalValue != null) {
-      valueToSub = this.calculateValue(skill, effect, null, oldConditional, oldConditionalValue);
-    }
-
-    if (oldEffectiveness) {
-      value *= effect.conditional.effectiveness;
-      valueToSub *= oldEffectiveness;
-    }
-
     
+    //Provide old condtional or old conditional value if its provided
+    if (oldConditional != null || oldConditionalValue != null || oldEffectiveness != null) {
+      valueToSub = this.calculateValue(skill, effect, null, oldConditional, oldConditionalValue, oldEffectiveness, currentEffectiveness, oldConditionalIndex);
+    }
 
     this.updateStat(value, valueToSub, effect);
   } 
@@ -416,27 +681,71 @@ export class StatsComponent implements OnInit, DoCheck {
    *            old active value of the effect
    * @param oldConditionalValue 
    *            old value of the conditional
+   * @param oldEffectiveness
+   *             old effectiveness value of the effect
+   * @param currentEffectiveness
+   *            current effectiveness value of the effect
+   * @param oldConditionalIndex
+   *            index of conditional if the effect contains more than 1
    */
-  calculateValue(skill: Skill, effect: any, oldIndex?: number, oldConditional?: boolean, oldConditionalValue?: number) {
+  calculateValue(skill: Skill, effect: any, oldIndex?: number, oldConditional?: boolean, oldConditionalValue?: number, oldEffectiveness?:number, currentEffectiveness?:number, oldConditionalIndex?: number) {
     var value: any = 0.00;        //the value to calculate
     var valueMulti: number = 1;   //multiplier for the value
 
-    //If the effect has a conditional, it's active, no old conditional is provided or its true, and no old conditional value is provided:
-    //The value multiplier is 1 unless the effect has a function to return a multiplier when active
-    if (effect.conditional != null && effect.conditional.active && oldConditional == null && oldConditionalValue == null || oldConditional == true) {
-      valueMulti = effect.getActiveValueMulti != null ? effect.getActiveValueMulti() : 1;
+    //Check if the effect has a conditional
+    if (effect.conditional != null) {
+      if (oldConditionalValue == null) { //Old conditional value wasn't updated
+        if (effect.conditional.active && oldConditional == null || oldConditional == true) { //effect is active and the old state was either null, or active
+          valueMulti = effect.getActiveValueMulti != null ? effect.getActiveValueMulti() : 1;
+        } else if (!effect.conditional.active && oldConditional == null || oldConditional == false) { //effect is inactive and the old state was either null, or inactive
+          valueMulti = effect.getNotActiveValueMulti != null ? effect.getNotActiveValueMulti() : 0;
+        } 
+      } else {
+        valueMulti = oldConditionalValue;
+      }
 
-    //Else if the effect has a conditional, it's not active, no old conditional is provided or its false, and no old conditional value is provided:
-    //The value multiplier is 1 unless the effect has a function to return a multiplier when not active
-    } else if (effect.conditional != null && !effect.conditional.active  && oldConditional == null && oldConditionalValue == null || oldConditional == false) {
-      valueMulti = effect.getNotActiveValueMulti != null ? effect.getNotActiveValueMulti() : 0;
-
-    //Else if the old conditional value is provided:
-    //The value multiplier is equal to it
-    } else if (oldConditionalValue != null) {
-      valueMulti = oldConditionalValue;
+      //Check if the effect has mulitple conditioals
+    } else if (effect.conditionals != null) {
+     if (oldConditionalValue == null) { //No old conditional value was provided continue to get value multi
+        if (oldConditionalIndex != null) {  //Old conditional index was proivded, just get the value multi
+          if (oldConditional) { 
+            if (effect.getActiveValueMultis != null && effect.getActiveValueMultis[oldConditionalIndex] != null) {
+              valueMulti = effect.getActiveValueMultis[oldConditionalIndex]();
+            } else {
+              valueMulti = 1;
+            }
+          } else {
+            if (effect.getNotActiveValueMultis != null && effect.getNotActiveValueMultis[oldConditionalIndex] != null) {
+              valueMulti = effect.getNotActiveValueMultis[oldConditionalIndex]();
+            } else {
+              valueMulti = 0;
+            }
+          }
+        } else { //Traverse conditionals if no old condtional index was provided and get value multi
+          effect.conditionals.forEach((conditional, index) => { 
+              if (conditional.active) { 
+                if (effect.getActiveValueMultis != null && effect.getActiveValueMultis[index] != null) {
+                  valueMulti = effect.getActiveValueMultis[index]();
+                } else {
+                  valueMulti = 1;
+                }
+              } else {
+                if (effect.getNotActiveValueMultis != null && effect.getNotActiveValueMultis[index] != null) {
+                  valueMulti = effect.getNotActiveValueMultis[index]();
+                } else {
+                  valueMulti = 0;
+                }
+              }
+          });
+        }
+      } else {
+        valueMulti = oldConditionalValue;
+      }
     }
-    
+
+    //If old effectiveness was provided get the value multi based on it
+    if (oldEffectiveness) valueMulti = (valueMulti / currentEffectiveness) * oldEffectiveness;
+
     //If an old index has been provided get the effect value based on it
     if (oldIndex != null) {
       effect.value != null ? value = effect.value : value = effect.values[oldIndex - 1];
@@ -450,7 +759,7 @@ export class StatsComponent implements OnInit, DoCheck {
     if (isNaN(value)) {
       value = parseFloat(value.replace(/^\D+[^-][a-zA-z]|\D+$/g, ""));
     }
-    
+
     return value * valueMulti;
   }
 
@@ -465,65 +774,71 @@ export class StatsComponent implements OnInit, DoCheck {
    *              the effect that is being used to update the stat
    */
   updateStat(value: number, valueToSub: number, effect: any) {
-    if (effect.type.extraType != null) {
-      effect.type.extraType(value - valueToSub);
-    } else if (effect.type.accuracy) {
-      this.offensiveStats.accuracy = (parseFloat(this.offensiveStats.accuracy) + value - valueToSub).toFixed(2);
-    } else if (effect.type.actionSkillDmg) {
-      this.offensiveStats.actionSkillDmg = (parseFloat(this.offensiveStats.actionSkillDmg) + value - valueToSub).toFixed(2);
-    } else if (effect.type.bonusDmg) {
-      this.offensiveStats.bonusDmg = (parseFloat(this.offensiveStats.bonusDmg) + value - valueToSub).toFixed(2);
-    } else if (effect.type.bonusElementalDmg) {
-      this.offensiveStats.bonusElementalDmg = (parseFloat(this.offensiveStats.bonusElementalDmg) + value - valueToSub).toFixed(2);
-    } else if (effect.type.chargeTime) {
-      this.utilityStats.chargeTime = (parseFloat(this.utilityStats.chargeTime) + value - valueToSub).toFixed(2);
-    } else if (effect.type.criticalHitDmg) {
-      this.offensiveStats.criticalHitDmg = (parseFloat(this.offensiveStats.criticalHitDmg) + value - valueToSub).toFixed(2);
-    } else if (effect.type.dmgIncrease) {
-      this.offensiveStats.dmgIncrease = (parseFloat(this.offensiveStats.dmgIncrease) + value - valueToSub).toFixed(2);
-    } else if (effect.type.dmgReduction) {
-      this.defensiveStats.dmgReduction = (parseFloat(this.defensiveStats.dmgReduction) + value - valueToSub).toFixed(2);
-    } else if (effect.type.elementalDmg) {
-      this.offensiveStats.elementalDmg = (parseFloat(this.offensiveStats.elementalDmg) + value - valueToSub).toFixed(2);
-    } else if (effect.type.elementalDmgReduction) {
-      this.defensiveStats.elementalDmgReduction = (parseFloat(this.defensiveStats.elementalDmgReduction) + value - valueToSub).toFixed(2);
-    } else if (effect.type.fireRate) {
-      this.offensiveStats.fireRate = (parseFloat(this.offensiveStats.fireRate) + value - valueToSub).toFixed(2);
-    } else if (effect.type.gunDmg) {
-      this.offensiveStats.gunDmg = (parseFloat(this.offensiveStats.gunDmg) + value - valueToSub).toFixed(2);
-    } else if (effect.type.handling) {
-      this.utilityStats.handling = (parseFloat(this.utilityStats.handling) + value - valueToSub).toFixed(2);
-    } else if (effect.type.healthRegen) {
-      this.defensiveStats.healthRegen = (parseFloat(this.defensiveStats.healthRegen) + value - valueToSub).toFixed(2);
-    } else if (effect.type.lifeSteal) {
-      this.defensiveStats.lifeSteal = (parseFloat(this.defensiveStats.lifeSteal) + value - valueToSub).toFixed(2);
-    } else if (effect.type.maxHealth) {
-      this.defensiveStats.maxHealth = (parseFloat(this.defensiveStats.maxHealth) + value - valueToSub).toFixed(2);
-    } else if (effect.type.meleeDmg) {
-      this.offensiveStats.meleeDmg = (parseFloat(this.offensiveStats.meleeDmg) + value - valueToSub).toFixed(2);
-    } else if (effect.type.modeSwitchSpeed) {
-      this.utilityStats.modeSwitchSpeed = (parseFloat(this.utilityStats.modeSwitchSpeed) + value - valueToSub).toFixed(2);
-    } else if (effect.type.movementSpeed) {
-      this.utilityStats.movementSpeed = (parseFloat(this.utilityStats.movementSpeed) + value - valueToSub).toFixed(2);
-    } else if (effect.type.reloadSpeed) {
-      this.utilityStats.reloadSpeed = (parseFloat(this.utilityStats.reloadSpeed) + value - valueToSub).toFixed(2);
-    } else if (effect.type.shieldRegenDelay) {
-      this.defensiveStats.shieldRegenDelay = (parseFloat(this.defensiveStats.shieldRegenDelay) + value - valueToSub).toFixed(2);
-    } else if (effect.type.shockDmg) {
-      this.offensiveStats.shockDmg = (parseFloat(this.offensiveStats.shockDmg) + value - valueToSub).toFixed(2);
-    } else if (effect.type.splashDmg) {
-      this.offensiveStats.splashDmg = (parseFloat(this.offensiveStats.splashDmg) + value - valueToSub).toFixed(2);
-    } else if (effect.type.splashDmgReduction) {
-      this.defensiveStats.splashDmgReduction = (parseFloat(this.defensiveStats.splashDmgReduction) + value - valueToSub).toFixed(2);
-    } else if (effect.type.statusEffectChance) {
-      this.utilityStats.statusEffectChance = (parseFloat(this.utilityStats.statusEffectChance) + value - valueToSub).toFixed(2);
-    } else if (effect.type.statusEffectDmg) {
-      this.offensiveStats.statusEffectDmg = (parseFloat(this.offensiveStats.statusEffectDmg) + value - valueToSub).toFixed(2);
-    } else if (effect.type.statusEffectDuration) {
-      this.offensiveStats.statusEffectDuration = (parseFloat(this.offensiveStats.statusEffectDuration) + value - valueToSub).toFixed(2);
-    } else if (effect.type.weaponSwapSpeed) {
-      this.utilityStats.weaponSwapSpeed = (parseFloat(this.utilityStats.weaponSwapSpeed) + value - valueToSub).toFixed(2);
-    }
+    effect.type.forEach(type => {
+      if (type.extraType != null) {
+        type.extraType.setFunc(value - valueToSub);
+      } else if (type.accuracy) {
+        this.offensiveStats.accuracy.value = (parseFloat(this.offensiveStats.accuracy.value) + value - valueToSub).toFixed(2);
+      } else if (type.actionSkillDmg) {
+        this.offensiveStats.actionSkillDmg.value = (parseFloat(this.offensiveStats.actionSkillDmg.value) + value - valueToSub).toFixed(2);
+      } else if (type.armorDmg) {
+        this.offensiveStats.armorDmg.value = (parseFloat(this.offensiveStats.armorDmg.value) + value - valueToSub).toFixed(2);
+      } else if (type.bonusDmg) {
+        this.offensiveStats.bonusDmg.value = (parseFloat(this.offensiveStats.bonusDmg.value) + value - valueToSub).toFixed(2);
+      } else if (type.bonusElementalDmg) {
+        this.offensiveStats.bonusElementalDmg.value = (parseFloat(this.offensiveStats.bonusElementalDmg.value) + value - valueToSub).toFixed(2);
+      } else if (type.chargeTime) {
+        this.utilityStats.chargeTime.value = (parseFloat(this.utilityStats.chargeTime.value) + value - valueToSub).toFixed(2);
+      } else if (type.criticalHitDmg) {
+        this.offensiveStats.criticalHitDmg.value = (parseFloat(this.offensiveStats.criticalHitDmg.value) + value - valueToSub).toFixed(2);
+      } else if (type.dmgIncrease) {
+        this.offensiveStats.dmgIncrease.value = (parseFloat(this.offensiveStats.dmgIncrease.value) + value - valueToSub).toFixed(2);
+      } else if (type.dmgReduction) {
+        this.defensiveStats.dmgReduction.value = (parseFloat(this.defensiveStats.dmgReduction.value) + value - valueToSub).toFixed(2);
+      } else if (type.elementalDmg) {
+        this.offensiveStats.elementalDmg.value = (parseFloat(this.offensiveStats.elementalDmg.value) + value - valueToSub).toFixed(2);
+      } else if (type.elementalDmgReduction) {
+        this.defensiveStats.elementalDmgReduction.value = (parseFloat(this.defensiveStats.elementalDmgReduction.value) + value - valueToSub).toFixed(2);
+      } else if (type.fireRate) {
+        this.offensiveStats.fireRate.value = (parseFloat(this.offensiveStats.fireRate.value) + value - valueToSub).toFixed(2);
+      } else if (type.gunDmg) {
+        this.offensiveStats.gunDmg.value = (parseFloat(this.offensiveStats.gunDmg.value) + value - valueToSub).toFixed(2);
+      } else if (type.handling) {
+        this.utilityStats.handling.value = (parseFloat(this.utilityStats.handling.value) + value - valueToSub).toFixed(2);
+      } else if (type.healthRegen_maxHealth) {
+        this.defensiveStats.healthRegen_maxHealth.value = (parseFloat(this.defensiveStats.healthRegen_maxHealth.value) + value - valueToSub).toFixed(2);
+      } else if (type.healthRegen_missingHealth) {
+        this.defensiveStats.healthRegen_missingHealth.value = (parseFloat(this.defensiveStats.healthRegen_missingHealth.value) + value - valueToSub).toFixed(2);
+      } else if (type.lifeSteal) {
+        this.defensiveStats.lifeSteal.value = (parseFloat(this.defensiveStats.lifeSteal.value) + value - valueToSub).toFixed(2);
+      } else if (type.maxHealth) {
+        this.defensiveStats.maxHealth.value = (parseFloat(this.defensiveStats.maxHealth.value) + value - valueToSub).toFixed(2);
+      } else if (type.meleeDmg) {
+        this.offensiveStats.meleeDmg.value = (parseFloat(this.offensiveStats.meleeDmg.value) + value - valueToSub).toFixed(2);
+      } else if (type.modeSwitchSpeed) {
+        this.utilityStats.modeSwitchSpeed.value = (parseFloat(this.utilityStats.modeSwitchSpeed.value) + value - valueToSub).toFixed(2);
+      } else if (type.movementSpeed) {
+        this.utilityStats.movementSpeed.value = (parseFloat(this.utilityStats.movementSpeed.value) + value - valueToSub).toFixed(2);
+      } else if (type.reloadSpeed) {
+        this.utilityStats.reloadSpeed.value = (parseFloat(this.utilityStats.reloadSpeed.value) + value - valueToSub).toFixed(2);
+      } else if (type.shieldRegenDelay) {
+        this.defensiveStats.shieldRegenDelay.value = (parseFloat(this.defensiveStats.shieldRegenDelay.value) + value - valueToSub).toFixed(2);
+      } else if (type.shockDmg) {
+        this.offensiveStats.shockDmg.value = (parseFloat(this.offensiveStats.shockDmg.value) + value - valueToSub).toFixed(2);
+      } else if (type.splashDmg) {
+        this.offensiveStats.splashDmg.value = (parseFloat(this.offensiveStats.splashDmg.value) + value - valueToSub).toFixed(2);
+      } else if (type.splashDmgReduction) {
+        this.defensiveStats.splashDmgReduction.value = (parseFloat(this.defensiveStats.splashDmgReduction.value) + value - valueToSub).toFixed(2);
+      } else if (type.statusEffectChance) {
+        this.utilityStats.statusEffectChance.value = (parseFloat(this.utilityStats.statusEffectChance.value) + value - valueToSub).toFixed(2);
+      } else if (type.statusEffectDmg) {
+        this.offensiveStats.statusEffectDmg.value = (parseFloat(this.offensiveStats.statusEffectDmg.value) + value - valueToSub).toFixed(2);
+      } else if (type.statusEffectDuration) {
+        this.offensiveStats.statusEffectDuration.value = (parseFloat(this.offensiveStats.statusEffectDuration.value) + value - valueToSub).toFixed(2);
+      } else if (type.weaponSwapSpeed) {
+        this.utilityStats.weaponSwapSpeed.value = (parseFloat(this.utilityStats.weaponSwapSpeed.value) + value - valueToSub).toFixed(2);
+      }
+    });
   }
 
   /**
