@@ -501,7 +501,7 @@ export class Fl4k extends Character {
                     effects:[
                         {name:"Extra Projectile Chance",
                         values:["+5%", "+10%", "+15%", "+20%", "+25%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/BigGame.webp", [3, 0], 3, 10, "red",
+        new NormalSkill("assets/images/fl4k/skills/BigGame.webp", [3, 0], 3, 15, "red",
                     {name:"BIG GAME", 
                     description:"FL4K's Hunter Skills become much more effective and have a longer duration.",
                     effects:[
