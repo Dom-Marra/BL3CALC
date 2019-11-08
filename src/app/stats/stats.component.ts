@@ -330,9 +330,46 @@ export class StatsComponent implements OnInit, DoCheck {
 
     if (removedSkills.length > 0) {
 
+      //Sort the removed skills, skills that have effectiveness attatched should be removes first
       removedSkills.sort((elementA, elementB) => {
-        return elementA.skill.item.getPreReq() -  elementB.skill.item.getPreReq();
+        let aResult;
+        let bResult;
+
+        elementA.skill.item.getSkillEffects().effects.forEach(effect => {
+          if (effect.conditionals != null) {
+           return effect.conditionals.forEach(cond => {
+              if (cond.effectiveness != null) {
+                aResult = -1;
+              } 
+            });
+          } else if (effect.conditional != null && effect.conditional.effectiveness != null) {
+            aResult = -1;
+          } 
+        });
+        
+        elementB.skill.item.getSkillEffects().effects.forEach(effect => {
+          if (effect.conditionals != null) {
+           return effect.conditionals.forEach(cond => {
+              if (cond.effectiveness != null) {
+                bResult =  1;
+              } 
+            });
+          } else if (effect.conditional != null && effect.conditional.effectiveness != null) {
+            bResult =  1;
+          }
+        });
+
+        if (aResult == bResult) {
+          return 0;
+        } else if (aResult != null) {
+          return aResult;
+        }  else if (bResult != null) {
+          return bResult;
+        } 
       });
+
+      console.log(removedSkills);
+
 
       removedSkills.forEach(entry => {
         this.updateStatBySkill(entry.skill.item, entry.oldAllocation);
