@@ -47,7 +47,7 @@
            [class.disabled]="allocatedPoints < skill.getPreReq()" 
             class="skill doNotSelect" 
             *ngFor="let skill of skills" 
-            (click)="((isActionMod(skill) && this.character.getMaxActionModPoints() == 1) 
+            (click)="((isActionMod(skill) && this.character.getMaxActionModPoints() == 1 && this.character.getMaxActionSkillPoints() == 1) 
                     || (isActionSkill(skill) && this.character.getMaxActionSkillPoints() == 1)) ||
                     !(isActionMod(skill) || isActionSkill(skill)) ? addPoint(skill) : ''" 
             (contextmenu)="removePoint(skill)"
@@ -106,33 +106,57 @@
                     attr.href="{{skill.getPath()}}" />
 
             <g *ngIf="(isActionMod(skill) 
-                      && this.character.getMaxActionModPoints() > 1 
+                      && ((this.character.getMaxActionModPoints() > 1
                       && (this.character.getEquippedSkills()[0].actionSkill == skill.getRequiredActionSkill() 
                           || this.character.getEquippedSkills()[1].actionSkill == skill.getRequiredActionSkill())
                       && skill != this.character.getEquippedSkills()[0].actionMods[0]
-                      && skill != this.character.getEquippedSkills()[1].actionMods[0]) 
-                      || (isActionSkill(skill) && this.character.getMaxActionSkillPoints() > 1)" 
+                      && skill != this.character.getEquippedSkills()[1].actionMods[0])
+
+                      || this.character.getMaxActionSkillPoints() > 1
+                      && this.character.getEquippedSkills()[0].actionSkill == skill.getRequiredActionSkill()
+                      && skill != this.character.getEquippedSkills()[0].actionMods[0]
+                      && skill != this.character.getEquippedSkills()[0].actionMods[1])) 
+
+                      || (isActionSkill(skill) 
+                          && this.character.getMaxActionSkillPoints() > 1
+                          && this.character.getEquippedSkills()[0].actionSkill != skill)" 
                 class="left-right-select"
                 (click)="addPoint(skill,0)">
-                <rect attr.x="{{skill.getPosition()[1] == -1 ? -22 : 98}}%" 
+                <rect attr.x="{{skill.getPosition()[1] == -1 ? -22 :
+                                skill.getPosition()[1] == 3 ? 90 : 
+                                7 + (skill.getPosition()[1] * 27)}}%" 
                       attr.y="{{11.12 + (skill.getPosition()[0] * 14.1)}}%"
                       height="3%" width="15%" rx="5" ry="5" />
-                <text attr.x="{{skill.getPosition()[1] == -1 ? -21 : 98}}%" 
+                <text attr.x="{{skill.getPosition()[1] == -1 ? -21 :
+                                skill.getPosition()[1] == 3 ? 90 : 
+                                7 + (skill.getPosition()[1] * 27)}}%" 
                       attr.y="{{13.2 + (skill.getPosition()[0] * 14.1)}}%">+Slot 1</text>
             </g>
             <g *ngIf="(isActionMod(skill) 
-                      && this.character.getMaxActionModPoints() > 1 
+                      && ((this.character.getMaxActionModPoints() > 1 
                       && (this.character.getEquippedSkills()[0].actionSkill == skill.getRequiredActionSkill() 
                           || this.character.getEquippedSkills()[1].actionSkill == skill.getRequiredActionSkill())
                       && skill != this.character.getEquippedSkills()[0].actionMods[1]
-                      && skill != this.character.getEquippedSkills()[1].actionMods[1]) 
-                      || (isActionSkill(skill) && this.character.getMaxActionSkillPoints() > 1)"
+                      && skill != this.character.getEquippedSkills()[1].actionMods[1])
+
+                      || this.character.getMaxActionSkillPoints() > 1
+                      && this.character.getEquippedSkills()[1].actionSkill == skill.getRequiredActionSkill()
+                      && skill != this.character.getEquippedSkills()[1].actionMods[0]
+                      && skill != this.character.getEquippedSkills()[1].actionMods[1]))
+
+                      || (isActionSkill(skill) 
+                          && this.character.getMaxActionSkillPoints() > 1
+                          && this.character.getEquippedSkills()[1].actionSkill != skill)"
                  class="left-right-select"
                  (click)="addPoint(skill,1)">
-                <rect attr.x="{{skill.getPosition()[1] == -1 ? -6 : 98}}%" 
+                <rect attr.x="{{skill.getPosition()[1] == -1 ? -6 :
+                                skill.getPosition()[1] == 3 ? 106 : 
+                                23 + (skill.getPosition()[1] * 27)}}%" 
                       attr.y="{{11.12 + (skill.getPosition()[0] * 14.1)}}%"
                       height="3%" width="15%" rx="5" ry="5" />
-                <text attr.x="{{skill.getPosition()[1] == -1 ? -6 : 82}}%" 
+                <text attr.x="{{skill.getPosition()[1] == -1 ? -6 :
+                                skill.getPosition()[1] == 3 ? 106 : 
+                                23 + (skill.getPosition()[1] * 27)}}%" 
                       attr.y="{{13.2 + (skill.getPosition()[0] * 14.1)}}%">+Slot 2</text>
             </g>
                     
