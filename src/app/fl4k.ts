@@ -79,7 +79,7 @@ export class Fl4k extends Character {
             header: "Using Unblinking Eye stacks?",
             requiresNumberField: true,
             currentValue: 0,
-            maxValue: 3,
+            maxValue: 0,
         },
         furiousStacks: {
             active: false,
@@ -93,35 +93,35 @@ export class Fl4k extends Character {
             header: "Using Furious stacks?",
             requiresNumberField: true,
             currentValue: 0,
-            maxValue: 5,
+            maxValue: 0,
         },
         interplanetaryStacks: {
             active: false,
             header: "Using Interplanetary stacks?",
             requiresNumberField: true,
             currentValue: 0,
-            maxValue: 3,
+            maxValue: 0,
         },
         interplanetaryHumanBonus: {
             active: false,
             header: "Got Interplanetary Human Bonus?",
             requiresNumberField: true,
             currentValue: 0,
-            maxValue: 3,
+            maxValue: 0,
         },
         interplanetaryRobotBonus: {
             active: false,
             header: "Got Interplanetary Robot Bonus?",
             requiresNumberField: true,
             currentValue: 0,
-            maxValue: 3,
+            maxValue: 0,
         },
         interplanetaryBeastBonus: {
             active: false,
             header: "Got Interplanetary Beast Bonus?",
             requiresNumberField: true,
             currentValue: 0,
-            maxValue: 3,
+            maxValue: 0,
         }
     };
 
@@ -184,6 +184,7 @@ export class Fl4k extends Character {
             }
         },
         dmgShared: {
+			type: "defense",
             header: "Damage Shared",
             value: 0,
             valueType: "percent",
@@ -221,7 +222,11 @@ export class Fl4k extends Character {
         maxUnblinkingEyeStacks: {
             header: "Max Unblinking Stacks",
             value: 0,
-            valueType: "flat"
+            valueType: "flat",
+            setFunc: (stackSize: number) => {
+                this.getExtraTypes().maxUnblinkingEyeStacks.value += stackSize;
+                this.getExtraCond().unblinkingEyeStacks.maxValue += stackSize; 
+            }
         },
         maxFuriousStacks: {
             header: "Max Furious Stacks",
@@ -235,12 +240,23 @@ export class Fl4k extends Character {
         maxEnduranceStacks: {
             header: "Max Endurance Stacks",
             value: 0,
-            valueType: "flat"
+            valueType: "flat",
+            setFunc: (stackSize: number) => {
+                this.getExtraTypes().maxEnduranceStacks.value += stackSize;
+                this.getExtraCond().enduranceStacks.maxValue += stackSize; 
+            }
         },
         maxInterplanetaryStacks: {
             header: "Max Interplanetary Stacks",
             value: 0,
-            valueType: "flat"
+            valueType: "flat",
+            setFunc: (stackSize: number) => {
+              this.getExtraTypes().maxInterplanetaryStacks.value += stackSize;
+              this.getExtraCond().interplanetaryStacks.maxValue += stackSize; 
+              this.getExtraCond().interplanetaryHumanBonus.maxValue += stackSize; 
+              this.getExtraCond().interplanetaryBeastBonus.maxValue += stackSize; 
+              this.getExtraCond().interplanetaryRobotBonus.maxValue += stackSize; 
+            }
         },
     };
 
@@ -358,21 +374,16 @@ export class Fl4k extends Character {
                     "they gain a bonus to all damage dealt.<br /><br />" +
                     "Additionally, they gain a unique stacking bonus depending on the type " + 
                     "of enemy killed. Each unique bonus can stack up to 3 times. Each stack decays after a short time.",
-                    effects:[   //STACK HERE
+                    effects:[
                         {name:"Damage",
                         type: [{dmgIncrease: true}],
                         conditionals: [this.getExtraCond().hunterSkill ,this.getExtraCond().interplanetaryStacks],
                         getActiveValueMultis: [
                             null,
                             () => {
-                                this.getExtraTypes().maxInterplanetaryStacks.value = 3;
                                 return this.getExtraCond().interplanetaryStacks.currentValue * this.getExtraCond().hunterSkill.effectiveness;
                             }
                         ],
-                        getNotActiveValueMulti: () => {
-                            this.getExtraTypes().maxInterplanetaryStacks.value = 0;
-                            return 0;
-                        },
                         values:["+2% /stack", "+4% /stack", "+6% /stack", "+8% /stack", "+10% /stack"]},
                         {name:"Human Bonus",
                         type: [{actionSkillDmg: true}],
@@ -403,7 +414,11 @@ export class Fl4k extends Character {
                                 return this.getExtraCond().interplanetaryBeastBonus.currentValue * this.getExtraCond().hunterSkill.effectiveness;
                             }
                         ],
-                        values:["+2% Movement Speed /stack", "+3% Movement Speed /stack", "+5% Movement Speed /stack", "+6% Movement Speed /stack", "+7% Movement Speed /stack"]}]}),
+                        values:["+2% Movement Speed /stack", "+3% Movement Speed /stack", "+5% Movement Speed /stack", "+6% Movement Speed /stack", "+7% Movement Speed /stack"]},
+                        {type: [{extraType: this.getExtraTypes().maxInterplanetaryStacks}],
+                        value: 3,
+                        hidden: true,
+                        }]}),
         new NormalSkill("assets/images/fl4k/skills/LeaveNoTrace.webp", [0, 1], 3, 0, "red",
                     {name:"LEAVE NO TRACE", 
                     description:"When FL4K scores a Critical Hit, there is a chance for 1 ammo to be added to their magazine.",
@@ -619,14 +634,12 @@ export class Fl4k extends Character {
                         type: [{extraType: this.getExtraTypes().petDmg}],
                         conditional: this.getExtraCond().enduranceEyeStacks,
                         getActiveValueMulti: () => {
-                            this.getExtraTypes().maxEnduranceEyeStacks.value = 3;
                             return this.getExtraCond().enduranceEyeStacks.currentValue;
                         },
-                        getNotActiveValueMulti: () => {
-                            this.getExtraTypes().maxEnduranceEyeStacks.value = 0;
-                            return 0;
-                        },
-                        value:"+10% per kill"}]}, this.gammaBurst);
+                        value:"+10% per kill"},
+                        {type: [{extraType: this.getExtraTypes().maxEnduranceStacks}],
+                        value: 5,
+                        hidden: true}]}, this.gammaBurst);
     private burstAid = new ActionMod("assets/images/fl4k/skills/BurstAid.webp", [4, -1], 1, 20, "blue",
                     {name:"BURST AID", 
                     description:"After using Gamma Burst, the Rift remains for the duration of the " + 
@@ -918,14 +931,12 @@ export class Fl4k extends Character {
                         type: [{criticalHitDmg: true}],
                         conditional: this.getExtraCond().unblinkingEyeStacks,
                         getActiveValueMulti: () => {
-                            this.getExtraTypes().maxUnblinkingEyeStacks.value = 3;
                             return this.getExtraCond().unblinkingEyeStacks.currentValue;
                         },
-                        getNotActiveValueMulti: () => {
-                            this.getExtraTypes().maxUnblinkingEyeStacks.value = 0;
-                            return 0;
-                        },
-                        value:"+75% per hit"}]}, this.fadeAway);
+                        value:"+75% per hit"},
+                        {type: [{extraType: this.getExtraTypes().maxUnblinkingEyeStacks}],
+                        value: 3,
+                        hidden: true}]}, this.fadeAway);
 
     //Pet Skills
     private jabberSidekick = new OtherSkill("assets/images/fl4k/skills/JabberSidekick.webp", [-1, 0], 1, 0, "green",
@@ -1191,7 +1202,7 @@ export class Fl4k extends Character {
 
             //Check to see if an action mod is allocated already
             //If there is remove a point from its allocation and remove it from equipped skills
-            if (this.getEquippedSkills()[0].actionskill != skill && this.getEquippedSkills()[0].actionskill != null)  {
+            if (this.getEquippedSkills()[0].actionSkill != skill && this.getEquippedSkills()[0].actionSkill != null)  {
                 this.getEquippedSkills()[0].actionSkill.removePoint();
                 this.removePoint(this.getEquippedSkills()[0].actionSkill);
             } 
