@@ -150,7 +150,7 @@
                         Value
                     </th>
                 </tr>
-                <tr *ngFor="let stat of characterSpecificStats | keyvalue">
+                <tr *ngFor="let stat of extraStats | keyvalue">
                     <td *ngIf="stat.value.value != 0">
                         {{stat.value.header}}
                     </td>
