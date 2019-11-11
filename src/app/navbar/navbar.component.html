@@ -3,7 +3,7 @@
     <ul [@openClose]="navState">
         <li routerLink="/build" [queryParams]="{character: 'amara'}">Amara</li>
         <li routerLink="/build" [queryParams]="{character: 'fl4k'}">FL4K</li>
-        <li>Moze</li>
+        <li routerLink="/build" [queryParams]="{character: 'moze'}">Moze</li>
         <li>Zane</li>
     </ul>
     <i id="menu" (click) = "toggleMenuIcon()" class="fa fa-bars"></i>
