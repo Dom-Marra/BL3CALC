@@ -41,6 +41,14 @@ export class StatsComponent implements OnInit, DoCheck {
       header: "Bonus Elemental Damage",
       value: "0"
     },
+    bonusIncendiaryDmg: {
+      header: "Bonus Incendiary Damage",
+      value: "0"
+    },
+    corrosiveDmg: {
+      header: "Corrosive Damage",
+      value: "0"
+    },
     criticalHitDmg: {
       header: "Critical Hit Damage",
       value: "0"
@@ -63,6 +71,10 @@ export class StatsComponent implements OnInit, DoCheck {
     },
     handling: {
       header: "Handling",
+      value: "0"
+    },
+    increasedIncendiaryDmg: {
+      header: "Increased Incendiary Damage",
       value: "0"
     },
     meleeDmg: {
@@ -112,8 +124,20 @@ export class StatsComponent implements OnInit, DoCheck {
       header: "Max Health",
       value: "0"
     },
+    maxShield: {
+      header: "Max Shield",
+      value: "0"
+    },
+    shieldRechargeRate: {
+      header: "Shield Recharge Rate",
+      value: "0"
+    },
     shieldRegenDelay: {
       header: "Shield Regen Delay",
+      value: "0"
+    },
+    shockDmgResist: {
+      header: "Shock Damage Resistance",
       value: "0"
     },
     splashDmgReduction: {
@@ -123,12 +147,24 @@ export class StatsComponent implements OnInit, DoCheck {
   }
 
   private utilityStats = {                                //Utility stats
+    actionSkillCooldown: {
+      header: "Action Skill Cooldown",
+      value: "0"
+    },
     chargeTime: {
       header: "Charge Time",
       value: "0"
     },
     handling: {
       header: "Handling",
+      value: "0"
+    },
+    heatPerShot: {
+      header: "Heat Per Shot",
+      value: "0"
+    },
+    magSize: {
+      header: "Mag Size",
       value: "0"
     },
     modeSwitchSpeed: {
@@ -153,7 +189,7 @@ export class StatsComponent implements OnInit, DoCheck {
     }
   }
 
-  private characterSpecificStats = { }            //Stats specific per character (different stack types etc...)
+  private extraStats = { }                        //Extra stats on the character
 
   @Input()
   allocatedPoints: number;                        //Points allocated in tree
@@ -205,12 +241,29 @@ export class StatsComponent implements OnInit, DoCheck {
    * Set extra stats based on extra stat types in the character object
    */
   set characterStats(characterStats: Object) {
-    this.characterSpecificStats = {};
+    this.extraStats = {};
 
     for (var stat in characterStats) {
       if (characterStats[stat].header != null) {
-        this.characterSpecificStats[stat] = characterStats[stat];
-      }
+        switch(characterStats[stat].type) {
+          case "offense": {
+            this.offensiveStats[stat] = characterStats[stat];
+            break;
+          }
+          case "defense": {
+            this.defensiveStats[stat] = characterStats[stat];
+            break;
+          }
+          case "utility": {
+            this.utilityStats[stat] = characterStats[stat];
+            break;
+          }
+          default: {
+            this.extraStats[stat] = characterStats[stat];
+            break;
+          }
+        }
+      } 
     }
   }
 
@@ -367,9 +420,6 @@ export class StatsComponent implements OnInit, DoCheck {
           return bResult;
         } 
       });
-
-      console.log(removedSkills);
-
 
       removedSkills.forEach(entry => {
         this.updateStatBySkill(entry.skill.item, entry.oldAllocation);
@@ -816,6 +866,8 @@ export class StatsComponent implements OnInit, DoCheck {
         type.extraType.setFunc(value - valueToSub);
       } else if (type.accuracy) {
         this.offensiveStats.accuracy.value = (parseFloat(this.offensiveStats.accuracy.value) + value - valueToSub).toFixed(2);
+      } else if (type.actionSkillCooldown) {
+        this.utilityStats.actionSkillCooldown.value = (parseFloat(this.utilityStats.actionSkillCooldown.value) + value - valueToSub).toFixed(2);
       } else if (type.actionSkillDmg) {
         this.offensiveStats.actionSkillDmg.value = (parseFloat(this.offensiveStats.actionSkillDmg.value) + value - valueToSub).toFixed(2);
       } else if (type.armorDmg) {
@@ -824,8 +876,12 @@ export class StatsComponent implements OnInit, DoCheck {
         this.offensiveStats.bonusDmg.value = (parseFloat(this.offensiveStats.bonusDmg.value) + value - valueToSub).toFixed(2);
       } else if (type.bonusElementalDmg) {
         this.offensiveStats.bonusElementalDmg.value = (parseFloat(this.offensiveStats.bonusElementalDmg.value) + value - valueToSub).toFixed(2);
+      } else if (type.bonusIncendiaryDmg) {
+        this.offensiveStats.bonusIncendiaryDmg.value = (parseFloat(this.offensiveStats.bonusIncendiaryDmg.value) + value - valueToSub).toFixed(2);
       } else if (type.chargeTime) {
         this.utilityStats.chargeTime.value = (parseFloat(this.utilityStats.chargeTime.value) + value - valueToSub).toFixed(2);
+      }  else if (type.corrosiveDmg) {
+        this.offensiveStats.corrosiveDmg.value = (parseFloat(this.offensiveStats.corrosiveDmg.value) + value - valueToSub).toFixed(2);
       } else if (type.criticalHitDmg) {
         this.offensiveStats.criticalHitDmg.value = (parseFloat(this.offensiveStats.criticalHitDmg.value) + value - valueToSub).toFixed(2);
       } else if (type.dmgIncrease) {
@@ -846,10 +902,18 @@ export class StatsComponent implements OnInit, DoCheck {
         this.defensiveStats.healthRegen_maxHealth.value = (parseFloat(this.defensiveStats.healthRegen_maxHealth.value) + value - valueToSub).toFixed(2);
       } else if (type.healthRegen_missingHealth) {
         this.defensiveStats.healthRegen_missingHealth.value = (parseFloat(this.defensiveStats.healthRegen_missingHealth.value) + value - valueToSub).toFixed(2);
+      } else if (type.heatPerShot) {
+        this.utilityStats.heatPerShot.value = (parseFloat(this.utilityStats.heatPerShot.value) + value - valueToSub).toFixed(2);
+      } else if (type.increasedIncendiaryDmg) {
+        this.offensiveStats.increasedIncendiaryDmg.value = (parseFloat(this.offensiveStats.increasedIncendiaryDmg.value) + value - valueToSub).toFixed(2);
       } else if (type.lifeSteal) {
         this.defensiveStats.lifeSteal.value = (parseFloat(this.defensiveStats.lifeSteal.value) + value - valueToSub).toFixed(2);
+      } else if (type.magSize) {
+        this.utilityStats.magSize.value = (parseFloat(this.utilityStats.magSize.value) + value - valueToSub).toFixed(2);
       } else if (type.maxHealth) {
         this.defensiveStats.maxHealth.value = (parseFloat(this.defensiveStats.maxHealth.value) + value - valueToSub).toFixed(2);
+      } else if (type.maxShield) {
+        this.defensiveStats.maxShield.value = (parseFloat(this.defensiveStats.maxShield.value) + value - valueToSub).toFixed(2);
       } else if (type.meleeDmg) {
         this.offensiveStats.meleeDmg.value = (parseFloat(this.offensiveStats.meleeDmg.value) + value - valueToSub).toFixed(2);
       } else if (type.modeSwitchSpeed) {
@@ -858,10 +922,14 @@ export class StatsComponent implements OnInit, DoCheck {
         this.utilityStats.movementSpeed.value = (parseFloat(this.utilityStats.movementSpeed.value) + value - valueToSub).toFixed(2);
       } else if (type.reloadSpeed) {
         this.utilityStats.reloadSpeed.value = (parseFloat(this.utilityStats.reloadSpeed.value) + value - valueToSub).toFixed(2);
+      } else if (type.shieldRechargeRate) {
+        this.defensiveStats.shieldRechargeRate.value = (parseFloat(this.defensiveStats.shieldRechargeRate.value) + value - valueToSub).toFixed(2);
       } else if (type.shieldRegenDelay) {
         this.defensiveStats.shieldRegenDelay.value = (parseFloat(this.defensiveStats.shieldRegenDelay.value) + value - valueToSub).toFixed(2);
       } else if (type.shockDmg) {
         this.offensiveStats.shockDmg.value = (parseFloat(this.offensiveStats.shockDmg.value) + value - valueToSub).toFixed(2);
+      } else if (type.shockDmgResist) {
+        this.defensiveStats.shockDmgResist.value = (parseFloat(this.defensiveStats.shockDmgResist.value) + value - valueToSub).toFixed(2);
       } else if (type.splashDmg) {
         this.offensiveStats.splashDmg.value = (parseFloat(this.offensiveStats.splashDmg.value) + value - valueToSub).toFixed(2);
       } else if (type.splashDmgReduction) {
