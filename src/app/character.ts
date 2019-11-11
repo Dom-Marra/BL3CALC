@@ -74,6 +74,26 @@ export abstract class Character {
             active: false,
             header: "Fighting a beast?"
         },
+        shieldsActive: {  //used on moze
+            active: false,
+            header: "Are your shields active?"
+        },
+        critHit: {  //used on moze
+            active: false,
+            header: "Is your shot a crit?"
+        },
+        splashDmgHit: {
+            active: false,
+            header: "Do your shots deal splash damage?"
+        },
+        dealtSplashDmg: { //used on moze
+            active: false,
+            header: "Did you deal splash damage?"
+        },
+        shieldFullyDepleted: {
+            active: false,
+            header: "Did your shields fully deplete?"
+        }
     }
 
 
