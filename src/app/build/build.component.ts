@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Amara } from '../amara';
 import { Character } from '../character';
 import { Fl4k } from '../fl4k';
+import { Moze } from '../moze';
 
 @Component({
   selector: 'app-build',
@@ -26,6 +27,8 @@ export class BuildComponent implements OnInit {
         } case 'fl4k': {
           this.character = new Fl4k(1, 2, 1);
           break;
+        } case 'moze': {
+          this.character = new Moze(2, 1, 0);
         }
       }
     });
