@@ -4,7 +4,7 @@
             <span *ngIf="isNormalSkill(skill)">{{skill.getAllocatedPoints()}}/{{skill.getMaxPoints()}}</span></p>
         <p class="skill-effects-content" [innerHTML]="skill.getSkillEffects().description"></p>
         <div class="skill-effects-content" *ngIf="skill.getAllocatedPoints() > 0">
-            <div *ngFor="let effect of skill.getSkillEffects().effects; let i = index">
+            <div *ngFor="let effect of skill.getSkillEffects().effects; let i = index" [hidden]="effect.hidden">
                 <p class="skill-effects-effect"  *ngIf="i == 0">Current Effect: </p>
                 <p *ngIf="effect.names != null" class="skill-effects-effect name"><span class="name">{{effect.names[skill.getAllocatedPoints() - 1]}}</span> 
                     <p *ngIf="effect.name != null" class="skill-effects-effect name"><span class="name">{{effect.name}}</span>
@@ -13,8 +13,8 @@
                 </p>
             </div>
         </div>
-        <div class="skill-effects-content"  *ngIf="skill.getAllocatedPoints() < skill.getMaxPoints()">
-            <div *ngFor="let effect of skill.getSkillEffects().effects; let i = index">
+        <div class="skill-effects-content"  *ngIf="skill.getAllocatedPoints() < skill.getMaxPoints() && (isNormalSkill(skill) || skill.getAllocatedPoints() < 1)">
+            <div *ngFor="let effect of skill.getSkillEffects().effects; let i = index" [hidden]="effect.hidden">
                 <p class="skill-effects-effect" *ngIf="i == 0">Next Rank: </p>
                 <p *ngIf="effect.names != null" class="skill-effects-effect name"><span class="name">{{effect.names[skill.getAllocatedPoints()]}}</span> 
                 <p *ngIf="effect.name != null" class="skill-effects-effect name"><span class="name">{{effect.name}}</span> 
