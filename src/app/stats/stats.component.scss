@@ -40,7 +40,7 @@
         .character-level {
             font-size: 35px;
             line-height: 60px;
-            padding-left: 40px;
+            padding-left: 30px;
         }
     }
 
@@ -109,9 +109,9 @@
             }
 
             .stats-table {
-                margin-top: 14px;
-                margin-bottom: 14px;
-                font-size: 14px;
+                margin-top: 12px;
+                margin-bottom: 12px;
+                font-size: 12px;
                 font-family: Verdana;
                 width: 95%;
                 border-spacing: 7px;
@@ -128,15 +128,14 @@
         color: white;
         width: 95%;
         margin: auto;
-        margin-top: 25px;
         display: none;
 
         .config {
             display: block;
             margin-left: 50px;
-            margin-top: 14px;
-            padding-bottom: 14px;
-            font-size: 14px;
+            margin-top: 12px;
+            padding-bottom: 12px;
+            font-size: 12px;
             font-family: Verdana;
             width: fit-content;
             line-height: 28px;
@@ -201,7 +200,7 @@
                 color: white;
                 margin-left: 14px;
                 height: 28px;
-                max-width: 80px;
+                max-width: 35px;
                 background-color: $primary-color-accent-light;
                 border: none;
                 border-bottom: 2px solid $primary-accent-color;
@@ -220,8 +219,10 @@
         }
         
     }
-    
-    
+
+    .simplebar-content {
+        width: 100%;
+    }
     
 }
 
@@ -256,7 +257,7 @@
     }
  }
 
-@media not screen and (min-width: 130vh) {
+@media not screen and (min-width: 1200px) {
 
     .stats {
         max-height: 100%;
@@ -273,14 +274,46 @@
         .stats-nav {
 
             .heading {
-                font-size: 10vw;
+                font-size: 6vh;
             }
     
             .character-level, .non-active {
-                font-size: 7vw;
+                font-size: 4vh;
             }
 
         }
-    }
+
+        .info {
+            .info-section {
+
+                .stats-table {
+                    font-size: 1.75vh;
+                }
+            }
+        }
+
+        #configs {
+            .config {
+                font-size: 1.5vh;
+
+                .checkbox {
+                    height: 4vh;
+                    width: 4vh;
+                }
     
+                .checkbox:after {
+                    top: 0.68vh;
+                    left: 1.28vh;
+                    width: 1.25vh;
+                    height: 2vh;
+                }
+
+                .num-input {
+                    margin-left: 1.5vh;
+                    height: 4vh;
+                    max-width: 4vh;
+                }
+            }
+        }
+    }
 }
