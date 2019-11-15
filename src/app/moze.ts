@@ -908,7 +908,7 @@ export class Moze extends Character {
 				this.getEquippedSkills()[pos].actionMods[0].removePoint();
 				this.removePoint(this.getEquippedSkills()[pos].actionMods[0]);
 			}
-	    } 
+		}
 
 	    //Add action skill to equipped skills
 	    this.getEquippedSkills()[pos].actionSkill = skill;
@@ -967,7 +967,13 @@ export class Moze extends Character {
 	//remove first instance of action skill from equipped skills
 	if (skill instanceof ActionSkill)  {
 	    var firstIndex: number = this.getEquippedSkills()[0].actionSkill == skill ? 0 : 1;
-	    this.getEquippedSkills()[firstIndex].actionSkill = null;
+		this.getEquippedSkills()[firstIndex].actionSkill = null;
+		
+		//remove the action mod that was here if there was any
+        if (this.getEquippedSkills()[firstIndex].actionMods[0] != null) {
+            this.getEquippedSkills()[firstIndex].actionMods[0].removePoint();
+            this.removePoint(this.getEquippedSkills()[firstIndex].actionMods[0]);
+        }
 	} 
 
 	//Remove action mod from equipped skills action mod array
@@ -1032,5 +1038,66 @@ export class Moze extends Character {
      */
     getExtraTypes(): any {
 		return this.extraTypes;
-    }
+	}
+	
+	
+      /**
+     * Returns blue tree name
+     * 
+     * @returns
+     *          string
+     */
+    getBlueTreeName(): string {
+		return this.BLUE_TREE_NAME;
+	  }
+  
+	  /**
+	   * Returns red tree name
+	   * 
+	   * @returns
+	   *          string
+	   */
+	  getRedTreeName(): string {
+		return this.RED_TREE_NAME;
+	  }
+  
+	  /**
+	   * Returns green tree name
+	   * 
+	   * @returns
+	   *          string
+	   */
+	  getGreenTreeName(): string {
+		return this.GREEN_TREE_NAME;
+	  }
+  
+	  /**
+	   * Returns blue tree header image path
+	   * 
+	   * @returns
+	   *          string
+	   */
+	  getBlueTreeHeader(): string {
+		return this.BLUE_TREE_HEADER;
+	  }
+  
+	  /**
+	   * Returns red tree header image path
+	   * 
+	   * @returns
+	   *          string
+	   */
+	  getRedTreeHeader(): string {
+		return this.RED_TREE_HEADER;
+	  }
+  
+	  /**
+	   * Returns green tree header image path
+	   * 
+	   * @returns
+	   *          string
+	   */
+	  getGreenTreeHeader(): string {
+		return this.GREEN_TREE_HEADER;
+	  }
 }

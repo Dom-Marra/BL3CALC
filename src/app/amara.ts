@@ -521,6 +521,7 @@ export class Amara extends Character {
                   description:"Amara gains increased Action Skill Cooldown Rate.",
                   effects:[
                     {name:"Cooldown Rate", 
+                    type: [{actionSkillCooldown: true}],
                     values:["+5%", "+10%", "+15%", "+20%", "+25%"]}]}),
     new NormalSkill('assets/images/amara/skills/Ascendant.webp', [2, 1], 1, 10, "blue",
                   {name:"ASCENDANT", 
@@ -999,4 +1000,64 @@ export class Amara extends Character {
   getExtraTypes(): any {
     return this.extraTypes;
   }
+
+      /**
+     * Returns blue tree name
+     * 
+     * @returns
+     *          string
+     */
+    getBlueTreeName(): string {
+      return this.BLUE_TREE_NAME;
+    }
+
+    /**
+     * Returns red tree name
+     * 
+     * @returns
+     *          string
+     */
+    getRedTreeName(): string {
+      return this.RED_TREE_NAME;
+    }
+
+    /**
+     * Returns green tree name
+     * 
+     * @returns
+     *          string
+     */
+    getGreenTreeName(): string {
+      return this.GREEN_TREE_NAME;
+    }
+
+    /**
+     * Returns blue tree header image path
+     * 
+     * @returns
+     *          string
+     */
+    getBlueTreeHeader(): string {
+      return this.BLUE_TREE_HEADER;
+    }
+
+    /**
+     * Returns red tree header image path
+     * 
+     * @returns
+     *          string
+     */
+    getRedTreeHeader(): string {
+      return this.RED_TREE_HEADER;
+    }
+
+    /**
+     * Returns green tree header image path
+     * 
+     * @returns
+     *          string
+     */
+    getGreenTreeHeader(): string {
+      return this.GREEN_TREE_HEADER;
+    }
 }

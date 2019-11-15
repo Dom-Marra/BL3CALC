@@ -90,7 +90,7 @@ export class Fl4k extends Character {
         },
         enduranceStacks: {
             active: false,
-            header: "Using Furious stacks?",
+            header: "Using Endurance stacks?",
             requiresNumberField: true,
             currentValue: 0,
             maxValue: 0,
@@ -1335,5 +1335,65 @@ export class Fl4k extends Character {
      */
     getExtraTypes(): any {
         return this.extraTypes;
+    }
+
+      /**
+     * Returns blue tree name
+     * 
+     * @returns
+     *          string
+     */
+    getBlueTreeName(): string {
+      return this.BLUE_TREE_NAME;
+    }
+
+    /**
+     * Returns red tree name
+     * 
+     * @returns
+     *          string
+     */
+    getRedTreeName(): string {
+      return this.RED_TREE_NAME;
+    }
+
+    /**
+     * Returns green tree name
+     * 
+     * @returns
+     *          string
+     */
+    getGreenTreeName(): string {
+      return this.GREEN_TREE_NAME;
+    }
+
+    /**
+     * Returns blue tree header image path
+     * 
+     * @returns
+     *          string
+     */
+    getBlueTreeHeader(): string {
+      return this.BLUE_TREE_HEADER;
+    }
+
+    /**
+     * Returns red tree header image path
+     * 
+     * @returns
+     *          string
+     */
+    getRedTreeHeader(): string {
+      return this.RED_TREE_HEADER;
+    }
+
+    /**
+     * Returns green tree header image path
+     * 
+     * @returns
+     *          string
+     */
+    getGreenTreeHeader(): string {
+      return this.GREEN_TREE_HEADER;
     }
 }
