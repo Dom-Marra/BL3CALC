@@ -25,6 +25,7 @@ export class SkilltreeComponent implements OnInit {
   private removeCount = 0;                    //Counter for removal animation
   private mainOff = 0.155;                    //Main gradient offset
   private secondOff = 0.175;                  //secondary gradient offset
+  private character: Character;
 
   @Input()
   treeName: string;                           //Name of the tree
@@ -42,7 +43,37 @@ export class SkilltreeComponent implements OnInit {
   skills: Array<Skill>;                       //Skills for the tree
 
   @Input()
-  character: Character;                       //Character that the tree belongs to
+  /**
+   * Any time a character is changed, reset skill tree fill values and the 
+   * current character
+   */
+  set _character(character: Character) {                       //Character that the tree belongs to
+    
+    if (this.allocatedPoints > 0) {
+      this.mainOff = 0.155;
+      this.secondOff = 0.175;
+      this.allocatedPoints = 0;
+    }
+    this.character = character;
+  }
+
+  @Input()
+  /**
+   * When new data is imported allocate it
+   */
+  set loadedData(data: any) {
+    if (data != null) {
+      if (this.color == "red") {
+        this.allocateLoadedData(data, data.redSkills, this.character.getRedSkills());
+      }
+      if (this.color == "green") {
+        this.allocateLoadedData(data, data.greenSkills, this.character.getGreenSkills());
+      }
+      if (this.color == "blue") {
+        this.allocateLoadedData(data, data.blueSkills, this.character.getBlueSkills());
+      }
+    }
+  }
 
   @Output() hovered = new EventEmitter<Array<any>>();   //Event emmiter for tooltip hover
 
@@ -85,7 +116,7 @@ export class SkilltreeComponent implements OnInit {
     const pointsToModify:number = 1; //Used give back a point character
 
     //Do not add point if skill cannot take point
-    if (!skill.validateModification(pointsToModify, this.allocatedPoints)) return false; 
+    if (!skill.validateModification(pointsToModify, this.allocatedPoints)) return false;
 
     //Do not add point if character has none remaining
     if(!this.character.validateModification(pointsToModify, skill)) return false; 
@@ -93,6 +124,7 @@ export class SkilltreeComponent implements OnInit {
     //Increase allocation of skill and character
     skill.addPoint();
     this.character.addPoint(skill, pos);
+
 
     //Trigger animation for point addition if skill type is normal
     if (skill instanceof NormalSkill) {
@@ -280,6 +312,70 @@ export class SkilltreeComponent implements OnInit {
       }
     }
 
+  }
+
+  /**
+   * Allocates loaded character data to the skill tree
+   * 
+   * @param data 
+   *            JSON that contains the data
+   * @param skillPoints 
+   *            Array of skill point allocations that are sorted to match the skills to allocate to
+   * @param skills 
+   *            Skills to allocate the points to that are sorted to match the array of skill point allocations
+   */
+  allocateLoadedData(data, skillPoints, skills) {
+
+    //Traverse the array of skill point allocations
+    //num being the allocation amount
+    skillPoints.forEach((num, index) => { 
+      if (num > 0) { 
+
+        //For every point of allocation add it
+        for (var i = 0; i < num; i++) {
+          
+          //If the skill is an action skill add it to the equipped skills
+          if (this.isActionSkill(skills[index])) {
+            
+            //Find the place in the data that the action skill belongs to
+            //the element.actionSkill is the index of the skill in its array
+            data.equipped.forEach((element, secondIndex) => {
+
+              // If the index of the actionSkill in the datas equipped skill matches the current index in the allocation point array
+              // and there is nothing in this current spot for equipped skills, add it
+              if (element.actionSkill == index && this.character.getEquippedSkills()[secondIndex].actionSkill == null) {
+                this.addPoint(skills[index], secondIndex);
+                return;
+              }
+            });
+
+            //If the skill is an action mod add it to the equipped skills
+          } else if (this.isActionMod(skills[index])) {
+
+            data.equipped.forEach((element, actionSkillIndex) => {
+              element.actionMods.forEach((element, secondIndex) => {
+
+                //If element, the index of the action mod in the allocation point array, macthes the current index
+                //Add it to the equipped skills
+                if (element == index) {
+
+                  //In the case that there is two action skills but only one mod per skill match use the action skill index 
+                  if (this.character.getMaxActionModPoints() == 2 && this.character.getMaxActionSkillPoints() == 2) {
+                    this.addPoint(skills[index], actionSkillIndex);
+                  } else {
+                    this.addPoint(skills[index], secondIndex);
+                  }
+                }
+              });
+            });
+          } else {
+
+            //Normal, or other skill just add it
+            this.addPoint(skills[index]);
+          }
+        }
+      }
+    });
   }
 
   /**
