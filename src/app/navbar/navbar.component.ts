@@ -21,7 +21,7 @@ import { Navigation } from 'selenium-webdriver';
 
 export class NavbarComponent implements OnInit {
 
-  private navState = 'closed';            //current state of the navbar when in mobile, used for animations
+  public navState = 'closed';            //current state of the navbar when in mobile, used for animations
 
   constructor(private router: Router) { 
 
