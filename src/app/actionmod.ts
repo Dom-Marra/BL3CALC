@@ -37,7 +37,7 @@ export class ActionMod extends Skill {
             if (this.getRequiredActionSkill().getAllocatedPoints() < 0) return false;
         } 
         
-        //At max points and the modification is addition return false
+        //At max points and the modification is addition remove a point from the skill
         if (this.getAllocatedPoints() == this.getMaxPoints() && modification > 0) {
             this.removePoint();
         }

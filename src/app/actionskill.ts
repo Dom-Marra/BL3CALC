@@ -27,8 +27,10 @@ export class ActionSkill extends Skill {
         //not enough pre-req points return false
         if (allocatedSkillTreePoints < this.getPreReq()) return false;
 
-        //At max points and the modification is addition return false
-        if (this.getAllocatedPoints() == this.getMaxPoints() && modification > 0) return false;
+        //At max points and the modification is addition remove a point from the skill
+        if (this.getAllocatedPoints() == this.getMaxPoints() && modification > 0)  {
+            this.removePoint();
+        }
 
         //At min points and the modification is subtraction return false
         if (this.getAllocatedPoints() == this.MIN_POINTS && modification < 0) return false;
