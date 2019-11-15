@@ -64,18 +64,20 @@
                         </feComponentTransfer>
                     </filter>
         </svg>
+        <button class="btn btn-success" id="share-build" (click)="createBuildData()">Share Build</button>
+        <button class="btn btn-info" id="import-build" (click)="importCharacter()">Import Build</button>
         <div class="carousel  flex horizontal-align-center">
             <ul class="carousel-track flex horizontal-align-center">
                 <button class="prev-item" aria-label="Previous Skill Tree" (click)='previous()'></button>
                 <button class="next-item" aria-label="Next Skill Tree"  (click)='next()'></button>
                 <li class="carousel-item left">
-                    <app-skilltree [treeName]='character.BLUE_TREE_NAME' color='blue' index='0' [header]="character.BLUE_TREE_HEADER" [skills]="character.getBlueSkills()" [character]="character" (hovered)="onHovered($event)"></app-skilltree>
+                    <app-skilltree [treeName]='character.getBlueTreeName()' color='blue' index='0' [header]="character.getBlueTreeHeader()" [skills]="character.getBlueSkills()" [_character]="character" [loadedData]="loadedCharacterData" (hovered)="onHovered($event)"></app-skilltree>
                 </li>
                 <li class="carousel-item active">
-                    <app-skilltree [treeName]='character.GREEN_TREE_NAME' color='green' index='1' [header]="character.GREEN_TREE_HEADER" [skills]="character.getGreenSkills()" [character]="character" (hovered)="onHovered($event)"></app-skilltree>
+                    <app-skilltree [treeName]='character.getGreenTreeName()' color='green' index='1' [header]="character.getGreenTreeHeader()" [skills]="character.getGreenSkills()" [_character]="character" [loadedData]="loadedCharacterData" (hovered)="onHovered($event)"></app-skilltree>
                 </li>
                 <li class="carousel-item right">
-                    <app-skilltree [treeName]='character.RED_TREE_NAME' color='red' index='2' [header]="character.RED_TREE_HEADER" [skills]="character.getRedSkills()" [character]="character" (hovered)="onHovered($event)"></app-skilltree>
+                    <app-skilltree [treeName]='character.getRedTreeName()' color='red' index='2' [header]="character.getRedTreeHeader()" [skills]="character.getRedSkills()" [_character]="character" [loadedData]="loadedCharacterData" (hovered)="onHovered($event)"></app-skilltree>
                 </li>
             </ul>
         </div>
@@ -84,7 +86,7 @@
                    [equippedSkills]="character.getEquippedSkills()"
                    [allocatedSkills]="character.getAllocatedSkills()"
                    [maxActionSkills]="character.getMaxActionSkillPoints()"
-                   [maxActionMods]="character.getMaxActionModPoints()"
+                   [maxActionMods]="{actionMods: character.getMaxActionModPoints(), actionSkills: character.getMaxActionSkillPoints()}"
                    [maxOtherSkills]="character.getMaxOtherSkillPoints()"
                    [characterStats]="character.getExtraTypes()"
                    (hovered)="onHovered($event)"></app-stats>
