@@ -44,3 +44,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+#api keys
+/src/app/api-key*
+
+#dev proxy
+proxy.conf.json
