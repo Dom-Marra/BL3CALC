@@ -5,6 +5,18 @@
     overflow: hidden;
 }
 
+#share-build {
+    position: absolute;
+    top: 70px;
+    left: 10px;
+}
+
+#import-build {
+    position: absolute;
+    top: 70px;
+    left: 120px;
+}
+
 /* Carousel Styles */
 .carousel  {
     margin-top: 5vh;
@@ -28,12 +40,12 @@
 
 .next-item {
     background-image: url('src/assets/images/skilltree/next.webp');
-    left: 20vh;
+    left: 19vh;
 }
 
 .prev-item {
     background-image: url('src/assets/images/skilltree/prev.webp');
-    right: 20vh;
+    right: 18.5vh;
 }
 
 

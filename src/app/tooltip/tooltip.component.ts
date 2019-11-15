@@ -8,7 +8,7 @@ import { NormalSkill } from '../normalskill';
   styleUrls: ['./tooltip.component.scss']
 })
 export class TooltipComponent implements OnInit {
-  private skill: Skill;
+  public skill: Skill;
   private event: Event;
 
 

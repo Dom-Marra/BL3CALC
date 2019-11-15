@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { SimplebarAngularModule } from 'simplebar-angular';
@@ -14,6 +15,7 @@ import { SkilltreeComponent } from './skilltree/skilltree.component';
 import { StatsComponent } from './stats/stats.component';
 import { BuildComponent } from './build/build.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
+import { ApiKey } from './api-key';
 
 @NgModule({
   declarations: [
@@ -31,9 +33,10 @@ import { TooltipComponent } from './tooltip/tooltip.component';
     AppRoutingModule,
     AngularFontAwesomeModule,
     BrowserAnimationsModule,
-    SimplebarAngularModule
+    SimplebarAngularModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [ApiKey],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

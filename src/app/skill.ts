@@ -12,6 +12,8 @@ export interface SkillEffects {
             bonusDmg?: boolean,
             bonusElementalDmg?: boolean,
             bonusIncendiaryDmg?: boolean,
+            bonusShockDmg?: boolean, //new stat
+            bonusCryoDmg?: boolean, //new stat
             chargeTime?: boolean,
             corrosiveDmg?: boolean, 
             criticalHitDmg?: boolean,
@@ -160,6 +162,18 @@ export abstract class Skill {
      */
     getSkillEffects(): SkillEffects {
         return this.skillEffects;
+    }
+
+    /**
+     * Sets the number of allocated points in the skill
+     * 
+     * @param
+     *       number of points to set to
+     */
+    setAllocatedPoints(points: number) {
+        if (points <= this.getMaxPoints()) {
+            this.allocatedPoints = points;
+        }
     }
 
     /**

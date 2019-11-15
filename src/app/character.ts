@@ -38,7 +38,7 @@ export abstract class Character {
             active: false,
             header: "Did you reload recently?"
         },
-        moving: { //used on fl4k
+        moving: { 
             active: false,
             header: "Are you moving?"
         },
@@ -171,6 +171,16 @@ export abstract class Character {
     }
 
     /**
+     * Sets the equipped skills
+     * 
+     * @params
+     *          EquippedSkills
+     */
+    setEquippedSkills(equippedSkills: Array<any>) {
+        this.equippedSkills = equippedSkills;
+    }
+
+    /**
      * Returns the allocated skills
      * 
      * @returns
@@ -280,6 +290,54 @@ export abstract class Character {
      *           Object
      */
     abstract getExtraTypes(): Object;
+
+    /**
+     * Returns blue tree name
+     * 
+     * @returns
+     *          string
+     */
+    abstract getBlueTreeName(): string;
+
+    /**
+     * Returns red tree name
+     * 
+     * @returns
+     *          string
+     */
+    abstract getRedTreeName(): string;
+
+    /**
+     * Returns green tree name
+     * 
+     * @returns
+     *          string
+     */
+    abstract getGreenTreeName(): string;
+
+    /**
+     * Returns blue tree header image path
+     * 
+     * @returns
+     *          string
+     */
+    abstract getBlueTreeHeader(): string;
+
+    /**
+     * Returns red tree header image path
+     * 
+     * @returns
+     *          string
+     */
+    abstract getRedTreeHeader(): string;
+
+    /**
+     * Returns green tree header image path
+     * 
+     * @returns
+     *          string
+     */
+    abstract getGreenTreeHeader(): string;
 
     
 }

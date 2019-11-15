@@ -9,18 +9,18 @@ import { Skill } from '../skill';
 export class StatsComponent implements OnInit, DoCheck {
 
   private readonly MATH = Math;                         //Used to perform mathematical operations in the html
-  private readonly CHARACTER_OFFSET:number = 2;         //Number to add to character allocation to show correct level
+  public readonly CHARACTER_OFFSET: number = 2;         //Number to add to character allocation to show correct level
 
-  private _maxActionSkills: Array<number> = [];         //Max action skills the character can have put into an array
+  public _maxActionSkills: Array<number> = [];         //Max action skills the character can have put into an array
   private _maxActionMods: Array<number> = [];           //Max action mods a character can have put into an array
   private _maxOtherSkills: Array<number> = [];          //Max other skills a character can have put into an array (not used as of right now)
 
-  private conditionals: Array<any> = [];                //Conditionals that the character uses
+  public conditionals: Array<any> = [];                //Conditionals that the character uses
 
   private allocatedSkillDiffer: Array<any> = [];        //Array that holds KeyValueDiffer of skills, and their effect conditionals
   private allocatedSkillsDiffer: any;                   //Holds IterbaleDiffer of allocates skill array
 
-  private offensiveStats = {                            //Offensive stats
+  public offensiveStats = {                            //Offensive stats
     accuracy: {
       header: "Accuracy",
       value: "0"
@@ -37,12 +37,20 @@ export class StatsComponent implements OnInit, DoCheck {
       header: "Bonus Damage",
       value: "0"
     },
+    bonusCryoDmg: {
+      header: "Bonus Cyro Damage",
+      value: "0"
+    },
     bonusElementalDmg: {
       header: "Bonus Elemental Damage",
       value: "0"
     },
     bonusIncendiaryDmg: {
       header: "Bonus Incendiary Damage",
+      value: "0"
+    },
+    bonusShockDmg: {
+      header: "Bonus Shock Damage",
       value: "0"
     },
     corrosiveDmg: {
@@ -99,7 +107,7 @@ export class StatsComponent implements OnInit, DoCheck {
     }
   };
 
-  private defensiveStats = {                             //Defensive stats
+  public defensiveStats = {                             //Defensive stats
     dmgReduction: {
       header: "Damage Reduction",
       value: "0"
@@ -146,9 +154,9 @@ export class StatsComponent implements OnInit, DoCheck {
     }
   }
 
-  private utilityStats = {                                //Utility stats
+  public utilityStats = {                                //Utility stats
     actionSkillCooldown: {
-      header: "Action Skill Cooldown",
+      header: "Action Skill Cooldown Rate",
       value: "0"
     },
     chargeTime: {
@@ -189,7 +197,7 @@ export class StatsComponent implements OnInit, DoCheck {
     }
   }
 
-  private extraStats = { }                        //Extra stats on the character
+  public extraStats = { }                        //Extra stats on the character
 
   @Input()
   allocatedPoints: number;                        //Points allocated in tree
@@ -217,11 +225,12 @@ export class StatsComponent implements OnInit, DoCheck {
    * For every number n in the max action mods a character can have
    * it is put into an array 
    */  
-  set maxActionMods(maxActionMods: number) {
+  set maxActionMods(maxActionMods: Object) {
     this._maxActionMods = [];
-    for (var i = 0; i < (maxActionMods / this._maxActionSkills.length); i++) {
+    for (var i = 0; i < (maxActionMods["actionMods"] / this._maxActionSkills.length); i++) {
       this._maxActionMods[i] = i;
     }
+
   }
 
   @Input() 
@@ -874,10 +883,14 @@ export class StatsComponent implements OnInit, DoCheck {
         this.offensiveStats.armorDmg.value = (parseFloat(this.offensiveStats.armorDmg.value) + value - valueToSub).toFixed(2);
       } else if (type.bonusDmg) {
         this.offensiveStats.bonusDmg.value = (parseFloat(this.offensiveStats.bonusDmg.value) + value - valueToSub).toFixed(2);
+      } else if (type.bonusCryoDmg) {
+        this.offensiveStats.bonusCryoDmg.value = (parseFloat(this.offensiveStats.bonusCryoDmg.value) + value - valueToSub).toFixed(2);
       } else if (type.bonusElementalDmg) {
         this.offensiveStats.bonusElementalDmg.value = (parseFloat(this.offensiveStats.bonusElementalDmg.value) + value - valueToSub).toFixed(2);
       } else if (type.bonusIncendiaryDmg) {
         this.offensiveStats.bonusIncendiaryDmg.value = (parseFloat(this.offensiveStats.bonusIncendiaryDmg.value) + value - valueToSub).toFixed(2);
+      } else if (type.bonusShockDmg) {
+        this.offensiveStats.bonusShockDmg.value = (parseFloat(this.offensiveStats.bonusShockDmg.value) + value - valueToSub).toFixed(2);
       } else if (type.chargeTime) {
         this.utilityStats.chargeTime.value = (parseFloat(this.utilityStats.chargeTime.value) + value - valueToSub).toFixed(2);
       }  else if (type.corrosiveDmg) {
