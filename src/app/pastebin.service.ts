@@ -28,7 +28,7 @@ export class PastebinService {
   getBuild(saveLink: string) {
 
       var request = new XMLHttpRequest();
-      request.open("GET", "https://www.pastebin.com/raw/" + saveLink, true);
+      request.open("GET", "https://crossorigin.me/https://www.pastebin.com/raw/" + saveLink, true);
 
       request.send(saveLink);
     
@@ -67,7 +67,7 @@ export class PastebinService {
 
     var request = new XMLHttpRequest();
 
-    request.open("POST", "https://www.pastebin.com/api/api_post.php", true);
+    request.open("POST", "https://crossorigin.me/https://www.pastebin.com/api/api_post.php", true);
 
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
