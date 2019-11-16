@@ -1,5 +1,5 @@
 <div class="mainContainer">
-    <div class="flex wrapped horizontal-align-evenly vertical-align-center" id="build-container">
+    <div class="flex wrapped horizontal-align-between vertical-align-center" id="build-container">
         <svg xmlns="http://www.w3.org/2000/svg" style="height: 0; width: 0; position: absolute">
                     <filter id="highlight">
                             <feGaussianBlur stdDeviation="3" result="blurred" />
@@ -66,7 +66,7 @@
         </svg>
         <button class="btn btn-success" id="share-build" (click)="createBuildData()">Share Build</button>
         <button class="btn btn-info" id="import-build" (click)="importCharacter()">Import Build</button>
-        <div class="carousel  flex horizontal-align-center">
+        <div class="carousel flex horizontal-align-center">
             <ul class="carousel-track flex horizontal-align-center">
                 <button class="prev-item" aria-label="Previous Skill Tree" (click)='previous()'></button>
                 <button class="next-item" aria-label="Next Skill Tree"  (click)='next()'></button>

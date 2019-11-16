@@ -317,3 +317,11 @@
         }
     }
 }
+
+@media screen and (max-device-width: 1000px) and (orientation: landscape) { 
+    .stats {
+        width: 50vw;
+        height: 85vw; 
+    }
+
+}

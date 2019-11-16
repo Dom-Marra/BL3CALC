@@ -1,8 +1,9 @@
 @import "../../styles.scss";
 
 #build-container{
-    width: 95%;
+    width: 85%;
     overflow: hidden;
+    margin: auto;
 }
 
 #share-build {
@@ -90,6 +91,7 @@
 
     #build-container {
         width: 100%;
+        flex-direction: column;
     }
 
     .carousel {
@@ -118,4 +120,29 @@
             }
         }
     }
+}
+
+@media screen and (max-device-width: 1000px) and (orientation: landscape) { 
+
+    .carousel {
+
+        .next-item,
+        .prev-item {
+            height: 4vw;
+            width: 4vw;
+        }
+
+        .next-item {
+            left: 22vw;
+        }
+
+        .prev-item {
+            right: 21vw;
+        }
+
+        margin-top: 50px;
+        width: 100%;
+        height: calc(2 * 95vh);
+    }
+
 }
