@@ -273,3 +273,12 @@
         max-height: calc(2 * 95vw);
     }
 }
+
+@media screen and (max-device-width: 1000px) and (orientation: landscape) { 
+
+    .skill-tree-container {
+        width: 95vh;
+        height: calc(2 * 95vh);
+    }
+
+}

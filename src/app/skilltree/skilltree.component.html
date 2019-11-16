@@ -108,9 +108,14 @@
             <g *ngIf="(isActionMod(skill) 
                       && ((this.character.getMaxActionModPoints() > 1
                       && (this.character.getEquippedSkills()[0].actionSkill == skill.getRequiredActionSkill() 
-                          || this.character.getEquippedSkills()[1].actionSkill == skill.getRequiredActionSkill())
-                      && skill != this.character.getEquippedSkills()[0].actionMods[0]
-                      && skill != this.character.getEquippedSkills()[1].actionMods[0])
+                          || (this.character.getEquippedSkills()[1].actionSkill == skill.getRequiredActionSkill())
+                             && (this.character.getMaxActionModPoints() > 2 || this.character.getMaxActionSkillPoints() == 1))
+                      && ((this.character.getMaxActionSkillPoints() == 1
+                         &&  skill != this.character.getEquippedSkills()[0].actionMods[0]) 
+                      || (this.character.getMaxActionSkillPoints() > 1
+                        && skill != this.character.getEquippedSkills()[0].actionMods[0]
+                        && skill != this.character.getEquippedSkills()[1].actionMods[0])))
+                      
 
                       || this.character.getMaxActionSkillPoints() > 1
                       && this.character.getEquippedSkills()[0].actionSkill == skill.getRequiredActionSkill()
@@ -134,10 +139,14 @@
             </g>
             <g *ngIf="(isActionMod(skill) 
                       && ((this.character.getMaxActionModPoints() > 1 
-                      && (this.character.getEquippedSkills()[0].actionSkill == skill.getRequiredActionSkill() 
+                      && ((this.character.getEquippedSkills()[0].actionSkill == skill.getRequiredActionSkill() 
+                          && (this.character.getMaxActionModPoints() > 2 || this.character.getMaxActionSkillPoints() == 1))
                           || this.character.getEquippedSkills()[1].actionSkill == skill.getRequiredActionSkill())
-                      && skill != this.character.getEquippedSkills()[0].actionMods[1]
-                      && skill != this.character.getEquippedSkills()[1].actionMods[1])
+                      && ((this.character.getMaxActionSkillPoints() == 1
+                          &&  skill != this.character.getEquippedSkills()[0].actionMods[1]) 
+                      || (this.character.getMaxActionSkillPoints() > 1
+                          && skill != this.character.getEquippedSkills()[0].actionMods[1]
+                          && skill != this.character.getEquippedSkills()[1].actionMods[1])))
 
                       || this.character.getMaxActionSkillPoints() > 1
                       && this.character.getEquippedSkills()[1].actionSkill == skill.getRequiredActionSkill()
