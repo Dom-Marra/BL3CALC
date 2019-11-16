@@ -355,17 +355,20 @@ export class SkilltreeComponent implements OnInit {
             data.equipped.forEach((element, actionSkillIndex) => {
               element.actionMods.forEach((element, secondIndex) => {
 
-                //If element, the index of the action mod in the allocation point array, macthes the current index
-                //Add it to the equipped skills
-                if (element == index) {
-
-                  //In the case that there is two action skills but only one mod per skill match use the action skill index 
-                  if (this.character.getMaxActionModPoints() == 2 && this.character.getMaxActionSkillPoints() == 2) {
-                    this.addPoint(skills[index], actionSkillIndex);
-                  } else {
-                    this.addPoint(skills[index], secondIndex);
+                if (this.character.getEquippedSkills()[actionSkillIndex].actionSkill == skills[index].getRequiredActionSkill() || skills[index].getRequiredActionSkill() == null) {
+                  //If element, the index of the action mod in the allocation point array, macthes the current index
+                  //Add it to the equipped skills
+                  if (element == index) {
+  
+                    //In the case that there is two action skills but only one mod per skill match use the action skill index 
+                    if (this.character.getMaxActionModPoints() == 2 && this.character.getMaxActionSkillPoints() == 2) {
+                      this.addPoint(skills[index], actionSkillIndex);
+                    } else {
+                      this.addPoint(skills[index], secondIndex);
+                    }
                   }
                 }
+                
               });
             });
           } else {
