@@ -451,7 +451,7 @@ export class Zane extends Character {
                         {name:"Item Duping", 
                         value:"+100%"},
                         {name:"Gun Damage", 
-                        type: [{gunDmg: true}],
+                        type: [{gunDmg: true}, {extraType: this.getExtraTypes().digiCloneGunDmg}],
                         conditional: this.getExtraCond().swappedPlaceWithClone,
                         value:"+20%"}]})
     ];
