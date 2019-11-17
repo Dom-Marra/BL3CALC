@@ -350,11 +350,11 @@ export class Zane extends Character {
                         values:["up to 4%", "up to 8%", "up to 12%" , "up to 16%", "up to 20%"]},
                         {name:"Cooldown Time", 
                         value:"8 seconds"}]}),
-        new NormalSkill("assets/images/zane/skills/QuickBreather.webp", [2, 1], 3, 10, "red",
+        new NormalSkill("assets/images/zane/skills/QuickBreather.webp", [2, 1], 1, 10, "red",
                 {name:"QUICK BREATHER",
                 description:"Whenever Zane swaps places with his Clone, his shield immediately begins recharging.",
                 effects:[]}),
-        new NormalSkill("assets/images/zane/skills/PocketFullOfGrenades.webp", [3, 0], 1, 15, "red",
+        new NormalSkill("assets/images/zane/skills/PocketFullOfGrenades.webp", [3, 0], 3, 15, "red",
                 {name:"POCKET FULL OF GRENADES",
                 description:"Kill Skill. After killing an enemy, Zane gains Grenade Regeneration for a few seconds.",
                 effects:[
@@ -372,7 +372,7 @@ export class Zane extends Character {
                 {name:"SUPERSONIC MAN",
                 description:"Whenever one or more of Zane's Action Skills are active, he gains increased Movement Speed for each active Action Skill.",
                 effects:[
-                        {name:"Whenever one or more of Zane's Action Skills are active, he gains increased Movement Speed for each active Action Skill.", 
+                        {name:"Movement Speed", 
                         type: [{movementSpeed: true}],
                         conditional: this.getExtraCond().activeActionSkills,
                         getActiveValueMulti: () => {
