@@ -387,14 +387,14 @@ export class Zane extends Character {
                         {name:"Ignore Bullet Chance", 
                         type: [{extraType: this.getExtraTypes().ignoreBulletChance}],
                         values:["2%", "4%", "6%"]},
-                        {name:"Additional Ignore Bullet Chance", 
-                        values:["+3%", "+6%", "+9%"]},
-                        {name:"Duration", 
+                        {name:"Additional Ignore Bullet Chance",  
                         type: [{extraType: this.getExtraTypes().ignoreBulletChance}],
                         conditional: this.getExtraCond().activeActionSkills,
                         getActiveValueMulti: () => {
                             return this.getExtraCond().activeActionSkills.currentValue;
                         },
+                        values:["+3%", "+6%", "+9%"]},
+                        {name:"Duration",
                         value:"8 seconds"}]}),
         new NormalSkill("assets/images/zane/skills/BoomEnhance.webp", [4, 1], 1, 20, "red",
                 {name:"BOOM. ENHANCE.",
