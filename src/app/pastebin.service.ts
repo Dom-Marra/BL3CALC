@@ -62,7 +62,7 @@ export class PastebinService {
           prompt("Unfortunatley you've created too many builds in the past 24h, but here is the import data for the save:", JSON.stringify(build));
         } else {
           var response = link["link"] .replace('https://pastebin.com/','');
-          prompt("Here is your build!", "https://bl3calc.com/build?character=" + character + "&save=" + response);
+          prompt("Here is your build!", "https://www.bl3calc.com/build?character=" + character + "&save=" + response);
         }
       });
 
