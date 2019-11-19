@@ -202,6 +202,7 @@ export class Zane extends Character {
             }
         },
         statusEffectDuration: {
+            type: "defense",
             header: "Status Effect Duration",
             value: 0,
             valueType: "percent",
@@ -892,7 +893,7 @@ export class Zane extends Character {
                         value:"3 seconds"}]}),
         new NormalSkill("assets/images/zane/skills/FutilityBelt.webp", [3, 2], 1, 15, "green",
                 {name:"FUTILITY BELT",
-                description:"Zane gains resistance to non-elemental damage." +
+                description:"Zane gains resistance to non-elemental damage.<br /><br />" +
                 "Kill Skill. After killing an enemy, all elemental damage Zane takes is converted to non-elemental damage",
                 effects:[
                         {name:"Damage Reduction", 
