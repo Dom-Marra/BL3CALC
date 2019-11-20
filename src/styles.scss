@@ -8,11 +8,11 @@
     src: url('src/assets/fonts/Teko-Medium.ttf') format("truetype");
 }
 
-$primary-color: rgb(34, 34, 34);
-$primary-accent-color: rgb(22, 22, 22);
+$primary-color: rgb(38, 38, 38);
+$primary-accent-color: rgb(28, 28, 28);
 $primary-color-accent-light: rgb(46, 46, 46);
 
-$secondary-color: rgb(16, 16, 16);
+$secondary-color: rgb(22, 22, 22);
 $text-color: rgb(255,215,0);
 
 @mixin borderlands-text {
