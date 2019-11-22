@@ -468,10 +468,10 @@ export class Zane extends Character {
                         value:"+25.0% seconds per grenade"}]}),
         new NormalSkill("assets/images/zane/skills/TrickOfTheLight.webp", [4, 2], 3, 20, "red",
                 {name:"TRICK OF THE LIGHT",
-                description:"Zane deals Bonus Shock Damage to enemies that aren't targeting him.",
+                description:"Zane deals Bonus Cryo Damage to enemies that aren't targeting him.",
                 effects:[
                         {name:"Bonus Damage", 
-                        type: [{bonusShockDmg: true}],
+                        type: [{bonusCryoDmg: true}],
                         conditional: this.getConditionals().enemyNotTargetingYou,
                         values:["6.0% of damage dealt", "12.0% of damage dealt", "18.0% of damage dealt"]}]}),
         new NormalSkill("assets/images/zane/skills/DoubleBarrel.webp", [5, 1], 1, 25, "red",
