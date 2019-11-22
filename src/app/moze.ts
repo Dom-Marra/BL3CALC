@@ -218,6 +218,14 @@ export class Moze extends Character {
 			setFunc: (movementSpeed: number) => {
 				this.getExtraTypes().ironBearMovementSpeed.value += movementSpeed;
 			}
+		}, 
+		ironBearDmg: {
+			header: "Iron Bear Damage",
+			value: 0,
+			valueType: "percent",
+			setFunc: (dmg: number) => {
+				this.getExtraTypes().ironBearDmg.value += dmg;
+			}
 		},
 		maxDrowningBrassStacks: {
             header: "Max Drowning In Brass Stacks",
@@ -432,10 +440,10 @@ export class Moze extends Character {
 					values:["-7.0%", "-14.0%", "-19.0%"]}]}),
 	new NormalSkill("assets/images/moze/skills/DesperateMeasures.webp", [3, 2], 3, 15, "red", 
 				{name:"DESPERATE MEASURES",
-				description:"Moze's Gun Damage is increased depending on how low her health is. The lower her health, the greater the increase.",
+				description:"Moze's Gun Damage and Iron Bear's Hard Point Damage is increased depending on how low her health is. The lower her health, the greater the increase.",
 				effects:[
 					{name:"Gun Damage",
-					type: [{gunDmg: true}],
+					type: [{gunDmg: true, extraType: this.getExtraTypes().ironBearDmg}],
 					values:["up to +17%", "up to +33%", "up to +50%"]}]}),
 	new NormalSkill("assets/images/moze/skills/PhalanxDoctrine.webp", [4, 0], 5, 20, "red", 
 				{name:"PHALANX DOCTRINE",
@@ -625,8 +633,8 @@ export class Moze extends Character {
 					value:"15 seconds"}]}),
 	new NormalSkill("assets/images/moze/skills/Vampyr.webp", [3, 0], 5, 15, "blue", 
 				{name:"VAMPYR",
-				description:"Whenever Moze damages an enemy with a thrown grenade, for every enemy " + 
-				"hit, she restores a portion of her missing health.",
+				description:"Whenever Moze damages an enemy with a thrown grenade or Iron Bear deals area damage, for every enemy " + 
+				"hit, she restores a portion of their missing health. Iron Bear receives half this bonus",
 				effects:[
 					{names: ["Restores +4% of missing health per enemy hit",
 							"Restores +8% of missing health per enemy hit",
@@ -824,14 +832,17 @@ export class Moze extends Character {
 				effects:[]}),
 	new NormalSkill("assets/images/moze/skills/ScorchingRPMs.webp", [2, 1], 5, 10, "green", 
 				{name:"SCORCHING RPM'S",
-				description:"Moze gains increased Fire Rate and Critical Hit Damage.",
+				description:"Moze gains increased Fire Rate and Critical Hit Damage. Iron Bear gains increased Hard Point Damage.",
 				effects:[
 					{name:"Fire Rate",
 					type: [{fireRate: true}],
 					values:["+3.0%", "+6.0%", "+9.0%", "+12.0%", "+15.0%"]},
 					{name:"Critical Hit Damage",
 					type: [{criticalHitDmg: true}],
-					values:["+4.0%", "+8.0%", "+12.0%", "+16.0%", "+20.0%"]}]}),
+					values:["+4.0%", "+8.0%", "+12.0%", "+16.0%", "+20.0%"]},
+					{name:"Iron Bear Damage",
+					type: [{extraType: this.getExtraTypes().ironBearDmg}],
+					values:["+5.0%", "+10.0%", "+15.0%", "+20.0%", "+25.0%"]}]}),
 	new NormalSkill("assets/images/moze/skills/TheIronBank.webp", [3, 1], 5, 15, "green", 
 				{name:"THE IRON BANK",
 				description:"Increases Moze's Magazine Size.",
