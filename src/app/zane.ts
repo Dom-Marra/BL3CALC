@@ -38,6 +38,34 @@ export class Zane extends Character {
             currentValue: 0,
             maxValue: 3,
         },
+        donnyBrookStacks: {
+            active: false,
+            header: "Using Donny Brook Stacks?",
+            requiresNumberField: true,
+            currentValue: 0,
+            maxValue: 2,
+        },
+        coolHandStacks: {
+            active: false,
+            header: "Using Cool Hand Stacks?",
+            requiresNumberField: true,
+            currentValue: 0,
+            maxValue: 2,
+        },
+        violentViolenceStacks: {
+            active: false,
+            header: "Using Violent Violence Stacks?",
+            requiresNumberField: true,
+            currentValue: 0,
+            maxValue: 2,
+        },
+        violentSpeedStacks: {
+            active: false,
+            header: "Using Violence Speed Stacks?",
+            requiresNumberField: true,
+            currentValue: 0,
+            maxValue: 2,
+        },
         swappedPlaceWithClone: {
             active: false,
             header: "Did you swap with your clone?"
@@ -306,29 +334,29 @@ export class Zane extends Character {
                         getActiveValueMulti: () => {
                             return this.getExtraCond().activeActionSkills.currentValue;
                         },
-                        values:["+3% per active action skill", "+6% per active action skill", "+9% per active action skill" , "+12% per active action skill", "+15% per active action skill"]}
+                        values:["+6% per active action skill", "+12% per active action skill", "+18% per active action skill" , "+24% per active action skill", "+30% per active action skill"]}
                 ]}),
         new NormalSkill("assets/images/zane/skills/DonnyBrook.webp", [1, 0], 5, 5, "red",
                 {name:"DONNYBROOK",
-                description:"Kill Skill. Whenever Zane kills an enemy, he and his Digi-Clone receive increased Gun Damage and gain Health Regeneration for a few seconds.",
+                description:"Kill Skill. Whenever Zane kills an enemy, he and his Digi-Clone receive increased Gun Damage and gain Health Regeneration for a few seconds. This effect stacks twice",
                 effects:[
                         {name:"Gun Damage",
                         type: [{gunDmg: true}],
-                        conditionals: [this.getExtraCond().killSkillBonus, this.getConditionals().activateKillSkills],
+                        conditionals: [this.getExtraCond().killSkillBonus, this.getExtraCond().donnyBrookStacks],
                         getActiveValueMultis: [
                             null,
                             () => {
-                                return this.getExtraCond().killSkillBonus.effectiveness;
+                                return this.getExtraCond().killSkillBonus.effectiveness * this.getExtraCond().donnyBrookStacks.currentValue;
                             }
                         ],
                         values:["+3%", "+6%", "+9%" , "+12%", "+15%"]},
                         {name:"Health Regeneration", 
                         type: [{healthRegen_missingHealth: true}],
-                        conditionals: [this.getExtraCond().killSkillBonus, this.getConditionals().activateKillSkills],
+                        conditionals: [this.getExtraCond().killSkillBonus, this.getExtraCond().donnyBrookStacks],
                         getActiveValueMultis: [
                             null,
                             () => {
-                                return this.getExtraCond().killSkillBonus.effectiveness;
+                                return this.getExtraCond().killSkillBonus.effectiveness * this.getExtraCond().donnyBrookStacks.currentValue;
                             }
                         ],
                         values:["0.5% of Missing Health / sec", "1.0% of Missing Health / sec", "1.5% of Missing Health / sec" , "2.0% of Missing Health / sec", "2.5% of Missing Health / sec"]},
@@ -352,11 +380,13 @@ export class Zane extends Character {
                         value:"8 seconds"}]}),
         new NormalSkill("assets/images/zane/skills/QuickBreather.webp", [2, 1], 1, 10, "red",
                 {name:"QUICK BREATHER",
-                description:"Whenever Zane swaps places with his Clone, his shield immediately begins recharging.",
-                effects:[]}),
+                description:"Whenever Zane swaps places with his Clone, his shield immediately begins recharging and restores health to his cone.",
+                effects:[
+                    {name:"Clone Heal", 
+                    value:"Up to 50% of Max Health"}]}),
         new NormalSkill("assets/images/zane/skills/PocketFullOfGrenades.webp", [3, 0], 3, 15, "red",
                 {name:"POCKET FULL OF GRENADES",
-                description:"Kill Skill. After killing an enemy, Zane gains Grenade Regeneration for a few seconds.",
+                description:"Kill Skill. After killing an enemy, Zane gains Grenade Regeneration for a few seconds. This effect stacks twice",
                 effects:[
                         {name:"Grenade Regeneration", 
                         values:["7% / sec", "13% / sec", "20% / sec"]},
@@ -453,7 +483,7 @@ export class Zane extends Character {
                         {name:"Gun Damage", 
                         type: [{gunDmg: true}],
                         conditional: this.getExtraCond().swappedPlaceWithClone,
-                        value:"+20%"}]})
+                        value:"+25%"}]})
     ];
 
     //Skills for blue skill tree
@@ -541,15 +571,15 @@ export class Zane extends Character {
         this.almightyOrdnance,
         new NormalSkill("assets/images/zane/skills/ViolentSpeed.webp", [0, 0], 5, 0, "blue",
                 {name:"VIOLENT SPEED",
-                description:"Kill Skill. After killing an enemy, Zane gains increased Movement Speed for a few seconds.",
+                description:"Kill Skill. After killing an enemy, Zane gains increased Movement Speed for a few seconds. This effect stacks twice",
                 effects:[
                     {name:"Movement Speed", 
                     type: [{movementSpeed: true}],
-                    conditionals: [this.getExtraCond().killSkillBonus, this.getConditionals().activateKillSkills],
+                    conditionals: [this.getExtraCond().killSkillBonus, this.getExtraCond().violentSpeedStacks],
                     getActiveValueMultis: [
                         null,
                         () => {
-                            return this.getExtraCond().killSkillBonus.effectiveness;
+                            return this.getExtraCond().killSkillBonus.effectiveness * this.getExtraCond().violentSpeedStacks.currentValue;
                         }
                     ],
                     values:["+4.0%", "+8.0%", "+12.0%" , "+16.0%", "+20.0%"]},
@@ -577,11 +607,11 @@ export class Zane extends Character {
         new NormalSkill("assets/images/zane/skills/CoolHand.webp", [1, 0], 5, 5, "blue",
                 {name:"COOL HAND",
                 description:"Zane gains increased Reload Speed.<br /><br />" +
-                "Kill Skill. After killing an enemy, Zane's Reload Speed is increased for a few seconds.",
+                "Kill Skill. After killing an enemy, Zane's Reload Speed is increased for a few seconds. This effect stacks twice",
                 effects:[
                     {name:"Reload Speed", 
                     type: [{reloadSpeed: true}],
-                    conditional: this.getConditionals().activateKillSkills,
+                    conditional: this.getExtraCond().coolHandStacks,
                     getActiveValueMulti: () => {
                         return 0;
                     },
@@ -591,11 +621,11 @@ export class Zane extends Character {
                     values:["+2.9%", "+5.7%", "+8.3%" , "+10.7%", "+13.0%"]},
                     {name:"Reload Speed", 
                     type: [{reloadSpeed: true}],
-                    conditionals: [this.getExtraCond().killSkillBonus, this.getConditionals().activateKillSkills],
+                    conditionals: [this.getExtraCond().killSkillBonus, this.getExtraCond().coolHandStacks],
                     getActiveValueMultis: [
                         null,
                         () => {
-                            return this.getExtraCond().killSkillBonus.effectiveness;
+                            return this.getExtraCond().killSkillBonus.effectiveness * this.getExtraCond().coolHandStacks.currentValue;
                         }
                     ],
                     values:["+4.0% after kill", "+7.0% after kill", "+11.0% after kill" , "+14.0% after kill", "+17.0% after kill"]},
@@ -634,15 +664,15 @@ export class Zane extends Character {
                     value:"+25.0%"}]}),
         new NormalSkill("assets/images/zane/skills/ViolentViolence.webp", [3, 0], 5, 15, "blue",
                 {name:"VIOLENT VIOLENCE",
-                description:"Kill Skill. After killing an enemy, Zane gains increased Fire Rate for a few seconds.",
+                description:"Kill Skill. After killing an enemy, Zane gains increased Fire Rate for a few seconds. This effect stacks twice",
                 effects:[
                     {name:"Fire Rate", 
                     type: [{fireRate: true}],
-                    conditionals: [this.getExtraCond().killSkillBonus, this.getConditionals().activateKillSkills],
+                    conditionals: [this.getExtraCond().killSkillBonus, this.getExtraCond().violentViolenceStacks],
                     getActiveValueMultis: [
                         null,
                         () => {
-                            return this.getExtraCond().killSkillBonus.effectiveness;
+                            return this.getExtraCond().killSkillBonus.effectiveness * this.getExtraCond().violentViolenceStacks.currentValue;
                         }
                     ],
                     values:["+4%", "+8%", "+12%" , "+16%", "+20%"]},
@@ -869,7 +899,7 @@ export class Zane extends Character {
                         {name:"Gun Damage", 
                         type: [{gunDmg: true}],
                         conditional: this.getConditionals().shieldsActive,
-                        value:"up to +20%"},
+                        value:"up to +25%"},
                         {name:"Accuracy", 
                         type: [{accuracy: true}],
                         conditional: this.getConditionals().shieldsActive,

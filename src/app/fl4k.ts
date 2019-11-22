@@ -122,6 +122,10 @@ export class Fl4k extends Character {
             requiresNumberField: true,
             currentValue: 0,
             maxValue: 0,
+        },
+        petRevivedYou: {
+            active: false,
+            header: "Has your pet revived you?"
         }
     };
 
@@ -371,7 +375,7 @@ export class Fl4k extends Character {
                     {name:"INTERPLANETARY STALKER", 
                     description:"Hunter Kill Skill. Whenever FL4K kills an enemy, they gain a stack " + 
                     "of Interplanetary Stalker. For each stack of Interplanetary Stalker, " +
-                    "they gain a bonus to all damage dealt.<br /><br />" +
+                    "they and their pet gain a bonus to all damage dealt.<br /><br />" +
                     "Additionally, they gain a unique stacking bonus depending on the type " + 
                     "of enemy killed. Each unique bonus can stack up to 3 times. Each stack decays after a short time.",
                     effects:[
@@ -385,6 +389,16 @@ export class Fl4k extends Character {
                             }
                         ],
                         values:["+2% /stack", "+4% /stack", "+6% /stack", "+8% /stack", "+10% /stack"]},
+                        {name:"Pet Damage",
+                        type: [{extraType: this.getExtraTypes().petDmg}],
+                        conditionals: [this.getExtraCond().hunterSkill, this.getExtraCond().interplanetaryStacks],
+                        getActiveValueMultis: [
+                            null,
+                            () => {
+                                return this.getExtraCond().interplanetaryStacks.currentValue * this.getExtraCond().hunterSkill.effectiveness;
+                            }
+                        ],
+                        values:["+1% /stack", "+2% /stack", "+3% /stack", "+4% /stack", "+5% /stack"]},
                         {name:"Human Bonus",
                         type: [{actionSkillDmg: true}],
                         conditionals: [this.getExtraCond().hunterSkill ,this.getExtraCond().interplanetaryHumanBonus],
@@ -528,7 +542,8 @@ export class Fl4k extends Character {
         new NormalSkill("assets/images/fl4k/skills/TheMostDangerousGame.webp", [3, 2], 3, 15, "red",
                     {name:"THE MOST DANGEROUS GAME", 
                     description:"Hunter Kill Skill. Whenever FL4K kills a Badass or stronger " + 
-                    "enemy, they gain increased Critical Hit Damage, Gun Damage, and Handling for a long time.<br /><br />" +
+                    "enemy, they gain increased Critical Hit Damage, Gun Damage, and Handling for a long time, and their pet" + 
+                    " receives increased Damage for a long time.<br /><br />" +
                     "Additionally, they receive a cash reward from the Intergalactic Bureau of Bounty Hunting.",
                     effects:[
                         {name:"Gun Damage",
@@ -561,8 +576,19 @@ export class Fl4k extends Character {
                             }
                         ],
                         values:["+14.3%", "+25.0%", "+33.33%"]},
+                        {name:"Pet Damage",
+                        type: [{extraType: this.getExtraTypes().petDmg}],
+                        conditionals: [this.getExtraCond().hunterSkill, this.getConditionals().activateKillSkills],
+                        getActiveValueMultis: [
+                            null,
+                            () => {
+                                return this.getExtraCond().hunterSkill.effectiveness;
+                            }
+                        ],
+                        values:["+9.0%", "+18.0%", "+27.0%"]},
                         {name:"Duration",
-                        value:"120 seconds"}]}),
+                        value:"120 seconds"},
+                        {name:"Rewards Cash on Kill"}]}),
         new NormalSkill("assets/images/fl4k/skills/GalacticShadow.webp", [4, 1], 1, 15, "red",
                     {name:"GALACTIC SHADOW", 
                     description:"FL4K deals increased Critical Hit Damage, and enemies are less likely to attack them.",
@@ -572,14 +598,17 @@ export class Fl4k extends Character {
                         value:"+15%"}]}),
         new NormalSkill("assets/images/fl4k/skills/GrimHarvest.webp", [4, 2], 5, 20, "red",
                     {name:"GRIM HARVEST", 
-                    description:"FL4K gains increased Gun Damage and Action Skill Damage.",
+                    description:"FL4K gains increased Gun Damage and Action Skill Damage. Fl4k's pet gains increased Damage",
                     effects:[
                         {name:"Gun Damage",
                         type: [{gunDmg: true}],
                         values:["+3%", "+6%", "+9%", "+12%", "+15%"]},
                         {name:"Action Skill Damage",
                         type: [{actionSkillDmg: true}],
-                        values:["+5%", "+10%", "+15%", "+20%", "+25%"]}]}),
+                        values:["+5%", "+10%", "+15%", "+20%", "+25%"]},
+                        {name:"Pet Damage",
+                        type: [{extraType: this.getExtraTypes().petDmg}],
+                        values:["+7%", "+14%", "+21%", "+28%", "+35%"]}]}),
         new NormalSkill("assets/images/fl4k/skills/Megavore.webp", [5, 1], 1, 25, "red",
                     {name:"MEGAVORE", 
                     description:"FL4K gains a chance to score a Critical Hit with weapons against any part of enemies.",
@@ -797,7 +826,7 @@ export class Fl4k extends Character {
                                 return this.getExtraCond().hunterSkill.effectiveness;
                             }
                         ],
-                        value:"+10%"},
+                        value:"+20%"},
                         {name:"Psycho Head On A Stick Duration",
                         value:"8 seconds"}]}),
         new NormalSkill("assets/images/fl4k/skills/HiveMind.webp", [2, 2], 3, 10, "blue",
@@ -834,7 +863,7 @@ export class Fl4k extends Character {
                     effects:[
                         {name:"Pet and FL4K Damage",
                         type: [{dmgIncrease: true}, {extraType: this.getExtraTypes().petDmg}],
-                        values:["+5%", "+10%", "+15%"]},
+                        values:["+7%", "+14%", "+21%"]},
                         {name:"Pet and FL4K Maximum Health",
                         type: [{maxHealth: true}, {extraType: this.getExtraTypes().petMaxHealth}],
                         values:["+5%", "+10%", "+15%"]}]}),
@@ -1023,7 +1052,7 @@ export class Fl4k extends Character {
         new NormalSkill("assets/images/fl4k/skills/FuriousAttack.webp", [0, 2], 5, 0, "green",
                     {name:"FURIOUS ATTACK", 
                     description:"Hunter Skill. After shooting an enemy, FL4K gains a stack of Furious Attack.<br /><br />" +
-                    "For each stack of Furious Attack, FL4K's Handling and Gun Damage are increased. Stacks decay after a few seconds.",
+                    "For each stack of Furious Attack, FL4K's Handling and Gun Damage are increased and their pet gains increased Damage. Stacks decay after a few seconds.",
                     effects:[
                         {name:"Handling",
                         type: [{handling: true}],
@@ -1045,6 +1074,16 @@ export class Fl4k extends Character {
                             }
                         ],
                         values:["+0.4% per stack", "+0.8% per stack", "+1.2% per stack", "+1.6% per stack", "+2.0% per stack"]},
+                        {name:"Pet Damage",
+                        type: [{extraType: this.getExtraTypes().petDmg}],
+                        conditionals: [this.getExtraCond().hunterSkill, this.getExtraCond().furiousStacks],
+                        getActiveValueMultis: [
+                            null,
+                            () => {
+                                return this.getExtraCond().furiousStacks.currentValue * this.getExtraCond().hunterSkill.effectiveness;
+                            }
+                        ],
+                        values:["+0.6% per stack", "+1.2% per stack", "+1.8% per stack", "+2.4% per stack", "+3.0% per stack"]},
                         {name:"Furious Attack Stacks",
                         type: [{extraType: this.getExtraTypes().maxFuriousStacks}],
                         value:"10"},
@@ -1081,8 +1120,15 @@ export class Fl4k extends Character {
                         value:"4 seconds"}]}),
         new NormalSkill("assets/images/fl4k/skills/LickTheWounds.webp", [2, 1], 1, 10, "green",
                     {name:"LICK THE WOUNDS", 
-                    description:"When FL4K is in Fight For Your Life, their pet will attempt to revive them.",
-                    effects:[]}),
+                    description:"When FL4K is in Fight For Your Life, their pet will attempt to revive them. If it does, it gains increased Damage for a short time",
+                    effects:[
+                        {name:"Pet Damage",
+                        type: [{extraType: this.getExtraTypes().petDmg}],
+                        conditional: this.getExtraCond().petRevivedYou,
+                        value: "+30%"},
+                        {name:"Duration",
+                        value:"60 seconds"}
+                    ]}),
         new NormalSkill("assets/images/fl4k/skills/TurnTailAndRun.webp", [2, 2], 3, 10, "green",
                     {name:"TURN TAIL AND RUN", 
                     description:"While moving, FL4K constantly regenerates health and gains Damage Reduction.<br /><br />" +
@@ -1106,7 +1152,7 @@ export class Fl4k extends Character {
                         values:["+4.0%", "+8.0%", "+12%"]}]}),
         new NormalSkill("assets/images/fl4k/skills/FastAndFurryous.webp", [3, 0], 3, 15, "green",
                     {name:"THE FAST AND THE FURRYOUS", 
-                    description:"While above half health, FL4K's Gun Damage and Movement Speed are increased.",
+                    description:"While above half health, FL4K's Gun Damage and Movement Speed are increased and their pet gains increased Damage.",
                     effects:[
                         {name:"Gun Damage",
                         type: [{gunDmg: true}],
@@ -1115,7 +1161,11 @@ export class Fl4k extends Character {
                         {name:"Movement Speed",
                         type: [{movementSpeed: true}],
                         conditional: this.getConditionals().aboveHalfHealth,
-                        values:["+3.3%", "+6.7%", "+10%"]}]}),
+                        values:["+3.3%", "+6.7%", "+10%"]},
+                        {name:"Pet Damage",
+                        type: [{extraType: this.getExtraTypes().petDmg}],
+                        conditional: this.getConditionals().aboveHalfHealth,
+                        values:["+10%", "+20%", "+30%"]}]}),
         new NormalSkill("assets/images/fl4k/skills/HiddenMachine.webp", [3, 2], 5, 15, "green",
                     {name:"HIDDEN MACHINE", 
                     description:"When an enemy has no target or is attacking a different target, FL4K deals increased damage against them.",
