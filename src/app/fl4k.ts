@@ -524,7 +524,7 @@ export class Fl4k extends Character {
                         type: [{handling: true}],
                         conditional: this.getConditionals().noEnemiesNearby,
                         values:["+17%", "+29%", "+38%", "+44%", "+50%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/TwoF4ng.webp", [2, 1], 1, 10, "red",
+        new NormalSkill("assets/images/fl4k/skills/TwoF4ng.webp", [2, 1], 5, 10, "red",
                     {name:"TWO F4NG", 
                     description:"FL4K has a chance to fire an extra projectile per shot.",
                     effects:[
