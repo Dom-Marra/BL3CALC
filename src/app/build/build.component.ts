@@ -148,7 +148,6 @@ export class BuildComponent implements OnInit {
           extraConfigs[cond].effectiveness = this.character.getExtraCond()[cond].effectiveness;
         }
         if (this.character.getExtraCond()[cond].currentValue != null) {
-          console.log(this.character.getExtraCond()[cond]);
           extraConfigs[cond].currentValue = this.character.getExtraCond()[cond].currentValue;
         }
       }
