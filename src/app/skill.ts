@@ -165,18 +165,6 @@ export abstract class Skill {
     }
 
     /**
-     * Sets the number of allocated points in the skill
-     * 
-     * @param
-     *       number of points to set to
-     */
-    setAllocatedPoints(points: number) {
-        if (points <= this.getMaxPoints()) {
-            this.allocatedPoints = points;
-        }
-    }
-
-    /**
      * Returns path of the image to go behind the skill
      * 
      * @returns
