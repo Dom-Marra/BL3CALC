@@ -343,7 +343,7 @@ export class SkilltreeComponent implements OnInit {
 
               // If the index of the actionSkill in the datas equipped skill matches the current index in the allocation point array
               // and there is nothing in this current spot for equipped skills, add it
-              if (element.actionSkill == index && this.character.getEquippedSkills()[secondIndex].actionSkill == null) {
+              if (element.actionSkill == index && this.character.getEquippedSkills()[secondIndex].actionSkill == null && skills[index].getMaxPoints() != skills[index].getAllocatedPoints()) {
                 this.addPoint(skills[index], secondIndex);
                 return;
               }
@@ -368,9 +368,9 @@ export class SkilltreeComponent implements OnInit {
                     }
                   }
                 }
-                
               });
             });
+            
           } else {
 
             //Normal, or other skill just add it
