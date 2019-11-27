@@ -202,6 +202,7 @@ export class SkilltreeComponent implements OnInit {
     var extraPoints = 0;                    //Any extra points before the required skill
     var requiredForPreReq = false;          //Skill may be required as a pre-req to another
     var tmpPoints = 0;                      //Points that are saved up while traversing the tree
+    var requiredSkillCheck = true;
 
     //order the skills based by their pre-req amount
     var skillsOrdered = this.skills.sort((a, b) => {
@@ -217,13 +218,24 @@ export class SkilltreeComponent implements OnInit {
         //Re-assign required skills when the current skill has a higher amount
         //Add tmp points to extra
         //reset tmp points
+        //Do check if skill is required based on current info
         if (currentSkill.getPreReq() > requiredSkill.getPreReq()) {
           requiredSkill = currentSkill;
           extraPoints += tmpPoints;
           tmpPoints = 0;
+
+          //Check that the skill pre-req is not the same as the requiredSkill pre-req
+          if (skill.getPreReq() !=  requiredSkill.getPreReq()) {
+
+            //If the points allocated at this current state (-1 for skill removal adjustment)
+            //is less than what is needed for the required skill pre-req
+            //result to remove is false
+            if (extraPoints - 1 <  requiredSkill.getPreReq()) {
+              requiredSkillCheck = false;
+            };
+          }
         }
 
-        //Increment extra points if the current skill shares the same pre-req or is less
         if (currentSkill.getPreReq() <= skill.getPreReq()) pointsForPreReq += currentSkill.getAllocatedPoints();
 
         //Skill is a pre-req if the difference between it and the current is 5
@@ -234,16 +246,9 @@ export class SkilltreeComponent implements OnInit {
           tmpPoints += currentSkill.getAllocatedPoints();
         }
       }
-
     });
 
-    //Check that the skill pre-req is not the same as the requiredSkill pre-req
-    if (skill.getPreReq() !=  requiredSkill.getPreReq()) {
-
-      //The total allocated points minus the requiredSkills points minus 1 point
-      //is less than what is needed for the requiredSkill then point removal failure
-      if (extraPoints - 1 <  requiredSkill.getPreReq()) return false;
-    }
+    if (!requiredSkillCheck) return false;
 
     //The skill is a pre-req and removing a point accross all extra points is less than
     //the next pre-req amount then point removal failure
