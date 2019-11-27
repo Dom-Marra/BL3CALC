@@ -157,11 +157,11 @@ export class BuildComponent implements OnInit {
     this.character.getEquippedSkills().forEach((set, index) => {
       if (set.actionSkill != null) {
         if (set.actionSkill.getColor() == "green") {
-          equippedSkills[index]['actionSkill'] = this.character.getGreenSkills().indexOf(set.actionSkill);
+          equippedSkills[index]['actionSkill'] = {index: this.character.getGreenSkills().indexOf(set.actionSkill), color: "green"};
         } else if (set.actionSkill.getColor() == "blue") {
-          equippedSkills[index]['actionSkill'] = this.character.getBlueSkills().indexOf(set.actionSkill);
+          equippedSkills[index]['actionSkill'] = {index: this.character.getBlueSkills().indexOf(set.actionSkill), color: "blue"};
         } else {
-          equippedSkills[index]['actionSkill'] = this.character.getRedSkills().indexOf(set.actionSkill);
+          equippedSkills[index]['actionSkill'] = {index: this.character.getRedSkills().indexOf(set.actionSkill), color: "red"};
         }
       }
 
