@@ -344,12 +344,17 @@ export class SkilltreeComponent implements OnInit {
             
             //Find the place in the data that the action skill belongs to
             //the element.actionSkill is the index of the skill in its array
-            data.equipped.forEach((element, secondIndex) => {
+            data.equipped.forEach((element, actionSkillIndex) => {
+
 
               // If the index of the actionSkill in the datas equipped skill matches the current index in the allocation point array
               // and there is nothing in this current spot for equipped skills, add it
-              if (element.actionSkill == index && this.character.getEquippedSkills()[secondIndex].actionSkill == null && skills[index].getMaxPoints() != skills[index].getAllocatedPoints()) {
-                this.addPoint(skills[index], secondIndex);
+              if ( element.actionSkill != null
+                  && element.actionSkill.index == index 
+                  && element.actionSkill.color == this.color
+                  && this.character.getEquippedSkills()[actionSkillIndex].actionSkill == null 
+                  && skills[index].getMaxPoints() != skills[index].getAllocatedPoints()) {
+                this.addPoint(skills[index], actionSkillIndex);
                 return;
               }
             });
@@ -361,10 +366,10 @@ export class SkilltreeComponent implements OnInit {
               element.actionMods.forEach((element, secondIndex) => {
 
                 if (this.character.getEquippedSkills()[actionSkillIndex].actionSkill == skills[index].getRequiredActionSkill() || skills[index].getRequiredActionSkill() == null) {
+                
                   //If element, the index of the action mod in the allocation point array, macthes the current index
                   //Add it to the equipped skills
                   if (element == index) {
-  
                     //In the case that there is two action skills but only one mod per skill match use the action skill index 
                     if (this.character.getMaxActionModPoints() == 2 && this.character.getMaxActionSkillPoints() == 2) {
                       this.addPoint(skills[index], actionSkillIndex);
