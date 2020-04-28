@@ -575,16 +575,6 @@ export class Fl4k extends Character {
                                 return this.getExtraCond().hunterSkill.effectiveness;
                             }
                         ],
-                        values:["+14.3%", "+25.0%", "+33.33%"]},
-                        {name:"Pet Damage",
-                        type: [{extraType: this.getExtraTypes().petDmg}],
-                        conditionals: [this.getExtraCond().hunterSkill, this.getConditionals().activateKillSkills],
-                        getActiveValueMultis: [
-                            null,
-                            () => {
-                                return this.getExtraCond().hunterSkill.effectiveness;
-                            }
-                        ],
                         values:["+9.0%", "+18.0%", "+27.0%"]},
                         {name:"Duration",
                         value:"120 seconds"},
@@ -826,7 +816,7 @@ export class Fl4k extends Character {
                                 return this.getExtraCond().hunterSkill.effectiveness;
                             }
                         ],
-                        value:"+20%"},
+                        value:"+10%"},
                         {name:"Psycho Head On A Stick Duration",
                         value:"8 seconds"}]}),
         new NormalSkill("assets/images/fl4k/skills/HiveMind.webp", [2, 2], 3, 10, "blue",
@@ -1073,16 +1063,6 @@ export class Fl4k extends Character {
                                 return this.getExtraCond().furiousStacks.currentValue * this.getExtraCond().hunterSkill.effectiveness;
                             }
                         ],
-                        values:["+0.4% per stack", "+0.8% per stack", "+1.2% per stack", "+1.6% per stack", "+2.0% per stack"]},
-                        {name:"Pet Damage",
-                        type: [{extraType: this.getExtraTypes().petDmg}],
-                        conditionals: [this.getExtraCond().hunterSkill, this.getExtraCond().furiousStacks],
-                        getActiveValueMultis: [
-                            null,
-                            () => {
-                                return this.getExtraCond().furiousStacks.currentValue * this.getExtraCond().hunterSkill.effectiveness;
-                            }
-                        ],
                         values:["+0.6% per stack", "+1.2% per stack", "+1.8% per stack", "+2.4% per stack", "+3.0% per stack"]},
                         {name:"Furious Attack Stacks",
                         type: [{extraType: this.getExtraTypes().maxFuriousStacks}],
@@ -1120,15 +1100,8 @@ export class Fl4k extends Character {
                         value:"4 seconds"}]}),
         new NormalSkill("assets/images/fl4k/skills/LickTheWounds.webp", [2, 1], 1, 10, "green",
                     {name:"LICK THE WOUNDS", 
-                    description:"When FL4K is in Fight For Your Life, their pet will attempt to revive them. If it does, it gains increased Damage for a short time",
-                    effects:[
-                        {name:"Pet Damage",
-                        type: [{extraType: this.getExtraTypes().petDmg}],
-                        conditional: this.getExtraCond().petRevivedYou,
-                        value: "+30%"},
-                        {name:"Duration",
-                        value:"60 seconds"}
-                    ]}),
+                    description:"When FL4K is in Fight For Your Life, their pet will attempt to revive them.",
+                    effects:[]}),
         new NormalSkill("assets/images/fl4k/skills/TurnTailAndRun.webp", [2, 2], 3, 10, "green",
                     {name:"TURN TAIL AND RUN", 
                     description:"While moving, FL4K constantly regenerates health and gains Damage Reduction.<br /><br />" +

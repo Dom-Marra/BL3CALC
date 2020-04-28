@@ -242,7 +242,7 @@ export class Amara extends Character {
                   effects:[
                     {name:"Shock Damage",
                     type: [{shockDmg: true}],
-                    values:["+4.0%", "+8.0%", "+12.0%",  "+16.0%", "+20.0%"]},
+                    values:["+8.0%", "+16.0%", "+24.0%",  "+32.0%", "+40.0%"]},
                     {name:"Elemental Damage", 
                     type: [{elementalDmg: true}],
                     values:["+6.0%", "+12.0%", "+18.0%", "+24.0%", "+30.0%"]}]}),
@@ -258,10 +258,7 @@ export class Amara extends Character {
                   description:"Whenever Amara applies a Status Effect to an enemy, it has a chance to spread to a nearby enemy.",
                   effects:[
                     {name:"Spread Chance",
-                    values:["8%", "16%", "24%", "32%", "40%"]},
-                    {name:"Elemental Damage", 
-                    type: [{elementalDmg: true}],
-                    values:["+6.0%","+12.0%","+18.0%","+24.0%", "+30.0%"]}]}),
+                    values:["8%", "16%", "24%", "32%", "40%"]}]}),
     new NormalSkill('assets/images/amara/skills/Dread.webp', [2, 1], 1, 10, "red",
                   {name:"DREAD", 
                   description:"Amara's Gun Damage is increased for a few seconds after an enemy is Grasped.<br /><br />" +
@@ -681,7 +678,7 @@ export class Amara extends Character {
                     effects:[
                       {name:"Bonus Damage",
                       type: [{bonusDmg: true}],
-                      values:["up to 12.0% of damage dealt", "up to 24.0% of damage dealt", "up to 36.0% of damage dealt"]}]}),
+                      values:["up to 18.0% of damage dealt", "up to 36.0% of damage dealt", "up to 54.0% of damage dealt"]}]}),
     new NormalSkill('assets/images/amara/skills/Clarity.webp', [0, 2], 5, 0, "green",
                   {name:"CLARITY", 
                   description:"Amara constantly regenerates health. The lower her health, " + 
@@ -832,7 +829,7 @@ export class Amara extends Character {
                   "Nova that may knock back nearby enemies. This skill has a long cooldown.",
                   effects:[
                     {name:"Max Health Restored",
-                    value:"100% of Max Health"},
+                    value:"50% of Max Health"},
                     {name:"Cooldown",
                     value:"120 seconds"}]}),
     new NormalSkill('assets/images/amara/skills/Blitz.webp', [5, 1], 1, 25, "green",

@@ -7,7 +7,7 @@ import { ActionMod } from './actionmod';
 export abstract class Character {
 
     public readonly MIN_POINTS = 0;                       //Min points that can be allocated
-    public readonly MAX_NORMAL_SKILL_POINTS = 48;         //Max points that can be allocated for normal skills
+    public readonly MAX_NORMAL_SKILL_POINTS = 55;         //Max points that can be allocated for normal skills
 
     private conditionals = {                              //Situations that affects the character
         usedActionSkill: { 
