@@ -53,13 +53,11 @@ export class TooltipComponent implements OnInit {
 
     
 
-    if (window.innerWidth > 768) {
-      if (hoveredElementX > (window.innerWidth/2)) {
-        tooltip.style.right = (body.getBoundingClientRect().right - hoveredElement.getBoundingClientRect().right) + "px";
-      } else if (hoveredElementX < (window.innerWidth/2)){
-        tooltip.style.left =  hoveredElement.getBoundingClientRect().left + "px";
-      }
-    } 
+    if (hoveredElementX > (window.innerWidth/2)) {
+      tooltip.style.right = (body.getBoundingClientRect().right - hoveredElement.getBoundingClientRect().right) + "px";
+    } else if (hoveredElementX < (window.innerWidth/2)){
+      tooltip.style.left =  hoveredElement.getBoundingClientRect().left + "px";
+    }
   }
 
   /**

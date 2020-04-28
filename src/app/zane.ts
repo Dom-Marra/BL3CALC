@@ -390,7 +390,7 @@ export class Zane extends Character {
                 description:"Kill Skill. After killing an enemy, Zane gains Grenade Regeneration for a few seconds. This effect stacks twice",
                 effects:[
                         {name:"Grenade Regeneration", 
-                        values:["7% / sec", "13% / sec", "20% / sec"]},
+                        values:["5% / sec", "10% / sec", "15% / sec"]},
                         {name:"Duration", 
                         value:"8 seconds"}]}),
         new NormalSkill("assets/images/zane/skills/OldU.webp", [3, 1], 1, 15, "red",
@@ -473,7 +473,7 @@ export class Zane extends Character {
                         {name:"Bonus Damage", 
                         type: [{bonusCryoDmg: true}],
                         conditional: this.getConditionals().enemyNotTargetingYou,
-                        values:["6.0% of damage dealt", "12.0% of damage dealt", "18.0% of damage dealt"]}]}),
+                        values:["12.0% of damage dealt", "24.0% of damage dealt", "36.0% of damage dealt"]}]}),
         new NormalSkill("assets/images/zane/skills/DoubleBarrel.webp", [5, 1], 1, 25, "red",
                 {name:"DOUBLE BARREL",
                 description:"The Clone is equipped with a copy of Zane's Current Weapon when activated.<br /><br />" +
@@ -676,7 +676,7 @@ export class Zane extends Character {
                             return this.getExtraCond().killSkillBonus.effectiveness * this.getExtraCond().violentViolenceStacks.currentValue;
                         }
                     ],
-                    values:["+4%", "+8%", "+12%" , "+16%", "+20%"]},
+                    values:["+3%", "+6%", "+9%" , "+12%", "+15%"]},
                     {name:"Duration", 
                     value:"8 seconds"}]}),
         new NormalSkill("assets/images/zane/skills/PlayingDirty.webp", [3, 2], 5, 15, "blue",
@@ -868,7 +868,7 @@ export class Zane extends Character {
                         values:["+6%", "+12%", "+18%" , "+24%", "+30%"]},
                         {name:"Shield Recharge Delay", 
                         type: [{shieldRegenDelay: true}],
-                        values:["-7%", "-14%", "-19%" , "-24%", "-29%"]}]}),
+                        values:["-7%", "-14%", "-21%" , "-28%", "-35%"]}]}),
         new NormalSkill("assets/images/zane/skills/BrainFreeze.webp", [1, 0], 5, 5, "green",
                 {name:"BRAIN FREEZE",
                 description:"Whenever Zane scores a Critical Hit on an enemy, there's a chance they will be Slowed. This effect stacks until the target is Frozen.",
@@ -900,7 +900,7 @@ export class Zane extends Character {
                         {name:"Gun Damage", 
                         type: [{gunDmg: true}],
                         conditional: this.getConditionals().shieldsActive,
-                        value:"up to +25%"},
+                        value:"up to +35%"},
                         {name:"Accuracy", 
                         type: [{accuracy: true}],
                         conditional: this.getConditionals().shieldsActive,
