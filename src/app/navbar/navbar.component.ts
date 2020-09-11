@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationStart } from '@angular/router';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { Navigation } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-navbar',

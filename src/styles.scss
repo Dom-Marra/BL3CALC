@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'Compacta Bold';
-    src: url('src/assets/fonts/Compacta Bold.otf') format("opentype");
+    src: url('./assets/fonts/Compacta\ Bold.otf') format("opentype");
 }
 
 @font-face {
     font-family: 'Teko';
-    src: url('src/assets/fonts/Teko-Medium.ttf') format("truetype");
+    src: url('./assets/fonts/Teko-Medium.ttf') format("truetype");
 }
 
 $primary-color: rgb(38, 38, 38);
