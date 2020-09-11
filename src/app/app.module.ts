@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SimplebarAngularModule } from 'simplebar-angular';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -31,7 +31,7 @@ import { ApiKey } from './api-key';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFontAwesomeModule,
+    FontAwesomeModule,
     BrowserAnimationsModule,
     SimplebarAngularModule,
     HttpClientModule
