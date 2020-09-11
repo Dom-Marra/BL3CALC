@@ -1,0 +1,251 @@
+[debug] [2020-09-11T19:21:29.524Z] ----------------------------------------------------------------------
+[debug] [2020-09-11T19:21:29.532Z] Command:       d:\nodejs\node.exe C:\Users\domin\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --debug
+[debug] [2020-09-11T19:21:29.535Z] CLI Version:   7.2.2
+[debug] [2020-09-11T19:21:29.537Z] Platform:      win32
+[debug] [2020-09-11T19:21:29.540Z] Node Version:  v10.15.0
+[debug] [2020-09-11T19:21:29.548Z] Time:          Fri Sep 11 2020 12:21:29 GMT-0700 (Pacific Daylight Time)
+[debug] [2020-09-11T19:21:29.550Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2020-09-11T19:21:29.567Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-09-11T19:21:29.571Z] > authorizing via signed-in user
+[debug] [2020-09-11T19:21:29.572Z] [iam] checking project bl3calc for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-09-11T19:21:29.582Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/bl3calc:testIamPermissions  
+
+[debug] [2020-09-11T19:21:29.976Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:29.983Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/bl3calc  
+ 
+[debug] [2020-09-11T19:21:30.137Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'bl3calc'...
+[info] 
+[info] i  deploying functions, hosting
+[info] Running command: npm --prefix "$RESOURCE_DIR" run build
+[info] +  functions: Finished running predeploy script.
+[debug] [2020-09-11T19:21:40.022Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "build": "tsc",
+    "serve": "npm run build && firebase serve --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "8"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^8.0.0",
+    "firebase-functions": "^3.1.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5"
+  },
+  "devDependencies": {
+    "typescript": "^3.2.2"
+  },
+  "private": true
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[debug] [2020-09-11T19:21:40.027Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/bl3calc/services/cloudfunctions.googleapis.com  
+ 
+[debug] [2020-09-11T19:21:40.038Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/bl3calc/services/runtimeconfig.googleapis.com  
+ 
+[debug] [2020-09-11T19:21:40.298Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:40.496Z] <<< HTTP RESPONSE 200
+[info] +  functions: all necessary APIs are enabled
+[debug] [2020-09-11T19:21:40.501Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/bl3calc/adminSdkConfig  
+ 
+[debug] [2020-09-11T19:21:40.681Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:40.685Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/bl3calc/versions  
+
+[debug] [2020-09-11T19:21:41.346Z] <<< HTTP RESPONSE 200
+[info] i  functions: preparing functions directory for uploading...
+[debug] [2020-09-11T19:21:41.354Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/bl3calc/configs  
+ 
+[debug] [2020-09-11T19:21:41.516Z] <<< HTTP RESPONSE 200
+[info] i  functions: packaged functions (32.08 KB) for uploading
+[debug] [2020-09-11T19:21:41.904Z] >>> HTTP REQUEST POST https://cloudfunctions.googleapis.com/v1/projects/bl3calc/locations/us-central1/functions:generateUploadUrl  
+ 
+[debug] [2020-09-11T19:21:42.327Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:42.330Z] >>> HTTP REQUEST PUT https://storage.googleapis.com/gcf-upload-us-central1-3e6a9969-f29a-449a-ba7f-9f7fce0b36c3/db5b4b2f-eefd-4f7a-adf3-38603cf919c1.zip?GoogleAccessId=service-984166629206@gcf-admin-robot.iam.gserviceaccount.com&Expires=1599853902&Signature=jdnBv%2FBb4IcFUwk%2FLDO9VdNpq%2BzrcTGBokBKZHHRqr4C9bq0WV7dS7bXZrHgI7tpZryHHql8E0pP18iaTQRv%2BkneoeY5HdTiIh3pxnae9g8Lza6vkfhpEt612GS78uB5dMqzo9FBh2YW6ZgJ47UJBZ47Tb5kGAlk6W1bKAIvz35rT6YD%2BH6l1%2B0RbGsJYZu6cmrnL9COmW4sG9k1lsfUJD44RYZhDhOpUy2ujIc40N2NX9HAWqSx%2B2lS587VFi2Nc7%2BQOdTbEYPO%2BWhio%2BwyPJ1xI8vvdwIlrZMaAvpqDQ2XoH6y7XSkdIS9oJu%2BFdOiNRKXahfIdURC0XpFfTuFfQ%3D%3D  
+ <request body omitted>
+[debug] [2020-09-11T19:21:42.541Z] <<< HTTP RESPONSE 200
+[info] +  functions: functions folder uploaded successfully
+[info] i  hosting[bl3calc]: beginning deploy...
+[info] i  hosting[bl3calc]: found 284 files in dist/BL3CALC
+[debug] [2020-09-11T19:21:42.655Z] [hosting] hash cache [ZGlzdFxCTDNDQUxD] load error: lines is not defined
+[debug] [2020-09-11T19:21:42.943Z] [hosting] hash cache [ZGlzdFxCTDNDQUxD] stored for 284 files
+[debug] [2020-09-11T19:21:42.945Z] [hosting][hash queue][FINAL]
+[debug] [2020-09-11T19:21:42.947Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/bl3calc/versions/a8e13468011bad32:populateFiles  
+ <request body omitted>
+[debug] [2020-09-11T19:21:43.727Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:43.730Z] [hosting][populate queue][FINAL]
+[debug] [2020-09-11T19:21:43.732Z] [hosting] uploads queued: 0
+[debug] [2020-09-11T19:21:43.733Z] [hosting][upload queue][FINAL]
+[info] +  hosting[bl3calc]: file upload complete
+[debug] [2020-09-11T19:21:43.737Z] [hosting] deploy completed after 1190ms
+[debug] [2020-09-11T19:21:43.890Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/projects/bl3calc/locations/-/functions  
+ 
+[debug] [2020-09-11T19:21:44.290Z] <<< HTTP RESPONSE 200
+[info] i  functions: updating Node.js 8 function pastebin(us-central1)...
+[debug] [2020-09-11T19:21:44.297Z] Trigger is:  {"httpsTrigger":{}}
+[info] i  functions: updating Node.js 8 function getPaste(us-central1)...
+[debug] [2020-09-11T19:21:44.300Z] Trigger is:  {"httpsTrigger":{}}
+[debug] [2020-09-11T19:21:44.302Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/bl3calc/services/cloudscheduler.googleapis.com  
+ 
+[debug] [2020-09-11T19:21:44.727Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:44.731Z] >>> HTTP REQUEST PATCH https://cloudfunctions.googleapis.com/v1/projects/bl3calc/locations/us-central1/functions/pastebin {"updateMask":"sourceUploadUrl,name,labels,runtime,httpsTrigger"} 
+
+[debug] [2020-09-11T19:21:44.735Z] >>> HTTP REQUEST PATCH https://cloudfunctions.googleapis.com/v1/projects/bl3calc/locations/us-central1/functions/getPaste {"updateMask":"sourceUploadUrl,name,labels,runtime,httpsTrigger"} 
+
+[debug] [2020-09-11T19:21:45.045Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:45.062Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:45.066Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/projects/bl3calc/locations/-/functions  
+ 
+[debug] [2020-09-11T19:21:45.448Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:45.452Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9wYXN0ZWJpbi9SSE9CQUJIR0lEUQ  
+ 
+[debug] [2020-09-11T19:21:45.454Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:21:45.623Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:45.626Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:47.629Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9wYXN0ZWJpbi9SSE9CQUJIR0lEUQ  
+ 
+[debug] [2020-09-11T19:21:47.632Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:21:47.798Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:47.807Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:49.805Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:21:49.811Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9wYXN0ZWJpbi9SSE9CQUJIR0lEUQ  
+ 
+[debug] [2020-09-11T19:21:49.977Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:49.981Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:51.993Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:21:51.994Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9wYXN0ZWJpbi9SSE9CQUJIR0lEUQ  
+ 
+[debug] [2020-09-11T19:21:52.148Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:52.155Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:54.150Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:21:54.165Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9wYXN0ZWJpbi9SSE9CQUJIR0lEUQ  
+ 
+[debug] [2020-09-11T19:21:54.330Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:54.334Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:56.347Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9wYXN0ZWJpbi9SSE9CQUJIR0lEUQ  
+ 
+[debug] [2020-09-11T19:21:56.350Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:21:56.508Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:56.511Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:58.523Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9wYXN0ZWJpbi9SSE9CQUJIR0lEUQ  
+ 
+[debug] [2020-09-11T19:21:58.525Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:21:58.692Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:21:58.731Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:00.707Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9wYXN0ZWJpbi9SSE9CQUJIR0lEUQ  
+ 
+[debug] [2020-09-11T19:22:00.738Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:22:00.870Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:00.896Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:02.890Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9wYXN0ZWJpbi9SSE9CQUJIR0lEUQ  
+ 
+[debug] [2020-09-11T19:22:02.906Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:22:03.072Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:03.095Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:05.089Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9wYXN0ZWJpbi9SSE9CQUJIR0lEUQ  
+ 
+[debug] [2020-09-11T19:22:05.103Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:22:05.245Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:05.251Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:07.254Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9wYXN0ZWJpbi9SSE9CQUJIR0lEUQ  
+ 
+[debug] [2020-09-11T19:22:07.256Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:22:07.417Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:07.440Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:09.420Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:22:09.449Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9wYXN0ZWJpbi9SSE9CQUJIR0lEUQ  
+ 
+[debug] [2020-09-11T19:22:09.573Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:09.611Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:11.578Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:22:11.625Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9wYXN0ZWJpbi9SSE9CQUJIR0lEUQ  
+ 
+[debug] [2020-09-11T19:22:11.747Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:11.789Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:13.751Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:22:13.792Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9wYXN0ZWJpbi9SSE9CQUJIR0lEUQ  
+ 
+[debug] [2020-09-11T19:22:13.918Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:13.965Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:15.924Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:22:15.970Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9wYXN0ZWJpbi9SSE9CQUJIR0lEUQ  
+ 
+[debug] [2020-09-11T19:22:16.073Z] <<< HTTP RESPONSE 200
+[debug] [2020-09-11T19:22:16.130Z] <<< HTTP RESPONSE 200
+[warn] !  functions[pastebin(us-central1)]: Deployment error.
+[info] Build failed: `npm_install` had stderr output:
+npm ERR! code EINTEGRITY
+npm ERR! sha512-nqHUnMXmBzT0w570r2JpJxfiSD1IzoI+HGVdd3aZ0yNi3ngvQ4jv1dtHt5VGxfI2yj5yqImPhOK4vmIh2xMbGg== integrity checksum failed when using sha512: wanted sha512-nqHUnMXmBzT0w570r2JpJxfiSD1IzoI+HGVdd3aZ0yNi3ngvQ4jv1dtHt5VGxfI2yj5yqImPhOK4vmIh2xMbGg== but got sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==. (15696 bytes)
+npm ERR! code EINTEGRITY
+npm ERR! sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA== integrity checksum failed when using sha512: wanted sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA== but got sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==. (43660 bytes)
+npm WARN tarball tarball data for lodash@4.17.19 (sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==) seems to be corrupted. Trying one more time.
+npm WARN tarball tarball data for lodash@4.17.19 (sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==) seems to be corrupted. Trying one more time.
+npm WARN tar ENOENT: no such file or directory, open '/workspace/node_modules/.staging/lodash-7943d0fc/fp/_baseConvert.js'
+npm WARN tar ENOENT: no such file or directory, open '/workspace/node_modules/.staging/lodash-7943d0fc/fp/_convertBrowser.js'
+npm WARN tar ENOENT: no such file or directory, open '/workspace/node_modules/.staging/lodash-7943d0fc/fp/_falseOptions.js'
+npm WARN tar ENOENT: no such file or directory, open '/workspace/node_modules/.staging/lodash-7943d0fc/fp/_mapping.js'
+npm ERR! code EINTEGRITY
+npm ERR! Verification failed while extracting lodash@4.17.19:
+npm ERR! Verification failed while extracting lodash@4.17.19:
+npm ERR! sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A== integrity checksum failed when using sha512: wanted sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A== but got sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==. (315311 bytes)
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /builder/home/.npm/_logs/2020-09-11T19_22_06_133Z-debug.log
+
+error: `npm_install` returned code: 1; Error ID: 3CDC3445
+[debug] [2020-09-11T19:22:18.076Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/YmwzY2FsYy91cy1jZW50cmFsMS9nZXRQYXN0ZS9mYU5fTnNfRFRQYw  
+ 
+[debug] [2020-09-11T19:22:18.239Z] <<< HTTP RESPONSE 200
+[warn] !  functions[getPaste(us-central1)]: Deployment error.
+[info] Build failed: `npm_install` had stderr output:
+npm ERR! code EINTEGRITY
+npm ERR! sha512-nqHUnMXmBzT0w570r2JpJxfiSD1IzoI+HGVdd3aZ0yNi3ngvQ4jv1dtHt5VGxfI2yj5yqImPhOK4vmIh2xMbGg== integrity checksum failed when using sha512: wanted sha512-nqHUnMXmBzT0w570r2JpJxfiSD1IzoI+HGVdd3aZ0yNi3ngvQ4jv1dtHt5VGxfI2yj5yqImPhOK4vmIh2xMbGg== but got sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==. (15696 bytes)
+npm ERR! code EINTEGRITY
+npm ERR! sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA== integrity checksum failed when using sha512: wanted sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA== but got sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==. (43660 bytes)
+npm WARN tarball tarball data for lodash@4.17.19 (sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==) seems to be corrupted. Trying one more time.
+npm ERR! code EINTEGRITY
+npm ERR! sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A== integrity checksum failed when using sha512: wanted sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A== but got sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==. (315311 bytes)
+npm WARN tar ENOENT: no such file or directory, open '/workspace/node_modules/.staging/lodash-7943d0fc/fp/_convertBrowser.js'
+npm WARN tar ENOENT: no such file or directory, open '/workspace/node_modules/.staging/lodash-7943d0fc/fp/_falseOptions.js'
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /builder/home/.npm/_logs/2020-09-11T19_22_06_712Z-debug.log
+
+error: `npm_install` returned code: 1; Error ID: DCB33AAE
+[info] 
+
+Functions deploy had errors with the following functions:
+[info] 	getPaste
+[info] 	pastebin
+[info] 
+
+To try redeploying those functions, run:
+[info]     firebase deploy --only functions:getPaste,functions:pastebin
+[info] 
+
+To continue deploying other features (such as database), run:
+[info]     firebase deploy --except functions
+[error] 
+[error] Error: Functions did not deploy properly.
