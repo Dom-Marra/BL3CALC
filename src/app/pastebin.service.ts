@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ApiKey } from './api-key'
 import { HttpClient } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -57,14 +59,17 @@ export class PastebinService {
     }
         
     this.http.post("https://us-central1-bl3calc.cloudfunctions.net/pastebin", JSON.stringify(content))
-      .subscribe(link => {
-        if (link["link"] == "Post limit, maximum pastes per 24h reached") {
-          prompt("Unfortunatley you've created too many builds in the past 24h, but here is the import data for the save:", JSON.stringify(build));
-        } else {
-          var response = link["link"] .replace('https://pastebin.com/','');
-          prompt("Here is your build!", "https://bl3calc.com/build?character=" + character + "&save=" + response);
-        }
-      });
+      .pipe(catchError((err: any) => {
+        prompt("There was an error while uploading your build, please try again later or save the build Data for import: ", JSON.stringify(build));
+        return Observable.throw(err.text);
+      })).subscribe(link => {
+          if (link["link"] == "Post limit, maximum pastes per 24h reached") {
+            prompt("Unfortunatley you've created too many builds in the past 24h, but here is the import data for the save:", JSON.stringify(build));
+          } else {
+            var response = link["link"] .replace('https://pastebin.com/','');
+            prompt("Here is your build!", "https://bl3calc.com/build?character=" + character + "&save=" + response);
+          }
+        });
 
   }
 }
