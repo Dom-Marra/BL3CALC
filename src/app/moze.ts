@@ -8,15 +8,15 @@ import { Character } from './character';
 export class Moze extends Character {
 
     //Path for red tree header image
-    public readonly RED_TREE_HEADER: string = "assets/images/moze/RedTreeHeader.webp";
+    public readonly RED_TREE_HEADER: string = "assets/images/moze/RedTreeHeader.png";
     public readonly RED_TREE_NAME: string = "Shield Of Retribution";
 
     //Path for blue tree header image
-    public readonly BLUE_TREE_HEADER: string = "assets/images/moze/BlueTreeHeader.webp";
+    public readonly BLUE_TREE_HEADER: string = "assets/images/moze/BlueTreeHeader.png";
     public readonly BLUE_TREE_NAME: string = "Bottomless Mags";
 
     //Path for green tree header image
-    public readonly GREEN_TREE_HEADER: string = "assets/images/moze/GreenTreeHeader.webp";
+    public readonly GREEN_TREE_HEADER: string = "assets/images/moze/GreenTreeHeader.png";
     public readonly GREEN_TREE_NAME: string = "Demolition Woman";
 
     private extraConditionals = { 
@@ -260,17 +260,17 @@ export class Moze extends Character {
     //Skills for red skill tree
 
     //Action Skills
-    private railGun = new ActionSkill("assets/images/moze/skills/RailGun.webp", [-1, 1], 2, 0, "red", 
+    private railGun = new ActionSkill("assets/images/moze/skills/RailGun.png", [-1, 1], 2, 0, "red", 
 				{name:"RAILGUN",
 				description:"The Railgun fires electrified high-velocity projectiles that deal Shock Damage.",
 				effects:[]});
-    private bearFist = new ActionSkill("assets/images/moze/skills/BearFist.webp", [1, 3], 2, 5, "red", 
+    private bearFist = new ActionSkill("assets/images/moze/skills/BearFist.png", [1, 3], 2, 5, "red", 
 				{name:"BEAR FIST",
 				description:"The Bear Fist is a pneumatic-driven fist that deals massive damage to a single target at close range.",
 				effects:[]});
 
     //Action Mods
-    private hellOnRails = new ActionMod("assets/images/moze/skills/HellOnRails.webp", [1, -1], 2, 5, "red", 
+    private hellOnRails = new ActionMod("assets/images/moze/skills/HellOnRails.png", [1, -1], 2, 5, "red", 
 				{name:"HELL ON RAILS",
 				description:"Railgun now fires superheated rounds that deal Incendiary Damage, but have increased Fuel Drain per shot.",
 				effects:[
@@ -278,20 +278,20 @@ export class Moze extends Character {
 					{name:"Fuel Drain",
 					type: [{extraType: this.getExtraTypes().railGunFuelDrain}],
 					value:"+30%"}]}, this.railGun);
-    private capacitiveArmature = new ActionMod("assets/images/moze/skills/CapacitiveArmature.webp", [2, -1], 2, 10, "red", 
+    private capacitiveArmature = new ActionMod("assets/images/moze/skills/CapacitiveArmature.png", [2, -1], 2, 10, "red", 
 				{name:"CAPACITIVE ARMATURE",
 				description:"When Railgun hits an enemy, it chains to nearby enemies, dealing reduced Shock Damage to more targets.",
 				effects:[
 					{name:"Splinter Damage",
 					value:"-75%"}]}, this.railGun);
-    private wildSwing = new ActionMod("assets/images/moze/skills/WildSwing.webp", [2, 3], 2, 10, "red", 
+    private wildSwing = new ActionMod("assets/images/moze/skills/WildSwing.png", [2, 3], 2, 10, "red", 
 				{name:"WILD SWING",
 				description:"Whenever Bear Fist hits an enemy, it deals random bonus Elemental Damage to that enemy and all enemies nearby.",
 				effects:[
 					{name:"Elemental Damage",
 					type: [{extraType: this.getExtraTypes().bearFistBonusEleDmg}],
 					value:"+35% of damage dealt"}]}, this.bearFist);
-    private corrosiveSabotRound = new ActionMod("assets/images/moze/skills/CorrosiveSabotRound.webp", [3, -1], 2, 15, "red", 
+    private corrosiveSabotRound = new ActionMod("assets/images/moze/skills/CorrosiveSabotRound.png", [3, -1], 2, 15, "red", 
 				{name:"CORROSIVE SABOT ROUND",
 				description:"Railgun now fires a specialty round that deals reduced damage and explodes after a short delay.<br /><br />" +
 				"Railgun shots have reduced Fuel Drain and the Magazine Size is increased.",
@@ -305,12 +305,12 @@ export class Moze extends Character {
 					{name:"Magazine Size",
 					value:"+2"},
 					{name:"Converts to Corrosive Damage"}]}, this.railGun);
-    private closeTheDistance = new ActionMod("assets/images/moze/skills/CloseTheDistance.webp", [3, 3], 2, 15, "red", 
+    private closeTheDistance = new ActionMod("assets/images/moze/skills/CloseTheDistance.png", [3, 3], 2, 15, "red", 
 				{name:"CLOSE THE DISTANCE",
 				description:"Instead of punching, Bear Fist now launches its fist forward and grabs enemies  " + 
 				"at greatly increased range, dealing Shock Damage and pulling them back to Iron Bear.",
 				effects:[]}, this.bearFist);
-    private shockHammer = new ActionMod("assets/images/moze/skills/ShockHammer.webp", [4, 3], 2, 20, "red", 
+    private shockHammer = new ActionMod("assets/images/moze/skills/ShockHammer.png", [4, 3], 2, 20, "red", 
 				{name:"SHOCKHAMMER",
 				description:"Bear Fist is now capable of sustained rapid fire punching.<br /><br />" +
 				"Additionally, Bear Fist has reduced Fuel Drain and deals Bonus Shock Damage with each hit.",
@@ -332,7 +332,7 @@ export class Moze extends Character {
 	this.corrosiveSabotRound,
 	this.closeTheDistance,
 	this.shockHammer,
-	new NormalSkill("assets/images/moze/skills/SelflessVengeance.webp", [0, 0], 5, 0, "red", 
+	new NormalSkill("assets/images/moze/skills/SelflessVengeance.png", [0, 0], 5, 0, "red", 
 				{name:"SELFLESS VENGEANCE",
 				description:"Whenever Moze reloads, she loses a small portion of her health " + 
 				"and grants additional Incendiary Damage to her and her allies' rounds for a few seconds.",
@@ -349,7 +349,7 @@ export class Moze extends Character {
 					"+15.0% of gun damage dealt"]},
 					{name:"Selfless Vengeance Duration",
 					value:"5 sec"}]}),
-	new NormalSkill("assets/images/moze/skills/SecurityBear.webp", [0, 1], 1, 0, "red", 
+	new NormalSkill("assets/images/moze/skills/SecurityBear.png", [0, 1], 1, 0, "red", 
 				{name:"SECURITY BEAR",
 				description:"Iron Bear gains a bubble shield that reduces damage taken.<br /><br />" +
 				"The shield deactivates if it sustains too much damage, reactivating after a short cooldown.",
@@ -357,7 +357,7 @@ export class Moze extends Character {
 					{name:"20% Iron Bear Max Health added as Shields"},
 					{name:"Bubble Recharge Delay",
 					value:"5 sec"}]}),
-	new NormalSkill("assets/images/moze/skills/ArmoredInfantry.webp", [0, 2], 5, 0, "red", 
+	new NormalSkill("assets/images/moze/skills/ArmoredInfantry.png", [0, 2], 5, 0, "red", 
 				{name:"ARMORED INFANTRY",
 				description:"While Moze's shields are active, she gains Damage Reduction and increased Gun Damage.",
 				effects:[
@@ -369,7 +369,7 @@ export class Moze extends Character {
 					conditional: this.getConditionals().shieldsActive,
 					type: [{gunDmg: true}],
 					values:["+3.0%",  "+6.0%", "+9.0%", "+12.0%", "+15.0%"]}]}),
-	new NormalSkill("assets/images/moze/skills/DrowningInBrass.webp", [1, 0], 5, 5, "red", 
+	new NormalSkill("assets/images/moze/skills/DrowningInBrass.png", [1, 0], 5, 5, "red", 
 				{name:"DROWNING IN BRASS",
 				description:"Kill Skill. Killing an enemy grants Moze a stack of Drowning in Brass.<br /><br />" +
 				"For each stack of Drowning in Brass, Moze's Fire Rate is reduced, but Gun Damage " + 
@@ -394,14 +394,14 @@ export class Moze extends Character {
 					value:"3"},
 					{name:"Drowning In Brass Duration",
 					value:"15 seconds"}]}),
-	new NormalSkill("assets/images/moze/skills/ThinRedLine.webp", [1, 1], 3, 5, "red", 
+	new NormalSkill("assets/images/moze/skills/ThinRedLine.png", [1, 1], 3, 5, "red", 
 				{name:"THIN RED LINE",
 				description:"A portion of Moze's health is Reserved and cannot be restored, but her Maximum Shield is increased by the same amount.",
 				effects:[
 					{names: ["+20% Max Health Reserved and Added to Max Shields",
 							"+40% Max Health Reserved and Added to Max Shields",
 							"+60% Max Health Reserved and Added to Max Shields"]}]}),
-	new NormalSkill("assets/images/moze/skills/VladofIngenuity.webp", [1, 2], 5, 5, "red", 
+	new NormalSkill("assets/images/moze/skills/VladofIngenuity.png", [1, 2], 5, 5, "red", 
 				{name:"VLADOF INGENUITY",
 				description:"Moze's Maximum Shield is increased, and she gains resistance to Shock Damage.",
 				effects:[
@@ -411,7 +411,7 @@ export class Moze extends Character {
 					{name:"Max Shield",
 					type: [{maxShield: true}],
 					values:["+6.0%",  "+12.0%", "+18.0%", "+24.0%", "+30.0%"]}]}),
-	new NormalSkill("assets/images/moze/skills/FullCanOfWhoop-Ass.webp", [2, 0], 1, 10, "red", 
+	new NormalSkill("assets/images/moze/skills/FullCanOfWhoop-Ass.png", [2, 0], 1, 10, "red", 
 				{name:"FULL CAN OF WHOOP-ASS",
 				description:"Entering Iron Bear causes Moze's and her allies' shields to immediately " + 
 				"begin recharging at an increased Shield Recharge Rate.",
@@ -420,7 +420,7 @@ export class Moze extends Character {
 					conditional: this.getConditionals().usedActionSkill,
 					type: [{shieldRechargeRate: true}],
 					value:"+25.0%"}]}),
-	new NormalSkill("assets/images/moze/skills/ExperimentalMunitions.webp", [2, 1], 1, 10, "red", 
+	new NormalSkill("assets/images/moze/skills/ExperimentalMunitions.png", [2, 1], 1, 10, "red", 
 				{name:"EXPERIMENTAL MUNITIONS ",
 				description:"Whenever Moze scores a Critical Hit, she deals bonus Incendiary Damage.",
 				effects:[
@@ -428,7 +428,7 @@ export class Moze extends Character {
 					conditional: this.getConditionals().critHit,
 					type: [{bonusIncendiaryDmg: true}],
 					value:"+10% of Damage Dealt"}]}),
-	new NormalSkill("assets/images/moze/skills/BehindTheIronCurtain.webp", [3, 0], 3, 15, "red", 
+	new NormalSkill("assets/images/moze/skills/BehindTheIronCurtain.png", [3, 0], 3, 15, "red", 
 				{name:"BEHIND THE IRON CURTAIN",
 				description:"Moze's Shield Recharge Delay is reduced, and her Shield Recharge Rate is increased.",
 				effects:[
@@ -438,14 +438,14 @@ export class Moze extends Character {
 					{name:"Shield Recharge Delay",
 					type: [{shieldRegenDelay: true}],
 					values:["-7.0%", "-14.0%", "-19.0%"]}]}),
-	new NormalSkill("assets/images/moze/skills/DesperateMeasures.webp", [3, 2], 3, 15, "red", 
+	new NormalSkill("assets/images/moze/skills/DesperateMeasures.png", [3, 2], 3, 15, "red", 
 				{name:"DESPERATE MEASURES",
 				description:"Moze's Gun Damage and Iron Bear's Hard Point Damage is increased depending on how low her health is. The lower her health, the greater the increase.",
 				effects:[
 					{name:"Gun Damage",
 					type: [{gunDmg: true, extraType: this.getExtraTypes().ironBearDmg}],
 					values:["up to +17%", "up to +33%", "up to +50%"]}]}),
-	new NormalSkill("assets/images/moze/skills/PhalanxDoctrine.webp", [4, 0], 5, 20, "red", 
+	new NormalSkill("assets/images/moze/skills/PhalanxDoctrine.png", [4, 0], 5, 20, "red", 
 				{name:"PHALANX DOCTRINE",
 				description:"Kill Skill. After killing an enemy, Moze gains a stack of Phalanx Doctrine. For every stack of Phalanx " + 
 				"Doctrine, Moze's Maximum Shield and Gun Damage are increased. Each stack lasts 30 seconds.",
@@ -470,11 +470,11 @@ export class Moze extends Character {
 					type: [{extraType: this.getExtraTypes().maxPhalanxDoctrineStacks}],
 					hidden: true,
 					value:"999"}]}),
-	new NormalSkill("assets/images/moze/skills/ForceFeedback.webp", [4, 1], 1, 20, "red", 
+	new NormalSkill("assets/images/moze/skills/ForceFeedback.png", [4, 1], 1, 20, "red", 
 				{name:"FORCE FEEDBACK",
 				description:"Whenever Moze scores a Critical Kill, her shields immediately begin recharging.",
 				effects:[]}),
-	new NormalSkill("assets/images/moze/skills/TenaciousDefense.webp", [5, 1], 1, 25, "red", 
+	new NormalSkill("assets/images/moze/skills/TenaciousDefense.png", [5, 1], 1, 25, "red", 
 				{name:"TENACIOUS DEFENSE",
 				description:"Whenever Moze's shield is fully depleted, she instantly restores a portion " + 
 				"of her shield, and her Gun Damage is increased for a short time.<br /><br />" +
@@ -493,18 +493,18 @@ export class Moze extends Character {
     //Skills for blue skill tree
 
     //Action Skills
-    private v35GrenadeLauncher = new ActionSkill("assets/images/moze/skills/V_35.webp", [-1, 1], 2, 0, "blue", 
+    private v35GrenadeLauncher = new ActionSkill("assets/images/moze/skills/V_35.png", [-1, 1], 2, 0, "blue", 
 				{name:"V-35 GRENADE LAUNCHER",
 				description:"The V-35 is a semi-automatic grenade launcher. Its grenades are not affected by Moze’s equipped grenade mod.",
 				effects:[]});
-    private vanquisherRocketPod = new ActionSkill("assets/images/moze/skills/VanquisherRocketPod.webp", [1, 3], 2, 5, "blue", 
+    private vanquisherRocketPod = new ActionSkill("assets/images/moze/skills/VanquisherRocketPod.png", [1, 3], 2, 5, "blue", 
 				{name:"VANQUISHER ROCKET POD",
 				description:"The Vanquisher Rocket Pod is a rocket launcher capable of rapid-firing volleys of unguided explosive rockets.",
 				effects:[]});
     
 
     //Action Mods
-    private shapedCharge = new ActionMod("assets/images/moze/skills/ShapedCharge.webp", [1, -1], 2, 5, "blue", 
+    private shapedCharge = new ActionMod("assets/images/moze/skills/ShapedCharge.png", [1, -1], 2, 5, "blue", 
 				{name:"SHAPED CHARGE",
 				description:"Direct hits with the V-35 deal increased damage.",
 				effects:[
@@ -512,13 +512,13 @@ export class Moze extends Character {
 					type: [{extraType: this.getExtraTypes().v35Dmg}],
 					conditional: this.getExtraCond().v35DirectHit,
 					value:"+35%"}]}, this.v35GrenadeLauncher);
-    private musicalChairs = new ActionMod("assets/images/moze/skills/MusicalChairs.webp", [2, -1], 2, 10, "blue", 
+    private musicalChairs = new ActionMod("assets/images/moze/skills/MusicalChairs.png", [2, -1], 2, 10, "blue", 
 				{name:"MUSICAL CHAIRS",
 				description:"Occasionally, the V-35 fires a Singularity Grenade that pulls in nearby enemies before exploding.",
 				effects:[
 					{name:"Singularity",
 					value:"Every 7th grenade"}]}, this.v35GrenadeLauncher);
-    private activeTracking = new ActionMod("assets/images/moze/skills/ActiveTracking.webp", [2, 3], 2, 10, "blue", 
+    private activeTracking = new ActionMod("assets/images/moze/skills/ActiveTracking.png", [2, 3], 2, 10, "blue", 
 				{name:"ACTIVE TRACKING",
 				description:"The Vanquisher Rocket Pod now fires homing rockets and has increased Reload Speed. Hold down F " + 
 				"and aim at enemies to designate up to 6 targets. Releasing Fire Button launches a volley of homing rockets at the designated targets.",
@@ -526,14 +526,14 @@ export class Moze extends Character {
 					{name:"Reload Speed",
 					type: [{extraType: this.getExtraTypes().vanquisherReloadSpeed}],
 					value:"+25%"}]}, this.vanquisherRocketPod);
-    private lockAndSpeedLoad = new ActionMod("assets/images/moze/skills/LockAndSpeedLoad.webp", [3, -1], 2, 15, "blue", 
+    private lockAndSpeedLoad = new ActionMod("assets/images/moze/skills/LockAndSpeedLoad.png", [3, -1], 2, 15, "blue", 
 				{name:"LOCK AND SPEEDLOAD",
 				description:"The V-35’s Reload Speed is greatly increased and it now fires a 5-round burst.",
 				effects:[
 					{name:"Reload Speed",
 					type: [{extraType: this.getExtraTypes().v35ReloadSpeed}],
 					value:"+25%"}]}, this.v35GrenadeLauncher);
-    private targetSoftening = new ActionMod("assets/images/moze/skills/TargetSoftening.webp", [3, 3], 2, 15, "blue", 
+    private targetSoftening = new ActionMod("assets/images/moze/skills/TargetSoftening.png", [3, 3], 2, 15, "blue", 
 				{name:"TARGET SOFTENING",
 				description:"The Vanquisher Rocket Pod deals greatly reduced damage per rocket, but fires in a " + 
 				"6-rocket spread. Additionally, enemies hit by Vanquisher Rocket Pod rockets take increased damage from all sources.",
@@ -543,7 +543,7 @@ export class Moze extends Character {
 					{name:"Damage",
 					type: [{extraType: this.getExtraTypes().vanquisherDamage}],
 					value:"-74%"}]}, this.vanquisherRocketPod);
-    private hammerdownProtocol = new ActionMod("assets/images/moze/skills/HammerdownProtocol.webp", [4, 3], 2, 20, "blue", 
+    private hammerdownProtocol = new ActionMod("assets/images/moze/skills/HammerdownProtocol.png", [4, 3], 2, 20, "blue", 
 				{name:"HAMMERDOWN PROTOCOL",
 				description:"Instead of a volley of conventional rockets, the Vanquisher Rocket Pod launches a single " + 
 				"rocket with a nuclear warhead, dealing massive Radiation Damage.",
@@ -564,7 +564,7 @@ export class Moze extends Character {
 	this.lockAndSpeedLoad,
 	this.targetSoftening,
 	this.hammerdownProtocol,
-	new NormalSkill("assets/images/moze/skills/FireInTheSkagDen.webp", [0, 0], 5, 0, "blue", 
+	new NormalSkill("assets/images/moze/skills/FireInTheSkagDen.png", [0, 0], 5, 0, "blue", 
 				{name:"FIRE IN THE SKAG DEN",
 				description:"Whenever Moze deals Splash Damage, she deals bonus Incendiary Damage.",
 				effects:[
@@ -572,7 +572,7 @@ export class Moze extends Character {
 					conditional: this.getConditionals().splashDmgHit,
 					type: [{bonusIncendiaryDmg: true}],
 					values:["+3%", "+6%", "+9%", "+12%", "+15%"]}]}),
-	new NormalSkill("assets/images/moze/skills/Deadlines.webp", [0, 1], 3, 0, "blue", 
+	new NormalSkill("assets/images/moze/skills/Deadlines.png", [0, 1], 3, 0, "blue", 
 				{name:"DEADLINES",
 				description:"Firing Iron Bear Weapons drains less Fuel.<br /><br />" +
 				"Killing an enemy while Iron Bear is active increases Fuel. This skill has diminishing returns.",
@@ -582,13 +582,13 @@ export class Moze extends Character {
 					values:["-12.0%", "-22.0%", "-30.0%"]},
 					{name:"Fuel Returned",
 					values:["Up to 2.0%", "Up to 4.0%", "Up to 6.0%"]}]}),
-	new NormalSkill("assets/images/moze/skills/Grizzled.webp", [0, 2], 5, 0, "blue", 
+	new NormalSkill("assets/images/moze/skills/Grizzled.png", [0, 2], 5, 0, "blue", 
 				{name:"GRIZZLED",
 				description:"Kill Skill. Killing an enemy reduces Moze's remaining Action Skill Cooldown Time. This skill has diminishing returns.",
 				effects:[
 					{name:"Iron Bear Cooldown Time",
 					values:["-1 seconds", "-2 seconds", "-3 seconds", "-4 seconds", "-5 seconds"]}]}),
-	new NormalSkill("assets/images/moze/skills/MeansOfDestruction.webp", [1, 0], 3, 5, "blue", 
+	new NormalSkill("assets/images/moze/skills/MeansOfDestruction.png", [1, 0], 3, 5, "blue", 
 				{name:"MEANS OF DESTRUCTION",
 				description:"Whenever Moze deals Splash Damage, there is a chance to add ammo " + 
 				"to her currently equipped weapon's magazine, with a smaller chance to return a grenade.",
@@ -597,7 +597,7 @@ export class Moze extends Character {
 					values:["+3.3%", "+6.7%", "+10.0%"]},
 					{name:"Grenade Chance",
 					values:["+2.0%", "+4.0%", "+6.0%"]}]}),
-	new NormalSkill("assets/images/moze/skills/TorgueCrossPromotion.webp", [1, 1], 5, 5, "blue", 
+	new NormalSkill("assets/images/moze/skills/TorgueCrossPromotion.png", [1, 1], 5, 5, "blue", 
 				{name:"TORGUE CROSS-PROMOTION",
 				description:"All Splash Damage dealt by Moze has a chance to double in size.",
 				effects:[
@@ -606,7 +606,7 @@ export class Moze extends Character {
 							"+9% chance to double Splash Damage Radius",
 							"+12% chance to double Splash Damage Radius",
 							"+15% chance to double Splash Damage Radius"]}]}),
-	new NormalSkill("assets/images/moze/skills/StainlessStealBear.webp", [1, 2], 5, 5, "blue", 
+	new NormalSkill("assets/images/moze/skills/StainlessStealBear.png", [1, 2], 5, 5, "blue", 
 				{name:"STAINLESS STEEL BEAR",
 				description:"Iron Bear gains additional armor and increased Maximum Fuel.",
 				effects:[
@@ -616,14 +616,14 @@ export class Moze extends Character {
 					{name:"Maximum Fuel",
 					type: [{extraType: this.getExtraTypes().ironBearMaxFuel}],
 					values:["+4.0%", "+8.0%", "+12.0%", "+16.0%", "+20.0%"]}]}),
-	new NormalSkill("assets/images/moze/skills/PullTheHolyPin.webp", [2, 0], 3, 10, "blue", 
+	new NormalSkill("assets/images/moze/skills/PullTheHolyPin.png", [2, 0], 3, 10, "blue", 
 				{name:"PULL THE HOLY PIN",
 				description:"Moze's grenades have a chance to score a Critical Hit, dealing " + 
 				"greatly increased damage. Sources of Critical Hit Damage do not affect grenade Critical Hits.",
 				effects:[
 					{name:"Critical Hit Chance",
 					values:["+10%", "+20%", "+30%"]}]}),
-	new NormalSkill("assets/images/moze/skills/AutoBear.webp", [2, 1], 1, 10, "blue", 
+	new NormalSkill("assets/images/moze/skills/AutoBear.png", [2, 1], 1, 10, "blue", 
 				{name:"AUTO BEAR",
 				description:"After Moze exits Iron Bear, it will remain deployed in place for a short time.<br /><br />" +
 				"While Auto Bear remains active, it will target and attack nearby enemies until its duration ends, " + 
@@ -631,7 +631,7 @@ export class Moze extends Character {
 				effects:[
 					{name:"Auto Bear Duration",
 					value:"15 seconds"}]}),
-	new NormalSkill("assets/images/moze/skills/Vampyr.webp", [3, 0], 5, 15, "blue", 
+	new NormalSkill("assets/images/moze/skills/Vampyr.png", [3, 0], 5, 15, "blue", 
 				{name:"VAMPYR",
 				description:"Whenever Moze damages an enemy with a thrown grenade or Iron Bear deals area damage, for every enemy " + 
 				"hit, she restores a portion of their missing health. Iron Bear receives half this bonus",
@@ -641,18 +641,18 @@ export class Moze extends Character {
 							"Restores +12% of missing health per enemy hit",
 							"Restores +16% of missing health per enemy hit",
 							"Restores +20% of missing health per enemy hit"]}]}),
-	new NormalSkill("assets/images/moze/skills/WCICATG.webp", [3, 2], 3, 15, "blue", 
+	new NormalSkill("assets/images/moze/skills/WCICATG.png", [3, 2], 3, 15, "blue", 
 				{name:"WHY CAN'T I CARRY ALL THESE GRENADES?",
 				description:"Increases Moze's grenade carrying capacity.",
 				effects:[
 					{name:"Grenade Capacity",
 					values:["+1", "+2", "+3"]}]}),
-	new NormalSkill("assets/images/moze/skills/ToTheLast.webp", [4, 0], 1, 20, "blue", 
+	new NormalSkill("assets/images/moze/skills/ToTheLast.png", [4, 0], 1, 20, "blue", 
 				{name:"TO THE LAST",
 				description:"Moze gains the ability to throw grenades while in Fight For " + 
 				"Your Life. If she threw a grenade before gaining Second Wind, a grenade is refunded.",
 				effects:[]}),
-	new NormalSkill("assets/images/moze/skills/ExplosivePunctuation.webp", [4, 1], 5, 20, "blue", 
+	new NormalSkill("assets/images/moze/skills/ExplosivePunctuation.png", [4, 1], 5, 20, "blue", 
 				{name:"EXPLOSIVE PUNCTUATION",
 				description:"When Moze deals Splash Damage, her Action Skill Cooldown Rate is briefly increased.",
 				effects:[
@@ -660,7 +660,7 @@ export class Moze extends Character {
 					type: [{actionSkillCooldown: true}],
 					conditional: this.getConditionals().dealtSplashDmg,
 					values:["+5.0%", "+10.0%", "+15.0%", "+20.0%", "+25.0%"]}]}),
-	new NormalSkill("assets/images/moze/skills/ShortFuse.webp", [5, 1], 1, 25, "blue", 
+	new NormalSkill("assets/images/moze/skills/ShortFuse.png", [5, 1], 1, 25, "blue", 
 				{name:"SHORT FUSE",
 				description:"Whenever Moze deals Gun Damage, there is a chance of a secondary explosion centered on the target.",
 				effects:[
@@ -673,12 +673,12 @@ export class Moze extends Character {
     //Skills for green skill tree
 
     //Action Skills
-    private miniGun = new ActionSkill("assets/images/moze/skills/MiniGun.webp", [-1, 1], 2, 0, "green", 
+    private miniGun = new ActionSkill("assets/images/moze/skills/MiniGun.png", [-1, 1], 2, 0, "green", 
 				{name:"MINIGUN",
 				description:"The Minigun is capable of sustained rapid fire. Firing for long periods " + 
 				"causes the Minigun to overheat, rendering it inoperable for a few seconds.",
 				effects:[]});
-    private salamander = new ActionSkill("assets/images/moze/skills/Salamander.webp", [1, 3], 2, 5, "green", 
+    private salamander = new ActionSkill("assets/images/moze/skills/Salamander.png", [1, 3], 2, 5, "green", 
 				{name:"SALAMANDER",
 				description:"The Salamander is a flamethrower that deals Incendiary Damage to enemies at close range.<br /><br />" +
 				"Though the Salamander has infinite ammo, it drains Fuel with use.",
@@ -686,7 +686,7 @@ export class Moze extends Character {
     
 
     //Action Mods
-    private letOffSomeSteam = new ActionMod("assets/images/moze/skills/LetOffSomeSteam.webp", [1, -1], 2, 5, "green", 
+    private letOffSomeSteam = new ActionMod("assets/images/moze/skills/LetOffSomeSteam.png", [1, -1], 2, 5, "green", 
 				{name:"LET OFF SOME STEAM",
 				description:"Minigun deals more damage as heat increases, and can be fired for longer before overheating.",
 				effects:[
@@ -696,7 +696,7 @@ export class Moze extends Character {
 					{name:"Minigun Heat Capacity",
 					type: [{extraType: this.getExtraTypes().minigunHeatCap}],
 					value:"+35%"}]}, this.miniGun);
-    private generalWinter = new ActionMod("assets/images/moze/skills/GeneralWinter.webp", [2, -1], 2, 10, "green", 
+    private generalWinter = new ActionMod("assets/images/moze/skills/GeneralWinter.png", [2, -1], 2, 10, "green", 
 				{name:"GENERAL WINTER",
 				description:"",
 				effects:[
@@ -709,7 +709,7 @@ export class Moze extends Character {
 					value:"-30%"},
 					{name:"Cryo Efficiency",
 					value:"+20%"}]}, this.miniGun);
-    private fuelEconomy = new ActionMod("assets/images/moze/skills/FuelEconomy.webp", [2, 3], 2, 10, "green", 
+    private fuelEconomy = new ActionMod("assets/images/moze/skills/FuelEconomy.png", [2, 3], 2, 10, "green", 
 				{name:"FUEL ECONOMY",
 				description:"Reduces Salamander’s Fuel Drain. Additionally, Iron Bear’s Movement " + 
 				"Speed is increased after damaging an enemy with Salamander.",
@@ -720,7 +720,7 @@ export class Moze extends Character {
 					{name:"Fuel Drain",
 					type: [{extraType: this.getExtraTypes().salamanderFuelDrain}],
 					value:"-25%"}]}, this.salamander);
-    private explodingBullets = new ActionMod("assets/images/moze/skills/ExplodingBullets.webp", [3, -1], 2, 15, "green", 
+    private explodingBullets = new ActionMod("assets/images/moze/skills/ExplodingBullets.png", [3, -1], 2, 15, "green", 
 				{name:"EXPLODING. BULLETS.",
 				description:"Minigun fires Explosive Rounds that deal increased Splash Damage, but its Fire Rate is decreased.",
 				effects:[
@@ -730,7 +730,7 @@ export class Moze extends Character {
 					{name:"Minigun Damage",
 					type: [{extraType: this.getExtraTypes().minigunDmg}],
 					value:"+126%"}]}, this.miniGun);
-    private chemicalWarfare = new ActionMod("assets/images/moze/skills/ChemicalWarfare.webp", [3, 3], 2, 15, "green", 
+    private chemicalWarfare = new ActionMod("assets/images/moze/skills/ChemicalWarfare.png", [3, 3], 2, 15, "green", 
 				{name:"CHEMICAL WARFARE",
 				description:"Salamander now deals Corrosive Damage. Additionally, Salamander’s Melt Damage is increased.",
 				effects:[
@@ -738,7 +738,7 @@ export class Moze extends Character {
 					{name:"Melt Damage",
 					type: [{extraType: this.getExtraTypes().salamanderMeltDmg}],
 					value:"+50%"}]}, this.salamander);
-    private moltenRoar = new ActionMod("assets/images/moze/skills/MoltenRoar.webp", [4, 3], 2, 20, "green", 
+    private moltenRoar = new ActionMod("assets/images/moze/skills/MoltenRoar.png", [4, 3], 2, 20, "green", 
 				{name:"MOLTEN ROAR",
 				description:"The Salamander burst-fires 3 projectiles with increased Fuel Drain, the first of which leaves a large Incendiary area.",
 				effects:[
@@ -756,7 +756,7 @@ export class Moze extends Character {
 	this.explodingBullets,
 	this.chemicalWarfare,
 	this.moltenRoar,
-	new NormalSkill("assets/images/moze/skills/CloudOfLead.webp", [0, 0], 5, 0, "green", 
+	new NormalSkill("assets/images/moze/skills/CloudOfLead.png", [0, 0], 5, 0, "green", 
 				{name:"CLOUD OF LEAD",
 				description:"Occasionally, Moze's and Iron Bear's shots will deal additional Incendiary Damage and won't consume ammo.",
 				effects:[
@@ -768,11 +768,11 @@ export class Moze extends Character {
 					{name:"Bonus Incendiary Damage",
 					type: [{bonusIncendiaryDmg: true}],
 					values:["+2.25%", "+4.50%", "+6.75%", "+9.00%", "+11.25%"]}]}),
-	new NormalSkill("assets/images/moze/skills/DakkaBear.webp", [0, 1], 1, 0, "green", 
+	new NormalSkill("assets/images/moze/skills/DakkaBear.png", [0, 1], 1, 0, "green", 
 				{name:"DAKKA BEAR",
 				description:"Adds a manned turret to the back of Iron Bear.",
 				effects:[]}),
-	new NormalSkill("assets/images/moze/skills/MatchedSet.webp", [0, 2], 5, 0, "green", 
+	new NormalSkill("assets/images/moze/skills/MatchedSet.png", [0, 2], 5, 0, "green", 
 				{name:"MATCHED SET",
 				description:"Moze's currently equipped weapon gains a stacking bonus to " + 
 				"Magazine Size and Decreased Heat Per Shot for every piece of equipped " + 
@@ -795,14 +795,14 @@ export class Moze extends Character {
 					{type: [{extraType: this.getExtraTypes().maxMatchedSetStacks}],
 					value: 7,
 					hidden: true}]}),
-	new NormalSkill("assets/images/moze/skills/StokeTheEmbers.webp", [1, 0], 3, 5, "green", 
+	new NormalSkill("assets/images/moze/skills/StokeTheEmbers.png", [1, 0], 3, 5, "green", 
 				{name:"STOKE THE EMBERS",
 				description:"Increases Moze and Iron Bear's Incendiary Damage.",
 				effects:[
 					{name:"Incendiary Damage",
 					type: [{increasedIncendiaryDmg: true}],
 					values:["+10%", "+20%", "+30%"]}]}),
-	new NormalSkill("assets/images/moze/skills/Redistribution.webp", [1, 1], 1, 5, "green", 
+	new NormalSkill("assets/images/moze/skills/Redistribution.png", [1, 1], 1, 5, "green", 
 				{name:"REDISTRIBUTION",
 				description:"After Moze scores a Critical Hit, she regenerates ammo for a few seconds.",
 				effects:[
@@ -810,7 +810,7 @@ export class Moze extends Character {
 					value:"+5% of Magazine"},
 					{name:"Redistribution Duration",
 					value:"3 seconds"}]}),
-	new NormalSkill("assets/images/moze/skills/Scrappy.webp", [1, 2], 5, 5, "green", 
+	new NormalSkill("assets/images/moze/skills/Scrappy.png", [1, 2], 5, 5, "green", 
 				{name:"SCRAPPY",
 				description:"While moving, Moze's Handling, Weapon Swap and Mode Switch Speed are increased.",
 				effects:[
@@ -826,11 +826,11 @@ export class Moze extends Character {
 					conditional: this.getConditionals().moving,
 					type: [{handling: true}],
 					values:["+10.7%", "+19.4%", "+26.5%", "+32.4%", "+37.5%"]}]}),
-	new NormalSkill("assets/images/moze/skills/RushinOffensive.webp", [2, 0], 1, 10, "green", 
+	new NormalSkill("assets/images/moze/skills/RushinOffensive.png", [2, 0], 1, 10, "green", 
 				{name:"RUSHIN’ OFFENSIVE",
 				description:"Moze can sprint and shoot at the same time.",
 				effects:[]}),
-	new NormalSkill("assets/images/moze/skills/ScorchingRPMs.webp", [2, 1], 5, 10, "green", 
+	new NormalSkill("assets/images/moze/skills/ScorchingRPMs.png", [2, 1], 5, 10, "green", 
 				{name:"SCORCHING RPM'S",
 				description:"Moze gains increased Fire Rate and Critical Hit Damage. Iron Bear gains increased Hard Point Damage.",
 				effects:[
@@ -840,27 +840,27 @@ export class Moze extends Character {
 					{name:"Critical Hit Damage",
 					type: [{criticalHitDmg: true}],
 					values:["+4.0%", "+8.0%", "+12.0%", "+16.0%", "+20.0%"]}]}),
-	new NormalSkill("assets/images/moze/skills/TheIronBank.webp", [3, 1], 5, 15, "green", 
+	new NormalSkill("assets/images/moze/skills/TheIronBank.png", [3, 1], 5, 15, "green", 
 				{name:"THE IRON BANK",
 				description:"Increases Moze's Magazine Size.",
 				effects:[
 					{name:"Magazine Size",
 					type: [{magSize: true}],
 					values:["+7.0%", "+14.0%", "+21.0%", "+28.0%", "+35.0%"]}]}),
-	new NormalSkill("assets/images/moze/skills/SpecialistBear.webp", [3, 2], 1, 15, "green", 
+	new NormalSkill("assets/images/moze/skills/SpecialistBear.png", [3, 2], 1, 15, "green", 
 				{name:"SPECIALIST BEAR",
 				description:"Equipping two of the same Weapons on Iron Bear increases the damage they deal.",
 				effects:[
 					{name:"Iron Bear Damage",
 					type: [{actionSkillDmg: true}],
 					value:"+25%"}]}),
-	new NormalSkill("assets/images/moze/skills/SomeForTheRoad.webp", [4, 0], 1, 20, "green", 
+	new NormalSkill("assets/images/moze/skills/SomeForTheRoad.png", [4, 0], 1, 20, "green", 
 				{name:"SOME FOR THE ROAD",
 				description:"Moze gains infinite ammo for a few seconds after exiting Iron Bear.",
 				effects:[
 					{name:"Some for the Road Duration",
 					value:"5 seconds"}]}),
-	new NormalSkill("assets/images/moze/skills/ClickClick.webp", [4, 1], 3, 20, "green", 
+	new NormalSkill("assets/images/moze/skills/ClickClick.png", [4, 1], 3, 20, "green", 
 				{name:"“CLICK, CLICK...”",
 				description:"Moze gains increased Gun Damage as her magazine empties. The less ammo " + 
 				"there is remaining, the greater the increase.<br /><br />" +
@@ -869,7 +869,7 @@ export class Moze extends Character {
 					{name:"Gun Damage",
 					type: [{gunDmg: true}],
 					values:["up to +12%", "up to +24%", "up to +36%"]}]}),
-	new NormalSkill("assets/images/moze/skills/Forge.webp", [5, 1], 1, 25, "green", 
+	new NormalSkill("assets/images/moze/skills/Forge.png", [5, 1], 1, 25, "green", 
 				{name:"FORGE",
 				description:"Moze constantly regenerates ammo for her currently equipped weapon.",
 				effects:[

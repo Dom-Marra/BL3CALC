@@ -8,15 +8,15 @@ import { Character } from './character';
 export class Fl4k extends Character {
     
     //Path for red tree header image
-    public readonly RED_TREE_HEADER: string = "assets/images/fl4k/RedTreeHeader.webp";
+    public readonly RED_TREE_HEADER: string = "assets/images/fl4k/RedTreeHeader.png";
     public readonly RED_TREE_NAME: string = "Hunter";
 
     //Path for blue tree header image
-    public readonly BLUE_TREE_HEADER: string = "assets/images/fl4k/BlueTreeHeader.webp";
+    public readonly BLUE_TREE_HEADER: string = "assets/images/fl4k/BlueTreeHeader.png";
     public readonly BLUE_TREE_NAME: string = "Master";
 
     //Path for green tree header image
-    public readonly GREEN_TREE_HEADER: string = "assets/images/fl4k/GreenTreeHeader.webp";
+    public readonly GREEN_TREE_HEADER: string = "assets/images/fl4k/GreenTreeHeader.png";
     public readonly GREEN_TREE_NAME: string = "Stalker";
 
     private extraConditionals = { 
@@ -268,7 +268,7 @@ export class Fl4k extends Character {
     //Skills for red skill tree
 
     //Action Skills
-    private rakkAttack = new ActionSkill("assets/images/fl4k/skills/RakkAttack.webp", [-1, 1], 1, 0, "red",
+    private rakkAttack = new ActionSkill("assets/images/fl4k/skills/RakkAttack.png", [-1, 1], 1, 0, "red",
                     {name:"RAKK ATTACK!", 
                     description:"FL4K sends forward 2 Rakk to dive-bomb enemies.<br /><br />" +
                     "This skill has multiple charges.",
@@ -279,24 +279,24 @@ export class Fl4k extends Character {
                         value:35}]});
 
     //Action Mods
-    private rakkOpenAColdOne = new ActionMod("assets/images/fl4k/skills/RakkOpenAColdOne.webp", [1, -1], 1, 5, "red",
+    private rakkOpenAColdOne = new ActionMod("assets/images/fl4k/skills/RakkOpenAColdOne.png", [1, -1], 1, 5, "red",
                     {name:"RAKK OPEN A COLD ONE", 
                     description:"Converts FL4K’s Rakk to Cryo damage.",
                     effects:[
                         {name:"Deals Cryo Elemental Damage"}]}, this.rakkAttack);
-    private falconersFeast = new ActionMod("assets/images/fl4k/skills/FalconersFeast.webp", [2, -1], 1, 10, "red",
+    private falconersFeast = new ActionMod("assets/images/fl4k/skills/FalconersFeast.png", [2, -1], 1, 10, "red",
                     {name:"FALCONER’S FEAST", 
                     description:"When FL4K’s Rakk damage an enemy, a portion of FL4K’s health is restored.",
                     effects:[
                         {name:"Health Returned",
                         value:"7% of Max Health"}]}, this.rakkAttack);
-    private flockNLoad  = new ActionMod("assets/images/fl4k/skills/FlockNLoad.webp", [3, -1], 1, 15, "red",
+    private flockNLoad  = new ActionMod("assets/images/fl4k/skills/FlockNLoad.png", [3, -1], 1, 15, "red",
                     {name:"FLOCK 'N LOAD", 
                     description:"FL4K’s Rakk have increased Cooldown Rate, and gain an Additional Charge.",
                     effects:[
                         {name:"Additional Rakk",
                         value:"+2"}]}, this.rakkAttack);
-    private rakkcelerate = new ActionMod("assets/images/fl4k/skills/Rackcelerate.webp", [4, -1], 1, 20, "red",
+    private rakkcelerate = new ActionMod("assets/images/fl4k/skills/Rackcelerate.png", [4, -1], 1, 20, "red",
                     {name:"RAKKCELERATE", 
                     description:"FL4K’s Rakk have increased Cooldown Rate, and gain an Additional Charge.",
                     effects:[
@@ -306,7 +306,7 @@ export class Fl4k extends Character {
                         value:"+1"}]}, this.rakkAttack);
 
     //Pet Skills
-    private spiderantCenturion = new OtherSkill("assets/images/fl4k/skills/SpiderantCenturion.webp", [-1, 0], 1, 0, "red",
+    private spiderantCenturion = new OtherSkill("assets/images/fl4k/skills/SpiderantCenturion.png", [-1, 0], 1, 0, "red",
                     {name:"SPIDERANT CENTURION", 
                     description:"FL4K is joined by a loyal Spiderant companion, which will " + 
                     "cause FL4K to constantly regenerate health.<br /><br />" +
@@ -319,7 +319,7 @@ export class Fl4k extends Character {
                             return this.getExtraCond().petBonuses.effectiveness;
                         },
                         value:"+1.0% of Max Health/sec"}]});
-    private spiderantScorcher = new OtherSkill("assets/images/fl4k/skills/SpiderantScorcher.webp", [2, 3], 1, 10, "red",
+    private spiderantScorcher = new OtherSkill("assets/images/fl4k/skills/SpiderantScorcher.png", [2, 3], 1, 10, "red",
                     {name:"SPIDERANT SCORCHER", 
                     description:"FL4K's Spiderant evolves into a Scorcher, occasionally dealing Incendiary Damage to " + 
                     "all enemies nearby. While accompanied by the Scorcher, FL4K constantly regenerates health " + 
@@ -340,7 +340,7 @@ export class Fl4k extends Character {
                             return this.getExtraCond().petBonuses.effectiveness;
                         },
                         value:"+10%"}]});
-    private spiderantCountess  = new OtherSkill("assets/images/fl4k/skills/SpiderantCountess.webp", [3, 3], 1, 15, "red",
+    private spiderantCountess  = new OtherSkill("assets/images/fl4k/skills/SpiderantCountess.png", [3, 3], 1, 15, "red",
                     {name:"SPIDERANT SCORCHER", 
                     description:"FL4K’s Spiderant evolves into a Countess, which will " + 
                     "cause FL4K to constantly regenerate health and gain Damage Reduction.<br /><br />" +
@@ -371,7 +371,7 @@ export class Fl4k extends Character {
         this.spiderantCenturion,
         this.spiderantScorcher,
         this.spiderantCountess,
-        new NormalSkill("assets/images/fl4k/skills/InterplanetaryStalker.webp", [0, 0], 5, 0, "red",
+        new NormalSkill("assets/images/fl4k/skills/InterplanetaryStalker.png", [0, 0], 5, 0, "red",
                     {name:"INTERPLANETARY STALKER", 
                     description:"Hunter Kill Skill. Whenever FL4K kills an enemy, they gain a stack " + 
                     "of Interplanetary Stalker. For each stack of Interplanetary Stalker, " +
@@ -433,13 +433,13 @@ export class Fl4k extends Character {
                         value: 3,
                         hidden: true,
                         }]}),
-        new NormalSkill("assets/images/fl4k/skills/LeaveNoTrace.webp", [0, 1], 3, 0, "red",
+        new NormalSkill("assets/images/fl4k/skills/LeaveNoTrace.png", [0, 1], 3, 0, "red",
                     {name:"LEAVE NO TRACE", 
                     description:"When FL4K scores a Critical Hit, there is a chance for 1 ammo to be added to their magazine.",
                     effects:[
                         {name:"Chance to add ammo",
                         values:["+12%", "+24%", "+36%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/SecondIntention.webp", [0, 2], 5, 0, "red",
+        new NormalSkill("assets/images/fl4k/skills/SecondIntention.png", [0, 2], 5, 0, "red",
                     {name:"SECOND INTENTION", 
                     description:"Hunter Kill Skill. Whenever FL4K kills an enemy, they gain increased Reload Speed.<br /><br />" +
                     "This bonus is increased if FL4K scores a Critical Kill.",
@@ -488,7 +488,7 @@ export class Fl4k extends Character {
                         values:["+6%", "+11%", "+15%", "+19%", "+23%"]},
                         {name:"Critical Kill Reload Duration",
                         value:"5 seconds"}]}),
-        new NormalSkill("assets/images/fl4k/skills/HuntersEye.webp", [1, 0], 5, 5, "red",
+        new NormalSkill("assets/images/fl4k/skills/HuntersEye.png", [1, 0], 5, 5, "red",
                     {name:"HUNTER'S EYE", 
                     description:"FL4K gains bonuses when fighting different types of enemies.",
                     effects:[
@@ -504,7 +504,7 @@ export class Fl4k extends Character {
                         type: [{dmgReduction: true}],
                         conditional: this.getConditionals().fightingABeast,
                         values:["+5.3% vs. Beasts", "+10.1% vs. Beasts", "+14.4% vs. Beasts", "+18.3% vs. Beasts", "+21.9% vs. Beasts"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/HeadCount.webp", [1, 1], 3, 5, "red",
+        new NormalSkill("assets/images/fl4k/skills/HeadCount.png", [1, 1], 3, 5, "red",
                     {name:"HEAD COUNT", 
                     description:"Whenever FL4K scores a Critical Hit, there is a chance their Action Skill Cooldown is reduced.",
                     effects:[
@@ -512,7 +512,7 @@ export class Fl4k extends Character {
                         values:["+10%", "+20%", "+30%"]},
                         {name:"Cooldown Time",
                         value:"-2s"}]}),
-        new NormalSkill("assets/images/fl4k/skills/AmbushPredator.webp", [1, 2], 5, 5, "red",
+        new NormalSkill("assets/images/fl4k/skills/AmbushPredator.png", [1, 2], 5, 5, "red",
                     {name:"AMBUSH PREDATOR", 
                     description:"While there are no enemies nearby, FL4K's Weapon Handling and Critical Hit Damage are increased.",
                     effects:[
@@ -524,13 +524,13 @@ export class Fl4k extends Character {
                         type: [{handling: true}],
                         conditional: this.getConditionals().noEnemiesNearby,
                         values:["+17%", "+29%", "+38%", "+44%", "+50%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/TwoF4ng.webp", [2, 1], 5, 10, "red",
+        new NormalSkill("assets/images/fl4k/skills/TwoF4ng.png", [2, 1], 5, 10, "red",
                     {name:"TWO F4NG", 
                     description:"FL4K has a chance to fire an extra projectile per shot.",
                     effects:[
                         {name:"Extra Projectile Chance",
                         values:["+5%", "+10%", "+15%", "+20%", "+25%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/BigGame.webp", [3, 0], 3, 15, "red",
+        new NormalSkill("assets/images/fl4k/skills/BigGame.png", [3, 0], 3, 15, "red",
                     {name:"BIG GAME", 
                     description:"FL4K's Hunter Skills become much more effective and have a longer duration.",
                     effects:[
@@ -539,7 +539,7 @@ export class Fl4k extends Character {
                         values:["+10%", "+20%", "+30%"]},
                         {name:"Hunter Skill Duration",
                         values:["+33%", "+67%", "+100%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/TheMostDangerousGame.webp", [3, 2], 3, 15, "red",
+        new NormalSkill("assets/images/fl4k/skills/TheMostDangerousGame.png", [3, 2], 3, 15, "red",
                     {name:"THE MOST DANGEROUS GAME", 
                     description:"Hunter Kill Skill. Whenever FL4K kills a Badass or stronger " + 
                     "enemy, they gain increased Critical Hit Damage, Gun Damage, and Handling for a long time, and their pet" + 
@@ -579,14 +579,14 @@ export class Fl4k extends Character {
                         {name:"Duration",
                         value:"120 seconds"},
                         {name:"Rewards Cash on Kill"}]}),
-        new NormalSkill("assets/images/fl4k/skills/GalacticShadow.webp", [4, 1], 1, 15, "red",
+        new NormalSkill("assets/images/fl4k/skills/GalacticShadow.png", [4, 1], 1, 15, "red",
                     {name:"GALACTIC SHADOW", 
                     description:"FL4K deals increased Critical Hit Damage, and enemies are less likely to attack them.",
                     effects:[
                         {name:"Critical Hit Damage",
                         type: [{criticalHitDmg: true}],
                         value:"+15%"}]}),
-        new NormalSkill("assets/images/fl4k/skills/GrimHarvest.webp", [4, 2], 5, 20, "red",
+        new NormalSkill("assets/images/fl4k/skills/GrimHarvest.png", [4, 2], 5, 20, "red",
                     {name:"GRIM HARVEST", 
                     description:"FL4K gains increased Gun Damage and Action Skill Damage. Fl4k's pet gains increased Damage",
                     effects:[
@@ -599,7 +599,7 @@ export class Fl4k extends Character {
                         {name:"Pet Damage",
                         type: [{extraType: this.getExtraTypes().petDmg}],
                         values:["+7%", "+14%", "+21%", "+28%", "+35%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/Megavore.webp", [5, 1], 1, 25, "red",
+        new NormalSkill("assets/images/fl4k/skills/Megavore.png", [5, 1], 1, 25, "red",
                     {name:"MEGAVORE", 
                     description:"FL4K gains a chance to score a Critical Hit with weapons against any part of enemies.",
                     effects:[
@@ -611,7 +611,7 @@ export class Fl4k extends Character {
     //Skills for blue skill tree
 
     //Action Skills
-    private gammaBurst = new ActionSkill("assets/images/fl4k/skills/GammaBurst.webp", [-1, 1], 1, 0, "blue",
+    private gammaBurst = new ActionSkill("assets/images/fl4k/skills/GammaBurst.png", [-1, 1], 1, 0, "blue",
                     {name:"GAMMA BURST", 
                     description:"FL4K creates a Rift at a target location, teleporting their pet through " + 
                     "the Rift and dealing Radiation Damage to nearby enemies.<br /><br />" +
@@ -628,13 +628,13 @@ export class Fl4k extends Character {
                         value:56}]});
 
     //Action Mods
-    private atomicAroma = new ActionMod("assets/images/fl4k/skills/AtomicAroma.webp", [1, -1], 1, 5, "blue",
+    private atomicAroma = new ActionMod("assets/images/fl4k/skills/AtomicAroma.png", [1, -1], 1, 5, "blue",
                     {name:"ATOMIC AROMA", 
                     description:"While Gamma Burst is active, FL4K’s pet is surrounded by a Radiation Aura, constantly damaging all nearby enemies.",
                     effects:[
                         {name:"Radiation Damage",
                         value:"4 per second"}]}, this.gammaBurst);
-    private empatheticRage = new ActionMod("assets/images/fl4k/skills/EmpatheticRage.webp", [2, -1], 1, 10, "blue",
+    private empatheticRage = new ActionMod("assets/images/fl4k/skills/EmpatheticRage.png", [2, -1], 1, 10, "blue",
                     {name:"EMPATHIC RAGE", 
                     description:"For the duration of Gamma Burst, Damage dealt by FL4K is increased.",
                     effects:[
@@ -642,7 +642,7 @@ export class Fl4k extends Character {
                         type: [{dmgIncrease: true}],
                         conditional: this.getExtraCond().gammaBurstActive,
                         value:"+20%"}]}, this.gammaBurst);
-    private endurance  = new ActionMod("assets/images/fl4k/skills/Endurance.webp", [3, -1], 1, 15, "blue",
+    private endurance  = new ActionMod("assets/images/fl4k/skills/Endurance.png", [3, -1], 1, 15, "blue",
                     {name:"ENDURANCE", 
                     description:"When FL4K or FL4K’s Pet kills an enemy while Gamma Burst is active, " + 
                     "the duration of Gamma Burst is extended and pet damage is increased. These effects can stack up to 5 times.",
@@ -659,7 +659,7 @@ export class Fl4k extends Character {
                         {type: [{extraType: this.getExtraTypes().maxEnduranceStacks}],
                         value: 5,
                         hidden: true}]}, this.gammaBurst);
-    private burstAid = new ActionMod("assets/images/fl4k/skills/BurstAid.webp", [4, -1], 1, 20, "blue",
+    private burstAid = new ActionMod("assets/images/fl4k/skills/BurstAid.png", [4, -1], 1, 20, "blue",
                     {name:"BURST AID", 
                     description:"After using Gamma Burst, the Rift remains for the duration of the " + 
                     "skill. While standing near the Rift, FL4K and their allies rapidly Regenerate Health.",
@@ -670,7 +670,7 @@ export class Fl4k extends Character {
                         value:"+20% of Max Health/sec"}]}, this.gammaBurst);
 
     //Pet Skills
-    private guardSkag = new OtherSkill("assets/images/fl4k/skills/GuardSkag.webp", [-1, 0], 1, 0, "blue",
+    private guardSkag = new OtherSkill("assets/images/fl4k/skills/GuardSkag.png", [-1, 0], 1, 0, "blue",
                     {name:"GUARD SKAG", 
                     description:"FL4K is joined by a loyal Skag companion, which will increase FL4K's Damage.<br /><br />" +
                     "Hold F to issue an Attack Command, which will cause the Skag to vomit acid onto enemies.",
@@ -682,7 +682,7 @@ export class Fl4k extends Character {
                             return this.getExtraCond().petBonuses.effectiveness;
                         },
                         value:"+5%"}]});
-    private greatHornedSkag = new OtherSkill("assets/images/fl4k/skills/GreatHornedSkag.webp", [2, 3], 1, 10, "blue",
+    private greatHornedSkag = new OtherSkill("assets/images/fl4k/skills/GreatHornedSkag.png", [2, 3], 1, 10, "blue",
                     {name:"GREAT HORNED SKAG", 
                     description:"FL4K’s Skag evolves into a larger, Great Horned Skag which will increase FL4K’s Damage and Gun Damage.<br /><br />" +
                     "When FL4K issues an Attack Command, the Great Horned Skag will charge at enemies and knock them into the air.",
@@ -701,7 +701,7 @@ export class Fl4k extends Character {
                             return this.getExtraCond().petBonuses.effectiveness;
                         },
                         value:"+10%"}]});
-    private eridianSkag  = new OtherSkill("assets/images/fl4k/skills/EridianSkag.webp", [3, 3], 1, 15, "blue",
+    private eridianSkag  = new OtherSkill("assets/images/fl4k/skills/EridianSkag.png", [3, 3], 1, 15, "blue",
                     {name:"GREAT HORNED SKAG", 
                     description:"FL4K’s Skag evolves into an Eridian Skag, which will increase FL4K’s Damage and Fire Rate.<br /><br />" +
                     "When FL4K issues an Attack Command, their Eridian Skag pulls nearby enemies in by generating a Singularity.",
@@ -730,14 +730,14 @@ export class Fl4k extends Character {
         this.guardSkag,
         this.greatHornedSkag,
         this.eridianSkag,
-        new NormalSkill("assets/images/fl4k/skills/Ferocity.webp", [0, 0], 5, 0, "blue",
+        new NormalSkill("assets/images/fl4k/skills/Ferocity.png", [0, 0], 5, 0, "blue",
                     {name:"FEROCITY", 
                     description:"FL4K's Pet deals increased damage.",
                     effects:[
                         {name:"Pet Damage",
                         type: [{extraType: this.getExtraTypes().petDmg}],
                         values:["+10%", "+20%", "+30%", "+40%", "+50%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/PersistenceHunter.webp", [0, 1], 3, 0, "blue",
+        new NormalSkill("assets/images/fl4k/skills/PersistenceHunter.png", [0, 1], 3, 0, "blue",
                     {name:"PERSISTENCE HUNTER", 
                     description:"Increases FL4K's Gun Damage and Action Skill Duration.",
                     effects:[
@@ -746,14 +746,14 @@ export class Fl4k extends Character {
                         values:["+4.0%", "+8.0%", "+12.0%"]},
                         {name:"Action Skill Duration",
                         values:["+15%", "+30%", "+45%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/GoForTheEyes.webp", [0, 2], 5, 0, "blue",
+        new NormalSkill("assets/images/fl4k/skills/GoForTheEyes.png", [0, 2], 5, 0, "blue",
                     {name:"GO FOR THE EYES!", 
                     description:"When FL4K's pet attacks an enemy, the first melee attack is an automatic Critical Hit that deals increased damage.",
                     effects:[
                         {name:"Pet Critical Hit Damage",
                         type: [{extraType: this.getExtraTypes().petCriticalHitDmg}],
                         values:["+15%", "+30%", "+45%", "+60%", "+75%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/WhoRescuedWho.webp", [1, 0], 5, 5, "blue",
+        new NormalSkill("assets/images/fl4k/skills/WhoRescuedWho.png", [1, 0], 5, 5, "blue",
                     {name:"WHO RESCUED WHO?", 
                     description:"Whenever FL4K's Pet deals damage, FL4K regenerates health for a few " + 
                     "seconds. Whenever FL4K deals damage to an enemy, their Pet's health " + 
@@ -768,13 +768,13 @@ export class Fl4k extends Character {
                         type: [{healthRegen_maxHealth: true}],
                         conditional: this.getExtraCond().petDealtDmg,
                         values:["+0.4% of Max Health/sec", "+0.8% of Max Health/sec", "+1.2% of Max Health/sec", "+1.6% of Max Health/sec", "+2.0% of Max Health/sec"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/HeBites.webp", [1, 1], 3, 5, "blue",
+        new NormalSkill("assets/images/fl4k/skills/HeBites.png", [1, 1], 3, 5, "blue",
                     {name:"HE BITES!", 
                     description:"When FL4K's pet takes damage, the pet returns some of that damage to the attacker.",
                     effects:[
                         {name:"Damage Reflected",
                         values:["+5%", "+10%", "+15%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/Frenzy.webp", [1, 2], 5, 5, "blue",
+        new NormalSkill("assets/images/fl4k/skills/Frenzy.png", [1, 2], 5, 5, "blue",
                     {name:"FRENZY", 
                     description:"Hunter Skill. When FL4K's pet deals damage, FL4K and " + 
                     "their pet gain a stack of Frenzy. Each stack of Frenzy increases Damage. The stacks decay after a few seconds.",
@@ -792,7 +792,7 @@ export class Fl4k extends Character {
                         {name:"Max Frenzy Stacks",
                         type: [{extraType: this.getExtraTypes().maxFrenzyStacks}],
                         value:10}]}),
-        new NormalSkill("assets/images/fl4k/skills/PhyscoHeadOnAStick.webp", [2, 1], 1, 10, "blue",
+        new NormalSkill("assets/images/fl4k/skills/PhyscoHeadOnAStick.png", [2, 1], 1, 10, "blue",
                     {name:"PSYCHO HEAD ON A STICK", 
                     description:"Hunter Kill Skill. Whenever FL4K kills an enemy, their Pet gains increased " + 
                     "Movement Speed and Damage for a few seconds.",
@@ -819,21 +819,21 @@ export class Fl4k extends Character {
                         value:"+10%"},
                         {name:"Psycho Head On A Stick Duration",
                         value:"8 seconds"}]}),
-        new NormalSkill("assets/images/fl4k/skills/HiveMind.webp", [2, 2], 3, 10, "blue",
+        new NormalSkill("assets/images/fl4k/skills/HiveMind.png", [2, 2], 3, 10, "blue",
                     {name:"HIVE MIND", 
                     description:"When FL4K takes damage, a portion of all damage they take is shared to their pet instead.",
                     effects:[
                         {name:"Damage Shared",
                         type: [{extraType: this.getExtraTypes().dmgShared}],
                         values:["+5%", "+10%", "+15%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/BarbaricYawp.webp", [3, 1], 5, 15, "blue",
+        new NormalSkill("assets/images/fl4k/skills/BarbaricYawp.png", [3, 1], 5, 15, "blue",
                     {name:"BARBARIC YAWP", 
                     description:"Increases the power of Pet Bonuses granted to FL4K.",
                     effects:[
                         {name:"Pet Bonuses",
                         type: [{extraType: this.getExtraTypes().petBonuses}],
                         values:["+20%", "+40%", "+60%", "+80%", "+100%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/MutatedDefenses.webp", [3, 2], 1, 15, "blue",
+        new NormalSkill("assets/images/fl4k/skills/MutatedDefenses.png", [3, 2], 1, 15, "blue",
                     {name:"MUTATED DEFENSES", 
                     description:"When FL4K's pet is at low health, it gains Damage Reduction " + 
                     "and regenerates health. This skill has a long cooldown.",
@@ -846,7 +846,7 @@ export class Fl4k extends Character {
                         value:"+40% of Max Pet Health"},
                         {name:"Mutated Defenses Cooldown",
                         value:15}]}),
-        new NormalSkill("assets/images/fl4k/skills/PackTactics.webp", [4, 0], 3, 20, "blue",
+        new NormalSkill("assets/images/fl4k/skills/PackTactics.png", [4, 0], 3, 20, "blue",
                     {name:"PACK TACTICS", 
                     description:"All Damage dealt by FL4K and their Pet is increased.<br /><br />" +
                     "Additionally, the Maximum Health of both FL4K and their Pet is increased.",
@@ -857,7 +857,7 @@ export class Fl4k extends Character {
                         {name:"Pet and FL4K Maximum Health",
                         type: [{maxHealth: true}, {extraType: this.getExtraTypes().petMaxHealth}],
                         values:["+5%", "+10%", "+15%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/SharedSpirit.webp", [4, 2], 1, 20, "blue",
+        new NormalSkill("assets/images/fl4k/skills/SharedSpirit.png", [4, 2], 1, 20, "blue",
                     {name:"SHARED SPIRIT", 
                     description:"While FL4K is at low health, a portion of all damage they take is shared to their pet instead.",
                     effects:[
@@ -865,7 +865,7 @@ export class Fl4k extends Character {
                         type: [{extraType: this.getExtraTypes().dmgShared}],
                         conditional: this.getExtraCond().lowLife,
                         value:"+50%"}]}),
-        new NormalSkill("assets/images/fl4k/skills/Dominance.webp", [5, 1], 1, 25, "blue",
+        new NormalSkill("assets/images/fl4k/skills/Dominance.png", [5, 1], 1, 25, "blue",
                     {name:"DOMINANCE", 
                     description:"Melee Override Skill. FL4K establishes dominance over an " + 
                     "enemy, turning it into an ally for a short time. If the enemy is a " + 
@@ -882,7 +882,7 @@ export class Fl4k extends Character {
     //Skills for green skill tree
 
     //Action Skills
-    private fadeAway = new ActionSkill("assets/images/fl4k/skills/FadeAway.webp", [-1, 1], 1, 0, "green",
+    private fadeAway = new ActionSkill("assets/images/fl4k/skills/FadeAway.png", [-1, 1], 1, 0, "green",
                     {name:"FADE AWAY", 
                     description:"FL4K cloaks, turning invisible. FL4K can fire 3 shots while cloaked, and each " +
                     "shot is automatically a Critical Hit.<br /><br />" +
@@ -912,7 +912,7 @@ export class Fl4k extends Character {
                         value:"15 seconds"}]});
 
     //Action Mods
-    private guerrillasInTheMist = new ActionMod("assets/images/fl4k/skills/GuerrillasInTheMist.webp", [1, -1], 1, 5, "green",
+    private guerrillasInTheMist = new ActionMod("assets/images/fl4k/skills/GuerrillasInTheMist.png", [1, -1], 1, 5, "green",
                     {name:"GUERRILLAS IN THE MIST", 
                     description:"Fade Away no longer ends after FL4K attacks, at the cost of Critical Hit Damage and Fade Away duration being reduced.",
                     effects:[
@@ -922,7 +922,7 @@ export class Fl4k extends Character {
                         value:"+50%"},
                         {name:"Duration",
                         value:"8 seconds"}]}, this.fadeAway);
-    private notMyCircus = new ActionMod("assets/images/fl4k/skills/NotMyCircus.webp", [2, -1], 1, 10, "green",
+    private notMyCircus = new ActionMod("assets/images/fl4k/skills/NotMyCircus.png", [2, -1], 1, 10, "green",
                     {name:"NOT MY CIRCUS", 
                     description:"After Fade Away ends, FL4K's pet will Taunt, drawing the attention of " + 
                     "all enemies in a huge radius.<br /><br />" +
@@ -934,14 +934,14 @@ export class Fl4k extends Character {
                         type: [{extraType: this.getExtraTypes().petDmgReduction}],
                         conditional: this.getExtraCond().fadeAwayEnded,
                         value:"+80%"}]}, this.fadeAway);
-    private untilYouAreDead  = new ActionMod("assets/images/fl4k/skills/UntilYouAreDead.webp", [3, -1], 1, 15, "green",
+    private untilYouAreDead  = new ActionMod("assets/images/fl4k/skills/UntilYouAreDead.png", [3, -1], 1, 15, "green",
                     {name:"UNTIL YOU ARE DEAD", 
                     description:"The Health Regeneration and Movement Speed of Fade Away persists for a short time " + 
                     "after the skill has ended.",
                     effects:[
                         {name:"Post Cloak Duration",
                         value:"10 seconds"}]}, this.fadeAway);
-    private unblinkingEye = new ActionMod("assets/images/fl4k/skills/UnblinkingEye.webp", [4, -1], 1, 20, "green",
+    private unblinkingEye = new ActionMod("assets/images/fl4k/skills/UnblinkingEye.png", [4, -1], 1, 20, "green",
                     {name:"UNBLINKING EYE", 
                     description:"Successive hits on the same target increase FL4K's Critical Damage per hit. " + 
                     "Unblinking Eye resets every 3 hits.",
@@ -958,7 +958,7 @@ export class Fl4k extends Character {
                         hidden: true}]}, this.fadeAway);
 
     //Pet Skills
-    private jabberSidekick = new OtherSkill("assets/images/fl4k/skills/JabberSidekick.webp", [-1, 0], 1, 0, "green",
+    private jabberSidekick = new OtherSkill("assets/images/fl4k/skills/JabberSidekick.png", [-1, 0], 1, 0, "green",
                     {name:"JABBER SIDEKICK", 
                     description:"FL4K is joined by a loyal Jabber companion, armed with a Pistol. While accompanied " + 
                     "by the Jabber, FL4K's Movement Speed is increased.<br /><br />" +
@@ -971,7 +971,7 @@ export class Fl4k extends Character {
                             return this.getExtraCond().petBonuses.effectiveness;
                         },
                         value:"+5.0%"}]});
-    private beefCakeJabber = new OtherSkill("assets/images/fl4k/skills/BeefCakeJabber.webp", [2, 3], 1, 10, "green",
+    private beefCakeJabber = new OtherSkill("assets/images/fl4k/skills/BeefCakeJabber.png", [2, 3], 1, 10, "green",
                     {name:"BEEFCAKE JABBER", 
                     description:"FL4K’s Jabber evolves into a Beefcake, discarding its pistol and equipping a Shotgun. " + 
                     "While accompanied by the Beefcake, FL4K gains increased Movement Speed and Maximum Health.<br /><br />" +
@@ -991,7 +991,7 @@ export class Fl4k extends Character {
                             return this.getExtraCond().petBonuses.effectiveness;
                         },
                         value:"+10.0%"}]});
-    private gunslingerJabber  = new OtherSkill("assets/images/fl4k/skills/GunslingerJabber.webp", [3, 3], 1, 15, "green",
+    private gunslingerJabber  = new OtherSkill("assets/images/fl4k/skills/GunslingerJabber.png", [3, 3], 1, 15, "green",
                     {name:"GUNSLINGER JABBER", 
                     description:"FL4K’s Jabber evolves into a Beefcake, discarding its pistol and equipping a Shotgun. " + 
                     "While accompanied by the Beefcake, FL4K gains increased Movement Speed and Maximum Health.<br /><br />" +
@@ -1021,7 +1021,7 @@ export class Fl4k extends Character {
         this.jabberSidekick,
         this.beefCakeJabber,
         this.gunslingerJabber,
-        new NormalSkill("assets/images/fl4k/skills/Self-RepairingSystem.webp", [0, 0], 5, 0, "green",
+        new NormalSkill("assets/images/fl4k/skills/Self-RepairingSystem.png", [0, 0], 5, 0, "green",
                     {name:"SELF-REPAIRING SYSTEM", 
                     description:"FL4K's Maximum Health is increased, and they constantly regenerate health.",
                     effects:[
@@ -1031,7 +1031,7 @@ export class Fl4k extends Character {
                         {name:"Health Regeneration",
                         type: [{healthRegen_maxHealth: true}],
                         values:["0.3% of Max Health/sec", "0.6% of Max Health/sec", "0.9% of Max Health/sec", "1.2% of Max Health/sec", "1.5% of Max Health/sec"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/Sic'Em.webp", [0, 1], 3, 0, "green",
+        new NormalSkill("assets/images/fl4k/skills/Sic'Em.png", [0, 1], 3, 0, "green",
                     {name:"SIC 'EM", 
                     description:"Attack Command has lowered Cooldown and increased Damage.",
                     effects:[
@@ -1039,7 +1039,7 @@ export class Fl4k extends Character {
                         values:["+10%", "+20%", "+30%"]},
                         {name:"Attack Command Cooldown", 
                         values:["-10%", "-20%", "-30%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/FuriousAttack.webp", [0, 2], 5, 0, "green",
+        new NormalSkill("assets/images/fl4k/skills/FuriousAttack.png", [0, 2], 5, 0, "green",
                     {name:"FURIOUS ATTACK", 
                     description:"Hunter Skill. After shooting an enemy, FL4K gains a stack of Furious Attack.<br /><br />" +
                     "For each stack of Furious Attack, FL4K's Handling and Gun Damage are increased and their pet gains increased Damage. Stacks decay after a few seconds.",
@@ -1069,7 +1069,7 @@ export class Fl4k extends Character {
                         value:"10"},
                         {name:"Furious Attack Duration",
                         value:"4 seconds"}]}),
-        new NormalSkill("assets/images/fl4k/skills/EagerToImpress.webp", [1, 0], 5, 5, "green",
+        new NormalSkill("assets/images/fl4k/skills/EagerToImpress.png", [1, 0], 5, 5, "green",
                     {name:"EAGER TO IMPRESS", 
                     description:"Kill Skill. Whenever FL4K kills an enemy, Action Skill Cooldown Time is reduced.<br /><br />" + 
                     "Whenever FL4K's pet kills an enemy, Action Skill Cooldown Time is reduced even more and Attack Command's cooldown is refreshed.",
@@ -1078,14 +1078,14 @@ export class Fl4k extends Character {
                         values:["-0.5 seconds", "-1.0 seconds", "-1.5 seconds", "-2.0 seconds", "-2.5 seconds"]},
                         {name:"FL4K Kill Cooldown Time",
                         values:["-0.25 seconds", "-0.50 seconds", "-0.75 seconds", "-1.00 seconds", "-1.25 seconds"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/AllMyBFF's.webp", [1, 1], 3, 5, "green",
+        new NormalSkill("assets/images/fl4k/skills/AllMyBFF's.png", [1, 1], 3, 5, "green",
                     {name:"ALL MY BFF'S", 
                     description:"Allies share a portion of FL4K's total Health Regeneration. FL4K's pet shares twice the amount of Health Regeneration.",
                     effects:[
                     {names:["Allies Share 17% of FL4K's Health Regeneration", 
                             "Allies Share 33% of FL4K's Health Regeneration",
                             "Allies Share 50% of FL4K's Health Regeneration"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/Overclocked.webp", [1, 2], 5, 5, "green",
+        new NormalSkill("assets/images/fl4k/skills/Overclocked.png", [1, 2], 5, 5, "green",
                     {name:"OVERCLOCKED", 
                     description:"FL4K gains increased Fire Rate. FL4K gains even more Fire Rate after reloading.",
                     effects:[
@@ -1098,11 +1098,11 @@ export class Fl4k extends Character {
                         values:["+2%", "+4%", "+6%", "8%", "+10%"]},
                         {name:"Overclocked Duration",
                         value:"4 seconds"}]}),
-        new NormalSkill("assets/images/fl4k/skills/LickTheWounds.webp", [2, 1], 1, 10, "green",
+        new NormalSkill("assets/images/fl4k/skills/LickTheWounds.png", [2, 1], 1, 10, "green",
                     {name:"LICK THE WOUNDS", 
                     description:"When FL4K is in Fight For Your Life, their pet will attempt to revive them.",
                     effects:[]}),
-        new NormalSkill("assets/images/fl4k/skills/TurnTailAndRun.webp", [2, 2], 3, 10, "green",
+        new NormalSkill("assets/images/fl4k/skills/TurnTailAndRun.png", [2, 2], 3, 10, "green",
                     {name:"TURN TAIL AND RUN", 
                     description:"While moving, FL4K constantly regenerates health and gains Damage Reduction.<br /><br />" +
                     "While still, FL4K gains Gun Damage and Fire Rate.",
@@ -1123,7 +1123,7 @@ export class Fl4k extends Character {
                         type: [{fireRate: true}],
                         conditional: this.getConditionals().standingStill,
                         values:["+4.0%", "+8.0%", "+12%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/FastAndFurryous.webp", [3, 0], 3, 15, "green",
+        new NormalSkill("assets/images/fl4k/skills/FastAndFurryous.png", [3, 0], 3, 15, "green",
                     {name:"THE FAST AND THE FURRYOUS", 
                     description:"While above half health, FL4K's Gun Damage and Movement Speed are increased and their pet gains increased Damage.",
                     effects:[
@@ -1139,7 +1139,7 @@ export class Fl4k extends Character {
                         type: [{extraType: this.getExtraTypes().petDmg}],
                         conditional: this.getConditionals().aboveHalfHealth,
                         values:["+10%", "+20%", "+30%"]}]}),
-        new NormalSkill("assets/images/fl4k/skills/HiddenMachine.webp", [3, 2], 5, 15, "green",
+        new NormalSkill("assets/images/fl4k/skills/HiddenMachine.png", [3, 2], 5, 15, "green",
                     {name:"HIDDEN MACHINE", 
                     description:"When an enemy has no target or is attacking a different target, FL4K deals increased damage against them.",
                     effects:[
@@ -1148,7 +1148,7 @@ export class Fl4k extends Character {
                         conditional: this.getConditionals().enemyNotTargetingYou,
                         values:["+6%", "+12%", "+18%", "+24%", "+30%"]},
                     ]}),
-        new NormalSkill("assets/images/fl4k/skills/RageAndRecover.webp", [4, 1], 5, 20, "green",
+        new NormalSkill("assets/images/fl4k/skills/RageAndRecover.png", [4, 1], 5, 20, "green",
                     {name:"RAGE AND RECOVER", 
                     description:"Kill Skill. After killing an enemy, FL4K and FL4K's pet regenerate health for a few seconds.",
                     effects:[
@@ -1158,7 +1158,7 @@ export class Fl4k extends Character {
                         values:["+1.6% of Missing Health/sec", "+3.2% of Missing Health/sec", "+4.8% of Missing Health/sec", "+6.4% of Missing Health/sec", "+8.0% of Missing Health/sec"]},
                         {name:"Rage and Recover Duration",
                         value:"3 seconds"}]}),
-        new NormalSkill("assets/images/fl4k/skills/ThePowerInside.webp", [5, 1], 1, 25, "green",
+        new NormalSkill("assets/images/fl4k/skills/ThePowerInside.png", [5, 1], 1, 25, "green",
                     {name:"THE POWER INSIDE", 
                     description:"FL4K and FL4K's Pet gain increased Damage when FL4K activates an Action Skill.<br /><br />" +
                     "If FL4K is at full health, the increased Damage is doubled.",

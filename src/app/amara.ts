@@ -8,15 +8,15 @@ import { Character } from './character';
 export class Amara extends Character {
 
   //Path for red tree header image
-  public readonly RED_TREE_HEADER: string = "assets/images/amara/RedTreeHeader.webp";
+  public readonly RED_TREE_HEADER: string = "assets/images/amara/RedTreeHeader.png";
   public readonly RED_TREE_NAME: string = "Fist of the Elements";
 
   //Path for blue tree header image
-  public readonly BLUE_TREE_HEADER: string = "assets/images/amara/BlueTreeHeader.webp";
+  public readonly BLUE_TREE_HEADER: string = "assets/images/amara/BlueTreeHeader.png";
   public readonly BLUE_TREE_NAME: string = "Mystic Assualt";
 
   //Path for green tree header image
-  public readonly GREEN_TREE_HEADER: string = "assets/images/amara/GreenTreeHeader.webp";
+  public readonly GREEN_TREE_HEADER: string = "assets/images/amara/GreenTreeHeader.png";
   public readonly GREEN_TREE_NAME: string = "Brawl";
 
   //Extra conditionals that are specific to amara and require special calculations
@@ -131,7 +131,7 @@ export class Amara extends Character {
   //Skills for red skill tree
 
   //Action skills
-  private phaseGrasp = new ActionSkill('assets/images/amara/skills/PhaseGrasp.webp', [-1, 1], 1, 0, "red",
+  private phaseGrasp = new ActionSkill('assets/images/amara/skills/PhaseGrasp.png', [-1, 1], 1, 0, "red",
                   {name:"PHASEGRASP", 
                   description:"Amara summons a giant fist that bursts from the ground and locks " + 
                   "the targeted enemy in place for a few seconds.<br /><br />" +
@@ -143,7 +143,7 @@ export class Amara extends Character {
                     value:"16 seconds"},
                     {name:"Grasp Immune Damage",
                     value:28}]});
-  private theEternalFists = new ActionSkill('assets/images/amara/skills/TheEternalFists.webp', [2, -1], 1, 10, "red",
+  private theEternalFists = new ActionSkill('assets/images/amara/skills/TheEternalFists.png', [2, -1], 1, 10, "red",
                   {name:"THE ETERNAL FIST", 
                   description:"Amara summons a giant fist that bursts from the ground and locks " + 
                   "the targeted enemy in place for a few seconds.<br /><br />" +
@@ -155,7 +155,7 @@ export class Amara extends Character {
                     value:"20 seconds"},
                     {name:"Grasp Immune Damage",
                     value:28}]});
-  private tiesThatBind = new ActionSkill('assets/images/amara/skills/TiesThatBind.webp', [3, 3], 1, 15, "red",
+  private tiesThatBind = new ActionSkill('assets/images/amara/skills/TiesThatBind.png', [3, 3], 1, 15, "red",
                   {name:"TIES THAT BIND", 
                   description:"Amara summons a giant fist that bursts from the ground " + 
                   "and locks the targeted enemy in place for a few seconds. <br /><br />" +
@@ -168,7 +168,7 @@ export class Amara extends Character {
                     value:"18 seconds"},
                     {name:"Grasp Immune Damage",
                     value:34}]});
-  private fistOverMatter = new ActionSkill('assets/images/amara/skills/FistOverMatter.webp', [4, -1], 1, 20, "red",
+  private fistOverMatter = new ActionSkill('assets/images/amara/skills/FistOverMatter.png', [4, -1], 1, 20, "red",
                   {name:"FIST OVER MATTER", 
                   description:"Amara summons a giant fist that bursts from the ground and " + 
                   "locks the targeted enemy in place for a few seconds.<br /><br />" +
@@ -183,12 +183,12 @@ export class Amara extends Character {
                     value:39}]});
 
   //Action Mods
-  private soulFire = new OtherSkill('assets/images/amara/skills/SoulFire.webp', [1, 3], 1, 5, "red",
+  private soulFire = new OtherSkill('assets/images/amara/skills/SoulFire.png', [1, 3], 1, 5, "red",
                   {name:"SOULFIRE", 
                   description:"Converts Amara's Action Skill to Incendiary Damage.",
                   effects:[
                     {name:"Converts to Incendiary Damage"}]});
-  private allure = new ActionMod('assets/images/amara/skills/Allure.webp', [2, 3], 1, 10, "red",
+  private allure = new ActionMod('assets/images/amara/skills/Allure.png', [2, 3], 1, 10, "red",
                   {name:"ALLURE", 
                   description:"Amara's Action Skill creates a singularity that pulls in enemies.",
                   effects:[
@@ -207,7 +207,7 @@ export class Amara extends Character {
     this.fistOverMatter,
     this.soulFire,
     this.allure, //BELOW HERE IS NORMAL SKILLS
-    new NormalSkill('assets/images/amara/skills/Anima.webp', [0, 0], 5, 0, "red",
+    new NormalSkill('assets/images/amara/skills/Anima.png', [0, 0], 5, 0, "red",
                   {name:"ANIMA", 
                   description:"Amara's Status Effects deal increased damage over time and have " + 
                   "increased duration. Her Action Skill Status Effect deals further increased damage.",
@@ -220,7 +220,7 @@ export class Amara extends Character {
                     {name:"Status Effect Duration:", 
                     type: [{statusEffectDuration: true}], 
                     values:["+20%", "+40%", "+60%", "+80%", "+100%"]}]}),
-    new NormalSkill('assets/images/amara/skills/SteadyHands.webp', [0, 1], 3, 0, "red",
+    new NormalSkill('assets/images/amara/skills/SteadyHands.png', [0, 1], 3, 0, "red",
                   {name:"STEADY HAND(S)", 
                   description:"Amara gains increased Weapon Handling and Accuracy.",
                   effects:[
@@ -230,13 +230,13 @@ export class Amara extends Character {
                     {name:"Accuracy", 
                     type: [{accuracy: true}],
                     values:["+13%", "+23%", "+31%"]}]}),
-    new NormalSkill('assets/images/amara/skills/Infusion.webp', [0, 2], 5, 0, "red",
+    new NormalSkill('assets/images/amara/skills/Infusion.png', [0, 2], 5, 0, "red",
                   {name:"INFUSION", 
                   description:"Convert a portion of damage dealt by Amara's weapons into her Action Skill Element.",
                   effects:[
                     {name:"Converted Damage",
                     values:["8%", "16%", "24%", "32%", "40%"]}]}),
-    new NormalSkill('assets/images/amara/skills/Tempest.webp', [1, 0], 5, 5, "red",
+    new NormalSkill('assets/images/amara/skills/Tempest.png', [1, 0], 5, 5, "red",
                   {name:"TEMPEST", 
                   description:"Amara deals increased Elemental Damage. Shock damage is further increased.",
                   effects:[
@@ -246,20 +246,20 @@ export class Amara extends Character {
                     {name:"Elemental Damage", 
                     type: [{elementalDmg: true}],
                     values:["+6.0%", "+12.0%", "+18.0%", "+24.0%", "+30.0%"]}]}),
-    new NormalSkill('assets/images/amara/skills/IlluminatedFist.webp', [1, 1], 1, 5, "red",
+    new NormalSkill('assets/images/amara/skills/IlluminatedFist.png', [1, 1], 1, 5, "red",
                   {name:"ILLUMINATED FIST", 
                   description:"Amara gains increased Melee Damage and her Melee Damage is converted to her Action Skill Element.",
                   effects:[
                     {name:"Melee Damage",
                     type: [{meleeDmg: true}],
                     value:"+75.0%"}]}),
-    new NormalSkill('assets/images/amara/skills/Wildfire.webp', [1, 2], 5, 5, "red",
+    new NormalSkill('assets/images/amara/skills/Wildfire.png', [1, 2], 5, 5, "red",
                   {name:"WILDFIRE", 
                   description:"Whenever Amara applies a Status Effect to an enemy, it has a chance to spread to a nearby enemy.",
                   effects:[
                     {name:"Spread Chance",
                     values:["8%", "16%", "24%", "32%", "40%"]}]}),
-    new NormalSkill('assets/images/amara/skills/Dread.webp', [2, 1], 1, 10, "red",
+    new NormalSkill('assets/images/amara/skills/Dread.png', [2, 1], 1, 10, "red",
                   {name:"DREAD", 
                   description:"Amara's Gun Damage is increased for a few seconds after an enemy is Grasped.<br /><br />" +
                   "Whenever any player kills a Grasped enemy, their current weapon is instantly reloaded.",
@@ -270,7 +270,7 @@ export class Amara extends Character {
                     value:"+15%"},
                     {name:"Duration",
                     value:"8 seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/Indiscriminate.webp', [3, 0], 3, 15, "red",
+    new NormalSkill('assets/images/amara/skills/Indiscriminate.png', [3, 0], 3, 15, "red",
                   {name:"INDISCRIMINATE", 
                   description:"Amara's bullets that damage enemies have a chance to ricochet " + 
                   "and deal decreased damage to other nearby enemies. Ricochet Chance and Damage " + 
@@ -284,13 +284,13 @@ export class Amara extends Character {
                     values:["20%","40%","60%"]},
                     {name:"Action Skill Ricochet Damage", 
                     value:"-25%"}]}),
-    new NormalSkill('assets/images/amara/skills/DeepWell.webp', [3, 1], 1, 15, "red",
+    new NormalSkill('assets/images/amara/skills/DeepWell.png', [3, 1], 1, 15, "red",
                   {name:"DEEP WELL", 
                   description:"Amara gains increased Magazine Size with elemental weapons.",
                   effects:[
                     {name:"Magazine Size",
                     value:"+20%"}]}),
-    new NormalSkill('assets/images/amara/skills/Catharsis.webp', [3, 2], 3, 15, "red",
+    new NormalSkill('assets/images/amara/skills/Catharsis.png', [3, 2], 3, 15, "red",
                   {name:"CATHARSIS", 
                   description:"Whenever Amara triggers an elemental effect on an enemy, when that enemy " + 
                   "dies that enemy explodes, dealing her attuned element damage along with any " + 
@@ -300,7 +300,7 @@ export class Amara extends Character {
                     values:[4, 8, 13]},
                     {name:"Cooldown",
                     value:"8 seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/Sustainment.webp', [4, 0], 5, 20, "red",
+    new NormalSkill('assets/images/amara/skills/Sustainment.png', [4, 0], 5, 20, "red",
                   {name:"SUSTAINMENT", 
                   description:"Amara gains Life Steal whenever she deals Elemental Damage with her weapon.",
                   effects:[
@@ -308,14 +308,14 @@ export class Amara extends Character {
                     type: [{lifeSteal: true}],
                     conditional: this.getConditionals().dealtEleDmgWithElementalWeapon,
                     values:["4% of damage dealt", "8% of damage dealt", "12% of damage dealt", "16% of damage dealt", "20% of damage dealt"]}]}),
-    new NormalSkill('assets/images/amara/skills/Conflux.webp', [4, 2], 5, 20, "red",
+    new NormalSkill('assets/images/amara/skills/Conflux.png', [4, 2], 5, 20, "red",
                   {name:"CONFLUX", 
                   description:"Whenever Amara applies a Status Effect to an enemy, " + 
                   "she gains a chance to randomly Electrocute, Ignite, or Melt that enemy.",
                   effects:[
                     {name:"Extra Effect Chance",
                     values:["7%", "14%", "21%", "28%", "35%"]}]}),
-    new NormalSkill('assets/images/amara/skills/ForcefulExpression.webp', [5, 1], 1, 25, "red",
+    new NormalSkill('assets/images/amara/skills/ForcefulExpression.png', [5, 1], 1, 25, "red",
                   {name:"FORCEFUL EXPRESSION", 
                   description:"Amara's guns deal Bonus Elemental Damage, based on her Action Skill Element.",
                   effects:[
@@ -327,7 +327,7 @@ export class Amara extends Character {
   //Skills for blue skill tree
 
   //Action skills
-  private phaseCast = new ActionSkill('assets/images/amara/skills/PhaseCast.webp', [-1, 1], 1, 0, "blue",
+  private phaseCast = new ActionSkill('assets/images/amara/skills/PhaseCast.png', [-1, 1], 1, 0, "blue",
                   {name:"PHASECAST", 
                   description:"Amara sends forward an Astral Projection of herself, dealing " + 
                   "damage to everything in its path.",
@@ -336,7 +336,7 @@ export class Amara extends Character {
                     value:"28 seconds"},
                     {name:"Damage",
                     value:92}]});
-  private deliverance = new ActionSkill('assets/images/amara/skills/Deliverance.webp', [2, -1], 1, 10, "blue",
+  private deliverance = new ActionSkill('assets/images/amara/skills/Deliverance.png', [2, -1], 1, 10, "blue",
                   {name:"DELIVERANCE", 
                   description:"Amara sends forward an Astral Projection of herself, dealing damage to everything in its path.<br /><br />" +
                   "Whenever Amara's Astral Projection damages an enemy or object, it releases homing Elemental Projectiles " + 
@@ -348,7 +348,7 @@ export class Amara extends Character {
                     value:86},
                     {name:"Elemental Projectiles",
                     value:"3 per enemy hit"}]});
-  private reverberation = new ActionSkill('assets/images/amara/skills/Reverberation.webp', [3, -1], 1, 15, "blue",
+  private reverberation = new ActionSkill('assets/images/amara/skills/Reverberation.png', [3, -1], 1, 15, "blue",
                   {name:"REVERBERATION", 
                   description:"Amara sends forward an Astral Projection of herself, " + 
                   "dealing damage to everything in its path..<br /><br />" +
@@ -360,7 +360,7 @@ export class Amara extends Character {
                     value:"+50% per enemy hit"},
                     {name:"Damage",
                     value:86}]});
-  private tandava = new ActionSkill('assets/images/amara/skills/Tandava.webp', [4, 3], 1, 20, "blue",
+  private tandava = new ActionSkill('assets/images/amara/skills/Tandava.png', [4, 3], 1, 20, "blue",
                   {name:"TANDAVA", 
                   description:"Amara sends forward an Astral Projection of herself. " + 
                   "When it hits a target, it explodes, damaging all nearby enemies.",
@@ -371,13 +371,13 @@ export class Amara extends Character {
                     value:91}]});
 
   //Action Mods 
-  private soulSap = new ActionMod('assets/images/amara/skills/SoulSap.webp', [1, 3], 1, 5, "blue",
+  private soulSap = new ActionMod('assets/images/amara/skills/SoulSap.png', [1, 3], 1, 5, "blue",
                   {name:"SOUL SAP", 
                   description:"A portion of all damage dealt by Amara's Action Skill is returned to her or a nearby ally as health.",
                   effects:[
                     {name:"Life Steal",
                     value:"30% of Skill damage dealt"}]});
-  private stillnessOfMind = new ActionMod('assets/images/amara/skills/StillnessOfMind.webp', [2, 3], 1, 10, "blue",
+  private stillnessOfMind = new ActionMod('assets/images/amara/skills/StillnessOfMind.png', [2, 3], 1, 10, "blue",
                   {name:"STILLNESS OF MIND", 
                   description:"Enemies damaged by Amara's Action Skill become phaselocked until " + 
                   "they are damaged or the duration ends. However, Action Skill Cooldown is increased.<br /><br />" +
@@ -389,7 +389,7 @@ export class Amara extends Character {
                     value:"+15%"},
                     {name:"Damage",
                     value:"-25%"}]});
-  private shockra = new OtherSkill('assets/images/amara/skills/Shockra.webp', null, 1, 0, "blue",
+  private shockra = new OtherSkill('assets/images/amara/skills/Shockra.png', null, 1, 0, "blue",
                   {name:"SHOCKRA", 
                   description:"Converts your Action Skill to Shock Damage.",
                   effects:[
@@ -404,7 +404,7 @@ export class Amara extends Character {
     this.tandava,
     this.soulSap,
     this.stillnessOfMind, //BELOW HERE IS NORMAL SKILLS
-    new NormalSkill('assets/images/amara/skills/DoHarm.webp', [0, 0], 5, 0, "blue",
+    new NormalSkill('assets/images/amara/skills/DoHarm.png', [0, 0], 5, 0, "blue",
                   {name:"DO HARM", 
                   description:"Killing an enemy grants Amara a stack of Rush. Activating her Action Skill consumes all Rush stacks." +
                   "For every stack of Rush consumed, Amara's Action Skill Damage is temporarily increased.",
@@ -428,7 +428,7 @@ export class Amara extends Character {
                     values:["+0.9% per stack consumed", "+1.8% per stack consumed", "+2.7% per stack consumed", "+3.6% per stack consumed", "+4.5% per stack consumed"]},
                     {name:"Duration", 
                     value:"20 seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/FastHands.webp', [0, 1], 3, 0, "blue",
+    new NormalSkill('assets/images/amara/skills/FastHands.png', [0, 1], 3, 0, "blue",
                   {name:"FAST HAND(S)", 
                   description:"Amara's Reload Speed, Weapon Swap Speed, and Mode Switch Speed are improved.",
                   effects:[
@@ -441,7 +441,7 @@ export class Amara extends Character {
                     {name:"Mode Switch Speed:", 
                     type: [{modeSwitchSpeed: true}],
                     values:["+16%", "+28%", "+36%",]}]}),
-    new NormalSkill('assets/images/amara/skills/ViolentTapestry.webp', [0, 2], 5, 0, "blue",
+    new NormalSkill('assets/images/amara/skills/ViolentTapestry.png', [0, 2], 5, 0, "blue",
                   {name:"VIOLENT TAPESTRY", 
                   description:"Applying a Status Effect grants Amara a stack of Rush. Activating " + 
                   "her action skill consumes all Rush stacks.<br /><br />" +
@@ -465,7 +465,7 @@ export class Amara extends Character {
                     values:["+0.6% per stack consumed", "+1.2% per stack consumed", "+1.8% per stack consumed", "+2.4% per stack consumed", "+3.0% per stack consumed"]},
                     {name:"Duration", 
                     value:"20 seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/Alacrity.webp', [1, 0], 5, 5, "blue",
+    new NormalSkill('assets/images/amara/skills/Alacrity.png', [1, 0], 5, 5, "blue",
                   {name:"ALACRITY", 
                   description:"Amara gains increased Reload Speed for every stack of Rush. " + 
                   "After consuming Rush stacks, this bonus is increased for a few seconds.",
@@ -498,7 +498,7 @@ export class Amara extends Character {
                     values:["+0.6% after action skill use", "+1.2% after action skill use", "+1.8% after action skill use", "+2.3% after action skill use", "+2.9% after action skill use"]},
                     {name:"Duration",
                     value:"8 seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/Transcend.webp', [1, 1], 3, 5, "blue",
+    new NormalSkill('assets/images/amara/skills/Transcend.png', [1, 1], 3, 5, "blue",
                   {name:"TRANSCEND", 
                   description:"Amara gains increased Accuracy and Critical Hit Damage for " + 
                   "a few seconds after activating her Action Skill.",
@@ -513,14 +513,14 @@ export class Amara extends Character {
                     values:["+9%", "+18%", "+27%"]},
                     {name:"Duration", 
                     value:"12 seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/Restless.webp', [1, 2], 5, 5, "blue",
+    new NormalSkill('assets/images/amara/skills/Restless.png', [1, 2], 5, 5, "blue",
                   {name:"RESTLESS", 
                   description:"Amara gains increased Action Skill Cooldown Rate.",
                   effects:[
                     {name:"Cooldown Rate", 
                     type: [{actionSkillCooldown: true}],
                     values:["+5%", "+10%", "+15%", "+20%", "+25%"]}]}),
-    new NormalSkill('assets/images/amara/skills/Ascendant.webp', [2, 1], 1, 10, "blue",
+    new NormalSkill('assets/images/amara/skills/Ascendant.png', [2, 1], 1, 10, "blue",
                   {name:"ASCENDANT", 
                   description:"All Action Skill Augments gain increased effects.",
                   effects:[
@@ -534,7 +534,7 @@ export class Amara extends Character {
                     value:"Breaks 0.75 seconds after being damaged"},
                     {name:"Revelation Damage",
                     value:"+25%"}]}),
-    new NormalSkill('assets/images/amara/skills/FromRest.webp', [3, 0], 3, 15, "blue",
+    new NormalSkill('assets/images/amara/skills/FromRest.png', [3, 0], 3, 15, "blue",
                   {name:"FROM REST", 
                   description:"Amara gains improved Fire Rate and Charge Time.",
                   effects:[
@@ -544,7 +544,7 @@ export class Amara extends Character {
                     {name:"Charge Time", 
                     type: [{chargeTime: true}],
                     values:["+21%", "+34%", "+44%"]}]}),
-    new NormalSkill('assets/images/amara/skills/LaidBare.webp', [3, 1], 3, 15, "blue",
+    new NormalSkill('assets/images/amara/skills/LaidBare.png', [3, 1], 3, 15, "blue",
                   {name:"LAID BARE", 
                   description:"Enemies take increased damage from all sources for a few seconds " + 
                   "after being damaged by Amara's Action Skill.",
@@ -555,7 +555,7 @@ export class Amara extends Character {
                     values:["+8.3%", "+16.7%", "+25.0%"]},
                     {name:"Duration", 
                     value:"8 seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/Wrath.webp', [3, 2], 3, 15, "blue",
+    new NormalSkill('assets/images/amara/skills/Wrath.png', [3, 2], 3, 15, "blue",
                   {name:"WRATH", 
                   description:"Amara gains increased Gun Damage. This effect is increased " +
                   "after she activates her action skill for a few seconds.",
@@ -569,7 +569,7 @@ export class Amara extends Character {
                     values:["+6.7% after action skill use", "+13.3% after action skill use", "+20.0% after action skill use"]},
                     {name:"Duration",
                     value:"8 seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/Remnant.webp', [4, 0], 3, 20, "blue",
+    new NormalSkill('assets/images/amara/skills/Remnant.png', [4, 0], 3, 20, "blue",
                   {name:"REMNANT", 
                   description:"When Amara kills an enemy with a Gun or Action Skill, " + 
                   "she creates a homing projectile that seeks out a new enemy dealing her Action Skill Elemental Damage.<br /><br />" +
@@ -577,14 +577,14 @@ export class Amara extends Character {
                   effects:[
                     {name:"Remnant Damage", 
                     values:[9, 18, 26]}]}),
-    new NormalSkill('assets/images/amara/skills/Awakening.webp', [4, 2], 3, 20, "blue",
+    new NormalSkill('assets/images/amara/skills/Awakening.png', [4, 2], 3, 20, "blue",
                   {name:"REMNANT", 
                   description:"Amara's Rush stacks gain increased effectiveness",
                   effects:[
                     {name:"Rush Stack Effectiveness", 
                     type: [{extraType: this.getExtraTypes().rushStackEffectiveness}],
                     values:["+10%", "+20%", "+30%"]}]}),
-    new NormalSkill('assets/images/amara/skills/Avatar.webp', [5, 1], 1, 25, "blue",
+    new NormalSkill('assets/images/amara/skills/Avatar.png', [5, 1], 1, 25, "blue",
                   {name:"AVATAR", 
                   description:"Amara's Action Skill can be activated while it's cooling down. " +
                   "This skill may only be used once per completed cooldown.<br /><br />" +
@@ -598,7 +598,7 @@ export class Amara extends Character {
 
   //Skills for green skill tree
   //Action skills
-  private phaseSlam = new ActionSkill('assets/images/amara/skills/PhaseSlam.webp', [-1, 1], 1, 0, "green",
+  private phaseSlam = new ActionSkill('assets/images/amara/skills/PhaseSlam.png', [-1, 1], 1, 0, "green",
                   {name:"PHASESLAM", 
                   description:"Amara leaps into the air and Slams the ground, " +
                   "dealing damage to all nearby enemies and knocking them up.",
@@ -607,7 +607,7 @@ export class Amara extends Character {
                     value:"35 seconds"},
                     {name:"Damage",
                     value:98}]});
-  private fracture = new ActionSkill('assets/images/amara/skills/Fracture.webp', [2, -1], 1, 10, "green",
+  private fracture = new ActionSkill('assets/images/amara/skills/Fracture.png', [2, -1], 1, 10, "green",
                   {name:"FRACTURE", 
                   description:"Amara summons a line of fists that erupt from the ground, " + 
                   "dealing damage to enemies in front of Amara.",
@@ -616,7 +616,7 @@ export class Amara extends Character {
                     value:"28 seconds"},
                     {name:"Damage",
                     value:88}]});
-  private downfall = new ActionSkill('assets/images/amara/skills/Downfall.webp', [3, -1], 1, 15, "green",
+  private downfall = new ActionSkill('assets/images/amara/skills/Downfall.png', [3, -1], 1, 15, "green",
                   {name:"DOWNFALL", 
                   description:"Amara leaps into the air and shoots an Elemental Beam " + 
                   "below her briefly, followed by a Slam.",
@@ -629,11 +629,11 @@ export class Amara extends Character {
                     value:"14/second"}]});
 
   //Action mods
-  private blightTiger = new OtherSkill('assets/images/amara/skills/BlightTiger.webp', [1, 3], 1, 5, "green",
+  private blightTiger = new OtherSkill('assets/images/amara/skills/BlightTiger.png', [1, 3], 1, 5, "green",
                   {name:"BLIGHT TIGER", 
                   description:"Converts Amara's Action Skill to Corrosive Damage.",
                   effects:[{name:"Converts to Corrosive Damage"}]});
-  private revelation = new ActionMod('assets/images/amara/skills/Revelation.webp', [2, 3], 1, 10, "green",
+  private revelation = new ActionMod('assets/images/amara/skills/Revelation.png', [2, 3], 1, 10, "green",
                   {name:"REVELATION", 
                   description:"Amara's Action Skill now creates a Nova when it damages " + 
                   "enemies, dealing damage to all nearby enemies.",
@@ -643,7 +643,7 @@ export class Amara extends Character {
                     value:"-15%"},
                     {name:"Nova Damage",
                     value:18}]});
-  private glamour = new ActionMod('assets/images/amara/skills/Glamour.webp', [4, 3], 1, 20, "green",
+  private glamour = new ActionMod('assets/images/amara/skills/Glamour.png', [4, 3], 1, 20, "green",
                   {name:"GLAMOUR", 
                   description:"Enemies damaged by Amara's action skill become confused and temporarily " + 
                   "attack their allies. However, Action Skill Cooldown is increased.<br /><br />" +
@@ -664,14 +664,14 @@ export class Amara extends Character {
     this.blightTiger,
     this.revelation,
     this.glamour, //BELOW HERE IS NORMAL SKILLS
-    new NormalSkill('assets/images/amara/skills/RootToRise.webp', [0, 0], 5, 0, "green",
+    new NormalSkill('assets/images/amara/skills/RootToRise.png', [0, 0], 5, 0, "green",
                   {name:"ROOT TO RISE", 
                   description:"Amara gains increased Max Health.",
                   effects:[
                     {name:"Max Health",
                     type: [{maxHealth: true}],
                       values:["+8%", "+16%", "+24%", "+32%", "+40%"]}]}),
-    new NormalSkill('assets/images/amara/skills/PersonalSpace.webp', [0, 1], 3, 0, "green",
+    new NormalSkill('assets/images/amara/skills/PersonalSpace.png', [0, 1], 3, 0, "green",
                     {name:"PERSONAL SPACE", 
                     description:"Amara's weapon shots deal Bonus Damage based " + 
                     "on the distance to her target. The closer the target, the greater the bonus.",
@@ -679,7 +679,7 @@ export class Amara extends Character {
                       {name:"Bonus Damage",
                       type: [{bonusDmg: true}],
                       values:["up to 18.0% of damage dealt", "up to 36.0% of damage dealt", "up to 54.0% of damage dealt"]}]}),
-    new NormalSkill('assets/images/amara/skills/Clarity.webp', [0, 2], 5, 0, "green",
+    new NormalSkill('assets/images/amara/skills/Clarity.png', [0, 2], 5, 0, "green",
                   {name:"CLARITY", 
                   description:"Amara constantly regenerates health. The lower her health, " + 
                   "the more powerful the regeneration.<br /><br />"+
@@ -692,7 +692,7 @@ export class Amara extends Character {
                     values:["up to +1.00% Missing Health/sec","up to +2.00% Missing Health/sec","up to +3.00% Missing Health/sec", "up to +4.00% Missing Health/sec", "up to +5.00% Missing Health/sec"]},
                     {name:"Duration", 
                     value:"5 seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/ArmsDeal.webp', [1, 0], 5, 5, "green",
+    new NormalSkill('assets/images/amara/skills/ArmsDeal.png', [1, 0], 5, 5, "green",
                   {name:"ARMS DEAL", 
                   description:"Amara deals increased Splash Damage, and takes reduced Splash Damage.",
                   effects:[
@@ -702,7 +702,7 @@ export class Amara extends Character {
                     {name:"Splash Damage Reduction",
                     type: [{splashDmgReduction: true}],
                     values:["+12%", "+21%", "+28%", "+35%", "+40%"]}]}),
-    new NormalSkill('assets/images/amara/skills/Samsara.webp', [1, 1], 3, 5, "green",
+    new NormalSkill('assets/images/amara/skills/Samsara.png', [1, 1], 3, 5, "green",
                   {name:"SAMSARA", 
                   description:"Whenever Amara deals damage to an enemy with her Action Skill, " + 
                   "she adds a stack of Samsara. For every stack of Samsara, Amara gains " + 
@@ -727,7 +727,7 @@ export class Amara extends Character {
                     value: 5},
                     {name:"Duration",
                     value: "20 seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/HelpingHands.webp', [1, 2], 5, 5, "green",
+    new NormalSkill('assets/images/amara/skills/HelpingHands.png', [1, 2], 5, 5, "green",
                   {name:"HELPING HAND(S)", 
                   description:"For a few seconds after using her Action Skill, " + 
                   "Amara's arms remain active and grant her Damage Reduction.",
@@ -738,7 +738,7 @@ export class Amara extends Character {
                     values:["+12.0%", "+21.0%", "+28.0%", "+35.0%", "+40.0%"]},
                     {name:"Duration",
                     value:"20 Seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/Mindfulness.webp', [2, 0], 3, 10, "green",
+    new NormalSkill('assets/images/amara/skills/Mindfulness.png', [2, 0], 3, 10, "green",
                   {name:"MINDFULNESS", 
                   description:"Whenever Amara takes damage, she gains a stack of " + 
                   "Mindfulness. For every stack of Mindfulness, Amara " + 
@@ -764,7 +764,7 @@ export class Amara extends Character {
                     value: 25},
                     {name: "Duration",
                     value: "5 seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/FindYourCenter.webp', [2, 1], 1, 10, "green",
+    new NormalSkill('assets/images/amara/skills/FindYourCenter.png', [2, 1], 1, 10, "green",
                   {name:"FIND YOUR CENTER", 
                   description:"Amara gains increased Melee Damage.<br /><br />" +
                   "Additionally, for a few seconds after using her Action Skill, Amara gains increased Melee Range.",
@@ -777,7 +777,7 @@ export class Amara extends Character {
                     value:"20 seconds"},
                     {name:"Melee Range",
                     value:"+75%"}]}),
-    new NormalSkill('assets/images/amara/skills/Vigor.webp', [2, 2], 3, 10, "green",
+    new NormalSkill('assets/images/amara/skills/Vigor.png', [2, 2], 3, 10, "green",
                   {name:"VIGOR", 
                   description:"Kill Skill. Killing an enemy with Amara's Action Skill " + 
                   "grants all allies increased Movement Speed for a few seconds.",
@@ -788,7 +788,7 @@ export class Amara extends Character {
                     values:["+3.3%", "+6.7%", "+10.0%"]},
                     {name:"Duration",
                     value: "8 seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/OneWithNature.webp', [3, 1], 5, 15, "green",
+    new NormalSkill('assets/images/amara/skills/OneWithNature.png', [3, 1], 5, 15, "green",
                   {name:"One With Nature", 
                   description:"Amara gains increased Max Health and Elemental " + 
                   "Damage Resistance to her Action Skill Element.",
@@ -799,7 +799,7 @@ export class Amara extends Character {
                     {name:"Elemental Damage Reduction",
                     type: [{elementalDmgReduction: true}],
                     values: ["+12.0%", "+21.0%", "+28.0%", "+35.0%", "+40.0%"]}]}),
-    new NormalSkill('assets/images/amara/skills/DoUntoOthers.webp', [4, 0], 1, 20, "green",
+    new NormalSkill('assets/images/amara/skills/DoUntoOthers.png', [4, 0], 1, 20, "green",
                   {name:"DO UNTO OTHERS", 
                   description:"Whenever an enemy damages Amara, she automatically " + 
                   "throws an energy orb back at them, dealing Action " + 
@@ -807,7 +807,7 @@ export class Amara extends Character {
                   effects:[
                     {name:"Cooldown",
                     value:"8 seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/JabCross.webp', [4, 1], 5, 20, "green",
+    new NormalSkill('assets/images/amara/skills/JabCross.png', [4, 1], 5, 20, "green",
                   {name:"JAB CROSS", 
                   description:"Whenever Amara deals melee damage to an enemy, she gains " +
                   "increased Action Skill Damage and increased Gun Damage for a few seconds.",
@@ -822,7 +822,7 @@ export class Amara extends Character {
                     values:["+15%", "+30%", "+45%", "+60%", "+75%"]},
                     {name: "Duration",
                     value: "10 seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/GuardianAngel.webp', [4, 2], 1, 20, "green",
+    new NormalSkill('assets/images/amara/skills/GuardianAngel.png', [4, 2], 1, 20, "green",
                   {name:"GUARDIAN ANGEL", 
                   description:"When Amara enters Fight For Your Life, she immediately gains a " +
                   "Second Wind, restores her health, and creates an Action Skill Elemental " +
@@ -832,7 +832,7 @@ export class Amara extends Character {
                     value:"50% of Max Health"},
                     {name:"Cooldown",
                     value:"120 seconds"}]}),
-    new NormalSkill('assets/images/amara/skills/Blitz.webp', [5, 1], 1, 25, "green",
+    new NormalSkill('assets/images/amara/skills/Blitz.png', [5, 1], 1, 25, "green",
                   {name:"BLITZ", 
                   description:"Melee Override. Press V while aiming at an enemy to make Amara dash " + 
                   "a short distance forward and perform a special melee strike, " + 

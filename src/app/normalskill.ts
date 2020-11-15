@@ -46,7 +46,7 @@ export class NormalSkill extends Skill {
      *          string
      */
     getSkillBoxPath(): string {
-        return "assets/images/skilltree/skillBox.webp";
+        return "assets/images/skilltree/skillBox.png";
     }
 }
 
