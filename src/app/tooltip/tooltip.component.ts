@@ -37,16 +37,16 @@ export class TooltipComponent implements OnInit {
   setPosition() {
     var tooltip = document.getElementById('tooltip');
     var body = document.body;
-    var hoveredElement = event.srcElement as HTMLElement;
+    if (this.event == null) return;
+
+    var hoveredElement = this.event.target as SVGElement;
     var hoveredElementY = (hoveredElement.getBoundingClientRect().top + hoveredElement.getBoundingClientRect().bottom) / 2;
     var hoveredElementX = (hoveredElement.getBoundingClientRect().left + hoveredElement.getBoundingClientRect().right) / 2;
     tooltip.removeAttribute("style");
     
     
     if (hoveredElementY > (window.innerHeight/2)) {
-      tooltip.style.bottom = (body.getBoundingClientRect().height
-                               - (hoveredElement.getBoundingClientRect().top 
-                               + document.documentElement.scrollTop) ) + "px";
+      tooltip.style.bottom = (window.innerHeight - hoveredElement.getBoundingClientRect().top - window.scrollY) + "px";
     } else {
       tooltip.style.top = (hoveredElement.getBoundingClientRect().bottom + window.scrollY) + "px";
     }
