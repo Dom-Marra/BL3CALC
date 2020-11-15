@@ -4,6 +4,7 @@
     position: absolute;
     z-index: 4;
     height: auto;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.5);
 }
 
 .skill-effects-container {
@@ -40,8 +41,16 @@
     }
 }
 
-@media not screen and (min-width: 768px) { 
-    .skill-effects-container {
-        width: 60vw; 
+@media not screen and (min-width: 697px) { 
+
+    #tooltip {
+        left: 50% !important;
+        transform: translateX(-50%);
+        right: initial !important;
+
+        .skill-effects-container {
+            width: 85vw; 
+        }
     }
+    
 }
