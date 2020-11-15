@@ -8,35 +8,31 @@
     src: url('./assets/fonts/Teko-Medium.ttf') format("truetype");
 }
 
-$primary-color: rgb(38, 38, 38);
-$primary-accent-color: rgb(28, 28, 28);
-$primary-color-accent-light: rgb(46, 46, 46);
+$primary-color: rgb(49, 49, 49);
+$primary-accent-color: rgb(39, 39, 39);
+$primary-color-accent-light: rgb(58, 58, 58);
 
-$secondary-color: rgb(22, 22, 22);
+$secondary-color: rgb(39, 39, 39);
 $text-color: rgb(255,215,0);
 
 @mixin borderlands-text {
     font-family: 'Compacta Bold';
     color: $text-color;
-    text-shadow: (2px 0 0 black, 
-                 -2px 0 0 black, 
-                  0 2px 0 black,
-                  0 -2px 0 black, 
-                  1px 1px black, 
-                 -1px -1px 0 black, 
-                  1px -1px 0 black,
-                 -1px 1px 0 black);
+    text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
 }
 
-body, html {
-    position: relative;
-    min-height: 100vh;
-    margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+
+html {
+    min-height: 100%;
 }
 
 body {
-    background: radial-gradient(rgb(16, 65, 114), $secondary-color);
+    margin: 0;
+    min-height: 100%;
+    background-image: radial-gradient(#104172,#161616) !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .doNotSelect {
@@ -50,6 +46,10 @@ body {
 
 .flex {
     display: flex;
+}
+
+.flex-grow {
+    flex-grow: 1;
 }
 
 .wrapped {
@@ -87,15 +87,3 @@ body {
 .horizontal-align-evenly {
     justify-content: space-evenly;
 }
-
-
-/* Container that holds the elements for each page */
-.mainContainer {
-    min-height: calc(100vh - 60px);
-
-    padding-top: 25px;
-    padding-bottom: 25px;
-}
-
-
-
