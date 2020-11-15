@@ -21,7 +21,6 @@ export class TooltipComponent implements OnInit {
       this.skill = emmitValues[0];
       this.event = emmitValues[1];
 
-      this.setPosition();
     } 
     
   }
@@ -29,6 +28,11 @@ export class TooltipComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngAfterViewChecked() {
+    this.setPosition();
+
   }
 
   /**
@@ -44,20 +48,19 @@ export class TooltipComponent implements OnInit {
     var hoveredElementX = (hoveredElement.getBoundingClientRect().left + hoveredElement.getBoundingClientRect().right) / 2;
     tooltip.removeAttribute("style");
     
-    
     if (hoveredElementY > (window.innerHeight/2)) {
-      tooltip.style.bottom = (window.innerHeight - hoveredElement.getBoundingClientRect().top - window.scrollY) + "px";
+      tooltip.style.top = ( hoveredElement.getBoundingClientRect().top - tooltip.offsetHeight + window.scrollY) + "px";
     } else {
       tooltip.style.top = (hoveredElement.getBoundingClientRect().bottom + window.scrollY) + "px";
     }
 
-    
-
-    if (hoveredElementX > (window.innerWidth/2)) {
+    if (hoveredElementX > (body.offsetWidth/2)) {
       tooltip.style.right = (body.getBoundingClientRect().right - hoveredElement.getBoundingClientRect().right) + "px";
     } else if (hoveredElementX < (window.innerWidth/2)){
       tooltip.style.left =  hoveredElement.getBoundingClientRect().left + "px";
     }
+
+    
   }
 
   /**
