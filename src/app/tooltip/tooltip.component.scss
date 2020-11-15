@@ -3,34 +3,32 @@
 #tooltip {
     position: absolute;
     z-index: 4;
-    height: fit-content;
+    height: auto;
 }
 
 .skill-effects-container {
     font-family: Verdana;
     color: white;
     background: $primary-color;
-    border: 1px solid $secondary-color;
-    border-radius: 1vh;
-    font-size: 12px;
-    width: auto;
-    max-width: 20vw;
+    border-radius: 3px;
+    font-size: 11px;
+    width: 30vw;
 
     .skill-effects-name {
         font-family: 'Teko';
-        font-size: 20px;
+        font-size: 18px;
         height: 25px;
-        width: 100%;
-        padding-left: 2%;
-        margin-bottom: 11px;
+        width: 95%;
+        margin: 0;
+        padding: 0 2.5%;
         background-color: $primary-accent-color;
-        border-radius: 0.5vh 0.5vh 0 0;
+        border-radius: 3px 3px 0 0;
     }
 
     .skill-effects-content {
         width: 95%;
         margin: auto;
-        margin-bottom: 11px;
+        padding: 0.75em 0;
     }
 
     .skill-effects-effect {
@@ -42,16 +40,8 @@
     }
 }
 
-@media not screen and (min-width: 130vh) { 
-    .skill-effects-container { 
-        width: auto;
-        max-width: 30vw;
-    }
-}
-
 @media not screen and (min-width: 768px) { 
     .skill-effects-container {
-        max-width: 100vw; 
-        width: auto;
+        width: 60vw; 
     }
 }
