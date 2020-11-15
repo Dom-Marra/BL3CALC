@@ -1,92 +1,88 @@
 @import "../../styles.scss";
 
 .stats {
-    position: relative;
-    width: 30vw;
-    height: 85vh;
+    width: 100%;
+    height: 100%;
     background: $primary-color;
-    border: 1px solid $secondary-color;
-    border-radius: 1vh;
+    border-radius: 5px;
 
-    .stats-nav {
+    .stats-header {
         position: relative;
         @include borderlands-text;
         height: 60px;
         background-color: $primary-accent-color;
-        border-radius: 1vh 1vh 0 0;
+        border-radius: 5px 5px 0 0;
+
+        .heading, .character-level {
+            display: inline-flex;
+            align-items: center;
+            margin: 0;
+            height: 60px;
+        }
 
         .heading {
             position: absolute;
             left: 50%;
-            transform: translate(-50%, 0);
-            text-align: center;
-            line-height: 60px;
-            font-size: 50px;
-            pointer-events: none;
-        }
-
-        .non-active {
-            font-size: 35px;
-            left: 90%;
-            transform: translate(-90%, 0);
-            cursor: pointer;
-            pointer-events: all;
-        }
-
-        .non-active:hover {
-            color: darken($color: $text-color, $amount: 20%);
+            transform: translateX(-50%);
+            font-size: 45px;
         }
 
         .character-level {
-            font-size: 35px;
-            line-height: 60px;
-            padding-left: 30px;
+            font-size: 30px;
+            padding-left: 0.75em;
         }
     }
 
-    .info {
-        position: relative;
+    #stats-container {
         width: 100%;
-        margin: auto;
-        height: calc(100% - 85px);
+    }
+
+    .info {
+        width: 45%;
         color: white;
         font-family: 'Teko';
         font-size: 20px;
 
         .info-section {
+            flex-direction: column;
             height: auto;
-            width: 90%;
-            margin: auto;
-            margin-top: 25px;
+            flex-grow: 1;
+            flex-basis: 400px;
+            max-width: 95%;
+            margin: 1em 0.5em;
             background-color: $primary-color-accent-light;
-            border-radius: 0.5vh;
+            border-radius: 3px;
     
             .info-section-header {
-                height: 25px;
+                height: 1.75em;
                 width: 100%;
                 background-color: $primary-accent-color;
-                border-radius: 0.5vh 0.5vh 0 0;
+                border-radius: 3px 3px 0 0;
 
                 p {
-                    margin-left: 2%;
-                    margin-bottom: 0;
+                    padding: 0.2em 0;
+                    margin: 0;
+                    margin-left: 0.5em;
                 }
             }
 
-            .equipped-skill{
-                margin-top: 20px;
-                margin-bottom: 20px;
-                max-height: calc(100% - 25px);
+            &#equipped-skills {
+                flex-direction: row;
+            }
+
+            .equipped-skill {
+                margin: 0.5em 0;
 
                 div {
                     display: inline-flex;
                     justify-content: center;
                     align-items: center;
-                    height: 8vh;
+                    height: 50px;
+                    
                     .skill-image {
                         position: absolute;
                         display: inline-block;
-                        height: 5vh;
+                        height: 35px;
                     }
 
                     .skill-image:hover {
@@ -109,12 +105,19 @@
             }
 
             .stats-table {
-                margin-top: 12px;
-                margin-bottom: 12px;
-                font-size: 12px;
+                margin: 0.75em auto;
+                font-size: 1.5vh;
                 font-family: Verdana;
                 width: 95%;
-                border-spacing: 7px;
+                text-align: left;
+
+                th {
+                    font-size: 13px;
+                }
+                
+                td, th {
+                    padding: 0.5em 0;
+                }
 
                 .value {
                     width: 25%;
@@ -124,26 +127,22 @@
         }
     }
 
-    #configs {
+    #configs.info-section {
+        position: relative;
+        min-height: 200px;
         color: white;
-        width: 95%;
-        margin: auto;
-        display: none;
 
         .config {
-            display: block;
-            margin-left: 50px;
-            margin-top: 12px;
-            padding-bottom: 12px;
-            font-size: 12px;
+            padding: 1em 0;
+            font-size: 1.5vh;
             font-family: Verdana;
-            width: fit-content;
             line-height: 28px;
             
             .input-header {
                 display: inline-block;
                 padding: 0;
                 margin: 0;
+                margin-left: 46px;
                 cursor: pointer;
                 &:hover {
                     ~.checkbox {
@@ -152,78 +151,76 @@
                 }
             }
 
-            input.check-input {
-                position: absolute;
-                height: 0;
-                width: 0;
-                visibility: hidden;
-            }
+            .conditional-label {
+                position: relative;
 
-            .checkbox {
-                position: absolute;
-                left: 8%;
-                height: 28px;
-                width: 28px;
-                background-color: $primary-accent-color;
-                cursor: pointer;
-                &:hover {
-                    filter: brightness(0.7);
+                .check-input {
+                    position: absolute;
+                    height: 0;
+                    width: 0;
+                    visibility: hidden;
+                }
+
+                .checkbox {
+                    position: absolute;
+                    left: 10px;
+                    height: 28px;
+                    width: 28px;
+                    background-color: $primary-accent-color;
                     cursor: pointer;
+    
+                    &:hover {
+                        filter: brightness(0.7);
+                        cursor: pointer;
+                    }
+                }
+    
+                .checkbox:after {
+                    content: "";
+                    position: relative;
+                    top: 5px;
+                    left: 9px;
+                    width: 6px;
+                    height: 14px;
+                    border: solid $primary-color;
+                    border-width: 0 3px 3px 0;
+                    -webkit-transform: rotate(45deg);
+                    -ms-transform: rotate(45deg);
+                    transform: rotate(45deg);
+                    display: none;
+                }
+                    
+                input:checked ~ .checkbox:after {
+                    display: block;
+                }
+    
+                input:checked ~ .checkbox {
+                    background-color: $text-color;
+                    border: 1px solid black;
+                }
+    
+                .num-input {
+                    color: white;
+                    margin-left: 14px;
+                    height: 28px;
+                    max-width: 35px;
+                    background-color: $primary-color-accent-light;
+                    border: none;
+                    border-bottom: 2px solid $primary-accent-color;
+                    outline: none;
+                    text-align: center;
+                }
+    
+                .num-input:focus {
+                    border-bottom: 2px solid $text-color;
+                }
+    
+                .num-input:disabled {
+                    visibility: hidden;
                 }
             }
-
-            .checkbox:after {
-                content: "";
-                position: relative;
-                top: 5px;
-                left: 9px;
-                width: 8px;
-                height: 14px;
-                border: solid $primary-color;
-                border-width: 0 3px 3px 0;
-                -webkit-transform: rotate(45deg);
-                -ms-transform: rotate(45deg);
-                transform: rotate(45deg);
-                display: none;
-            }
-              
-            input:checked ~ .checkbox:after {
-                display: block;
-            }
-
-            input:checked ~ .checkbox {
-                background-color: $text-color;
-                border: 1px solid black;
-            }
-
-            .num-input {
-                color: white;
-                margin-left: 14px;
-                height: 28px;
-                max-width: 35px;
-                background-color: $primary-color-accent-light;
-                border: none;
-                border-bottom: 2px solid $primary-accent-color;
-                outline: none;
-                text-align: center;
-            }
-
-            .num-input:focus {
-                border-bottom: 2px solid $text-color;
-            }
-
-            .num-input:disabled {
-                visibility: hidden;
-            }
-
         }
-        
     }
-
-    .simplebar-content {
-        width: 100%;
-    }
-    
 }
 
 
@@ -256,72 +253,3 @@
         }
     }
  }
-
-@media not screen and (min-width: 1200px) {
-
-    .stats {
-        max-height: 100%;
-        width: 50vw;
-        margin-top: 45px;
-        margin-bottom: 45px;
-    }
-}
-
-@media not screen and (min-width: 768px) { 
-
-    .stats {
-        width: 90vw;
-        .stats-nav {
-
-            .heading {
-                font-size: 6vh;
-            }
-    
-            .character-level, .non-active {
-                font-size: 4vh;
-            }
-
-        }
-
-        .info {
-            .info-section {
-
-                .stats-table {
-                    font-size: 1.75vh;
-                }
-            }
-        }
-
-        #configs {
-            .config {
-                font-size: 1.5vh;
-
-                .checkbox {
-                    height: 4vh;
-                    width: 4vh;
-                }
-    
-                .checkbox:after {
-                    top: 0.68vh;
-                    left: 1.28vh;
-                    width: 1.25vh;
-                    height: 2vh;
-                }
-
-                .num-input {
-                    margin-left: 1.5vh;
-                    height: 4vh;
-                    max-width: 4vh;
-                }
-            }
-        }
-    }
-}
-
-@media screen and (max-device-width: 1000px) and (orientation: landscape) { 
-    .stats {
-        width: 50vw;
-        height: 85vw; 
-    }
-
-}
