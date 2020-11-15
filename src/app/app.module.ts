@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FeatherModule } from 'angular-feather';
+import { Menu, X } from 'angular-feather/icons';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,11 @@ import { StatsComponent } from './stats/stats.component';
 import { BuildComponent } from './build/build.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { ApiKey } from './api-key';
+
+const icons = {
+  Menu,
+  X
+}
 
 @NgModule({
   declarations: [
@@ -30,9 +36,12 @@ import { ApiKey } from './api-key';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FontAwesomeModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    FeatherModule.pick(icons)
+  ],
+  exports: [
+    FeatherModule
   ],
   providers: [ApiKey],
   bootstrap: [AppComponent]
