@@ -21,6 +21,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 export class NavbarComponent implements OnInit {
 
   public navState = 'closed';            //current state of the navbar when in mobile, used for animations
+  public menuIcon = 'menu';
 
   constructor(private router: Router) { 
 
@@ -51,10 +52,14 @@ export class NavbarComponent implements OnInit {
    *  toggles class for menu button for its animation
    */
   toggleMenuIcon() {
-    document.getElementById('menu').classList.toggle('fa-bars');
-    document.getElementById('menu').classList.toggle('fa-times');
     document.body.style.overflow = document.body.style.overflow == 'hidden' ? 'auto' : 'hidden';
-    this.navState === 'closed' ? this.navState = 'open' : this.navState = 'closed';
+    if (this.navState === 'closed') {
+      this.navState = 'open';
+      this.menuIcon = 'x';
+    } else {
+      this.navState = 'closed';
+      this.menuIcon = 'menu';
+    }
   }
 
 }
