@@ -69,6 +69,12 @@ $height: 60px;
         cursor: pointer;
     }
 
+    #menu:focus {
+        outline-style: none;
+        box-shadow: none;
+        border-color: transparent;
+    }
+
     #navbar > ul {
         height: 100vh;
         width: 100%;
