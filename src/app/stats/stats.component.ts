@@ -960,26 +960,6 @@ export class StatsComponent implements OnInit, DoCheck {
   }
 
   /**
-   * Switched stats view to the configuration view
-   */
-  toggleConfig() {
-    document.getElementById("configToggle").classList.toggle("non-active");
-    document.getElementById("statsToggle").classList.toggle("non-active");
-    document.getElementById("stats-container").style.display = "none";
-    document.getElementById("configs").style.display = "block";
-  }
-
-  /**
-   * Switches the stats view to the stats information
-   */
-  toggleStats() {
-    document.getElementById("configToggle").classList.toggle("non-active");
-    document.getElementById("statsToggle").classList.toggle("non-active");
-    document.getElementById("stats-container").style.display = "block";
-    document.getElementById("configs").style.display = "none";
-  }
-
-  /**
    * Emits notification to show tooltoip on skill hover
    * 
    * @param skill 
