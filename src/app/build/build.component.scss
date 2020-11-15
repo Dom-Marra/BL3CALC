@@ -1,148 +1,85 @@
 @import "../../styles.scss";
 
-#build-container{
-    width: 85%;
-    overflow: hidden;
-    margin: auto;
-}
-
-#share-build {
-    position: absolute;
-    top: 70px;
-    left: 10px;
-}
-
-#import-build {
-    position: absolute;
-    top: 70px;
-    left: 120px;
-}
-
-/* Carousel Styles */
-.carousel  {
-    margin-top: 5vh;
-    height: 90vh;
-    width: 48vw;
-}
-
-.next-item, 
-.prev-item {
-    z-index: 3;
-    position: relative;
-    background: none;
-    border: none;
-    outline: none;
-    background-size: contain;
-    background-repeat: no-repeat;
-    width: 4vh;
-    height: 4vh;
-    top: 6vh;
-}
-
-.next-item {
-    background-image: url('../../assets/images/skilltree/next.webp');
-    left: 19vh;
-}
-
-.prev-item {
-    background-image: url('../../assets/images/skilltree/prev.webp');
-    right: 18.5vh;
-}
-
-
-/* Contains all of the trees for the carousel */
-.carousel-track {
-    height: 100%;
+#main-container {
+    min-height: 100%;
     width: 100%;
-    margin: 0;
-    padding: 0;
-}
+    padding: 2em 0;
 
-/* Contains a single tree for the carousel */
-.carousel-item {
-    display: list-item;
-    position: absolute;
-    list-style: none;
-    width: auto;
-    margin: 0;
-    opacity: 0.8;
-    float: none;
-    pointer-events: none;
-
-    &.active {
-        z-index: 2;
-        opacity: 1;
-        transition: transform 0.3s linear;
-        pointer-events: visible;
-    }
-
-    &.left {
-        transform: translateX(-13vh) scale(0.8);
-        transition: transform 0.35s linear;
-    }
-
-    &.right {
-        transform: translateX(13vh) scale(0.8);
-        transition: transform 0.35s linear;
-    }
-}
-
-@media not screen and (min-width: 1200px) {
-
-    #build-container {
+    #build-option-buttons {
         width: 100%;
-        flex-direction: column;
-    }
+        margin: auto;
 
-    .carousel {
-        height: 95vh;
-        width: 100%;
-    }
-}
+        .build-option-button {
+            margin: 0 10px;
+            font-family: Verdana;
+            font-size: 16px;
+            text-decoration: none;
+            border: none;
+            color: white;
+            padding: 0.75em;
+            transition: background-color 0.3s;
+            border-radius: 3px;
 
-@media not screen and (min-width: 768px) { 
+            &:focus {
+                outline: none;
+            }
 
-    .carousel {
+            &:hover {
+                cursor: pointer;
+            }
 
-        .next-item, 
-        .prev-item { 
-            top: 50px;
-        }
+            &#share-build {
+                background-color: rgba(28, 165, 28, 0.35);
+                border: 2px solid rgb(19, 109, 19);
 
-        .carousel-item { 
+                &:hover {
+                    background-color: rgba(42, 216, 42, 0.35);
+                }
+            }
 
-            &.left,
-            &.right {
-                visibility: hidden;
-                transition: 0s;
-                margin-left: 0px;
-                transform: scale(1);
+            &#import-build {
+                background-color: rgba(0, 98, 189, 0.35);
+                border: 2px solid rgb(0, 62, 121);
+
+                &:hover {
+                    background-color: rgba(0, 114, 221, 0.35);
+                }
             }
         }
     }
+
+    #build-container {
+        width: 100%;
+        overflow: hidden;
+        margin: auto;
+        padding-top: 2em;
+
+        
+        #skilltrees {
+            height: 100%;
+            width: 100%;
+
+            .skilltree {
+                min-width: 300px;
+                max-width: 400px;
+                padding: 0 20px;
+            }
+        }
+        
+
+        #stats {
+            width: 90%;
+            height: 100%;
+            margin: auto;
+        }
+    }
 }
 
-@media screen and (max-device-width: 1000px) and (orientation: landscape) { 
+@media only screen and (max-width: 680px) {
+    #main-container {
 
-    .carousel {
-
-        .next-item,
-        .prev-item {
-            height: 4vw;
-            width: 4vw;
+        #build-option-buttons { 
+            justify-content: center;
         }
-
-        .next-item {
-            left: 22vw;
-        }
-
-        .prev-item {
-            right: 21vw;
-        }
-
-        margin-top: 50px;
-        width: 100%;
-        height: calc(2 * 95vh);
     }
-
 }
