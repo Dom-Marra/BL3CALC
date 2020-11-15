@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SimplebarAngularModule } from 'simplebar-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,7 +32,6 @@ import { ApiKey } from './api-key';
     AppRoutingModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
-    SimplebarAngularModule,
     HttpClientModule
   ],
   providers: [ApiKey],
