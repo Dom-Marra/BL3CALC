@@ -1,72 +1,65 @@
 @import "../../styles.scss";
 
-svg {
-    display: block;
-    margin: auto;
-    max-height: 75vh;
-    outline: none;
-    
-    polygon:nth-child(1) {
-        fill: rgba($primary-color, 0.3); 
-        stroke: transparent;
-        paint-order: stroke fill;
-    }
-
-    polygon:nth-child(2) {
-        fill: rgba($primary-accent-color, 0.5);
-        stroke: transparent;
-        paint-order: stroke fill;
-    }
-
-    polygon:nth-child(4) {
-        fill: transparent;
-        stroke: black;
-        paint-order: stroke fill;
-    }
-}
-
-.page-heading {
-    
-    @include borderlands-text;
-    fill: $text-color;
-    font-size: 60px;
-    text-align: center;
-    margin-top: 25px;
-}
-
-#character-select {
-    height: 100%;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-.character {
-    margin-top: 25px;
-}
-
-svg:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-}
-
-text {
-    @include borderlands-text;
-    fill: $text-color;
-    font-size: 50px;
-    
-}
-
-@media not screen and (min-width: 992px) {
-    .character {
-        
-        svg {
-            max-height: 350px;
-            max-width: 300px;
-        }
-    }
+#home-container {
+    min-height: 100%;
 
     .page-heading {
-        margin-top: 0px;
+    
+        @include borderlands-text;
+        fill: $text-color;
+        font-size: 60px;
+        text-align: center;
+        margin-top: 25px;
     }
-} 
+    
+    #character-select {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    
+        .character {
+            margin: 2em 0;
+            min-width: 200px;
+
+            svg {
+                display: block;
+                margin: auto;
+                outline: none;
+                transition: all 0.15s;
+                
+                polygon:nth-child(1) {
+                    fill: rgba($primary-color, 0.3); 
+                    stroke: transparent;
+                    paint-order: stroke fill;
+                }
+            
+                polygon:nth-child(2) {
+                    fill: rgba($primary-accent-color, 0.5);
+                    stroke: transparent;
+                    paint-order: stroke fill;
+                }
+            
+                polygon:nth-child(4) {
+                    fill: transparent;
+                    stroke: black;
+                    paint-order: stroke fill;
+                }
+        
+                &:hover {
+                    transform: scale(1.05);
+                    cursor: pointer;
+                }
+        
+                text {
+                    @include borderlands-text;
+                    fill: $text-color;
+                    font-size: 50px;
+                }
+            }
+        }
+    
+        
+    }
+}
+
+
