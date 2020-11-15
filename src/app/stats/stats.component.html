@@ -1,39 +1,38 @@
 <div class="stats">
-    <div class="stats-nav flex horizontal-align-start">
+    <div class="stats-header">
         <p class="character-level">Lvl: {{allocatedPoints + CHARACTER_OFFSET}}</p>
-        <p class="heading" id="statsToggle" (click)="toggleStats()">Stats</p>
-        <p class="heading non-active" id="configToggle" (click)="toggleConfig()">Config</p>
+        <p class="heading">Stats</p>
     </div>
-    <ngx-simplebar class="info" id="stats-container">
-        <div class="info-section flex wrapped horizontal-align-center">
+    <div id="stats-container" class="info flex horizontal-align-around wrapped">
+        <div id="equipped-skills" class="info-section flex wrapped horizontal-align-center">
             <div class="info-section-header"><p>Equipped Skills</p></div>
-            <div *ngFor="let skill of _maxActionSkills" class="equipped-skill" [style.width]="100/_maxActionSkills.length + '%'">
+            <div *ngFor="let skill of _maxActionSkills" class="equipped-skill flex vetical-align-center wrapped" [style.width]="100/_maxActionSkills.length + '%'">
                 
                     <div
-                         [class.blue]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'blue' : ''" 
-                         [class.green]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'green' : ''" 
-                         [class.red]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'red' : ''" 
-                         [ngStyle]="{background: 'url(assets/images/skilltree/actionSkillBox.webp)', 
+                            [class.blue]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'blue' : ''" 
+                            [class.green]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'green' : ''" 
+                            [class.red]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'red' : ''" 
+                            [ngStyle]="{background: 'url(assets/images/skilltree/actionSkillBox.webp)', 
                                     'background-size': 'contain', 
                                     'background-repeat': 'no-repeat',
                                     'background-position': 'center',
                                     'min-width' :_maxActionSkills.length < 2 ? 
                                     MATH.floor(100/(_maxActionSkills.length + _maxActionMods.length + _maxOtherSkills.length)) + '%':
-                                               '100%'}">
+                                                '100%'}">
                         <img (mouseenter)="showToolTip(equippedSkills[skill].actionSkill, $event)"
-                             (mouseleave)="showToolTip(null, null)"
-                             *ngIf="equippedSkills[skill].actionSkill != null "
-                             [class.blue]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'blue' : ''" 
-                             [class.green]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'green' : ''" 
-                             [class.red]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'red' : ''"  
-                             class="skill-image" attr.src="{{equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getPath() : ''}}" alt="Skill Image"/>
+                                (mouseleave)="showToolTip(null, null)"
+                                *ngIf="equippedSkills[skill].actionSkill != null "
+                                [class.blue]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'blue' : ''" 
+                                [class.green]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'green' : ''" 
+                                [class.red]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'red' : ''"  
+                                class="skill-image" attr.src="{{equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getPath() : ''}}" alt="Skill Image"/>
                     </div>
 
                     <div [class.blue]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'blue' : ''" 
-                         [class.green]="equippedSkills[skill].actionMods[mod] != null  ? equippedSkills[skill].actionMods[mod].getColor() == 'green' : ''" 
-                         [class.red]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'red' : ''"  
-                         *ngFor="let mod of _maxActionMods" 
-                         [ngStyle]="{background: 'url(assets/images/skilltree/actionSkillModBox.webp)', 
+                            [class.green]="equippedSkills[skill].actionMods[mod] != null  ? equippedSkills[skill].actionMods[mod].getColor() == 'green' : ''" 
+                            [class.red]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'red' : ''"  
+                            *ngFor="let mod of _maxActionMods" 
+                            [ngStyle]="{background: 'url(assets/images/skilltree/actionSkillModBox.webp)', 
                                     'background-size': 'contain', 
                                     'background-repeat': 'no-repeat',
                                     'background-position': 'center',
@@ -41,19 +40,19 @@
                                     MATH.floor(100/(_maxActionSkills.length + _maxActionMods.length + _maxOtherSkills.length)) + '%':
                                     '100%'}">
                         <img (mouseenter)="showToolTip(equippedSkills[skill].actionMods[mod], $event)"
-                             (mouseleave)="showToolTip(null, null)"
-                             *ngIf="equippedSkills[skill].actionMods[mod] != null"
-                             [class.blue]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'blue' : ''" 
-                             [class.green]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'green' : ''" 
-                             [class.red]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'red' : ''" 
-                             class="skill-image" 
-                             attr.src="{{equippedSkills[skill].actionMods[mod].getPath()}}" alt="Skill Image"/>
+                                (mouseleave)="showToolTip(null, null)"
+                                *ngIf="equippedSkills[skill].actionMods[mod] != null"
+                                [class.blue]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'blue' : ''" 
+                                [class.green]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'green' : ''" 
+                                [class.red]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'red' : ''" 
+                                class="skill-image" 
+                                attr.src="{{equippedSkills[skill].actionMods[mod].getPath()}}" alt="Skill Image"/>
                     </div>
 
                     <div [class.blue]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'blue' : ''" 
-                         [class.green]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'green' : ''" 
-                         [class.red]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'red' : ''"  
-                         *ngIf="_maxOtherSkills.length > 0" [ngStyle]="{background: 'url(assets/images/skilltree/otherSkillBox.webp)', 
+                            [class.green]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'green' : ''" 
+                            [class.red]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'red' : ''"  
+                            *ngIf="_maxOtherSkills.length > 0" [ngStyle]="{background: 'url(assets/images/skilltree/otherSkillBox.webp)', 
                                     'background-size': 'contain', 
                                     'background-repeat': 'no-repeat',
                                     'background-position': 'center',
@@ -61,19 +60,19 @@
                                     MATH.floor(100/(_maxActionSkills.length + _maxActionMods.length + _maxOtherSkills.length)) + '%':
                                     '100%'}">
                         <img (mouseenter)="showToolTip(equippedSkills[skill].otherSkill, $event)"
-                             (mouseleave)="showToolTip(null, null)"
-                             *ngIf="equippedSkills[skill].otherSkill != null"
-                             [class.blue]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'blue' : ''" 
-                             [class.green]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'green' : ''" 
-                             [class.red]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'red' : ''" 
-                             class="skill-image"
-                             attr.src="{{(equippedSkills[skill].otherSkill != null) ?
+                                (mouseleave)="showToolTip(null, null)"
+                                *ngIf="equippedSkills[skill].otherSkill != null"
+                                [class.blue]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'blue' : ''" 
+                                [class.green]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'green' : ''" 
+                                [class.red]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'red' : ''" 
+                                class="skill-image"
+                                attr.src="{{(equippedSkills[skill].otherSkill != null) ?
                                         equippedSkills[skill].otherSkill.getPath() : ''}}"  alt="Skill Image"/>
                     </div>
                     
             </div>
         </div>
-        <div class="info-section flex wrapped horizontal-align-center">
+        <div class="info-section flex">
             <div class="info-section-header"><p>Offensive Stats</p></div>
             <table class="stats-table">
                 <tr>
@@ -84,18 +83,20 @@
                         Value
                     </th>
                 </tr>
-                <tr *ngFor="let stat of offensiveStats | keyvalue">
-                    <td *ngIf="stat.value.value != 0">
-                        {{stat.value.header}}
-                    </td>
-                    <td class="value" *ngIf="stat.value.value != 0">    
-                        {{stat.value.type == null ? stat.value.value : stat.value.value.toFixed(2)}}%
-                    </td>
-                </tr>
+                <ng-container *ngFor="let stat of offensiveStats | keyvalue">
+                    <tr *ngIf="stat.value.value != 0">
+                        <td>
+                            {{stat.value.header}}
+                        </td>
+                        <td class="value">    
+                            {{stat.value.type == null ? stat.value.value : stat.value.value.toFixed(2)}}%
+                        </td>
+                    </tr>
+                </ng-container>
             </table>
         </div>
 
-        <div class="info-section flex wrapped horizontal-align-center">
+        <div class="info-section flex">
             <div class="info-section-header"><p>Defensive Stats</p></div>
             <table class="stats-table">
                 <tr>
@@ -106,18 +107,20 @@
                         Value
                     </th>
                 </tr>
-                <tr *ngFor="let stat of defensiveStats | keyvalue">
-                    <td *ngIf="stat.value.value != 0">
-                        {{stat.value.header}}
-                    </td>
-                    <td class="value" *ngIf="stat.value.value != 0">    
-                        {{stat.value.type == null ? stat.value.value : stat.value.value.toFixed(2)}}%
-                    </td>
-                </tr>
+                <ng-container *ngFor="let stat of defensiveStats | keyvalue">
+                    <tr *ngIf="stat.value.value != 0">
+                        <td>
+                            {{stat.value.header}}
+                        </td>
+                        <td class="value">    
+                            {{stat.value.type == null ? stat.value.value : stat.value.value.toFixed(2)}}%
+                        </td>
+                    </tr>
+                </ng-container>
             </table>
         </div>
 
-        <div class="info-section flex wrapped horizontal-align-center">
+        <div class="info-section flex">
             <div class="info-section-header"><p>Utility Stats</p></div>
             <table class="stats-table">
                 <tr>
@@ -128,18 +131,20 @@
                         Value
                     </th>
                 </tr>
-                <tr *ngFor="let stat of utilityStats | keyvalue">
-                    <td *ngIf="stat.value.value != 0">
-                        {{stat.value.header}}
-                    </td>
-                    <td class="value" *ngIf="stat.value.value != 0">    
-                        {{stat.value.type == null ? stat.value.value : stat.value.value.toFixed(2)}}%
-                    </td>
-                </tr>
+                <ng-container *ngFor="let stat of utilityStats | keyvalue">
+                    <tr *ngIf="stat.value.value != 0">
+                        <td>
+                            {{stat.value.header}}
+                        </td>
+                        <td class="value">    
+                            {{stat.value.type == null ? stat.value.value : stat.value.value.toFixed(2)}}%
+                        </td>
+                    </tr>
+                </ng-container>
             </table>
         </div>
 
-        <div class="info-section flex wrapped horizontal-align-center">
+        <div class="info-section flex">
             <div class="info-section-header"><p>Extra Stats</p></div>
             <table class="stats-table">
                 <tr>
@@ -150,27 +155,28 @@
                         Value
                     </th>
                 </tr>
-                <tr *ngFor="let stat of extraStats | keyvalue">
-                    <td *ngIf="stat.value.value != 0">
-                        {{stat.value.header}}
-                    </td>
-                    <td class="value" *ngIf="stat.value.value != 0">    
-                        {{stat.value.value.toFixed(2)}}<span *ngIf="stat.value.valueType == 'percent'">%</span>
-                    </td>
-                </tr>
+                <ng-container *ngFor="let stat of extraStats | keyvalue">
+                    <tr *ngIf="stat.value.value != 0">
+                        <td>
+                            {{stat.value.header}}
+                        </td>
+                        <td class="value">    
+                            {{stat.value.value.toFixed(2)}}<span *ngIf="stat.value.valueType == 'percent'">%</span>
+                        </td>
+                    </tr>
+                </ng-container>
             </table>
         </div>
-    </ngx-simplebar>
-    <ngx-simplebar class="info" id="configs">
-        <div class="info-section doNotSelect">
+
+        <div id="configs" class="info-section doNotSelect">
             <div class="info-section-header"><p>Configurations</p></div>
             <div [hidden]="conditional[0].header == null" *ngFor="let conditional of conditionals" class="config">
-                <label *ngIf="conditional[0].header != null">
+                <label class="conditional-label" *ngIf="conditional[0].header != null">
                     <p class="input-header">{{conditional[0].header}}</p>
                     <input class="check-input" 
-                           type="checkbox" 
-                           (change)="conditional[0].active = !conditional[0].active" 
-                           [checked]="conditional[0].active">
+                            type="checkbox" 
+                            (change)="conditional[0].active = !conditional[0].active" 
+                            [checked]="conditional[0].active">
                     <input  *ngIf="conditional[0].requiresNumberField" 
                             [disabled]="!conditional[0].active"
                             class="num-input" 
@@ -184,5 +190,5 @@
                 </label>
             </div>
         </div>
-    </ngx-simplebar>
+    </div>
 </div>
