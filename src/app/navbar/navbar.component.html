@@ -6,6 +6,6 @@
         <li routerLink="/build" [queryParams]="{character: 'moze'}">Moze</li>
         <li routerLink="/build" [queryParams]="{character: 'zane'}">Zane</li>
     </ul>
-    <i id="menu" (click) = "toggleMenuIcon()" class="fa fa-bars"></i>
+    <i-feather id="menu" (click)="toggleMenuIcon()" [name]="menuIcon"></i-feather>
 
 </div>
