@@ -1,16 +1,14 @@
 @import "../../styles.scss";
 
-//tree css
 .skill-tree-container {
-    height: 90vh;
-    width: 30vw;
+    height: 100%;
+    width: 100%;
     display: inline-block;
 }
 
 .tree {
-    
     overflow: visible;
-
+    
     .top-border,
     .special-skill-border {
         stroke: black;
@@ -164,12 +162,6 @@
 
     }
 
-    .skill-description {
-        visibility: hidden;
-        position: absolute;
-        overflow: visible;
-    }
-    
     .skill.activated:hover {
         image, .points {
             filter: none;
@@ -203,23 +195,30 @@
     }
 
     .tree-reset {
+        font-family: Verdana;
+
+        &:hover {
+            cursor: pointer;
+
+            rect {
+                fill: lighten($color: rgba(158, 45, 45, 0.65), $amount: 15%);
+            }
+        }   
 
         rect {
-            fill: rgb(158, 45, 45);
+            transition: fill 0.3s;
+            fill: rgba(158, 45, 45, 0.65);
             stroke: darken($color: rgb(158, 45, 45), $amount: 15%);
         }
 
-        rect:hover {
-            cursor: pointer;
-            fill: lighten($color: rgb(158, 45, 45), $amount: 15%);
-        }
-        
         text {
             fill: white;
         }
     }
 
     .left-right-select {
+        font-family: Verdana;
+        font-size: 14px;
         display: none;
 
         rect {
@@ -258,27 +257,3 @@
         }
     }
  }
-
-
-@media not screen and (min-width: 1200px) { 
-    .skill-tree-container {
-        height: 95vh;
-        width: 95vw;
-    }
-}
-
-@media not screen and (min-width: 768px) { 
-    .skill-tree-container {
-        width: 95vw;
-        max-height: calc(2 * 95vw);
-    }
-}
-
-@media screen and (max-device-width: 1000px) and (orientation: landscape) { 
-
-    .skill-tree-container {
-        width: 95vh;
-        height: calc(2 * 95vh);
-    }
-
-}
