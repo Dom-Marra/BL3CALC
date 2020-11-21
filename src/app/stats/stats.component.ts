@@ -451,14 +451,17 @@ export class StatsComponent implements OnInit, DoCheck {
    */
   removeSkill(skillDiffer, skill, indexOffset): number {
     const removedSkill = skillDiffer.splice(skill.previousIndex - indexOffset, 1);
+    let allocationAmnt: number = 0;
 
     //Traverse through the records of the removed skills until allocated points is reached
     //If the current allocated points is greater than 1 use it, otherwise use 1
-    for (let [key, value] of removedSkill[0][0]._records) {
-      if (key == "allocatedPoints") {
-        return value.currentValue > 1 ? value.currentValue : 1;
+    removedSkill[0][0]._records.forEach((v, k) => {
+      if (k == "allocatedPoints") {
+        v.currentValue > 1 ? allocationAmnt = v.currentValue : allocationAmnt = 1;
       }
-    }
+    });
+
+    return allocationAmnt;
   }
 
   /**
@@ -728,7 +731,7 @@ export class StatsComponent implements OnInit, DoCheck {
         if (oldValue != null) {
           valueToSub = this.calculateValue(skill, effect, oldValue);
         }
-        
+
         this.updateStat(value, valueToSub, effect);
       }
       
