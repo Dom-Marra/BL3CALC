@@ -56,7 +56,22 @@ export class ActionMod extends Skill {
      *          string
      */
     getSkillBoxPath(): string {
-        return "assets/images/skilltree/actionSkillModBox.png";
+        if (this.getAllocatedPoints() == 0) return "assets/images/skilltree/actionSkillModBox.png";
+
+        switch (this.getColor().toLowerCase()) {
+            case 'blue': {
+                return "assets/images/skilltree/actionSkillModBoxBlue.png";
+            }
+            case 'green': {
+                return "assets/images/skilltree/actionSkillModBoxGreen.png";
+            }
+            case 'red': {
+                return "assets/images/skilltree/actionSkillModBoxRed.png";
+            }
+            default: {
+                return "assets/images/skilltree/actionSkillModBox.png";
+            }
+        }
     }
 
     /**

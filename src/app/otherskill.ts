@@ -45,7 +45,22 @@ export class OtherSkill extends Skill {
      *          string
      */
     getSkillBoxPath(): string {
-        return "assets/images/skilltree/otherSkillBox.png";
+        if (this.getAllocatedPoints() == 0) return "assets/images/skilltree/otherSkillBox.png";
+
+        switch (this.getColor().toLowerCase()) {
+            case 'blue': {
+                return "assets/images/skilltree/otherSkillBoxBlue.png";
+            }
+            case 'green': {
+                return "assets/images/skilltree/otherSkillBoxGreen.png";
+            }
+            case 'red': {
+                return "assets/images/skilltree/otherSkillBoxRed.png";
+            }
+            default: {
+                return "assets/images/skilltree/otherSkillBox.png";
+            }
+        }
     }
 
 }

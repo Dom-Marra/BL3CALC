@@ -46,7 +46,22 @@ export class NormalSkill extends Skill {
      *          string
      */
     getSkillBoxPath(): string {
-        return "assets/images/skilltree/skillBox.png";
+        if (this.getAllocatedPoints() == 0) return "assets/images/skilltree/skillBox.png";
+
+        switch (this.getColor().toLowerCase()) {
+            case 'blue': {
+                return "assets/images/skilltree/skillBoxBlue.png";
+            }
+            case 'green': {
+                return "assets/images/skilltree/skillBoxGreen.png";
+            }
+            case 'red': {
+                return "assets/images/skilltree/skillBoxRed.png";
+            }
+            default: {
+                return "assets/images/skilltree/skillBox.png";
+            }
+        }
     }
 }
 

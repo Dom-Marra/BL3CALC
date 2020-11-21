@@ -47,6 +47,21 @@ export class ActionSkill extends Skill {
      *          string
      */
     getSkillBoxPath(): string {
-        return "assets/images/skilltree/actionSkillBox.png";
+        if (this.getAllocatedPoints() == 0) return "assets/images/skilltree/actionSkillBox.png";
+
+        switch (this.getColor().toLowerCase()) {
+            case 'blue': {
+                return "assets/images/skilltree/actionSkillBoxBlue.png";
+            }
+            case 'green': {
+                return "assets/images/skilltree/actionSkillBoxGreen.png";
+            }
+            case 'red': {
+                return "assets/images/skilltree/actionSkillBoxRed.png";
+            }
+            default: {
+                return "assets/images/skilltree/actionSkillBox.png";
+            }
+        }
     }
 }
