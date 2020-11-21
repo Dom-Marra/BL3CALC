@@ -38,6 +38,7 @@
     }
 
     .info {
+        margin: auto;
         width: 45%;
         color: white;
         font-family: 'Teko';
@@ -45,10 +46,10 @@
 
         .info-section {
             flex-direction: column;
+            align-items: center;
             height: auto;
-            flex-grow: 1;
-            flex-basis: 400px;
-            max-width: 95%;
+            flex: 1 1 400px;
+            max-width: 100%;
             margin: 1em 0.5em;
             background-color: $primary-color-accent-light;
             border-radius: 3px;
@@ -67,51 +68,43 @@
             }
 
             &#equipped-skills {
+                align-self: start;
                 flex-direction: row;
+                align-items: start;
+                
+                .equipped-skill {
+                    margin: 0.5em 0;
+    
+                    div {
+                        display: inline-flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 50px;
+                        
+                        .skill-image {
+                            display: inline-block;
+                            height: 35px;
+                        }
+    
+                        .skill-image:hover {
+                            cursor: pointer;
+                        }
+    
+                    }
+                }
             }
 
-            .equipped-skill {
-                margin: 0.5em 0;
-
-                div {
-                    display: inline-flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 50px;
-                    
-                    .skill-image {
-                        position: absolute;
-                        display: inline-block;
-                        height: 35px;
-                    }
-
-                    .skill-image:hover {
-                        cursor: pointer;
-                    }
-
-                }
-
-                .red {
-                    filter: url(#activated-red);
-                }
-
-                .green {
-                    filter: url(#activated-green);
-                }
-
-                .blue {
-                    filter: url(#activated-blue);
-                }
-            }
+            
 
             .stats-table {
-                margin: 0.75em auto;
-                font-size: 1.5vh;
-                font-family: Verdana;
                 width: 95%;
+                margin: 0.75em auto;
+                font-size: 11px;
+                font-family: Verdana;
                 text-align: left;
 
                 th {
+                    text-align: left;
                     font-size: 13px;
                 }
                 
@@ -134,7 +127,7 @@
 
         .config {
             padding: 1em 0;
-            font-size: 1.5vh;
+            font-size: 11px;
             font-family: Verdana;
             line-height: 28px;
             
@@ -222,34 +215,3 @@
         }
     }
 }
-
-
-@supports (-ms-ime-align: auto) { 
-
-    .stats {
-        .info {
-            .info-section {
-        
-    
-                .equipped-skill{
-    
-                    .red {
-                        filter: sepia(100%) saturate(1000%) hue-rotate(350deg) brightness(0.8);
-                        -webkit-filter: sepia(100%) saturate(1000%) hue-rotate(350deg) brightness(0.8);
-                    }
-    
-                    
-                    .green {
-                        filter: sepia(100%) saturate(1000%) hue-rotate(45deg) brightness(0.8);
-                        -webkit-filter: sepia(100%)  saturate(1000%) hue-rotate(45deg) brightness(0.8);
-                    }
-    
-                    .blue {
-                        filter: sepia(100%) saturate(1000%) hue-rotate(120deg) brightness(0.7);
-                        -webkit-filter: sepia(100%)  saturate(1000%) hue-rotate(120deg) brightness(0.7);
-                    }
-                }
-            }
-        }
-    }
- }
