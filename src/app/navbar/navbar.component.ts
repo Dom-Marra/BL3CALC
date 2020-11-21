@@ -52,7 +52,7 @@ export class NavbarComponent implements OnInit {
    *  toggles class for menu button for its animation
    */
   toggleMenuIcon() {
-    document.body.style.overflow = document.body.style.overflow == 'hidden' ? 'auto' : 'hidden';
+    document.body.style.overflow = document.body.style.overflow == 'hidden' ? 'initial' : 'hidden';
     if (this.navState === 'closed') {
       this.navState = 'open';
       this.menuIcon = 'x';
