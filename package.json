@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "^10.1.6",
     "@angular/router": "^10.1.6",
     "angular-feather": "^6.0.10",
+    "classlist.js": "^1.1.20150312",
     "postcss": "^8.1.0",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.3",
