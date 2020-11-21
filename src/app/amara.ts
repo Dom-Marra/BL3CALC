@@ -849,7 +849,7 @@ export class Amara extends Character {
   constructor(maxActionSkillPoints: number, maxActionModPoints: number, maxOtherSkillPoints: number) {
     super(maxActionSkillPoints, maxActionModPoints, maxOtherSkillPoints);
     this.addPoint(this.shockra);
-    
+    this.shockra.addPoint();
   }
 
   /**
@@ -861,7 +861,7 @@ export class Amara extends Character {
   addPoint(skill: Skill) {
 
      //If the skill is already in the array then don't add it
-     if (!this.getAllocatedSkills().includes(skill)) {
+     if (this.getAllocatedSkills().indexOf(skill) == -1) {
       this.getAllocatedSkills().push(skill);
      }
 
@@ -945,6 +945,7 @@ export class Amara extends Character {
     //Remove other skill from equipped skills
     if (skill instanceof OtherSkill) {
       this.getEquippedSkills()[0].otherSkill = this.shockra;
+      this.shockra.addPoint();
     } 
   }
   
