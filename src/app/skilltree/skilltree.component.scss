@@ -63,6 +63,12 @@
         font-size: 18px;
         fill: white;
     }
+
+    .skill {
+        .unallocated {
+            filter: url(#grayscale);
+        }
+    }
     
 
     &.red {
@@ -86,9 +92,6 @@
         }
 
         .skill.activated {
-            image {
-                filter: url(#activated-red);
-            }
             .points {
                 fill: rgb(255, 211, 120);
             }
@@ -122,9 +125,6 @@
         }
 
         .skill.activated {
-            image {
-                filter: url(#activated-blue);
-            }
             .points {
                 fill: cyan;
             }
@@ -152,9 +152,6 @@
         }
 
         .skill.activated {
-            image {
-                filter: url(#activated-green);
-            }
             .points {
                 fill: rgb(205, 255, 147);
             }
@@ -179,19 +176,11 @@
     .skill.disabled:hover {
         filter: none;
         cursor: pointer;
-
+        
         &:not(.disabled) {
             .left-right-select {
                 display: inline-block;
             }
-        }
-        
-        image {
-            filter: url(#highlight);
-        }
-    
-        .points {
-            fill: yellow;
         }
 
         .skill-description {
@@ -250,16 +239,3 @@
         filter: url(#skill-disabled);
     }
 }
-
-
-@-moz-document url-prefix() {
-    .skill-tree-container {
-        .tree {
-            .disabled {
-                image, text {
-                    filter: brightness(0.7);
-                }
-            }
-        }
-    }
- }
