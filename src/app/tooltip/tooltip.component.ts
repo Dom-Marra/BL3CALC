@@ -41,17 +41,21 @@ export class TooltipComponent implements OnInit {
   setPosition() {
     var tooltip = document.getElementById('tooltip');
     var body = document.body;
-    if (this.event == null) return;
+    if (this.event == null) { 
+      tooltip.classList.remove('visible');
+      return;
+    };
 
+    tooltip.classList.add('visible');
     var hoveredElement = this.event.target as SVGElement;
     var hoveredElementY = (hoveredElement.getBoundingClientRect().top + hoveredElement.getBoundingClientRect().bottom) / 2;
     var hoveredElementX = (hoveredElement.getBoundingClientRect().left + hoveredElement.getBoundingClientRect().right) / 2;
     tooltip.removeAttribute("style");
     
     if (hoveredElementY > (window.innerHeight/2)) {
-      tooltip.style.top = ( hoveredElement.getBoundingClientRect().top - tooltip.offsetHeight + window.scrollY) + "px";
+      tooltip.style.top = ( hoveredElement.getBoundingClientRect().top - tooltip.offsetHeight + document.documentElement.scrollTop) + "px";
     } else {
-      tooltip.style.top = (hoveredElement.getBoundingClientRect().bottom + window.scrollY) + "px";
+      tooltip.style.top = (hoveredElement.getBoundingClientRect().bottom + document.documentElement.scrollTop) + "px";
     }
 
     if (hoveredElementX > (body.offsetWidth/2)) {
@@ -59,8 +63,6 @@ export class TooltipComponent implements OnInit {
     } else if (hoveredElementX < (window.innerWidth/2)){
       tooltip.style.left =  hoveredElement.getBoundingClientRect().left + "px";
     }
-
-    
   }
 
   /**
