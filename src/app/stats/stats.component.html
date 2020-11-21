@@ -3,17 +3,13 @@
         <p class="character-level">Lvl: {{allocatedPoints + CHARACTER_OFFSET}}</p>
         <p class="heading">Stats</p>
     </div>
-    <div id="stats-container" class="info flex horizontal-align-around wrapped">
+    <div id="stats-container" class="info flex wrapped">
         <div id="equipped-skills" class="info-section flex wrapped horizontal-align-center">
             <div class="info-section-header"><p>Equipped Skills</p></div>
             <div *ngFor="let skill of _maxActionSkills" class="equipped-skill flex vetical-align-center wrapped" [style.width]="100/_maxActionSkills.length + '%'">
                 
-                    <div
-                            [class.blue]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'blue' : ''" 
-                            [class.green]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'green' : ''" 
-                            [class.red]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'red' : ''" 
-                            [ngStyle]="{background: 'url(assets/images/skilltree/actionSkillBox.png)', 
-                                    'background-size': 'contain', 
+                    <div [style.background-image]="equippedSkills[skill].actionSkill != null ? 'url(' + equippedSkills[skill].actionSkill.getSkillBoxPath() + ')' : 'url(assets/images/skilltree/actionSkillBox.png)'"
+                            [ngStyle]="{'background-size': 'contain', 
                                     'background-repeat': 'no-repeat',
                                     'background-position': 'center',
                                     'min-width' :_maxActionSkills.length < 2 ? 
@@ -21,19 +17,15 @@
                                                 '100%'}">
                         <img (mouseenter)="showToolTip(equippedSkills[skill].actionSkill, $event)"
                                 (mouseleave)="showToolTip(null, null)"
-                                *ngIf="equippedSkills[skill].actionSkill != null "
-                                [class.blue]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'blue' : ''" 
-                                [class.green]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'green' : ''" 
-                                [class.red]="equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getColor() == 'red' : ''"  
+                                *ngIf="equippedSkills[skill].actionSkill != null"  
                                 class="skill-image" attr.src="{{equippedSkills[skill].actionSkill != null ? equippedSkills[skill].actionSkill.getPath() : ''}}" alt="Skill Image"/>
                     </div>
 
-                    <div [class.blue]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'blue' : ''" 
-                            [class.green]="equippedSkills[skill].actionMods[mod] != null  ? equippedSkills[skill].actionMods[mod].getColor() == 'green' : ''" 
-                            [class.red]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'red' : ''"  
-                            *ngFor="let mod of _maxActionMods" 
-                            [ngStyle]="{background: 'url(assets/images/skilltree/actionSkillModBox.png)', 
-                                    'background-size': 'contain', 
+                    <div *ngFor="let mod of _maxActionMods" 
+                            [style.background-image]="equippedSkills[skill].actionMods[mod] != null 
+                            ? 'url(' + equippedSkills[skill].actionMods[mod].getSkillBoxPath() + ')' 
+                            : 'url(assets/images/skilltree/actionSkillModBox.png)'"
+                            [ngStyle]="{'background-size': 'contain', 
                                     'background-repeat': 'no-repeat',
                                     'background-position': 'center',
                                     'min-width' : _maxActionSkills.length < 2 ? 
@@ -41,19 +33,16 @@
                                     '100%'}">
                         <img (mouseenter)="showToolTip(equippedSkills[skill].actionMods[mod], $event)"
                                 (mouseleave)="showToolTip(null, null)"
-                                *ngIf="equippedSkills[skill].actionMods[mod] != null"
-                                [class.blue]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'blue' : ''" 
-                                [class.green]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'green' : ''" 
-                                [class.red]="equippedSkills[skill].actionMods[mod] != null ? equippedSkills[skill].actionMods[mod].getColor() == 'red' : ''" 
+                                *ngIf="equippedSkills[skill].actionMods[mod] != null" 
                                 class="skill-image" 
                                 attr.src="{{equippedSkills[skill].actionMods[mod].getPath()}}" alt="Skill Image"/>
                     </div>
 
-                    <div [class.blue]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'blue' : ''" 
-                            [class.green]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'green' : ''" 
-                            [class.red]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'red' : ''"  
-                            *ngIf="_maxOtherSkills.length > 0" [ngStyle]="{background: 'url(assets/images/skilltree/otherSkillBox.png)', 
-                                    'background-size': 'contain', 
+                    <div *ngIf="_maxOtherSkills.length > 0" 
+                            [style.background-image]="equippedSkills[skill].otherSkill != null 
+                            ? 'url(' + equippedSkills[skill].otherSkill.getSkillBoxPath() + ')' 
+                            : 'url(assets/images/skilltree/otherSkillBox.png)'"
+                            [ngStyle]="{'background-size': 'contain', 
                                     'background-repeat': 'no-repeat',
                                     'background-position': 'center',
                                     'min-width' : _maxActionSkills.length < 2 ? 
@@ -62,9 +51,6 @@
                         <img (mouseenter)="showToolTip(equippedSkills[skill].otherSkill, $event)"
                                 (mouseleave)="showToolTip(null, null)"
                                 *ngIf="equippedSkills[skill].otherSkill != null"
-                                [class.blue]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'blue' : ''" 
-                                [class.green]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'green' : ''" 
-                                [class.red]="equippedSkills[skill].otherSkill != null ? equippedSkills[skill].otherSkill.getColor() == 'red' : ''" 
                                 class="skill-image"
                                 attr.src="{{(equippedSkills[skill].otherSkill != null) ?
                                         equippedSkills[skill].otherSkill.getPath() : ''}}"  alt="Skill Image"/>
