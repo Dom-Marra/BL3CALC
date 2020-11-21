@@ -1,7 +1,6 @@
 @import "../../styles.scss";
 
 #main-container {
-    min-height: 100%;
     width: 100%;
     padding: 2em 0;
 
@@ -56,21 +55,58 @@
 
         
         #skilltrees {
-            height: 100%;
             width: 100%;
 
-            .skilltree {
+            .skill-tree-wrapper {
+                flex: 1 400px;
+                position: relative;
+                padding: 0;
+                padding-bottom: 45%;
+                height: 0;
+                overflow: hidden;
                 min-width: 300px;
                 max-width: 400px;
-                padding: 0 20px;
+
+                .skilltree {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                }
             }
         }
         
-
         #stats {
             width: 90%;
             height: 100%;
             margin: auto;
+        }
+    }
+}
+
+@media only screen and (max-width: 1216px) {
+    #main-container {
+
+        #build-container { 
+            #skilltrees {
+                .skill-tree-wrapper { 
+                    padding-bottom: 60%;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 899px) {
+    #main-container {
+
+        #build-container {
+            #skilltrees {
+                .skill-tree-wrapper { 
+                    padding-bottom: 80%;
+                }
+            }
         }
     }
 }
@@ -80,6 +116,14 @@
 
         #build-option-buttons { 
             justify-content: center;
+        }
+
+        #build-container { 
+            #skilltrees {
+                .skill-tree-wrapper { 
+                    padding-bottom: 100%;
+                }
+            }
         }
     }
 }

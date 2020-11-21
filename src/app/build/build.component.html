@@ -1,15 +1,19 @@
-<div id="main-container">
+<div id="main-container" class="blue-background">
     <div id="build-option-buttons" class="flex">
         <button class="build-option-button" id="share-build" (click)="createBuildData()">Share Build</button>
         <button class="build-option-button" id="import-build" (click)="importCharacter()">Import Build</button>
     </div>
-    <div class="flex wrapped horizontal-align-around vertical-align-center" id="build-container">
+    <div *ngIf="character != null" class="flex wrapped horizontal-align-around vertical-align-center" id="build-container">
         <div id="skilltrees" class="flex wrapped horizontal-align-around vertical-align-center">
-            <app-skilltree class="flex-grow skilltree" [treeName]='character.getBlueTreeName()' color='blue' index='0' [header]="character.getBlueTreeHeader()" [skills]="character.getBlueSkills()" [_character]="character" [loadedData]="loadedCharacterData" (hovered)="onHovered($event)"></app-skilltree>
-        
-            <app-skilltree class="flex-grow skilltree" [treeName]='character.getGreenTreeName()' color='green' index='1' [header]="character.getGreenTreeHeader()" [skills]="character.getGreenSkills()" [_character]="character" [loadedData]="loadedCharacterData" (hovered)="onHovered($event)"></app-skilltree>
-        
-            <app-skilltree class="flex-grow skilltree" [treeName]='character.getRedTreeName()' color='red' index='2' [header]="character.getRedTreeHeader()" [skills]="character.getRedSkills()" [_character]="character" [loadedData]="loadedCharacterData" (hovered)="onHovered($event)"></app-skilltree>
+            <div class="skill-tree-wrapper">
+                <app-skilltree class="skilltree" [treeName]='character.getBlueTreeName()' color='blue' index='0' [header]="character.getBlueTreeHeader()" [skills]="character.getBlueSkills()" [_character]="character" [loadedData]="loadedCharacterData" (hovered)="onHovered($event)"></app-skilltree>
+            </div>
+            <div class="skill-tree-wrapper">
+                <app-skilltree class="skilltree" [treeName]='character.getGreenTreeName()' color='green' index='1' [header]="character.getGreenTreeHeader()" [skills]="character.getGreenSkills()" [_character]="character" [loadedData]="loadedCharacterData" (hovered)="onHovered($event)"></app-skilltree>
+            </div>
+            <div class="skill-tree-wrapper">
+                <app-skilltree class="skilltree" [treeName]='character.getRedTreeName()' color='red' index='2' [header]="character.getRedTreeHeader()" [skills]="character.getRedSkills()" [_character]="character" [loadedData]="loadedCharacterData" (hovered)="onHovered($event)"></app-skilltree>
+            </div>
             
         </div>
     

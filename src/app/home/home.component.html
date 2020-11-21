@@ -1,9 +1,9 @@
-<div id="home-container" class="flex wrapped vertical-align-start horizontal-align-center ">
+<div id="home-container" class="flex wrapped vertical-align-start horizontal-align-center blue-background">
     <p class="page-heading">Select Your Character</p>
-    <div class="flex wrapped flex-grow horizontal-align-around" id="character-select">
+    <div class="flex wrapped horizontal-align-around" id="character-select">
 
         <div class="character flex vertical-align-center">
-            <svg height="85%" width="85%" viewBox="0 0 200 400" routerLink="/build" [queryParams]="{character: 'amara'}">
+            <svg class="character-svg" viewBox="0 0 200 400" routerLink="/build" [queryParams]="{character: 'amara'}"> 
                 <polygon points="1,399 179,399 199,379 199,1 19,1 1,19"></polygon>
                 <polygon points="1,399 1,319  199,319  199,379 179,399"></polygon>
                 <image width="197px" height="300px" x="2px"y="21px" href="assets/images/amara/amara_character.png"></image>
@@ -12,7 +12,7 @@
             </svg>
         </div>
         <div class="character flex vertical-align-center">
-            <svg height="85%" width="85%" viewBox="0 0 200 400" routerLink="/build" [queryParams]="{character: 'fl4k'}">
+            <svg class="character-svg" viewBox="0 0 200 400" routerLink="/build" [queryParams]="{character: 'fl4k'}" >
                 <polygon points="1,399 179,399 199,379 199,1 19,1 1,19"></polygon>
                 <polygon points="1,399 1,319  199,319  199,379 179,399"></polygon>
                 <image width="197px" height="270px" y="49px" x="2px" href="assets/images/fl4k/fl4k_character.png"></image>
@@ -21,7 +21,7 @@
             </svg>
         </div>
         <div class="character flex vertical-align-center">
-            <svg height="85%" width="85%" viewBox="0 0 200 400" routerLink="/build" [queryParams]="{character: 'moze'}">
+            <svg class="character-svg" viewBox="0 0 200 400" routerLink="/build" [queryParams]="{character: 'moze'}">
                 <polygon points="1,399 179,399 199,379 199,1 19,1 1,19"></polygon>
                 <polygon points="1,399 1,319  199,319  199,379 179,399"></polygon>
                 <image width="200px" height="284px" y="35px" href="assets/images/moze/moze_character.png"></image>
@@ -30,7 +30,7 @@
             </svg>
         </div>
         <div class="character flex vertical-align-center">
-            <svg height="85%" width="85%" viewBox="0 0 200 400" routerLink="/build" [queryParams]="{character: 'zane'}">
+            <svg class="character-svg" viewBox="0 0 200 400" routerLink="/build" [queryParams]="{character: 'zane'}">
                 <polygon points="1,399 179,399 199,379 199,1 19,1 1,19"></polygon>
                 <polygon points="1,399 1,319  199,319  199,379 179,399"></polygon>
                 <image width="197px" height="272px" x="2px" y="47" href="assets/images/zane/zane_character.png"></image>
