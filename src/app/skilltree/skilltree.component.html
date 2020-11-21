@@ -1,67 +1,15 @@
 <div class="skill-tree-container">
 
     <svg xmlns="http://www.w3.org/2000/svg" height="0" width="0">
-        <filter id="highlight">
-            <feGaussianBlur stdDeviation="3" result="blurred" />
-            <feFlood flood-color="yellow" result="glowColor" />
-            <feComposite in="glowColor" in2="blurred" operator="in" result="glow" />
-            <feMerge>
-                <feMergeNode in="glow"/>
-                <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-            <feColorMatrix type="matrix"
-            color-interpolation-filters="sRGB"
-            result="highlight"
-            values="1 0 0 0 0
-                    0 1 0 0 0
-                    0 0 0 0 0
-                    0 0 0 1 0" />
-        </filter>
-        <filter id="activated-blue">
-            <feColorMatrix type="matrix"
-            color-interpolation-filters="sRGB"
-            values="0 0 0 0 0
-                    0 1 0 0 0
-                    0 0 1 0 0
-                    0 0 0 1 0" />
-            <feComponentTransfer>
-                <feFuncR type="linear" slope="1"/>
-                <feFuncG type="linear" slope="1"/>
-                <feFuncB type="linear" slope="1"/>
-            </feComponentTransfer>
-        </filter>
-        <filter id="activated-red">
-            <feColorMatrix type="matrix"
-            color-interpolation-filters="sRGB"
-            values="0.99 0 0 0 0
-                    0 0.58 0 0 0
-                    0 0 0.17 0 0
-                    0 0 0 1 0" />
-            <feComponentTransfer>
-                <feFuncR type="linear" slope="2"/>
-                <feFuncG type="linear" slope="2"/>
-                <feFuncB type="linear" slope="2"/>
-            </feComponentTransfer>
-        </filter>
-        <filter id="activated-green">
-            <feColorMatrix type="matrix"
-            color-interpolation-filters="sRGB"
-            values="0.42 0 0 0 0
-                    0 0.77 0 0 0
-                    0 0 0.06 0 0
-                    0 0 0 1 0" />
-            <feComponentTransfer>
-                <feFuncR type="linear" slope="1.5"/>
-                <feFuncG type="linear" slope="1.5"/>
-                <feFuncB type="linear" slope="1.5"/>
-            </feComponentTransfer>
-        </filter>
         <filter id="skill-disabled">
             <feComponentTransfer>
                 <feFuncR type="linear" slope="0.5"/>
                 <feFuncG type="linear" slope="0.5"/>
                 <feFuncB type="linear" slope="0.5"/>
             </feComponentTransfer>
+        </filter>
+        <filter id="grayscale">
+            <feColorMatrix type="saturate" values="0.10"/>
         </filter>
     </svg>
 
@@ -102,7 +50,7 @@
                             250,58 258,50 283,50 288,56 
                             288,630 273,645 
                             27, 645, 12,630" class="main-front"></polygon>
-            <image width="300" height="138" x="0" y="-65"attr.href="{{header}}" ></image>
+            <image width="300" height="138" x="0" y="-65" attr.href="{{header}}" ></image>
             <text class="tree-name doNotSelect" x="150" y="680" text-anchor="middle">{{treeName}}</text>
         </g>
         
@@ -161,14 +109,15 @@
                     attr.y="{{127 + (skill.getPosition()[0] * 98)}}" 
                     attr.href="{{skill.getSkillBoxPath()}}" />
 
-            <image width="42" height="42"
+            <image width="49" height="49"
                     attr.x="{{skill.getPosition()[1] < 0 ? 
-                            4:
+                            0:
                             (skill.getPosition()[1] < 3 ? 
-                            82 + (skill.getPosition()[1] * 88) :
-                            338)}}"
-                    attr.y="{{141 + (skill.getPosition()[0] * 98)}}"
-                    attr.href="{{skill.getPath()}}" />
+                            80 + (skill.getPosition()[1] * 88) :
+                            335)}}"
+                    attr.y="{{137 + (skill.getPosition()[0] * 98)}}"
+                    attr.href="{{skill.getPath()}}" 
+                    [ngClass]="{'unallocated': skill.getAllocatedPoints() == 0}"/>
 
             <g *ngIf="(isActionMod(skill) 
                       && ((this.character.getMaxActionModPoints() > 1
@@ -241,7 +190,12 @@
                 <image width="35" height="24"
                         attr.x="{{115 + (skill.getPosition()[1] * 88)}}" 
                         attr.y="{{178 + (skill.getPosition()[0] * 98)}}" 
-                        href="assets/images/skilltree/pointBox.png" />
+                        attr.href="{{
+                            skill.getAllocatedPoints() == 0 ? 'assets/images/skilltree/pointBox.png' :
+                            skill.getColor().toLowerCase() == 'blue' ?  'assets/images/skilltree/pointBoxBlue.png' :
+                            skill.getColor().toLowerCase() == 'green' ?  'assets/images/skilltree/pointBoxGreen.png' :
+                            skill.getColor().toLowerCase() == 'red' ?  'assets/images/skilltree/pointBoxRed.png' :
+                            assets/images/skilltree/pointBox.png}}" />
                 <text class="points" 
                         attr.x="{{132 + (skill.getPosition()[1] * 88)}}"
                         attr.y="{{195 + (skill.getPosition()[0] * 98)}}"
