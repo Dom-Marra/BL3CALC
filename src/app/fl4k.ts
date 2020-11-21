@@ -1212,7 +1212,7 @@ export class Fl4k extends Character {
     addPoint(skill: Skill, pos?: number): boolean {
 
         //If the skill is already in the array then don't add it
-        if (!this.getAllocatedSkills().includes(skill)) {
+        if (this.getAllocatedSkills().indexOf(skill) == -1) {
             this.getAllocatedSkills().push(skill);
         }
 
