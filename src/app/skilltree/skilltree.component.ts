@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Skill } from '../skill';
 import { NormalSkill } from '../normalskill';
 import { Character } from '../character'
@@ -74,8 +74,6 @@ export class SkilltreeComponent implements OnInit {
       }
     }
   }
-
-  @Output() hovered = new EventEmitter<Array<any>>();   //Event emmiter for tooltip hover
 
   constructor(private router: Router) { 
 
@@ -426,18 +424,4 @@ export class SkilltreeComponent implements OnInit {
   isNormalSkill(skill: Skill): Boolean {
     return skill instanceof NormalSkill;
   }
-
-  
-  /**
-   * Emits notification to show tooltoip on skill hover
-   * 
-   * @param skill 
-   *              skill to display
-   * @param event 
-   *              event that triggered this
-   */
-  showToolTip(skill: Skill, event: any) {
-    this.hovered.emit([skill, event]);
-  }
-  
 }

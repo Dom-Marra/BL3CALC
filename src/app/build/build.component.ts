@@ -17,7 +17,6 @@ export class BuildComponent implements OnInit {
 
   public character: Character;
   private characterType: string;
-  public emmitValues: Array<any>;
   public loadedCharacterData = null;
 
   constructor(private router: ActivatedRoute, private pastebin: PastebinService, private route: Router) { }
@@ -56,15 +55,6 @@ export class BuildComponent implements OnInit {
         this.characterType = "amara";
       }
     }
-  }
-
-  /**
-   * Updates values for tooltip
-   * @param emmitValues 
-   *                    Array, first value has to be the skill, then next is the event
-   */
-  onHovered(emmitValues: Array<any>) {
-    this.emmitValues = emmitValues;
   }
 
   /**

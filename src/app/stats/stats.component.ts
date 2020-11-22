@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, DoCheck, KeyValueDiffers, IterableDiffers } from '@angular/core';
+import { Component, OnInit, Input, DoCheck, KeyValueDiffers, IterableDiffers } from '@angular/core';
 import { Skill } from '../skill';
 
 @Component({
@@ -275,8 +275,6 @@ export class StatsComponent implements OnInit, DoCheck {
       } 
     }
   }
-
-  @Output() hovered = new EventEmitter<Array<any>>();     //Event emmiter for tooltip hover
   
   constructor(private differs: KeyValueDiffers, private iterableDiffers: IterableDiffers) { 
     this.allocatedSkillsDiffer = iterableDiffers.find([]).create();      
@@ -960,17 +958,5 @@ export class StatsComponent implements OnInit, DoCheck {
         this.utilityStats.weaponSwapSpeed.value = (parseFloat(this.utilityStats.weaponSwapSpeed.value) + value - valueToSub).toFixed(2);
       }
     });
-  }
-
-  /**
-   * Emits notification to show tooltoip on skill hover
-   * 
-   * @param skill 
-   *              skill to display
-   * @param event 
-   *              event that triggered this
-   */
-  showToolTip(skill: Skill, event: any) {
-    this.hovered.emit([skill, event]);
   }
 }
