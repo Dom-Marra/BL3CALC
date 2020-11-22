@@ -63,7 +63,7 @@ export class TooltipComponent implements OnInit {
     heightObs.observe(this.tooltip.nativeElement);
 
   }
-  
+
   /**
    * Sets position of the tooltip on the screen
    */
@@ -82,7 +82,7 @@ export class TooltipComponent implements OnInit {
     this.tooltip.nativeElement.removeAttribute("style");
     
     if (hoveredElementY > (window.innerHeight/2)) {
-      this.tooltip.nativeElement.style.top = ( hoveredElement.getBoundingClientRect().top - this.tooltip.nativeElement.offsetHeight + document.documentElement.scrollTop) + "px";
+      this.tooltip.nativeElement.style.top = ( hoveredElement.getBoundingClientRect().top - (this.tooltip.nativeElement.offsetHeight + 10) + document.documentElement.scrollTop) + "px";
     } else {
       this.tooltip.nativeElement.style.top = (hoveredElement.getBoundingClientRect().bottom + document.documentElement.scrollTop) + "px";
     }
