@@ -1,4 +1,4 @@
-<div id="tooltip" >
+<div #toolTip id="tooltip" >
     <div *ngIf="skill != null" class="skill-effects-container">
         <p class="skill-effects-name">{{skill.getSkillEffects().name}}&nbsp;&nbsp;&nbsp;
             <span *ngIf="isNormalSkill(skill)">{{skill.getAllocatedPoints()}}/{{skill.getMaxPoints()}}</span></p>
