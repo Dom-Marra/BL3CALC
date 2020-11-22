@@ -14,7 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { SkilltreeComponent } from './skilltree/skilltree.component';
 import { StatsComponent } from './stats/stats.component';
 import { BuildComponent } from './build/build.component';
-import { TooltipComponent } from './tooltip/tooltip.component';
+import { TooltipComponent, DisplaySkillDirective } from './tooltip/tooltip.component';
 import { ApiKey } from './api-key';
 
 const icons = {
@@ -31,7 +31,8 @@ const icons = {
     SkilltreeComponent,
     StatsComponent,
     BuildComponent,
-    TooltipComponent
+    TooltipComponent,
+    DisplaySkillDirective
   ],
   imports: [
     BrowserModule,
