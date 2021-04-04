@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, DoCheck, KeyValueDiffers, IterableDiffers } from '@angular/core';
-import { Skill } from '../skill';
+import { Skill } from '../core/classes/skill';
 
 @Component({
   selector: 'app-stats',

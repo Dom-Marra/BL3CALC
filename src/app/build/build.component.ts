@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Amara } from '../amara';
-import { Character } from '../character';
-import { Fl4k } from '../fl4k';
-import { Moze } from '../moze';
-import { Zane } from '../zane';
-import { Skill } from '../skill';
-import { PastebinService } from "../pastebin.service";
+import { Amara } from '../core/classes/amara';
+import { Character } from '../core/classes/character';
+import { Fl4k } from '../core/classes/fl4k';
+import { Moze } from '../core/classes/moze';
+import { Skill } from '../core/classes/skill';
+import { Zane } from '../core/classes/zane';
+import { PastebinService } from "../core/services/pastebin.service";
 
 @Component({
   selector: 'app-build',

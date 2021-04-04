@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Skill } from '../skill';
-import { NormalSkill } from '../normalskill';
-import { Character } from '../character'
 import { Router, NavigationStart } from '@angular/router';
-import { ActionMod } from '../actionmod';
-import { ActionSkill } from '../actionskill';
+import { ActionMod } from '../core/classes/actionmod';
+import { ActionSkill } from '../core/classes/actionskill';
+import { Character } from '../core/classes/character';
+import { NormalSkill } from '../core/classes/normalskill';
+import { Skill } from '../core/classes/skill';
 
 @Component({
   selector: 'app-skilltree',

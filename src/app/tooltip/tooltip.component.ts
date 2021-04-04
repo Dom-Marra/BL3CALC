@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, Injectable } from '@angular/core';
-import { Skill } from '../skill';
-import { NormalSkill } from '../normalskill';
 import { Directive } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import ResizeObserver from 'resize-observer-polyfill';
+import { NormalSkill } from '../core/classes/normalskill';
+import { Skill } from '../core/classes/skill';
 
 
 export interface tooltipdata {
