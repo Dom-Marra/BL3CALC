@@ -1,0 +1,23 @@
+<div #toolTip id="tooltip">
+    <app-edge-box id="edge-box" theme="accent">
+        <div *ngIf="skill" class="skill-effects-container">
+            <p class="skill-effects-name">{{skill.name}}&nbsp;&nbsp;&nbsp;
+                <span *ngIf="isNormalSkill(skill)">{{skill.getAllocatedPoints()}}/{{skill.getMaxPoints()}}</span></p>
+            <p class="skill-effects-content" [innerHTML]="skill.description"></p>
+            <div class="skill-effects-content" *ngIf="skill.getAllocatedPoints() > 0">
+                <p class="skill-effects-effect">Current Effect: </p>
+                <div *ngFor="let effect of skill.skillEffects; let i = index" [hidden]="effect.hidden">
+                    <span class="name">{{effect.name}}</span>
+                    <span *ngIf="effect.textValues">: {{effect.textValues.length - 1 < skill.getAllocatedPoints() ? effect.textValues[effect.textValues.length - 1] : effect.textValues[skill.getAllocatedPoints() - 1]}}</span>
+                </div>
+            </div>
+            <div class="skill-effects-content"  *ngIf="skill.getAllocatedPoints() < skill.getMaxPoints() && (isNormalSkill(skill) || skill.getAllocatedPoints() < 1)">
+                <p class="skill-effects-effect">Next Rank: </p>
+                <div *ngFor="let effect of skill.skillEffects; let i = index" [hidden]="effect.hidden">
+                    <span class="name">{{effect.name}}</span>
+                    <span *ngIf="effect.textValues">: {{effect.textValues.length - 1 < skill.getAllocatedPoints() ? effect.textValues[effect.textValues.length - 1] : effect.textValues[skill.getAllocatedPoints()]}}</span>
+                </div>
+            </div>
+        </div>
+    </app-edge-box>
+</div>

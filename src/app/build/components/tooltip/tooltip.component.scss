@@ -1,0 +1,49 @@
+@import "../../../../styles.scss";
+
+#tooltip {
+    position: absolute;
+    z-index: -1;
+    height: auto;
+
+    &.visible {
+        z-index: 4;
+    }
+}
+
+.skill-effects-container {
+    font-size: mat-font-size(mat-typography-config(), body-2);
+    width: 350px;
+
+    .skill-effects-name {
+        font-size: mat-font-size(mat-typography-config(), subheading-2);
+        font-weight: bold;
+    }
+
+    .skill-effects-name, .skill-effects-content {
+        margin: 0;
+        padding: 0.5em;
+    }
+
+    .skill-effects-effect {
+        margin: 0;
+        font-weight: bold;
+    }
+
+    .name {
+        color: mat-color($BL3CALC-primary, 500);
+    }
+}
+
+@media not screen and (min-width: 750px) { 
+
+    #tooltip {
+        left: 50% !important;
+        transform: translateX(-50%);
+        right: auto !important;
+
+        .skill-effects-container {
+            width: 80vw; 
+        }
+    }
+    
+}
