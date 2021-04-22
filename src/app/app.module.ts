@@ -8,13 +8,7 @@ import { Menu, X } from 'angular-feather/icons';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
-import { HomeComponent } from './home/home.component';
-import { SkilltreeComponent } from './skilltree/skilltree.component';
-import { StatsComponent } from './stats/stats.component';
-import { BuildComponent } from './build/build.component';
-import { TooltipComponent, DisplaySkillDirective } from './tooltip/tooltip.component';
+import { SharedModule } from './shared/shared.module';
 import { ApiKey } from './api-key';
 
 const icons = {
@@ -25,20 +19,13 @@ const icons = {
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    FooterComponent,
-    HomeComponent,
-    SkilltreeComponent,
-    StatsComponent,
-    BuildComponent,
-    TooltipComponent,
-    DisplaySkillDirective
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    SharedModule,
     FeatherModule.pick(icons)
   ],
   exports: [
