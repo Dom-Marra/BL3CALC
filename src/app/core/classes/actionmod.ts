@@ -1,14 +1,24 @@
+import { SkillEffect } from '../models/skilleffect.model';
 import { Skill } from './skill';
-import { SkillEffects } from './skill';
 
 export class ActionMod extends Skill {
 
     private requiredActionSkill: Skill = null;      //Required active skill to allocate active skill mod
 
-    constructor(path: string, position: Array<number>, maxPoints: number, preReq: number, color: string, skillEffects?: SkillEffects, requiredActionSkill?: Skill) { 
-        super(path, position, maxPoints, preReq, color, skillEffects);
+    constructor(name: string, 
+        description: string, 
+        image: string, 
+        x: number,
+        y: number, 
+        maxPoints: number, 
+        preReq: number, 
+        color: string, 
+        skillEffects?: Array<SkillEffect>,
+        requiredActionSkill?: Skill) {
+
+        super(name, description, image, x, y, maxPoints, preReq, color, skillEffects);
         this.requiredActionSkill = requiredActionSkill;
-    }  
+    }
     
     /**
      * Checks if the skill can have a point added or removed from it
