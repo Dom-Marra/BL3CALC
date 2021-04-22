@@ -1,0 +1,91 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$BL3CALC-primary: (
+    50 : #e5e9f0,
+    100 : #bec9da,
+    200 : #93a5c1,
+    300 : #6881a8,
+    400 : #476695,
+    500 : #274b82,
+    600 : #23447a,
+    700 : #1d3b6f,
+    800 : #173365,
+    900 : #0e2352,
+    A100 : #89aaff,
+    A200 : #5685ff,
+    A400 : #2360ff,
+    A700 : #094eff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$BL3CALC-accent: (
+    50 : #fffce4,
+    100 : #fff7ba,
+    200 : #fff18d,
+    300 : #feeb5f,
+    400 : #fee73c,
+    500 : #fee31a,
+    600 : #fee017,
+    700 : #fedc13,
+    800 : #fed80f,
+    900 : #fdd008,
+    A100 : #ffffff,
+    A200 : #fffcf2,
+    A400 : #fff2bf,
+    A700 : #ffeda6,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$BL3CALC-warn: mat-palette($mat-red);
+
+$BL3CALC-theme: mat-light-theme((
+  color: (
+    primary: $BL3CALC-primary,
+    accent: $BL3CALC-accent,
+    warn: $BL3CALC-warn,
+  )
+));
+
+$BL3CALC-typography: mat-typography-config(
+  $font-family: 'Saira Condensed',
+  $headline: mat-typography-level(45px, 1.6, 500),
+  $title: mat-typography-level(35px, 1.6, 500),
+  $subheading-2: mat-typography-level(24px, 1.6, 500),
+  $body-1: mat-typography-level(18px, 1.6, 500),
+  $caption: mat-typography-level(16px, 1.6, 500),
+);
+
+@include angular-material-typography($BL3CALC-typography);
+
+@include angular-material-theme($BL3CALC-theme);
