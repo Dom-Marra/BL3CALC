@@ -1,10 +1,18 @@
+import { SkillEffect } from '../models/skilleffect.model';
 import { Skill} from './skill';
-import { SkillEffects } from './skill';
 
 export class ActionSkill extends Skill {
 
-    constructor(path: string, position: Array<number>, maxPoints: number, preReq: number, color: string, skillEffects?: SkillEffects) {
-        super(path, position, maxPoints, preReq, color, skillEffects);
+    constructor(name: string, 
+        description: string, 
+        image: string, 
+        x: number,
+        y: number, 
+        maxPoints: number, 
+        preReq: number, 
+        color: string, 
+        skillEffects: Array<SkillEffect>) {
+        super(name, description, image, x, y, maxPoints, preReq, color, skillEffects);
     }
 
     /**
