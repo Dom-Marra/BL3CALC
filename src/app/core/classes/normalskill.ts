@@ -1,11 +1,28 @@
+import { SkillEffect } from '../models/skilleffect.model';
 import { Skill } from './skill';
-import { SkillEffects } from './skill';
 
 export class NormalSkill extends Skill {
 
+    constructor(name: string, 
+                description: string, 
+                image: string, 
+                x: number,
+                y: number, 
+                maxPoints: number, 
+                preReq: number, 
+                color: string, 
+                skillEffects: Array<SkillEffect>) {
+        super(name, description, image, x, y, maxPoints, preReq, color, skillEffects);
+    }
 
-    constructor(path: string, position: Array<number>, maxPoints: number, preReq: number, color: string, skillEffects?: SkillEffects) {
-        super(path, position, maxPoints, preReq, color, skillEffects);
+    public addPoint(): number {
+        super.addPoint();
+        return 1;
+    }
+
+    public removePoint(): number {
+        super.removePoint();
+        return -1;
     }
 
     /**
