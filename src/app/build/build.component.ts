@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Amara } from '../core/classes/amara';
 import { Character } from '../core/classes/character';
-import { Fl4k } from '../core/classes/fl4k';
-import { Moze } from '../core/classes/moze';
-import { Skill } from '../core/classes/skill';
-import { Zane } from '../core/classes/zane';
-import { PastebinService } from "../core/services/pastebin.service";
+// import { Fl4k } from '../core/classes/fl4k';
+// import { Moze } from '../core/classes/moze';
+// import { Zane } from '../core/classes/zane';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { Observable } from 'rxjs';
+import { CharacterService } from './services/character.service';
 
 @Component({
   selector: 'app-build',
@@ -15,235 +16,49 @@ import { PastebinService } from "../core/services/pastebin.service";
 })
 export class BuildComponent implements OnInit {
 
-  public character: Character;
-  private characterType: string;
-  public loadedCharacterData = null;
+  @ViewChild('drawerContent') drawerContent: ElementRef;
 
-  constructor(private router: ActivatedRoute, private pastebin: PastebinService, private route: Router) { }
+  public activePage: 'trees' | 'stats' = 'trees';
+
+  public mobileQuery: Observable<BreakpointState>;
+  public pageNavOpened: boolean = false;
+  public character: Character = null;
+
+  constructor(private breakObs: BreakpointObserver, private characterService: CharacterService) { 
+    this.mobileQuery = this.breakObs.observe('(max-width: 730px)');
+  }
 
   ngOnInit() {
-
-    this.router.queryParams.subscribe(params => {
-      this.setCharacter(params.character);
-
-      if (params.save != null) {
-        this.loadCharacter(params.save);
+    this.mobileQuery.subscribe(res => {
+      if (!res.matches) {
+        this.pageNavOpened = false;
       }
     });
+
+    this.characterService.currentCharacter.subscribe(character => {
+      if (character) this.character = character;
+    })
+
+    this.setCharacter('amara');
   }
 
-  setCharacter(characterType: string) {
+  public setCharacter(characterType: string) {
     switch(characterType) {
       case 'amara': {
-        this.character = new Amara(1, 1, 1);
-        this.characterType = "amara";
+        this.characterService.currentCharacter.next(new Amara(1, 1, 1));
         break;
-      } case 'fl4k': {
-        this.character = new Fl4k(1, 2, 1);
-        this.characterType = "fl4k";
-        break;
-      } case 'moze': {
-        this.character = new Moze(2, 2, 0);
-        this.characterType = "moze";
-        break;
-      } case 'zane': {
-        this.character = new Zane(2, 4, 0);
-        this.characterType = "zane";
-        break;
+      // } case 'fl4k': {
+      //   this.characterService.currentCharacter.next(new Fl4k(1, 2, 1));
+      //   break;
+      // } case 'moze': {
+      //   this.characterService.currentCharacter.next(new Moze(2, 2, 0));
+      //   break;
+      // } case 'zane': {
+      //   this.characterService.currentCharacter.next(new Zane(2, 4, 0));
+      //   break;
       } default: {
-        this.character = new Amara(1, 1, 1);
-        this.characterType = "amara";
+        this.characterService.currentCharacter.next(new Amara(1, 1, 1));
       }
     }
   }
-
-  /**
-   * Creates the build data and sends it to the pastebin service for a link generation
-   */
-  createBuildData() {
-    var greenSkills = this.sortSkills(this.character.getGreenSkills());
-    var blueSkills = this.sortSkills(this.character.getBlueSkills());
-    var redSkills = this.sortSkills(this.character.getRedSkills());
-
-    //Create skill allocation data
-    var redSkillAllocations: Array<number> = this.getAllocations(redSkills);
-    var blueSkillAllocations: Array<number> = this.getAllocations(blueSkills);
-    var greenSkillAllocations: Array<number> = this.getAllocations(greenSkills);
-
-    var equippedSkills = [{actionMods: []},{actionMods: []}];
-
-    var configs = {};
-    var extraConfigs = {};
-
-    //Create conditional data
-    for (var cond in this.character.getConditionals()) {
-      if (this.character.getConditionals()[cond]['active'] == true) {
-        configs[cond] = {};
-        configs[cond].active = true;
-      }
-    }
-
-    //Create extra conditional data
-    for (var cond in this.character.getExtraCond()) {
-      if (this.character.getExtraCond()[cond]['active'] == true) {
-        extraConfigs[cond] = {};
-        extraConfigs[cond].active = true;
-        
-        if (this.character.getExtraCond()[cond].effectiveness != null) {
-          extraConfigs[cond].effectiveness = this.character.getExtraCond()[cond].effectiveness;
-        }
-        if (this.character.getExtraCond()[cond].currentValue != null) {
-          extraConfigs[cond].currentValue = this.character.getExtraCond()[cond].currentValue;
-        }
-      }
-    }
-
-    //Create equipped skills data
-    this.character.getEquippedSkills().forEach((set, index) => {
-      if (set.actionSkill != null) {
-        if (set.actionSkill.getColor() == "green") {
-          equippedSkills[index]['actionSkill'] = {index: this.character.getGreenSkills().indexOf(set.actionSkill), color: "green"};
-        } else if (set.actionSkill.getColor() == "blue") {
-          equippedSkills[index]['actionSkill'] = {index: this.character.getBlueSkills().indexOf(set.actionSkill), color: "blue"};
-        } else {
-          equippedSkills[index]['actionSkill'] = {index: this.character.getRedSkills().indexOf(set.actionSkill), color: "red"};
-        }
-      }
-
-      set.actionMods.forEach((mod, secondIndex) => {
-        if (mod.getColor() == "green") {
-          equippedSkills[index]['actionMods'][secondIndex] = this.character.getGreenSkills().indexOf(mod);
-        } else if (mod.getColor() == "blue") {
-          equippedSkills[index]['actionMods'][secondIndex] = this.character.getBlueSkills().indexOf(mod);
-        } else {
-          equippedSkills[index]['actionMods'][secondIndex] = this.character.getRedSkills().indexOf(mod);
-        }
-      });
-    });
-      
-
-    var build = {
-      character: this.characterType,
-      redSkills: redSkillAllocations,
-      blueSkills: blueSkillAllocations,
-      greenSkills: greenSkillAllocations,
-      equipped: equippedSkills,
-      config: configs,
-      extraConfig: extraConfigs
-    }
-
-    this.pastebin.createBuild(build, this.characterType);
-  }
-
-  getAllocations(skills: Array<Skill>): Array<number> {
-    var allocations: Array<number> = [];
-
-    skills.forEach((skill, index) => {
-      allocations[index] = skill.getAllocatedPoints();
-    });
-
-    return allocations;
-  }
-
-  sortSkills(skills: Array<Skill>): Array<Skill> {
-    //Sort the removed skills, skills that have effectiveness attatched should be removes first
-    skills.sort((elementA, elementB) => {
-      return elementA.getPreReq() - elementB.getPreReq();
-    });
-    
-    return skills;
-
-  }
-
-  /**
-   * Loads character data from pastebin
-   * 
-   * @param saveLink 
-   *                pastebin entry
-   */
-  loadCharacter(saveLink: string) {
-    //Get the data from the pastebing service
-    var request = this.pastebin.getBuild(saveLink);
-
-    //If the request is successful perform import
-    request.then((data: any) => {
-      if (this.characterType != data["character"]) {
-        this.route.navigateByUrl(this.route.url.replace(this.characterType, data["character"]));
-        return;
-      }
-      this.importCharacter(data);
-    });
-  }
-
-  /**
-   * Imports JSON build data
-   * 
-   * @param importedData
-   *                    data imported from pastebin
-   */
-  importCharacter(importedData?: JSON) {
-
-    var input: string;
-    var data: JSON;
-    
-    if (importedData == null) {
-      input = prompt("Please paste the build data:");
-
-      if (input == "" || input == null) {
-        return;
-      }
-
-      try {
-        data = JSON.parse(input);
-      } catch {
-        alert("The import data is invalid!");
-        return;
-      }
-      
-    } else {
-      data = importedData;
-    }
-
-    //If the character data type is null disregard the imported data
-    if (data["character"] == null) {
-      alert("The imported data is invalid!");
-      return;
-    }
-
-    if (this.characterType != data["character"]) {
-      this.route.navigateByUrl(this.route.url.replace(this.characterType, data["character"])).then(() => {
-        this.importCharacter(data);
-      });
-      return;
-    }
-
-    this.setCharacter(data["character"]);
-    this.loadedCharacterData = data;
-
-    this.sortSkills(this.character.getGreenSkills());
-    this.sortSkills(this.character.getBlueSkills());
-    this.sortSkills(this.character.getRedSkills());
-
-    //Add the conditionals 
-    for (var config in this.loadedCharacterData.config) {
-      if (this.loadedCharacterData.config[config].active) {
-        this.character.getConditionals()[config].active = true;
-      }
-    }
-    
-    //Add the extra conditionals
-    for (var config in this.loadedCharacterData.extraConfig) {
-      if (this.loadedCharacterData.extraConfig[config].active) {
-        this.character.getExtraCond()[config].active = true;
-      }
-      if (this.loadedCharacterData.extraConfig[config].effectiveness != null) {
-        this.character.getExtraCond()[config].effectiveness = this.loadedCharacterData.extraConfig[config].effectiveness;
-      }
-      if (this.loadedCharacterData.extraConfig[config].currentValue != null) {
-        this.character.getExtraCond()[config].currentValue = this.loadedCharacterData.extraConfig[config].currentValue;
-      }
-    }
-    
-  }
-
 }
