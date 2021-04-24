@@ -13,6 +13,11 @@ import { TooltipComponent, DisplaySkillDirective } from './components/tooltip/to
 import { SharedModule } from '../shared/shared.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { SkilltreesComponent } from './pages/skilltrees/skilltrees.component';
+import { DigitsonlyDirective } from './directives/digitsonly.directive';
+import { StatfilterPipe } from './pipes/statfilter.pipe';
+
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -21,7 +26,9 @@ import { SkilltreesComponent } from './pages/skilltrees/skilltrees.component';
     BuildComponent,
     TooltipComponent,
     DisplaySkillDirective,
-    SkilltreesComponent
+    SkilltreesComponent,
+    DigitsonlyDirective,
+    StatfilterPipe
   ],
   imports: [
     CommonModule,
@@ -31,7 +38,9 @@ import { SkilltreesComponent } from './pages/skilltrees/skilltrees.component';
     MatButtonModule,
     SharedModule,
     BuildRoutingModule,
-    LayoutModule
+    LayoutModule,
+    MatInputModule,
+    MatSlideToggleModule
   ],
   exports: [
     BuildComponent
