@@ -1,0 +1,17 @@
+@import "../../../../styles.scss";
+
+.build-datils-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 30px 25px;
+
+    .detail {
+        margin: 10px 25px;
+        white-space: nowrap;
+
+        .modified-text {
+            color: mat-color($BL3CALC-accent, 500);
+        }
+    }
+}
