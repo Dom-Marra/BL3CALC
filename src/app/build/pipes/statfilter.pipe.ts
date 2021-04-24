@@ -11,7 +11,7 @@ export class StatfilterPipe implements PipeTransform {
     let groupedStats: Map<string, CharacterStat> = new Map();
 
     stats.forEach((val, key) => {
-      if (val.group == group && val.value && val.value > 0) groupedStats.set(key, val);  
+      if (val.group == group && val.value && val.value != 0) groupedStats.set(key, val);  
     });
 
     return groupedStats;
