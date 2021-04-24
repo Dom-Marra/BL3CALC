@@ -6,6 +6,7 @@ import { BASE_CHARACTER_STATS } from '../data/basecharacterstats';
 import { Conditional } from '../models/conditional.model';
 import { CharacterStat } from '../models/characterstat.model';
 import { SkillTree } from './skilltree';
+import { ConditionalInfo } from '../models/skilleffect.model';
 
 export abstract class Character {
 
@@ -118,11 +119,11 @@ export abstract class Character {
     private addConditionalsFromSkill(skill: Skill): void {
         skill.getSkillEffects().forEach(effect => {
             effect.conditionals?.forEach(conditional => {
-                if (this.conditionalsInUse.has(conditional)) {
-                    let occurances = this.conditionalsInUse.get(conditional);
-                    this.conditionalsInUse.set(conditional, ++occurances);
+                if (this.conditionalsInUse.has(conditional.key)) {
+                    let occurances = this.conditionalsInUse.get(conditional.key);
+                    this.conditionalsInUse.set(conditional.key, ++occurances);
                 } else {
-                    this.conditionalsInUse.set(conditional, 1);
+                    this.conditionalsInUse.set(conditional.key, 1);
                 }
             });
         });
@@ -158,12 +159,12 @@ export abstract class Character {
     private removeConditionalsFromSkill(skill: Skill): void {
         skill.getSkillEffects().forEach(effect => {
             effect.conditionals?.forEach(conditional => {
-                let occurances = this.conditionalsInUse.get(conditional);
+                let occurances = this.conditionalsInUse.get(conditional.key);
 
                 if (occurances == 1) {
-                    this.conditionalsInUse.delete(conditional);
+                    this.conditionalsInUse.delete(conditional.key);
                 } else {
-                    this.conditionalsInUse.set(conditional, --occurances);
+                    this.conditionalsInUse.set(conditional.key, --occurances);
                 }
             });
         });
@@ -219,18 +220,21 @@ export abstract class Character {
         return new Array().concat(this.greenTree.skills, this.orangeTree.skills, this.blueTree.skills);
     }
 
-    public conditionalsAreActive(conditionals: Array<string>): number | boolean{
+    public conditionalsAreActive(conditionals: Array<ConditionalInfo>): number | boolean{
         let res: number | boolean;
 
-        conditionals?.some(conditionalKey => {
-            let conditional = this.conditionals.get(conditionalKey);
+        conditionals?.some(conditionalInfo => {
+            let conditional = this.conditionals.get(conditionalInfo.key);
 
-            if (!conditional || !conditional.isActive) {
+            if ((!conditional || !conditional.isActive) && conditionalInfo.nonActiveMultiplier == null) {
                 res = false;
                 return;
+            } else {
+                res == null ? res = conditionalInfo.nonActiveMultiplier : (<number> res) *= conditionalInfo.nonActiveMultiplier;
             }
              
             if (conditional.usesStacks) res == null ? res = conditional.value : (<number> res) += conditional.value;
+            if (conditionalInfo.activeMultiplier && conditional.isActive) res == null ? res = conditionalInfo.activeMultiplier : (<number> res) *= conditionalInfo.activeMultiplier;
         });
 
         return res == null ? true : res;
@@ -280,11 +284,11 @@ export abstract class Character {
 
     public updateStatsBasedOnUpdatedConditional(previousConditional: Conditional, currentConditional: Conditional, conKey: string) {
 
-        let skillsAffected = this.getAllSkills().filter(skill => skill.getSkillEffects().some(effect => effect.conditionals?.includes(conKey)) && skill.getAllocatedPoints() > 0);
+        let skillsAffected = this.getAllSkills().filter(skill => skill.getSkillEffects().some(effect => effect.conditionals?.filter(conditionalInfo => conditionalInfo.key == conKey).length > 0) && skill.getAllocatedPoints() > 0);
 
         skillsAffected.forEach(skill => {
             skill.getSkillEffects().forEach(effect => {
-                if (!effect.conditionals?.find(conditional => conditional == conKey)) return;
+                if (!effect.conditionals?.find(conditional => conditional.key == conKey)) return;
                 
                 let currentMulti: number = currentConditional.usesStacks ? (currentConditional.value && currentConditional.isActive ? currentConditional.value : 0) : null;
                 let previousMulti: number = previousConditional.usesStacks ? (previousConditional.value && previousConditional.isActive ? previousConditional.value : 0) : null;
@@ -292,7 +296,7 @@ export abstract class Character {
                 let previousValue: number = 0;
                 let currentValue: number = 0;
 
-                let unModifiedConditionals = effect.conditionals.filter(conditional => conditional != conKey);
+                let unModifiedConditionals = effect.conditionals.filter(conditional => conditional.key != conKey);
 
                 let conditionalValues = this.conditionalsAreActive(unModifiedConditionals);
                 if (conditionalValues == false) return;
