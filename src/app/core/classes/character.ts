@@ -21,7 +21,7 @@ export abstract class Character {
 
     public allocatedPoints: number = 0;
 
-    private equippedSkills: Array<EquippedSkill>;           //Action skills, action mods, and other skills allocated
+    public equippedSkills: Array<EquippedSkill>;           //Action skills, action mods, and other skills allocated
     public name: string = "Character Name";                 //Name of the Character
 
     public abstract greenTree: SkillTree;                   //Green Skill Tree
