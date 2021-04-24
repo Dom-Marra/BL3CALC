@@ -171,7 +171,7 @@ export const ORANGE_SKILLS: Array<Skill> = [
         [{
             name: "Gun Damage",
             stats: [{ key: 'gunDmg' }],
-            conditionals: ['graspedAnEnemy'],
+            conditionals: [{key: 'graspedAnEnemy'}],
             textValues: ["+15%"],
             values: [15]
         },
@@ -226,7 +226,7 @@ export const ORANGE_SKILLS: Array<Skill> = [
         [{
             name: "Life Steal",
             stats: [{ key: 'lifeSteal' }],
-            conditionals: ['dealtEleDmgWithElementalWeapon'],
+            conditionals: [{key: 'dealtEleDmgWithElementalWeapon'}],
             textValues: ["4% of damage dealt", "8% of damage dealt", "12% of damage dealt", "16% of damage dealt", "20% of damage dealt"],
             values: [4, 8, 12, 16, 20]
         }]),
@@ -351,7 +351,7 @@ export const BLUE_SKILLS: Array<Skill> = [
         {
             name: "Action Skill Damage",
             stats: [{ key: 'actionSkillDmg', multipliers: ['rushStackEffectiveness'] }],
-            conditionals: ['rushStacksConsumed'],
+            conditionals: [{key: 'rushStacksConsumed'}],
             textValues: ["+0.9% per stack consumed", "+1.8% per stack consumed", "+2.7% per stack consumed", "+3.6% per stack consumed", "+4.5% per stack consumed"],
             values: [0.9, 1.8, 2.7, 3.6, 4.5]
         },
@@ -394,7 +394,7 @@ export const BLUE_SKILLS: Array<Skill> = [
         {
             name: "Effect Chance",
             stats: [{ key: 'statusEffectChance', multipliers: ['rushStackEffectiveness'] }],
-            conditionals: ['rushStacksConsumed'],
+            conditionals: [{key: 'rushStacksConsumed'}],
             textValues: ["+0.6% per stack consumed", "+1.2% per stack consumed", "+1.8% per stack consumed", "+2.4% per stack consumed", "+3.0% per stack consumed"],
             values: [0.6, 1.2, 1.8, 2.4, 3.0]
         },
@@ -409,14 +409,14 @@ export const BLUE_SKILLS: Array<Skill> = [
         [{
             name: "Reload Speed",
             stats: [{ key: 'reloadSpeed', multipliers: ['rushStackEffectiveness'] }],
-            conditionals: ['rushStacks'],
+            conditionals: [{key: 'rushStacks'}],
             textValues: ["+0.4% per stack", "+0.8% per stack", "+1.2% per stack", "+1.6% per stack", "+2.0% per stack"],
             values: [0.4, 0.8, 1.2, 1.6, 2.0]
         },
         {
             name: "Reload Speed",
             stats: [{ key: 'reloadSpeed', multipliers: ['rushStackEffectiveness'] }],
-            conditionals: ['rushStacksConsumed'],
+            conditionals: [{key: 'rushStacksConsumed'}],
             textValues: ["+0.6% after action skill use", "+1.2% after action skill use", "+1.8% after action skill use", "+2.3% after action skill use", "+2.9% after action skill use"],
             values: [0.6, 1.2, 1.8, 2.3, 2.9]
         },
@@ -431,14 +431,14 @@ export const BLUE_SKILLS: Array<Skill> = [
         [{
             name: "Accuracy",
             stats: [{ key: 'accuracy' }],
-            conditionals: ['usedActionSkill'],
+            conditionals: [{key: 'usedActionSkill'}],
             textValues: ["+17%", "+29%", "+38%"],
             values: [17, 29, 38]
         },
         {
             name: "Critical Hit Damage",
             stats: [{ key: 'criticalHitDmg' }],
-            conditionals: ['usedActionSkill'],
+            conditionals: [{key: 'usedActionSkill'}],
             textValues: ["+9%", "+18%", "+27%"],
             values: [9, 18, 27]
         },
@@ -500,7 +500,7 @@ export const BLUE_SKILLS: Array<Skill> = [
         [{
             name: "Damage Increase",
             stats: [{ key: 'dmgIncrease' }],
-            conditionals: ['enemyDamagedByAS'],
+            conditionals: [{key: 'enemyDamagedByAS'}],
             textValues: ["+8.3%", "+16.7%", "+25.0%"],
             values: [8.3, 16.7, 25]
         },
@@ -521,7 +521,7 @@ export const BLUE_SKILLS: Array<Skill> = [
         {
             name: "Gun Damage",
             stats: [{ key: 'gunDmg' }],
-            conditionals: ['usedActionSkill'],
+            conditionals: [{key: 'usedActionSkill'}],
             textValues: ["+6.7% after action skill use", "+13.3% after action skill use", "+20.0% after action skill use"],
             values: [6.7, 13.3, 20]
         },
@@ -664,7 +664,7 @@ export const GREEN_SKILLS: Array<Skill> = [
         [{
             name: "Health Regeneration",
             stats: [{ key: 'healthRegen_missingHealth' }],
-            conditionals: ['usedActionSkill'],
+            conditionals: [{key: 'usedActionSkill', activeMultiplier: 2, nonActiveMultiplier: 1}],
             textValues: ["up to +1.00% Missing Health/sec", "up to +2.00% Missing Health/sec", "up to +3.00% Missing Health/sec", "up to +4.00% Missing Health/sec", "up to +5.00% Missing Health/sec"],
             values: [1, 2, 3, 4, 5]
         },
@@ -695,14 +695,14 @@ export const GREEN_SKILLS: Array<Skill> = [
         [{
             name: "Gun Damage",
             stats: [{ key: 'gunDmg' }],
-            conditionals: ['samsaraStacks'],
+            conditionals: [{key: 'samsaraStacks'}],
             textValues: ["+1.7% per enemy damaged", "+3.3% per enemy damaged", "+5.0% per enemy damaged"],
             values: [1.7, 3.3, 5.0]
         },
         {
             name: "Health Regeneration",
             stats: [{ key: 'healthRegen_maxHealth' }],
-            conditionals: ['samsaraStacks'],
+            conditionals: [{key: 'samsaraStacks'}],
             textValues: ["+1.7% of Max Health / sec. per stack", "+3.3% of Max Health / sec. per stack", "+5.0% of Max Health / sec. per stack"],
             values: [1.7, 3.3, 5.0]
         },
@@ -723,7 +723,7 @@ export const GREEN_SKILLS: Array<Skill> = [
         [{
             name: "Damage Reduction",
             stats: [{ key: 'dmgReduction' }],
-            conditionals: ['usedActionSkill'],
+            conditionals: [{key: 'usedActionSkill'}],
             textValues: ["+12.0%", "+21.0%", "+28.0%", "+35.0%", "+40.0%"],
             values: [12, 21, 28, 35, 40]
         },
@@ -740,14 +740,14 @@ export const GREEN_SKILLS: Array<Skill> = [
         [{
             name: "Shield Regeneration Delay",
             stats: [{ key: 'shieldRegenDelay' }],
-            conditionals: ['mindfulnessStacks'],
+            conditionals: [{key: 'mindfulnessStacks'}],
             textValues: ["-9.0%", "-17.0%", "-23.0%"],
             values: [-9, -17, -23]
         },
         {
             name: "Movement Speed",
             stats: [{ key: 'movementSpeed' }],
-            conditionals: ['mindfulnessStacks'],
+            conditionals: [{key: 'mindfulnessStacks'}],
             textValues: ["1.4%", "2.8%", "4.2%"],
             values: [1.4, 2.8, 4.2]
         },
@@ -768,7 +768,7 @@ export const GREEN_SKILLS: Array<Skill> = [
         [{
             name: "Melee Damage",
             stats: [{ key: 'meleeDmg' }],
-            conditionals: ['usedActionSkill'],
+            conditionals: [{key: 'usedActionSkill'}],
             textValues: ["+100%"],
             values: [100]
         },
@@ -787,7 +787,7 @@ export const GREEN_SKILLS: Array<Skill> = [
         [{
             name: "Team Movement Speed",
             stats: [{ key: 'movementSpeed' }],
-            conditionals: ['activateKillSkills'],
+            conditionals: [{key: 'activateKillSkills'}],
             textValues: ["+3.3%", "+6.7%", "+10.0%"],
             values: [3.3, 6.7, 10]
         },
@@ -827,14 +827,14 @@ export const GREEN_SKILLS: Array<Skill> = [
         [{
             name: "Gun Damage",
             stats: [{ key: 'gunDmg' }],
-            conditionals: ['dealtMeeleDmg'],
+            conditionals: [{key: 'dealtMeeleDmg'}],
             textValues: ["+3%", "+6%", "+9%", "+12%", "+15%"],
             values: [3, 6, 9, 12, 15]
         },
         {
             name: "Action Skill Damage",
             stats: [{ key: 'actionSkillDmg' }],
-            conditionals: ['dealtMeeleDmg'],
+            conditionals: [{key: 'dealtMeeleDmg'}],
             textValues: ["+15%", "+30%", "+45%", "+60%", "+75%"],
             values: [15, 30, 45, 60, 75]
         },
