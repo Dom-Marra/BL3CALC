@@ -5,9 +5,15 @@ import { ActionMod } from './actionmod';
 import { Character } from './character';
 import { SkillTree } from './skilltree';
 import { BLUE_SKILLS, GREEN_SKILLS, ORANGE_SKILLS, shockra } from '../data/amara/amaraskills';
+import { Conditional } from '../models/conditional.model';
 import { AMARA_CONDITIONALS } from '../data/amara/amaraconditionals';
+import { CharacterStat } from '../models/characterstat.model';
+import { AMARA_STATS } from '../data/amara/amarastats';
 
 export class Amara extends Character {
+
+  private amaraConditionals: Map<string, Conditional> = AMARA_CONDITIONALS;
+  private amaraStats: Map<string, CharacterStat> = AMARA_STATS;
 
   public greenTree: SkillTree = new SkillTree('green', 'assets/images/amara/GreenTreeHeader.png', 'Brawl', GREEN_SKILLS, this);
   public blueTree: SkillTree = new SkillTree('blue', 'assets/images/amara/BlueTreeHeader.png', 'Mystic Assualt', BLUE_SKILLS, this);
@@ -18,21 +24,11 @@ export class Amara extends Character {
     this.name = "Amara";
 
     this.addPoint(shockra);
-    shockra.addPoint();
-    this.addConditionals(AMARA_CONDITIONALS);
+    this.addConditionalMap(this.amaraConditionals);
+    this.addStatsMap(this.amaraStats);
   }
 
-  /**
-   * Adds point into a specific skill type allocation
-   * 
-   * @param skill 
-   *              Skill to be allocated
-   */
-  public addPoint(skill: Skill): number {
-
-    let modification: number = skill.addPoint();
-    this.allocatedPoints += modification;
-
+  public handleAdditionOfNonNormalSkill(skill: Skill): void {
     //Action skill
     if (skill instanceof ActionSkill) {
 
@@ -70,22 +66,10 @@ export class Amara extends Character {
       
       //Add other skill to equipped skills
       this.getEquippedSkills()[0].otherSkill = skill;
-    };
-
-    return modification;
+    }
   }
 
-  /**
-   * removes point from a specific skill type allocation
-   * 
-   * @param skill
-   *              skill to be removed
-   */
-  public removePoint(skill: Skill): number {
-
-    let modification: number = skill.removePoint();
-    this.allocatedPoints += modification;
-
+  public handleRemovalOfNonNormalSkill(skill: Skill, pos?: number): void {
     //remove action skill from equipped skills
     if (skill instanceof ActionSkill)  {
       this.getEquippedSkills()[0].actionSkill = null;
@@ -101,9 +85,6 @@ export class Amara extends Character {
     if (skill instanceof OtherSkill && skill != shockra) {
       this.getEquippedSkills()[0].otherSkill = null;
       this.addPoint(shockra);
-      shockra.addPoint();
     } 
-
-    return modification;
   }
 }
