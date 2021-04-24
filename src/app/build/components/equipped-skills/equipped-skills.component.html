@@ -1,0 +1,43 @@
+<div class="equipped-skills-container">
+    <div *ngFor="let skillset of _equippedSkills" class="skill-set">
+        <div class="action-skill-container skill-container">
+            <img 
+                [src]="skillset.actionSkill ? skillset.actionSkill.getSkillBoxPath() : '../../../../assets/images/skilltree/actionSkillBox.png'" 
+                class="skill-box-img" 
+            />
+            <img 
+                *ngIf="skillset.actionSkill" 
+                [src]="skillset.actionSkill.image" 
+                class="skill-img" 
+                displaySkill 
+                [skill]="skillset.actionSkill"
+            />
+        </div>
+        <div *ngFor="let actionMod of skillset.actionMods" class="action-mod-container skill-container">
+            <img 
+                [src]="actionMod ? actionMod.getSkillBoxPath() : '../../../../assets/images/skilltree/actionSkillModBox.png'" 
+                class="skill-box-img" 
+            />
+            <img 
+                *ngIf="actionMod" 
+                [src]="actionMod.image" 
+                class="skill-img"    
+                displaySkill 
+                [skill]="actionMod"
+            />
+        </div>
+        <div *ngIf="skillset.otherSkill" class="skill-container">
+            <img 
+                [src]="skillset.otherSkill ? skillset.otherSkill.getSkillBoxPath() : '../../../../assets/images/skilltree/otherSkillBox.png'" 
+                class="skill-box-img" 
+            />
+            <img 
+                *ngIf="skillset.otherSkill" 
+                [src]="skillset.otherSkill.image"
+                class="skill-img" 
+                displaySkill 
+                [skill]="skillset.otherSkill"
+                />
+        </div>
+    </div>
+</div>

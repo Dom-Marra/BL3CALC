@@ -1,0 +1,35 @@
+.equipped-skills-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    .skill-set {
+        display: flex;
+
+
+        .skill-container {
+            margin: 10px;
+            position: relative;
+            height: 60px;
+            width: 60px;
+
+            .skill-box-img {
+                position: absolute;
+                height: 100%;
+                width: auto;
+            }
+
+            .skill-img {
+                position: absolute;
+                height: 75%;
+                width: auto;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
