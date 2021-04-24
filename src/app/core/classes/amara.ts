@@ -77,8 +77,7 @@ export class Amara extends Character {
 
     //Remove action mod from equipped skills action mod array
     if (skill instanceof ActionMod) {
-      var index: number = this.getEquippedSkills()[0].actionMods.indexOf(skill);
-      this.getEquippedSkills()[0].actionMods.splice(index, 1)
+      this.getEquippedSkills()[0].actionMods[0] = null;
     }
 
     //Remove other skill from equipped skills
