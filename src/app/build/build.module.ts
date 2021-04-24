@@ -18,6 +18,8 @@ import { StatfilterPipe } from './pipes/statfilter.pipe';
 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatInputModule } from '@angular/material/input';
+import { EquippedSkillsComponent } from './components/equipped-skills/equipped-skills.component';
+import { BuildDetailsComponent } from './components/build-details/build-details.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { MatInputModule } from '@angular/material/input';
     DisplaySkillDirective,
     SkilltreesComponent,
     DigitsonlyDirective,
-    StatfilterPipe
+    StatfilterPipe,
+    EquippedSkillsComponent,
+    BuildDetailsComponent
   ],
   imports: [
     CommonModule,
