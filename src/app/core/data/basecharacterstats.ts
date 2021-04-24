@@ -1,250 +1,209 @@
 import { CharacterStat } from "../models/characterstat.model";
 
-export const BASE_CHARACTER_STATS: {[key: string]: CharacterStat} = {
-    accuracy: {
+export const BASE_CHARACTER_STATS: Map<string, CharacterStat> =  new Map([
+    ['accuracy', {
         text: 'Accuracy',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    actionSkillCooldown: {
+    }],
+    ['actionSkillCooldown', {
         text: 'Action Skill Cooldown',
-        value: 0,
         valueType: 'percent',
         group: 'utility'
-    }, 
-    actionSkillDmg: {
+    }], 
+    ['actionSkillDmg', {
         text: 'Action Skill Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    armorDmg: {
+    }],
+    ['armorDmg', {
         text: 'Armor Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    bonusDmg: {
+    }],
+    ['bonusDmg', {
         text: 'Bonus Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    bonusElementalDmg: {
+    }],
+    ['bonusElementalDmg', {
         text: 'Bonus Elemental Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    bonusIncendiaryDmg: {
+    }],
+    ['bonusIncendiaryDmg', {
         text: 'Bonus Incendiary Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    bonusShockDmg: {
+    }],
+    ['bonusShockDmg', {
         text: 'Bonus Shock Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    bonusCryoDmg: {
+    }],
+    ['bonusCryoDmg', {
         text: 'Bonus Cryo Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    chargeTime: {
+    }],
+    ['chargeTime', {
         text: 'Charge Time',
-        value: 0,
         valueType: 'percent',
         group: 'utility'
-    },
-    corrosiveDmg: {
+    }],
+    ['corrosiveDmg', {
         text: 'Corrosive Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    }, 
-    criticalHitDmg: {
+    }], 
+    ['criticalHitDmg', {
         text: 'Critical Hit Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    dmgIncrease: {
+    }],
+    ['dmgIncrease', {
         text: 'Increased Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    dmgReduction: {
+    }],
+    ['dmgReduction', {
         text: 'Reduced Damage Taken',
-        value: 0,
         valueType: 'percent',
         group: 'defense'
-    },
-    elementalDmg: {
+    }],
+    ['elementalDmg', {
         text: 'Elemental Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    elementalDmgReduction: {
+    }],
+    ['elementalDmgReduction', {
         text: 'Reduced Elemental Damage Taken',
-        value: 0,
         valueType: 'percent',
         group: 'defense'
-    },
-    fireRate: {
+    }],
+    ['fireRate', {
         text: 'Increased Fire Rate',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    gunDmg: {
+    }],
+    ['gunDmg', {
         text: 'Increased Gun Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    handling: {
+    }],
+    ['handling', {
         text: 'Increased Handling',
-        value: 0,
         valueType: 'percent',
         group: 'utility'
-    },
-    healthRegen_maxHealth: {
+    }],
+    ['healthRegen_maxHealth', {
         text: 'Increased Health Regen (Max HP)',
-        value: 0,
         valueType: 'percent',
         group: 'defense'
-    },
-    healthRegen_missingHealth: {
+    }],
+   ['healthRegen_missingHealth', {
         text: 'Increased Health Regen (Missing HP)',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    heatPerShot: {
+    }],
+   ['heatPerShot', {
         text: 'Heat Per Shot',
-        value: 0,
         valueType: 'percent',
         group: 'utility'
-    }, 
-    increasedIncendiaryDmg: {
+    }], 
+    ['increasedIncendiaryDmg', {
         text: 'Increased Incendiary Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    lifeSteal: {
+    }],
+    ['lifeSteal', {
         text: 'Life Steal',
-        value: 0,
         valueType: 'percent',
         group: 'defense'
-    },
-    magSize: {
+    }],
+    ['magSize', {
         text: 'Increased Magazine Size',
-        value: 0,
         valueType: 'percent',
         group: 'utility'
-    }, 
-    maxHealth: {
+    }], 
+    ['maxHealth', {
         text: 'Increased Max Health',
-        value: 0,
         valueType: 'percent',
         group: 'defense'
-    },
-    maxShield: {
+    }],
+    ['maxShield', {
         text: 'Increased Max Shield',
-        value: 0,
         valueType: 'percent',
         group: 'defense'
-    }, 
-    meleeDmg: {
+    }], 
+    ['meleeDmg', {
         text: 'Increased Melee Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    modeSwitchSpeed: {
+    }],
+    ['modeSwitchSpeed', {
         text: 'Increase Mode Switch Speed',
-        value: 0,
         valueType: 'percent',
         group: 'utility'
-    },
-    movementSpeed: {
+    }],
+    ['movementSpeed', {
         text: 'Increased Movement Speed',
-        value: 0,
         valueType: 'percent',
         group: 'utility'
-    },
-    reloadSpeed: {
+    }],
+    ['reloadSpeed', {
         text: 'Increased Reload Speed',
-        value: 0,
         valueType: 'percent',
         group: 'utility'
-    },
-    shieldRegenDelay: {
+    }],
+    ['shieldRegenDelay', {
         text: 'Shield Regeneration Delay',
-        value: 0,
         valueType: 'percent',
         group: 'defense'
-    },
-    shieldRechargeRate: {
+    }],
+    ['shieldRechargeRate', {
         text: 'Shield Recharge Rate',
-        value: 0,
         valueType: 'percent',
         group: 'defense'
-    },
-    shockDmg: {
+    }],
+    ['shockDmg', {
         text: 'Increased Shock Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    shockDmgResist: {
+    }],
+    ['shockDmgResist', {
         text: 'Shock Damage Resistance',
-        value: 0,
         valueType: 'percent',
         group: 'defense'
-    },
-    splashDmg: {
+    }],
+    ['splashDmg', {
         text: 'Increased Splash Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    splashDmgReduction: {
+    }],
+    ['splashDmgReduction', {
         text: 'Splash Damage Reduction',
-        value: 0,
         valueType: 'percent',
         group: 'defense'
-    },
-    statusEffectChance: {
+    }],
+    ['statusEffectChance', {
         text: 'Increased Status Effect Chance',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    statusEffectDmg: {
+    }],
+    ['statusEffectDmg', {
         text: 'Increased Status Effect Damage',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    statusEffectDuration: {
+    }],
+    ['statusEffectDuration', {
         text: 'Increased Status Effect Duration',
-        value: 0,
         valueType: 'percent',
         group: 'offense'
-    },
-    weaponSwapSpeed: {
+    }],
+    ['weaponSwapSpeed', {
         text: 'Increased Weapon Swap Speed',
-        value: 0,
         valueType: 'percent',
         group: 'utility'
-    },
-}
+    }],
+])

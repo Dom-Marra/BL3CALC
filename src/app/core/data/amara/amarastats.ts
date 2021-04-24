@@ -1,28 +1,25 @@
 import { CharacterStat } from "../../models/characterstat.model";
 
-export const AMARA_STATS: {[key: string]: CharacterStat} = {
-    rushStackEffectiveness: {
+export const AMARA_STATS: Map<string, CharacterStat> = new Map([
+   [ 'rushStackEffectiveness', {
         text: "Rush Stack Effectiveness",
-        value: 0,
         valueType: "percent",
-        group: 'utility'
-    },
-    maxRushStacks: {
+        group: 'utility',
+        isMultiplier: true
+    }],
+    ['maxRushStacks', {
         text: "Max Rush Stacks",
-        value: 0,
         valueType: "flat",
         group: 'utility'
-    },
-    maxSamsaraStacks: {
+    }],
+    ['maxSamsaraStacks', {
         text: "Max Samsara Stacks",
-        value: 0,
         valueType: "flat",
         group: 'utility'
-    },
-    maxMindfulnessStacks: {
+    }],
+    ['maxMindfulnessStacks', {
         text: "Max Mindfulness Stacks",
-        value: 0,
         valueType: "flat",
         group: 'utility'
-    }
-}
+    }]
+])

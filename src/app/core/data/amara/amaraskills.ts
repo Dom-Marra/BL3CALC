@@ -3,10 +3,6 @@ import { ActionSkill } from "../../classes/actionskill";
 import { NormalSkill } from "../../classes/normalskill";
 import { OtherSkill } from "../../classes/otherskill";
 import { Skill } from "../../classes/skill";
-import { BASE_CHARACTER_CONDITIONALS } from "../basecharacterconditionals";
-import { BASE_CHARACTER_STATS } from "../basecharacterstats";
-import { AMARA_CONDITIONALS } from "./amaraconditionals";
-import { AMARA_STATS } from "./amarastats";
 
 export const ORANGE_SKILLS: Array<Skill> = [
     new ActionSkill("PHASEGRASP",
@@ -86,7 +82,7 @@ export const ORANGE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Allure.png', 3, 2, 1, 10, "red",
         [{
             name: "Action Skill Damage",
-            stats: [BASE_CHARACTER_STATS.actionSkillDmg],
+            stats: [{ key: 'actionSkillDmg' }],
             textValues: ["-20%"],
             values: [-20]
         },
@@ -104,13 +100,13 @@ export const ORANGE_SKILLS: Array<Skill> = [
         },
         {
             name: "Status Effect Damage",
-            stats: [BASE_CHARACTER_STATS.statusEffectDmg],
+            stats: [{ key: 'statusEffectDmg' }],
             textValues: ["+4%", "+8%", "+12%", "+16%", "+20%"],
             values: [4, 8, 12, 16, 20]
         },
         {
             name: "Status Effect Duration:",
-            stats: [BASE_CHARACTER_STATS.statusEffectDuration],
+            stats: [{ key: 'statusEffectDuration' }],
             textValues: ["+20%", "+40%", "+60%", "+80%", "+100%"],
             values: [20, 40, 60, 80, 100]
         }]),
@@ -119,13 +115,13 @@ export const ORANGE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/SteadyHands.png', 1, 0, 3, 0, "red",
         [{
             name: "Handling",
-            stats: [BASE_CHARACTER_STATS.handling],
+            stats: [{ key: 'handling' }],
             textValues: ["+14%", "+24%", "+32%"],
             values: [14, 24, 32]
         },
         {
             name: "Accuracy",
-            stats: [BASE_CHARACTER_STATS.accuracy],
+            stats: [{ key: 'accuracy' }],
             textValues: ["+13%", "+23%", "+31%"],
             values: [13, 23, 31]
         }]),
@@ -141,13 +137,13 @@ export const ORANGE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Tempest.png', 0, 1, 5, 5, "red",
         [{
             name: "Shock Damage",
-            stats: [BASE_CHARACTER_STATS.shockDmg],
+            stats: [{ key: 'shockDmg' }],
             textValues: ["+8.0%", "+16.0%", "+24.0%", "+32.0%", "+40.0%"],
             values: [8, 16, 24, 32, 40]
         },
         {
             name: "Elemental Damage",
-            stats: [BASE_CHARACTER_STATS.elementalDmg],
+            stats: [{ key: 'elementalDmg' }],
             textValues: ["+6.0%", "+12.0%", "+18.0%", "+24.0%", "+30.0%"],
             values: [6, 12, 18, 24, 30]
         }]),
@@ -156,7 +152,7 @@ export const ORANGE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/IlluminatedFist.png', 1, 1, 1, 5, "red",
         [{
             name: "Melee Damage",
-            stats: [BASE_CHARACTER_STATS.meleeDmg],
+            stats: [{ key: 'meleeDmg' }],
             textValues: ["+75.0%"],
             values: [75]
         }]),
@@ -174,8 +170,8 @@ export const ORANGE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Dread.png', 1, 2, 1, 10, "red",
         [{
             name: "Gun Damage",
-            stats: [BASE_CHARACTER_STATS.gunDmg],
-            conditionals: [AMARA_CONDITIONALS.graspedAnEnemy],
+            stats: [{ key: 'gunDmg' }],
+            conditionals: ['graspedAnEnemy'],
             textValues: ["+15%"],
             values: [15]
         },
@@ -229,8 +225,8 @@ export const ORANGE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Sustainment.png', 0, 4, 5, 20, "red",
         [{
             name: "Life Steal",
-            stats: [BASE_CHARACTER_STATS.lifeSteal],
-            conditionals: [BASE_CHARACTER_CONDITIONALS.dealtEleDmgWithElementalWeapon],
+            stats: [{ key: 'lifeSteal' }],
+            conditionals: ['dealtEleDmgWithElementalWeapon'],
             textValues: ["4% of damage dealt", "8% of damage dealt", "12% of damage dealt", "16% of damage dealt", "20% of damage dealt"],
             values: [4, 8, 12, 16, 20]
         }]),
@@ -247,7 +243,7 @@ export const ORANGE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/ForcefulExpression.png', 1, 5, 1, 25, "red",
         [{
             name: "Bonus Elemental Damage",
-            stats: [BASE_CHARACTER_STATS.bonusElementalDmg],
+            stats: [{ key: 'bonusElementalDmg' }],
             textValues: ["18.0% of Damage Dealt"],
             values: [18]
         }])
@@ -334,20 +330,28 @@ export const BLUE_SKILLS: Array<Skill> = [
         },
         {
             name: "Cooldown",
-            textValues: ["+15%"]
+            stats: [{key: 'actionSkillCooldown'}],
+            textValues: ["+15%"],
+            values: [15]
         },
         {
             name: "Damage",
             textValues: ["-25%"]
         }]),
     new NormalSkill("DO HARM",
-        "Killing an enemy grants Amara a stack of Rush. Activating her Action Skill consumes all Rush stacks." +
+        "Killing an enemy grants Amara a stack of Rush. Activating her Action Skill consumes all Rush stacks. " +
         "For every stack of Rush consumed, Amara's Action Skill Damage is temporarily increased.",
         'assets/images/amara/skills/DoHarm.png', 0, 0, 5, 0, "blue",
         [{
+            name: "Max Rush Stacks",
+            stats: [{ key: 'maxRushStacks', isBaseStackValue: true }],
+            textValues: ["10"],
+            values: [10]
+        },
+        {
             name: "Action Skill Damage",
-            stats: [BASE_CHARACTER_STATS.actionSkillDmg],
-            conditionals: [AMARA_CONDITIONALS.rushStackEffectiveness, AMARA_CONDITIONALS.rushStacksConsumed],
+            stats: [{ key: 'actionSkillDmg', multipliers: ['rushStackEffectiveness'] }],
+            conditionals: ['rushStacksConsumed'],
             textValues: ["+0.9% per stack consumed", "+1.8% per stack consumed", "+2.7% per stack consumed", "+3.6% per stack consumed", "+4.5% per stack consumed"],
             values: [0.9, 1.8, 2.7, 3.6, 4.5]
         },
@@ -360,19 +364,19 @@ export const BLUE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/FastHands.png', 1, 0, 3, 0, "blue",
         [{
             name: "Reload Speed",
-            stats: [BASE_CHARACTER_STATS.reloadSpeed],
+            stats: [{ key: 'reloadSpeed' }],
             textValues: ["+7%", "+14%", "+19%"],
             values: [7, 14, 19]
         },
         {
             name: "Weapon Swap Speed",
-            stats: [BASE_CHARACTER_STATS.weaponSwapSpeed],
+            stats: [{ key: 'weaponSwapSpeed' }],
             textValues: ["+16%", "+28%", "+36%"],
             values: [16, 28, 36]
         },
         {
             name: "Mode Switch Speed:",
-            stats: [BASE_CHARACTER_STATS.modeSwitchSpeed],
+            stats: [{ key: 'modeSwitchSpeed' }],
             textValues: ["+16%", "+28%", "+36%"],
             values: [16, 25, 36]
         }]),
@@ -382,9 +386,15 @@ export const BLUE_SKILLS: Array<Skill> = [
         "For every stack of Rush consumed, Amara's Status Effect Chance is temporarily increased.",
         'assets/images/amara/skills/ViolentTapestry.png', 2, 0, 5, 0, "blue",
         [{
+            name: "Max Rush Stacks",
+            stats: [{ key: 'maxRushStacks', isBaseStackValue: true }],
+            textValues: ["10"],
+            values: [10]
+        },
+        {
             name: "Effect Chance",
-            stats: [BASE_CHARACTER_STATS.statusEffectChance],
-            conditionals: [AMARA_CONDITIONALS.rushStackEffectiveness, AMARA_CONDITIONALS.rushStacksConsumed],
+            stats: [{ key: 'statusEffectChance', multipliers: ['rushStackEffectiveness'] }],
+            conditionals: ['rushStacksConsumed'],
             textValues: ["+0.6% per stack consumed", "+1.2% per stack consumed", "+1.8% per stack consumed", "+2.4% per stack consumed", "+3.0% per stack consumed"],
             values: [0.6, 1.2, 1.8, 2.4, 3.0]
         },
@@ -398,15 +408,15 @@ export const BLUE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Alacrity.png', 0, 1, 5, 5, "blue",
         [{
             name: "Reload Speed",
-            stats: [BASE_CHARACTER_STATS.reloadSpeed],
-            conditionals: [AMARA_CONDITIONALS.rushStackEffectiveness, AMARA_CONDITIONALS.rushStacks],
+            stats: [{ key: 'reloadSpeed', multipliers: ['rushStackEffectiveness'] }],
+            conditionals: ['rushStacks'],
             textValues: ["+0.4% per stack", "+0.8% per stack", "+1.2% per stack", "+1.6% per stack", "+2.0% per stack"],
             values: [0.4, 0.8, 1.2, 1.6, 2.0]
         },
         {
             name: "Reload Speed",
-            stats: [BASE_CHARACTER_STATS.reloadSpeed],
-            conditionals: [AMARA_CONDITIONALS.rushStackEffectiveness, AMARA_CONDITIONALS.rushStacksConsumed],
+            stats: [{ key: 'reloadSpeed', multipliers: ['rushStackEffectiveness'] }],
+            conditionals: ['rushStacksConsumed'],
             textValues: ["+0.6% after action skill use", "+1.2% after action skill use", "+1.8% after action skill use", "+2.3% after action skill use", "+2.9% after action skill use"],
             values: [0.6, 1.2, 1.8, 2.3, 2.9]
         },
@@ -420,15 +430,15 @@ export const BLUE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Transcend.png', 1, 1, 3, 5, "blue",
         [{
             name: "Accuracy",
-            stats: [BASE_CHARACTER_STATS.accuracy],
-            conditionals: [BASE_CHARACTER_CONDITIONALS.usedActionSkill],
+            stats: [{ key: 'accuracy' }],
+            conditionals: ['usedActionSkill'],
             textValues: ["+17%", "+29%", "+38%"],
             values: [17, 29, 38]
         },
         {
             name: "Critical Hit Damage",
-            stats: [BASE_CHARACTER_STATS.criticalHitDmg],
-            conditionals: [BASE_CHARACTER_CONDITIONALS.usedActionSkill],
+            stats: [{ key: 'criticalHitDmg' }],
+            conditionals: ['usedActionSkill'],
             textValues: ["+9%", "+18%", "+27%"],
             values: [9, 18, 27]
         },
@@ -441,7 +451,7 @@ export const BLUE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Restless.png', 2, 1, 5, 5, "blue",
         [{
             name: "Cooldown Rate",
-            stats: [BASE_CHARACTER_STATS.actionSkillCooldown],
+            stats: [{ key: 'actionSkillCooldown' }],
             textValues: ["+5%", "+10%", "+15%", "+20%", "+25%"],
             values: [5, 10, 15, 20, 25]
         }]),
@@ -473,13 +483,13 @@ export const BLUE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/FromRest.png', 0, 3, 3, 15, "blue",
         [{
             name: "Fire Rate",
-            stats: [BASE_CHARACTER_STATS.fireRate],
+            stats: [{ key: 'fireRate' }],
             textValues: ["+4%", "+8%", "+12%"],
             values: [4, 8, 12]
         },
         {
             name: "Charge Time",
-            stats: [BASE_CHARACTER_STATS.chargeTime],
+            stats: [{ key: 'chargeTime' }],
             textValues: ["+21%", "+34%", "+44%"],
             values: [21, 34, 44]
         }]),
@@ -489,8 +499,8 @@ export const BLUE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/LaidBare.png', 1, 3, 3, 15, "blue",
         [{
             name: "Damage Increase",
-            stats: [BASE_CHARACTER_STATS.dmgIncrease],
-            conditionals: [BASE_CHARACTER_CONDITIONALS.enemyDamagedByAS],
+            stats: [{ key: 'dmgIncrease' }],
+            conditionals: ['enemyDamagedByAS'],
             textValues: ["+8.3%", "+16.7%", "+25.0%"],
             values: [8.3, 16.7, 25]
         },
@@ -504,14 +514,14 @@ export const BLUE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Wrath.png', 2, 3, 3, 15, "blue",
         [{
             name: "Gun Damage",
-            stats: [BASE_CHARACTER_STATS.gunDmg],
+            stats: [{ key: 'gunDmg' }],
             textValues: ["+6.7%", "+13.3%", "+20.0%"],
             values: [6.7, 13.3, 20]
         },
         {
             name: "Gun Damage",
-            stats: [BASE_CHARACTER_STATS.gunDmg],
-            conditionals: [BASE_CHARACTER_CONDITIONALS.usedActionSkill],
+            stats: [{ key: 'gunDmg' }],
+            conditionals: ['usedActionSkill'],
             textValues: ["+6.7% after action skill use", "+13.3% after action skill use", "+20.0% after action skill use"],
             values: [6.7, 13.3, 20]
         },
@@ -534,7 +544,7 @@ export const BLUE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Awakening.png', 2, 4, 3, 20, "blue",
         [{
             name: "Rush Stack Effectiveness",
-            stats: [AMARA_STATS.rushStackEffectiveness],
+            stats: [{ key: 'rushStackEffectiveness' }],
             textValues: ["+10%", "+20%", "+30%"],
             values: [10, 20, 30]
         }]),
@@ -546,7 +556,7 @@ export const BLUE_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Avatar.png', 1, 5, 1, 25, "blue",
         [{
             name: "Bonus Rush Stacks",
-            stats: [AMARA_STATS.maxRushStacks],
+            stats: [{ key: 'maxRushStacks' }],
             textValues: ['10'],
             values: [10]
         }])
@@ -603,7 +613,7 @@ export const GREEN_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Revelation.png', 3, 2, 1, 10, "green",
         [{
             name: "Action Skill Damage",
-            stats: [BASE_CHARACTER_STATS.actionSkillDmg],
+            stats: [{ key: 'actionSkillDmg' }],
             textValues: ["-15%"]
         },
         {
@@ -632,7 +642,7 @@ export const GREEN_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/RootToRise.png', 0, 0, 5, 0, "green",
         [{
             name: "Max Health",
-            stats: [BASE_CHARACTER_STATS.maxHealth],
+            stats: [{ key: 'maxHealth' }],
             textValues: ["+8%", "+16%", "+24%", "+32%", "+40%"],
             values: [8, 16, 24, 32, 40]
         }]),
@@ -642,9 +652,9 @@ export const GREEN_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/PersonalSpace.png', 1, 0, 3, 0, "green",
         [{
             name: "Bonus Damage",
-            stats: [BASE_CHARACTER_STATS.bonusDmg],
+            stats: [{ key: 'bonusDmg' }],
             textValues: ["up to 18.0% of damage dealt", "up to 36.0% of damage dealt", "up to 54.0% of damage dealt"],
-            values: [18, 36, 24]
+            values: [18, 36, 54]
         }]),
     new NormalSkill("CLARITY",
         "Amara constantly regenerates health. The lower her health, " +
@@ -653,8 +663,8 @@ export const GREEN_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Clarity.png', 2, 0, 5, 0, "green",
         [{
             name: "Health Regeneration",
-            stats: [BASE_CHARACTER_STATS.healthRegen_missingHealth],
-            conditionals: [BASE_CHARACTER_CONDITIONALS.usedActionSkill],
+            stats: [{ key: 'healthRegen_missingHealth' }],
+            conditionals: ['usedActionSkill'],
             textValues: ["up to +1.00% Missing Health/sec", "up to +2.00% Missing Health/sec", "up to +3.00% Missing Health/sec", "up to +4.00% Missing Health/sec", "up to +5.00% Missing Health/sec"],
             values: [1, 2, 3, 4, 5]
         },
@@ -667,13 +677,13 @@ export const GREEN_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/ArmsDeal.png', 0, 1, 5, 5, "green",
         [{
             name: "Splash Damage",
-            stats: [BASE_CHARACTER_STATS.splashDmg],
+            stats: [{ key: 'splashDmg' }],
             textValues: ["+4%", "+8%", "+12%", "+16%", "+20%"],
             values: [4, 8, 12, 16, 20]
         },
         {
             name: "Splash Damage Reduction",
-            stats: [BASE_CHARACTER_STATS.splashDmgReduction],
+            stats: [{ key: 'splashDmgReduction' }],
             textValues: ["+12%", "+21%", "+28%", "+35%", "+40%"],
             values: [12, 21, 28, 35, 40]
         }]),
@@ -684,21 +694,21 @@ export const GREEN_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Samsara.png', 1, 1, 3, 5, "green",
         [{
             name: "Gun Damage",
-            stats: [BASE_CHARACTER_STATS.gunDmg],
-            conditionals: [AMARA_CONDITIONALS.samsaraStacks],
+            stats: [{ key: 'gunDmg' }],
+            conditionals: ['samsaraStacks'],
             textValues: ["+1.7% per enemy damaged", "+3.3% per enemy damaged", "+5.0% per enemy damaged"],
             values: [1.7, 3.3, 5.0]
         },
         {
             name: "Health Regeneration",
-            stats: [BASE_CHARACTER_STATS.healthRegen_maxHealth],
-            conditionals: [AMARA_CONDITIONALS.samsaraStacks],
+            stats: [{ key: 'healthRegen_maxHealth' }],
+            conditionals: ['samsaraStacks'],
             textValues: ["+1.7% of Max Health / sec. per stack", "+3.3% of Max Health / sec. per stack", "+5.0% of Max Health / sec. per stack"],
             values: [1.7, 3.3, 5.0]
         },
         {
             name: "Max Samsara Stacks",
-            stats: [AMARA_STATS.maxSamsaraStacks],
+            stats: [{ key: 'maxSamsaraStacks' }],
             textValues: ['5'],
             values: [5]
         },
@@ -712,8 +722,8 @@ export const GREEN_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/HelpingHands.png', 2, 1, 5, 5, "green",
         [{
             name: "Damage Reduction",
-            stats: [BASE_CHARACTER_STATS.dmgReduction],
-            conditionals: [BASE_CHARACTER_CONDITIONALS.usedActionSkill],
+            stats: [{ key: 'dmgReduction' }],
+            conditionals: ['usedActionSkill'],
             textValues: ["+12.0%", "+21.0%", "+28.0%", "+35.0%", "+40.0%"],
             values: [12, 21, 28, 35, 40]
         },
@@ -729,21 +739,21 @@ export const GREEN_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Mindfulness.png', 0, 2, 3, 10, "green",
         [{
             name: "Shield Regeneration Delay",
-            stats: [BASE_CHARACTER_STATS.shieldRegenDelay],
-            conditionals: [AMARA_CONDITIONALS.mindfulnessStacks],
+            stats: [{ key: 'shieldRegenDelay' }],
+            conditionals: ['mindfulnessStacks'],
             textValues: ["-9.0%", "-17.0%", "-23.0%"],
             values: [-9, -17, -23]
         },
         {
             name: "Movement Speed",
-            stats: [BASE_CHARACTER_STATS.movementSpeed],
-            conditionals: [AMARA_CONDITIONALS.mindfulnessStacks],
+            stats: [{ key: 'movementSpeed' }],
+            conditionals: ['mindfulnessStacks'],
             textValues: ["1.4%", "2.8%", "4.2%"],
             values: [1.4, 2.8, 4.2]
         },
         {
             name: "Max Mindfulness Stacks",
-            stats: [AMARA_STATS.maxMindfulnessStacks],
+            stats: [{ key: 'maxMindfulnessStacks' }],
             textValues: ['25'],
             values: [25]
         },
@@ -757,8 +767,8 @@ export const GREEN_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/FindYourCenter.png', 1, 2, 1, 10, "green",
         [{
             name: "Melee Damage",
-            stats: [BASE_CHARACTER_STATS.meleeDmg],
-            conditionals: [BASE_CHARACTER_CONDITIONALS.usedActionSkill],
+            stats: [{ key: 'meleeDmg' }],
+            conditionals: ['usedActionSkill'],
             textValues: ["+100%"],
             values: [100]
         },
@@ -776,8 +786,8 @@ export const GREEN_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Vigor.png', 2, 2, 3, 10, "green",
         [{
             name: "Team Movement Speed",
-            stats: [BASE_CHARACTER_STATS.movementSpeed],
-            conditionals: [BASE_CHARACTER_CONDITIONALS.activateKillSkills],
+            stats: [{ key: 'movementSpeed' }],
+            conditionals: ['activateKillSkills'],
             textValues: ["+3.3%", "+6.7%", "+10.0%"],
             values: [3.3, 6.7, 10]
         },
@@ -791,13 +801,13 @@ export const GREEN_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/OneWithNature.png', 1, 3, 5, 15, "green",
         [{
             name: "Max Health",
-            stats: [BASE_CHARACTER_STATS.maxHealth],
+            stats: [{ key: 'maxHealth' }],
             textValues: ["+5.0%", "+10.0%", "+15.0%", "+20.0%", "+25.0%"],
             values: [5, 10, 15, 20, 25]
         },
         {
             name: "Elemental Damage Reduction",
-            stats: [BASE_CHARACTER_STATS.elementalDmgReduction],
+            stats: [{ key: 'elementalDmgReduction' }],
             textValues: ["+12.0%", "+21.0%", "+28.0%", "+35.0%", "+40.0%"],
             values: [12, 21, 28, 35, 40]
         }]),
@@ -816,15 +826,15 @@ export const GREEN_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/JabCross.png', 1, 4, 5, 20, "green",
         [{
             name: "Gun Damage",
-            stats: [BASE_CHARACTER_STATS.gunDmg],
-            conditionals: [BASE_CHARACTER_CONDITIONALS.dealtMeeleDmg],
+            stats: [{ key: 'gunDmg' }],
+            conditionals: ['dealtMeeleDmg'],
             textValues: ["+3%", "+6%", "+9%", "+12%", "+15%"],
             values: [3, 6, 9, 12, 15]
         },
         {
             name: "Action Skill Damage",
-            stats: [BASE_CHARACTER_STATS.actionSkillDmg],
-            conditionals: [BASE_CHARACTER_CONDITIONALS.dealtMeeleDmg],
+            stats: [{ key: 'actionSkillDmg' }],
+            conditionals: ['dealtMeeleDmg'],
             textValues: ["+15%", "+30%", "+45%", "+60%", "+75%"],
             values: [15, 30, 45, 60, 75]
         },
@@ -853,7 +863,7 @@ export const GREEN_SKILLS: Array<Skill> = [
         'assets/images/amara/skills/Blitz.png', 1, 5, 1, 25, "green",
         [{
             name: "Melee Damage",
-            stats: [BASE_CHARACTER_STATS.meleeDmg],
+            stats: [{ key: 'meleeDmg' }],
             textValues: ["+100%"],
             values: [100]
         },

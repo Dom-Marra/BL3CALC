@@ -1,36 +1,27 @@
 import { Conditional } from "../../models/conditional.model";
 
-export const AMARA_CONDITIONALS: {[key: string]: Conditional} = {
-    rushStacksConsumed: {
-        isActive: false,
-        text: "Consumed rush stacks?",
-        numberInput: true,
-        currentValue: 0,
-        maxValue: 0,
-    },
-    rushStacks: {
-        isActive: false,
-        text: "Using rush stacks?",
-        numberInput: true,
-        currentValue: 0,
-        maxValue: 0
-    },
-    samsaraStacks: {
-        isActive: false,
-        text: "Using samsara stacks?",
-        numberInput: true,
-        currentValue: 0,
-        maxValue: 0,
-    },
-    mindfulnessStacks: {
-        isActive: false,
-        text: "Using mindfulness stacks?",
-        numberInput: true,
-        currentValue: 0,
-        maxValue: 0
-    },
-    graspedAnEnemy: {
-        isActive: false,
+export const AMARA_CONDITIONALS: Map<string, Conditional> = new Map([
+    ['rushStacksConsumed', {
+        text: "Amount of consumed rush stacks",
+        usesStacks: true,
+        stackKey: 'maxRushStacks'
+    }],
+    ['rushStacks', {
+        text: "Amount of rush stacks",
+        usesStacks: true,
+        stackKey: 'maxRushStacks'
+    }],
+    ['samsaraStacks', {
+        text: "Amount of samsara stacks",
+        usesStacks: true,
+        stackKey: 'samsaraStacks'
+    }],
+    ['mindfulnessStacks', {
+        text: "Amount of mindfulness stacks",
+        usesStacks: true,
+        stackKey: 'maxMindfulnessStacks'
+    }],
+    ['graspedAnEnemy', {
         text: "Have you grasped an enemy?"
-    },
-}
+    }]
+])
