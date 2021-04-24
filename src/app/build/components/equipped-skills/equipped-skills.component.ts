@@ -11,7 +11,6 @@ export class EquippedSkillsComponent implements OnInit {
 
   @Input() set equippedSkills(equippedSkills: Array<EquippedSkill>) {
     this._equippedSkills = equippedSkills;
-    console.log(equippedSkills)
   }
 
   public _equippedSkills: Array<EquippedSkill>;
