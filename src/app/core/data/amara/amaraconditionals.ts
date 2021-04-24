@@ -23,5 +23,8 @@ export const AMARA_CONDITIONALS: Map<string, Conditional> = new Map([
     }],
     ['graspedAnEnemy', {
         text: "Have you grasped an enemy?"
+    }],
+    ['dealtEleDmgWithElementalWeapon', {
+        text: "Dealing weapon elemental damage"
     }]
 ])
