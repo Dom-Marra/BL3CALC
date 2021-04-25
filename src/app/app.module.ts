@@ -3,18 +3,18 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
-import { FeatherModule } from 'angular-feather';
-import { Menu, X } from 'angular-feather/icons';
+// import { FeatherModule } from 'angular-feather';
+// import { Menu, X } from 'angular-feather/icons';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { ApiKey } from './api-key';
 
-const icons = {
-  Menu,
-  X
-}
+
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -26,10 +26,7 @@ const icons = {
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
-    FeatherModule.pick(icons)
-  ],
-  exports: [
-    FeatherModule
+    AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [ApiKey],
   bootstrap: [AppComponent]
