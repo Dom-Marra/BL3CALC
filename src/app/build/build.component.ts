@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Amara } from '../core/classes/amara';
 import { Character } from '../core/classes/character';
 // import { Fl4k } from '../core/classes/fl4k';
@@ -8,6 +7,9 @@ import { Character } from '../core/classes/character';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { CharacterService } from './services/character.service';
+import { FirebaseCharactersService } from '../core/services/firebase-characters.service';
+import { BaseCharacterModel } from '../core/models/basecharacter.model';
+import { CharacterModel } from '../core/models/character.model';
 
 @Component({
   selector: 'app-build',
@@ -16,16 +18,39 @@ import { CharacterService } from './services/character.service';
 })
 export class BuildComponent implements OnInit {
 
-  @ViewChild('drawerContent') drawerContent: ElementRef;
+  @ViewChild('drawerContent') drawerContent: ElementRef;    //Mat drawer
 
-  public activePage: 'trees' | 'stats' = 'trees';
+  public activePage: 'trees' | 'stats' = 'trees';          //The active page
 
-  public mobileQuery: Observable<BreakpointState>;
-  public pageNavOpened: boolean = false;
-  public character: Character = null;
+  public mobileQuery: Observable<BreakpointState>;         //Determines page breakpoints
+  public pageNavOpened: boolean = false;                   //Page navigation state
+  public character: Character = null;                      //Current Character
 
-  constructor(private breakObs: BreakpointObserver, private characterService: CharacterService) { 
+  private baseCharacterData: BaseCharacterModel;           //Base Character Data
+  private amaraData: CharacterModel;                       //Amara Data
+  private fl4kData: CharacterModel;                        //FL4K Data
+  private mozeData: CharacterModel;                        //Moze Data
+  private zaneData: CharacterModel;                        //Zane Data
+
+
+  constructor(
+    private breakObs: BreakpointObserver,
+    private characterService: CharacterService,
+    private firebase: FirebaseCharactersService
+  ) {
     this.mobileQuery = this.breakObs.observe('(max-width: 730px)');
+
+    this.firebase.getAllCharacters().subscribe(characters => {
+      characters.forEach(doc => {
+        if (doc.id == 'base') this.baseCharacterData = doc.data() as BaseCharacterModel;
+        else if (doc.id == 'amara') this.amaraData = doc.data() as CharacterModel;
+        else if (doc.id == 'fl4k') this.fl4kData = doc.data() as CharacterModel;
+        else if (doc.id == 'moze') this.mozeData = doc.data() as CharacterModel;
+        else if (doc.id == 'zane') this.zaneData = doc.data() as CharacterModel;
+      });
+
+      this.setCharacter('amara');
+    });
   }
 
   ngOnInit() {
@@ -37,27 +62,31 @@ export class BuildComponent implements OnInit {
 
     this.characterService.currentCharacter.subscribe(character => {
       if (character) this.character = character;
-    })
-
-    this.setCharacter('amara');
+    });
   }
 
+  /**
+   * Sets the character based on the selected type
+   * 
+   * @param characterType 
+   *        string: type of the character
+   */
   public setCharacter(characterType: string) {
-    switch(characterType) {
+    switch (characterType) {
       case 'amara': {
-        this.characterService.currentCharacter.next(new Amara(1, 1, 1));
+        this.characterService.currentCharacter.next(new Amara(this.baseCharacterData, this.amaraData));
         break;
-      // } case 'fl4k': {
-      //   this.characterService.currentCharacter.next(new Fl4k(1, 2, 1));
-      //   break;
-      // } case 'moze': {
-      //   this.characterService.currentCharacter.next(new Moze(2, 2, 0));
-      //   break;
-      // } case 'zane': {
-      //   this.characterService.currentCharacter.next(new Zane(2, 4, 0));
-      //   break;
+        // } case 'fl4k': {
+        //   this.characterService.currentCharacter.next(new Fl4k(1, 2, 1));
+        //   break;
+        // } case 'moze': {
+        //   this.characterService.currentCharacter.next(new Moze(2, 2, 0));
+        //   break;
+        // } case 'zane': {
+        //   this.characterService.currentCharacter.next(new Zane(2, 4, 0));
+        //   break;
       } default: {
-        this.characterService.currentCharacter.next(new Amara(1, 1, 1));
+        this.characterService.currentCharacter.next(new Amara(this.baseCharacterData, this.amaraData));
       }
     }
   }
