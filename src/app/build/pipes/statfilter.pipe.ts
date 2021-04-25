@@ -7,12 +7,12 @@ import { CharacterStat } from 'src/app/core/models/characterstat.model';
 })
 export class StatfilterPipe implements PipeTransform {
 
-  transform(stats: Map<string, CharacterStat>, group: string): Map<string, CharacterStat> {
+  transform(stats: {[key: string]: CharacterStat}, group: string): Map<string, CharacterStat> {
     let groupedStats: Map<string, CharacterStat> = new Map();
 
-    stats.forEach((val, key) => {
-      if (val.group == group && val.value && val.value != 0) groupedStats.set(key, val);  
-    });
+    for (let key in stats) {
+      if (stats[key].group == group && stats[key].value && stats[key].value != 0) groupedStats.set(key, stats[key]);
+    }
 
     return groupedStats.size > 0 ? groupedStats : null;
   }
