@@ -88,7 +88,7 @@
         <h3>Configurations</h3>
 
         <div id="config-box">
-            <ng-container *ngFor="let conditional of character.getConditionals() | keyvalue">
+            <ng-container *ngFor="let conditional of character.conditionals | keyvalue">
                 <div class="config" *ngIf="character.conditionalsInUse.has(conditional.key)" [style.order]="conditional.value.usesStacks ? 1 : 0">
                     <mat-slide-toggle 
                         color="primary" 
@@ -104,7 +104,7 @@
                             matInput
                             digitsonly 
                             defaultZero="true" 
-                            [maxValue]="this.character.getStats().get(conditional.value.stackKey)?.value ? this.character.getStats().get(conditional.value.stackKey).value : null" 
+                            [maxValue]="this.character.stats[conditional.value.stackKey]?.value ? this.character.stats[conditional.value.stackKey].value : null" 
                             [value]="conditional.value.value ? conditional.value.value : 0"
                             (change)="onConditionalChange(conditional.value, conditional.key, null, $event.target.value)" 
                         />
