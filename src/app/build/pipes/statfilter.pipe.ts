@@ -14,7 +14,7 @@ export class StatfilterPipe implements PipeTransform {
       if (val.group == group && val.value && val.value != 0) groupedStats.set(key, val);  
     });
 
-    return groupedStats;
+    return groupedStats.size > 0 ? groupedStats : null;
   }
 
 }
