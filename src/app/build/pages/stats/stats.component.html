@@ -1,19 +1,20 @@
 <div id="stats-page">
     <div id="stats" class="stats-page-item">
+        
         <app-edge-box
-            color="#358ab0"
-            class="utility stat-container"
+            theme="accent"
+            class="offensive stat-container"
             edgeRatio="0.1"
             minEdge="20"
         >
-            <h3>Utility</h3>
-            <table>
+            <h3>Offensive</h3>
+            <table *ngIf="(character.stats | statfilter:'offense') as offenseStats">
                 <thead>
                     <th>Name</th>
                     <th>Value</th>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let stat of (character.stats | statfilter:'utility') | keyvalue">
+                    <tr *ngFor="let stat of offenseStats | keyvalue">
                         <td>
                             {{stat.value.text}}
                         </td>
@@ -25,20 +26,21 @@
             </table>
         </app-edge-box>
 
+        
         <app-edge-box
-            color="#69a624"
+            theme="accent"
             class="defensive stat-container"
             edgeRatio="0.1"
             minEdge="20"
         >
             <h3>Defensive</h3>
-            <table>
+            <table *ngIf="(character.stats | statfilter:'defense') as defenseStats">
                 <thead>
                     <th>Name</th>
                     <th>Value</th>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let stat of (character.stats | statfilter:'defense') | keyvalue">
+                    <tr *ngFor="let stat of defenseStats | keyvalue">
                         <td>
                             {{stat.value.text}}
                         </td>
@@ -51,19 +53,19 @@
         </app-edge-box>
 
         <app-edge-box
-            color="#8a5720"
-            class="offensive stat-container"
+            theme="accent"
+            class="utility stat-container"
             edgeRatio="0.1"
             minEdge="20"
         >
-            <h3>Offensive</h3>
-            <table>
+            <h3>Utility</h3>
+            <table *ngIf="(character.stats | statfilter:'utility') as utilityStats">
                 <thead>
                     <th>Name</th>
                     <th>Value</th>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let stat of (character.stats | statfilter:'offense') | keyvalue">
+                    <tr *ngFor="let stat of utilityStats | keyvalue">
                         <td>
                             {{stat.value.text}}
                         </td>
@@ -75,7 +77,6 @@
             </table>
         </app-edge-box>
     </div>
-        
 
     <app-edge-box
         class="stats-page-item"
