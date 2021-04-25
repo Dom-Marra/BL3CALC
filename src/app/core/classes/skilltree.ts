@@ -1,5 +1,9 @@
+import { TreeModel } from "../models/tree.model";
+import { ActionMod } from "./actionmod";
+import { ActionSkill } from "./actionskill";
 import { Character } from "./character";
 import { NormalSkill } from "./normalskill";
+import { OtherSkill } from "./otherskill";
 import { Skill } from "./skill";
 
 export class SkillTree {
@@ -7,11 +11,27 @@ export class SkillTree {
     private readonly POINTS_PER_PREREQ: number = 5;         //The amount of points needed to get to the next pre-req
     public allocatedPoints: number = 0;                     //Points Allocated in the tree
 
-    constructor(public color: string,                       //Color of the treee
-                public header: string,                      //Path to the tree header image
-                public name: string,                        //Name of the skill tree
-                public skills: Array<Skill>,                //Skills that belong to the skill tree
-                private character: Character) {             //Owner of the tree
+    public skills: Array<Skill> = new Array<Skill>();       //Skills of the tree
+    public name: string;                                    //Name of the tree
+    public image: string;                                   //Tree image
+    public color: string;                                   //Tree Color
+
+    constructor(private treeData: TreeModel, private character: Character) {
+        this.name = this.treeData.name;
+        this.image = this.treeData.image;
+        this.color = this.treeData.color;
+
+        this.treeData.skills.forEach(skill => {             //Populate skills based on data
+            if (skill.type == 'actionmod') {
+                this.skills.push(new ActionMod(skill));
+            } else if (skill.type == 'actionskill') {
+                this.skills.push(new ActionSkill(skill));
+            } else if (skill.type == 'normalskill') {
+                this.skills.push(new NormalSkill(skill));
+            } else if (skill.type == 'otherskill') {
+                this.skills.push(new OtherSkill(skill))
+            }
+        });
     }
 
     /**
@@ -96,44 +116,44 @@ export class SkillTree {
 
         //order the skills based by their pre-req amount
         var skillsOrdered = this.skills.sort((a, b) => {
-            return a.getPreReq() - b.getPreReq();
+            return a.preReq - b.preReq;
         });
 
         //Traverse through ordered skill list
         skillsOrdered.forEach(currentSkill => {
 
             //Analyze when when a skill has an allocation more than 0
-            if (currentSkill.getAllocatedPoints() > 0) {
+            if (currentSkill.allocatedPoints > 0) {
 
                 //Re-assign required skills when the current skill has a higher amount
                 //Add tmp points to extra
                 //reset tmp points
                 //Do check if skill is required based on current info
-                if (currentSkill.getPreReq() > requiredSkill.getPreReq()) {
+                if (currentSkill.preReq > requiredSkill.preReq) {
                     requiredSkill = currentSkill;
                     extraPoints += tmpPoints;
                     tmpPoints = 0;
 
                     //Check that the skill pre-req is not the same as the requiredSkill pre-req
-                    if (skill.getPreReq() != requiredSkill.getPreReq()) {
+                    if (skill.preReq != requiredSkill.preReq) {
 
                         //If the points allocated at this current state (-1 for skill removal adjustment)
                         //is less than what is needed for the required skill pre-req
                         //result to remove is false
-                        if (extraPoints - 1 < requiredSkill.getPreReq()) {
+                        if (extraPoints - 1 < requiredSkill.preReq) {
                             requiredSkillCheck = false;
                         };
                     }
                 }
 
-                if (currentSkill.getPreReq() <= skill.getPreReq()) pointsForPreReq += currentSkill.getAllocatedPoints();
+                if (currentSkill.preReq <= skill.preReq) pointsForPreReq += currentSkill.allocatedPoints;
 
                 //Skill is a pre-req if the difference between it and the current is 5
-                if (currentSkill.getPreReq() - skill.getPreReq() == this.POINTS_PER_PREREQ) requiredForPreReq = true;
+                if (currentSkill.preReq - skill.preReq == this.POINTS_PER_PREREQ) requiredForPreReq = true;
 
                 //Add current skill points to tmp points when its a normal skill
                 if (currentSkill instanceof NormalSkill) {
-                    tmpPoints += currentSkill.getAllocatedPoints();
+                    tmpPoints += currentSkill.allocatedPoints;
                 }
             }
         });
@@ -142,7 +162,7 @@ export class SkillTree {
 
         //The skill is a pre-req and removing a point accross all extra points is less than
         //the next pre-req amount then point removal failure
-        if (requiredForPreReq && (pointsForPreReq - 1 < skill.getPreReq() + this.POINTS_PER_PREREQ)) return false;
+        if (requiredForPreReq && (pointsForPreReq - 1 < skill.preReq + this.POINTS_PER_PREREQ)) return false;
 
         //point can be removed
         return true;
@@ -153,12 +173,12 @@ export class SkillTree {
      */
     public reset() {
         this.skills.sort(function (a, b) {
-            return a.getPreReq() - b.getPreReq();
+            return a.preReq - b.preReq;
         });
 
         for (var i = this.skills.length - 1; i >= 0; i--) {
-            if (this.skills[i].getAllocatedPoints() > 0) {
-                for (var j = this.skills[i].getAllocatedPoints(); j > 0; j--) {
+            if (this.skills[i].allocatedPoints > 0) {
+                for (var j = this.skills[i].allocatedPoints; j > 0; j--) {
                     this.removePoint(this.skills[i]);
                 }
             }

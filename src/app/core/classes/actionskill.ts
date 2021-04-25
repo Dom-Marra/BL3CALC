@@ -1,18 +1,20 @@
-import { SkillEffect } from '../models/skilleffect.model';
+import { SkillModel } from '../models/skill.model';
 import { Skill} from './skill';
 
 export class ActionSkill extends Skill {
 
-    constructor(name: string, 
-        description: string, 
-        image: string, 
-        x: number,
-        y: number, 
-        maxPoints: number, 
-        preReq: number, 
-        color: string, 
-        skillEffects: Array<SkillEffect>) {
-        super(name, description, image, x, y, maxPoints, preReq, color, skillEffects);
+    constructor(skillData: SkillModel) {
+        super(
+            skillData.name, 
+            skillData.description, 
+            skillData.image, 
+            skillData.x, 
+            skillData.y, 
+            skillData.maxPoints, 
+            skillData.preReq,
+            skillData.color, 
+            skillData.skillEffects
+        )
     }
 
     /**
@@ -33,15 +35,15 @@ export class ActionSkill extends Skill {
         if (modification < -1 || modification > 1 || modification == 0) return false;
 
         //not enough pre-req points return false
-        if (allocatedSkillTreePoints < this.getPreReq()) return false;
+        if (allocatedSkillTreePoints < this.preReq) return false;
 
         //At max points and the modification is addition remove a point from the skill
-        if (this.getAllocatedPoints() == this.getMaxPoints() && modification > 0)  {
+        if (this.allocatedPoints == this.maxPoints && modification > 0)  {
             this.removePoint();
         }
 
         //At min points and the modification is subtraction return false
-        if (this.getAllocatedPoints() == this.MIN_POINTS && modification < 0) return false;
+        if (this.allocatedPoints == this.MIN_POINTS && modification < 0) return false;
 
         //Modification successful
         return true;
@@ -55,9 +57,9 @@ export class ActionSkill extends Skill {
      *          string
      */
     getSkillBoxPath(): string {
-        if (this.getAllocatedPoints() == 0) return "assets/images/skilltree/actionSkillBox.png";
+        if (this.allocatedPoints == 0) return "assets/images/skilltree/actionSkillBox.png";
 
-        switch (this.getColor().toLowerCase()) {
+        switch (this.color.toLowerCase()) {
             case 'blue': {
                 return "assets/images/skilltree/actionSkillBoxBlue.png";
             }
