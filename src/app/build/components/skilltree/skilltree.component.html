@@ -1,5 +1,5 @@
 <div class="skilltree-container">
-    <img [src]="skilltree.header" class="skilltree-header-image" />
+    <img [src]="skilltree.image" class="skilltree-header-image" />
     <app-edge-box 
         class="edgebox" 
         [color]="skilltree.color == 'blue' ? '#358ab0' : skilltree.color == 'green' ? '#69a624' : '#8a5720'"
@@ -26,7 +26,7 @@
             [skill]="skill"
         >
             <app-edge-box 
-                *ngIf="skill.getPreReq() <= skilltree.allocatedPoints &&
+                *ngIf="skill.preReq <= skilltree.allocatedPoints &&
                         (skilltree.character.maxActionSkillPoints == 2 && 
                         (isActionSkill(skill) && skilltree.character.equippedSkills[0].actionSkill != skill) ||
 
@@ -49,7 +49,7 @@
                <p class="slot-text">First</p> 
             </app-edge-box>
             <app-edge-box 
-                *ngIf="skill.getPreReq() <= skilltree.allocatedPoints &&
+                *ngIf="skill.prereq <= skilltree.allocatedPoints &&
                         (skilltree.character.maxActionSkillPoints == 2 && 
                         (isActionSkill(skill) && skilltree.character.equippedSkills[1].actionSkill != skill) ||
 
@@ -85,10 +85,10 @@
                 [bottomLeft]="skill.x == -1"
             >
             </app-edge-box>
-            <img [src]="skill.image" class="skill-image" [class.unallocated]="skill.getAllocatedPoints() == 0" [class.untargetable]="skilltree.allocatedPoints < skill.getPreReq()" />
-            <img [src]="skill.getSkillBoxPath()" class="skill-background-image"  [class.untargetable]="skilltree.allocatedPoints < skill.getPreReq()" />
-            <div *ngIf="isNormalSkill(skill)" class="points-container" [style.background-image]="'url(../../../../assets/images/skilltree/pointBox.png)'"  [class.untargetable]="skilltree.allocatedPoints < skill.getPreReq()">
-                <p class="skill-points">{{skill.getAllocatedPoints() + '/' + skill.getMaxPoints()}}</p>
+            <img [src]="skill.image" class="skill-image" [class.unallocated]="skill.allocatedPoints == 0" [class.untargetable]="skilltree.allocatedPoints < skill.prereq" />
+            <img [src]="skill.getSkillBoxPath()" class="skill-background-image"  [class.untargetable]="skilltree.allocatedPoints < skill.prereq" />
+            <div *ngIf="isNormalSkill(skill)" class="points-container" [style.background-image]="'url(../../../../assets/images/skilltree/pointBox.png)'"  [class.untargetable]="skilltree.allocatedPoints < skill.prereq">
+                <p class="skill-points">{{skill.allocatedPoints + '/' + skill.maxPoints}}</p>
             </div>
         </div>
     </div>
