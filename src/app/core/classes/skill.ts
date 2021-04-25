@@ -3,16 +3,16 @@ import { SkillEffect } from "../models/skilleffect.model";
 export abstract class Skill {
     public readonly MIN_POINTS: number = 0;         //min number of points that can be allocated in the skill
 
-    private allocatedPoints: number = 0;            //number of points allocated into the skill
+    public allocatedPoints: number = 0;            //number of points allocated into the skill
     public name: string;                            //Name of the skill
     public description: string;                     //Skill description
     public image: string;                           //Image path
     public x: number;                               //x position of the skill
     public y: number;                               //y position of the skill
-    private maxPoints: number;                      //max number of points that can be allocated in the skill
-    private preReq: number;                         //number of points required on the tree to allocate into this
-    private color: string;                          //The color group this skill belongs to 
-    private skillEffects: Array<SkillEffect>;       //The effects of the skill
+    public maxPoints: number;                      //max number of points that can be allocated in the skill
+    public preReq: number;                         //number of points required on the tree to allocate into this
+    public color: string;                          //The color group this skill belongs to 
+    public skillEffects: Array<SkillEffect>;       //The effects of the skill
 
 
     constructor(name: string,
@@ -48,55 +48,6 @@ export abstract class Skill {
     removePoint(): number {
         this.allocatedPoints--;
         return 0;
-    }
-
-    /**
-     * Returns the pre-req amount of points to allocate into this skill
-     * 
-     * @returns
-     *          number
-     */
-    getPreReq(): number {
-        return this.preReq;
-    }
-
-    /**
-     * Returns the allocated points into this skill
-     * 
-     * @returns
-     *          number
-     */
-    getAllocatedPoints(): number {
-        return this.allocatedPoints;
-    }
-
-    /**
-     * The number of maximum number of points that can be allocated into this skill
-     * @returns
-     *          number
-     */
-    getMaxPoints(): number {
-        return this.maxPoints;
-    }
-
-    /**
-     * Returns the color group this skill belongs to
-     * 
-     * @returns
-     *          string
-     */
-    getColor(): string {
-        return this.color;
-    }
-
-    /**
-     * Returns the description of the skill, which includes its name and effects
-     * 
-     * @returns
-     *          SkillEffects
-     */
-    getSkillEffects(): Array<SkillEffect> {
-        return this.skillEffects;
     }
 
     /**
