@@ -10,7 +10,7 @@ import { CharacterService } from '../../services/character.service';
 })
 export class StatsComponent implements OnInit{
 
-  public character: Character;
+  public character: Character;    //Current Character
   
   constructor(private characterService: CharacterService) { 
   }
@@ -21,6 +21,18 @@ export class StatsComponent implements OnInit{
     });
   }
 
+  /**
+   * Prompts the character to update its stats based on a conditional change
+   * 
+   * @param conditional
+   *        Conditional: the conditional changed 
+   * @param conKey 
+   *        string: the key of the conditional
+   * @param isActive 
+   *        boolean: whether the conditional is active or not
+   * @param value 
+   *        number: value of the stacks on the conditional
+   */
   public onConditionalChange(conditional: Conditional, conKey: string, isActive?: boolean, value?: number) {
     let oldConditional: Conditional = {
       isActive: conditional.isActive,
