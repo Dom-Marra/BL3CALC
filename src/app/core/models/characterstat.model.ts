@@ -4,4 +4,5 @@ export interface CharacterStat {
     group: 'offense' | 'defense' | 'utility';      //group that the stat belongs to
     value?: number;                                //Value of the stat
     isMultiplier?: boolean;
+    isAdditive?: boolean;
 }
