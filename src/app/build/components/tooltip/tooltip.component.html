@@ -2,20 +2,20 @@
     <app-edge-box id="edge-box" theme="accent">
         <div *ngIf="skill" class="skill-effects-container">
             <p class="skill-effects-name">{{skill.name}}&nbsp;&nbsp;&nbsp;
-                <span *ngIf="isNormalSkill(skill)">{{skill.getAllocatedPoints()}}/{{skill.getMaxPoints()}}</span></p>
+                <span *ngIf="isNormalSkill(skill)">{{skill.allocatedPoints}}/{{skill.maxPoints}}</span></p>
             <p class="skill-effects-content" [innerHTML]="skill.description"></p>
-            <div class="skill-effects-content" *ngIf="skill.getAllocatedPoints() > 0">
+            <div class="skill-effects-content" *ngIf="skill.allocatedPoints > 0 && skill.skillEffects.length > 0">
                 <p class="skill-effects-effect">Current Effect: </p>
                 <div *ngFor="let effect of skill.skillEffects; let i = index" [hidden]="effect.hidden">
-                    <span class="name">{{effect.name}}</span>
-                    <span *ngIf="effect.textValues">: {{effect.textValues.length - 1 < skill.getAllocatedPoints() ? effect.textValues[effect.textValues.length - 1] : effect.textValues[skill.getAllocatedPoints() - 1]}}</span>
+                    <span *ngIf="effect.names" class="name">{{effect.names.length - 1 < skill.allocatedPoints ? effect.names[effect.names.length - 1] : effect.names[skill.allocatedPoints - 1]}}</span>
+                    <span *ngIf="effect.textValues">: {{effect.textValues.length - 1 < skill.allocatedPoints ? effect.textValues[effect.textValues.length - 1] : effect.textValues[skill.allocatedPoints - 1]}}</span>
                 </div>
             </div>
-            <div class="skill-effects-content"  *ngIf="skill.getAllocatedPoints() < skill.getMaxPoints() && (isNormalSkill(skill) || skill.getAllocatedPoints() < 1)">
+            <div class="skill-effects-content"  *ngIf="skill.allocatedPoints < skill.maxPoints && (isNormalSkill(skill) || skill.allocatedPoints < 1) && skill.skillEffects.length > 0">
                 <p class="skill-effects-effect">Next Rank: </p>
                 <div *ngFor="let effect of skill.skillEffects; let i = index" [hidden]="effect.hidden">
-                    <span class="name">{{effect.name}}</span>
-                    <span *ngIf="effect.textValues">: {{effect.textValues.length - 1 < skill.getAllocatedPoints() ? effect.textValues[effect.textValues.length - 1] : effect.textValues[skill.getAllocatedPoints()]}}</span>
+                    <span *ngIf="effect.names" class="name">{{effect.names.length - 1 < skill.allocatedPoints ? effect.names[effect.names.length - 1] : effect.names[skill.allocatedPoints]}}</span>
+                    <span *ngIf="effect.textValues">: {{effect.textValues.length - 1 < skill.allocatedPoints ? effect.textValues[effect.textValues.length - 1] : effect.textValues[skill.allocatedPoints]}}</span>
                 </div>
             </div>
         </div>
