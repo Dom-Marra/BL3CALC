@@ -26,7 +26,7 @@
                 [skill]="actionMod"
             />
         </div>
-        <div *ngIf="skillset.otherSkill" class="skill-container">
+        <div *ngIf="skillset.hasOwnProperty('otherSkill')" class="skill-container">
             <img 
                 [src]="skillset.otherSkill ? skillset.otherSkill.getSkillBoxPath() : '../../../../assets/images/skilltree/otherSkillBox.png'" 
                 class="skill-box-img" 
