@@ -11,5 +11,5 @@ export interface SkillModel {
     maxPoints: number,
     name: string,
     skillEffects: Array<SkillEffect>,
-    requiredActionSkill?: SkillModel
+    requiredActionSkill?: number
 }
