@@ -1,6 +1,7 @@
 export interface StatInfo {
     key: string;
     multipliers?: Array<string>;
+    additives?: Array<string>;
     isBaseStackValue?: boolean;
     isBonusStackValue?: boolean;
 }
@@ -12,7 +13,7 @@ export interface ConditionalInfo {
 }
 
 export interface SkillEffect {
-    name: string;
+    names: Array<string>;
     textValues?: Array<string>;
     values?: Array<number>;
     hidden?: boolean;
