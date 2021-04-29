@@ -23,7 +23,9 @@ export class SkillTree {
 
         this.treeData.skills.forEach(skill => {             //Populate skills based on data
             if (skill.type == 'actionmod') {
-                this.skills.push(new ActionMod(skill));
+                let requiredActionSkill: ActionSkill;
+                if (skill.requiredActionSkill != null) requiredActionSkill = this.skills[skill.requiredActionSkill];  
+                this.skills.push(new ActionMod(skill, requiredActionSkill));
             } else if (skill.type == 'actionskill') {
                 this.skills.push(new ActionSkill(skill));
             } else if (skill.type == 'normalskill') {
