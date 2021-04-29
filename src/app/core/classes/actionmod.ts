@@ -4,9 +4,7 @@ import { Skill } from './skill';
 
 export class ActionMod extends Skill {
 
-    private requiredActionSkill: ActionSkill = null;      //Required active skill to allocate active skill mod
-
-    constructor(skillData: SkillModel) {
+    constructor(skillData: SkillModel, private requiredActionSkill?: ActionSkill) {
 
         super(
             skillData.name, 
@@ -19,8 +17,6 @@ export class ActionMod extends Skill {
             skillData.color, 
             skillData.skillEffects
         );
-        
-        this.requiredActionSkill = new ActionSkill(skillData.requiredActionSkill);
     }
     
     /**
