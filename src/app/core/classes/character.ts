@@ -199,7 +199,7 @@ export abstract class Character {
 
             if (conditionalValues == false) return;
             else if (conditionalValues == true) multi = 1;
-            else multi += conditionalValues;
+            else  multi += conditionalValues;
 
             let currentValueIndex: number = effect.values.length < skill.allocatedPoints ? effect.values.length - 1 : skill.allocatedPoints - 1;
             let previousValueIndex: number = effect.values.length < skill.allocatedPoints - modification ? effect.values.length - 1 : (skill.allocatedPoints - modification) - 1;
@@ -214,21 +214,27 @@ export abstract class Character {
             effect.stats.forEach(statInfo => {
                 let stat = this.stats[statInfo.key];
                 let prevStat = JSON.parse(JSON.stringify(stat));
+                let statTotal: number = total;
 
                 if (statInfo.isBaseStackValue) {
                     let otherSkill = this.getAllSkills().find(other => skill != other && other.skillEffects.find(effect => effect.stats?.find(stat => stat.isBaseStackValue) && other.allocatedPoints > 0));
                     if (otherSkill) return;
                 }
 
-                statInfo.multipliers?.forEach(multiKey => {
-                    let multiplier = this.stats[multiKey];
-                    if (multiplier.value) total *= (1 + (multiplier.value / 100));
+                statInfo.additives?.forEach(addKey => {
+                    if (this.stats[addKey].value) statTotal += (this.stats[addKey].value * modification);
                 });
 
-                total = this.cleanValue(total);
+                statInfo.multipliers?.forEach(multiKey => {
+                    let multiplier = this.stats[multiKey];
+                    if (multiplier.value) statTotal *= (1 + (multiplier.value / 100));
+                });
 
-                stat.value != null ? stat.value = this.cleanValue(stat.value + total) : stat.value = total;
+                statTotal = this.cleanValue(statTotal);
+
+                stat.value != null ? stat.value = this.cleanValue(stat.value + statTotal) : stat.value = statTotal;
                 if (stat.isMultiplier) this.updateStatsBasedOnUpdatedMulti(prevStat, stat, statInfo.key)
+                if (stat.isAdditive) this.updateStatsBasedOnUpdatedAdditive(prevStat, stat, statInfo.key)
             });
         });
     }
@@ -243,7 +249,7 @@ export abstract class Character {
      * @param multiKey 
      *          string: the key of the stat
      */
-    public updateStatsBasedOnUpdatedMulti(previousMulti: CharacterStat, currentMulti: CharacterStat, multiKey: string) {
+    private updateStatsBasedOnUpdatedMulti(previousMulti: CharacterStat, currentMulti: CharacterStat, multiKey: string) {
         let skillsAffected = this.getAllSkills().filter(skill => skill.skillEffects.some(effect => effect.stats?.some(stat => stat.multipliers?.includes(multiKey))) && skill.allocatedPoints > 0);
 
         skillsAffected.forEach(skill => {
@@ -280,6 +286,40 @@ export abstract class Character {
         });
     }
 
+    private updateStatsBasedOnUpdatedAdditive(previousAdditive: CharacterStat, currentAdditive: CharacterStat, addKey: string) {
+        let skillsAffected = this.getAllSkills().filter(skill => skill.skillEffects.some(effect => effect.stats?.some(stat => stat.additives?.includes(addKey))) && skill.allocatedPoints > 0);
+    
+        skillsAffected.forEach(skill => {
+            skill.skillEffects.forEach(effect => {
+                effect.stats?.forEach(statInfo => {
+                    if (!statInfo.additives?.find(add => add == addKey)) return;
+
+                    let previousValue: number = 0;
+                    let currentValue: number = 0;
+                    let previousAddValue: number = previousAdditive.value ? previousAdditive.value : 0;
+                    let currentAddValue: number = currentAdditive.value ? currentAdditive.value : 0;
+                    let multiplier: number;
+
+                    let conditionalValues = this.conditionalsAreActive(effect.conditionals);
+
+                    if (conditionalValues == false) return;
+                    else if (conditionalValues == true) multiplier = 1;
+                    else multiplier = conditionalValues;
+
+                    let valueIndex: number = effect.values.length < skill.allocatedPoints ? effect.values.length - 1 : skill.allocatedPoints - 1;
+
+                    previousValue = valueIndex < 0 ? 0 : effect.values[valueIndex] + (previousAddValue * multiplier);
+                    currentValue = valueIndex < 0 ? 0 : effect.values[valueIndex] + (currentAddValue * multiplier);
+
+                    let total = this.cleanValue(currentValue - previousValue);
+
+                    let stat = this.stats[statInfo.key];
+                    stat.value != null ? stat.value = this.cleanValue(stat.value + total) : stat.value = total;
+                });
+            });
+        });
+    }
+
     /**
      * Updates characters stats based on an updated conditinoal
      * 
@@ -305,19 +345,24 @@ export abstract class Character {
                 let currentValue: number = 0;
 
                 let unModifiedConditionals = effect.conditionals.filter(conditional => conditional.key != conKey);
+                let conditionalInfo = effect.conditionals.find(conditional => conditional.key == conKey);
 
                 let conditionalValues = this.conditionalsAreActive(unModifiedConditionals);
-                if (conditionalValues == false) return;
 
-                if (typeof conditionalValues === 'number') {
-                    if (currentMulti) currentMulti += conditionalValues;
-                    if (previousMulti) previousMulti += conditionalValues;
+                if (conditionalValues == false) return;
+                else if (typeof conditionalValues === 'number') {
+                    currentMulti ? currentMulti *= conditionalValues : currentMulti = conditionalValues;
+                    previousMulti ? previousMulti *= conditionalValues : previousMulti = conditionalValues;
                 }
 
-                if (currentMulti === null && currentConditional.isActive) currentMulti = 1;
+                if (currentConditional.isActive && conditionalInfo.activeMultiplier != null) currentMulti ? currentMulti *= conditionalInfo.activeMultiplier : currentMulti = conditionalInfo.activeMultiplier;
+                else if (!currentConditional.isActive && conditionalInfo.nonActiveMultiplier != null) currentMulti ? currentMulti *= conditionalInfo.nonActiveMultiplier : currentMulti = conditionalInfo.nonActiveMultiplier;
+                else if (currentMulti === null && currentConditional.isActive) currentMulti = 1;
                 else if (!currentConditional.isActive) currentMulti = 0;
 
-                if (previousMulti === null && previousConditional.isActive) previousMulti = 1;
+                if (previousConditional.isActive && conditionalInfo.activeMultiplier != null) previousMulti ? previousMulti *= conditionalInfo.activeMultiplier : previousMulti = conditionalInfo.activeMultiplier;
+                else if (!previousConditional.isActive && conditionalInfo.nonActiveMultiplier != null) previousMulti ? previousMulti *= conditionalInfo.nonActiveMultiplier : previousMulti = conditionalInfo.nonActiveMultiplier;
+                else if (previousMulti === null && previousConditional.isActive) previousMulti = 1;
                 else if (!previousConditional.isActive) previousMulti = 0;
 
                 let valueIndex: number = effect.values.length < skill.allocatedPoints ? effect.values.length - 1 : skill.allocatedPoints - 1;
@@ -330,16 +375,23 @@ export abstract class Character {
                 effect.stats.forEach(statInfo => {
                     let stat = this.stats[statInfo.key];
                     let prevStat = JSON.parse(JSON.stringify(stat));
+                    let statTotal: number = total;
+
+                    statInfo.additives?.forEach(addKey => {
+                        if (this.stats[addKey].value) statTotal += this.stats[addKey].value;
+                    });
 
                     statInfo.multipliers?.forEach(multiKey => {
                         let multiplier = this.stats[multiKey];
-                        if (multiplier.value) total *= (1 + (multiplier.value / 100));
+                        if (multiplier.value) statTotal *= (1 + (multiplier.value / 100));
                     });
 
-                    total = this.cleanValue(total);
+                    statTotal = this.cleanValue(statTotal);
+                    
 
-                    stat.value != null ? stat.value = this.cleanValue(stat.value + total) : stat.value = total;
+                    stat.value != null ? stat.value = this.cleanValue(stat.value + statTotal) : stat.value = statTotal;
                     if (stat.isMultiplier) this.updateStatsBasedOnUpdatedMulti(prevStat, stat, statInfo.key)
+                    if (stat.isAdditive) this.updateStatsBasedOnUpdatedAdditive(prevStat, stat, statInfo.key)
                 });
             });
         });
@@ -364,12 +416,12 @@ export abstract class Character {
             if ((!conditional || !conditional.isActive) && conditionalInfo.nonActiveMultiplier == null) {
                 res = false;
                 return;
-            } else {
+            } else if (!conditional.isActive && conditionalInfo.nonActiveMultiplier) {
                 res == null ? res = conditionalInfo.nonActiveMultiplier : (<number>res) *= conditionalInfo.nonActiveMultiplier;
             }
 
-            if (conditional.usesStacks) res == null ? res = conditional.value : (<number>res) += conditional.value;
-            if (conditionalInfo.activeMultiplier && conditional.isActive) res == null ? res = conditionalInfo.activeMultiplier : (<number>res) *= conditionalInfo.activeMultiplier;
+            if (conditional.usesStacks && conditional.isActive) res == null ? res = conditional.value : (<number>res) += conditional.value;
+            if (conditionalInfo.activeMultiplier != null && conditional.isActive) res == null ? res = conditionalInfo.activeMultiplier : (<number>res) *= conditionalInfo.activeMultiplier;
         });
 
         return res == null ? true : res;
