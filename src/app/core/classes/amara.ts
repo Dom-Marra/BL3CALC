@@ -27,62 +27,63 @@ export class Amara extends Character {
     this.addPoint(this.SHOCKRA);
   }
 
+  /**
+   * Adds the specified skill to the equipped skills,
+   * may remove other skills if it takes the position
+   * 
+   * @param skill 
+   *        Skill: skill added
+   */
   public handleAdditionOfNonNormalSkill(skill: Skill): void {
-    //Action skill
     if (skill instanceof ActionSkill) {
 
-      //Check to see if an action skill is allocated already
-      //If there is remove a point from its allocation and remove it from equipped skills
-      if (this.equippedSkills[0].actionSkill != skill && this.equippedSkills[0].actionSkill != null)  {
+      if (this.equippedSkills[0].actionSkill != skill         //remove action skill in the position
+        && this.equippedSkills[0].actionSkill != null) {
         this.removePoint(this.equippedSkills[0].actionSkill);
-      } 
+      }
 
-      //Add action skill to equipped skills
       this.equippedSkills[0].actionSkill = skill;
-    } 
+    }
 
-    //Action mod
     if (skill instanceof ActionMod) {
-      
-      //Check to see if an action mod is allocated already
-      //If there is remove a point from its allocation and remove it from equipped skills
-      if (this.equippedSkills[0].actionMods[0] != skill && this.equippedSkills[0].actionMods[0] != null)  {
-        this.removePoint(this.equippedSkills[0].actionMods[0]);
-      } 
 
-      //Add action mod to equipped skills action mod array
+      if (this.equippedSkills[0].actionMods[0] != skill       //remove action mod in the position
+        && this.equippedSkills[0].actionMods[0] != null) {
+        this.removePoint(this.equippedSkills[0].actionMods[0]);
+      }
+
       this.equippedSkills[0].actionMods[0] = skill;
     }
 
-    //Other skill
     if (skill instanceof OtherSkill) {
 
-      //Check to see if an other skill is allocated already
-      //If there is remove a point from its allocation and remove it from equipped skills
-      if (this.equippedSkills[0].otherSkill != skill && this.equippedSkills[0].otherSkill != null)  {
+      if (this.equippedSkills[0].otherSkill != skill          //remove other skill in the position
+        && this.equippedSkills[0].otherSkill != null) {
         this.removePoint(this.equippedSkills[0].otherSkill);
-      } 
-      
-      //Add other skill to equipped skills
+      }
+
       this.equippedSkills[0].otherSkill = skill;
     }
   }
 
-  public handleRemovalOfNonNormalSkill(skill: Skill, pos?: number): void {
-    //remove action skill from equipped skills
-    if (skill instanceof ActionSkill)  {
+  /**
+   * Removes the specified skill from the equipped skills
+   * 
+   * @param skill 
+   *        Skill: the skill removed
+   */
+  public handleRemovalOfNonNormalSkill(skill: Skill): void {
+    if (skill instanceof ActionSkill) {
       this.equippedSkills[0].actionSkill = null;
-    } 
+    }
 
-    //Remove action mod from equipped skills action mod array
     if (skill instanceof ActionMod) {
       this.equippedSkills[0].actionMods[0] = null;
     }
 
-    //Remove other skill from equipped skills
     if (skill instanceof OtherSkill && skill != this.SHOCKRA) {
       this.equippedSkills[0].otherSkill = null;
-      this.addPoint(this.SHOCKRA);
-    } 
+      this.addPoint(this.SHOCKRA);              //Default other skills
+    }
   }
 }

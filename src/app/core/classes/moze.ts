@@ -29,34 +29,27 @@ export class Moze extends Character {
      * @param pos
      *        position of skill in equipped skills (only applies to action mods)
      */
-    public handleAdditionOfNonNormalSkill(skill: Skill, pos?: number): boolean {
+    public handleAdditionOfNonNormalSkill(skill: Skill, pos?: number) {
 
-        //Action Mod
         if (skill instanceof ActionSkill) {
 
-            //Check to see if an action mod is allocated already
-            //If there is remove a point from its allocation and remove it from equipped skills
-            if (this.equippedSkills[pos].actionSkill != skill && this.equippedSkills[pos].actionSkill != null) {
+            if (this.equippedSkills[pos].actionSkill != skill               //remove action skill in the position
+                && this.equippedSkills[pos].actionSkill != null) {
                 this.removePoint(this.equippedSkills[pos].actionSkill, pos);
             }
 
-            //Add action skill to equipped skills
             this.equippedSkills[pos].actionSkill = skill;
         }
 
-        //Action Mod
         if (skill instanceof ActionMod) {
 
-            //If a skill exists in this position, remove it from the equipped skills and remove a point from its allocation
-            if (this.equippedSkills[pos].actionMods[0] != skill && this.equippedSkills[pos].actionMods[0] != null) {
+            if (this.equippedSkills[pos].actionMods[0] != skill             //remove action mod in the position
+                && this.equippedSkills[pos].actionMods[0] != null) {
                 this.removePoint(this.equippedSkills[pos].actionMods[0]);
             }
 
-            //Add mod to equipped skill in the specified position
             this.equippedSkills[pos].actionMods[0] = skill;
         }
-
-        return true;
     }
 
     /**
@@ -68,9 +61,9 @@ export class Moze extends Character {
      */
     public handleRemovalOfNonNormalSkill(skill: Skill, pos?: number) {
 
-        //remove first instance of action skill from equipped skills
-        if (skill instanceof ActionSkill) {
-            var index: number;
+        if (skill instanceof ActionSkill) {         //remove first instance of action skill from equipped skills
+            let index: number;
+
             if (pos == null) {
                 index = this.equippedSkills[0].actionSkill == skill ? 0 : 1;
             } else {
@@ -78,16 +71,12 @@ export class Moze extends Character {
             }
 
             this.equippedSkills[index].actionSkill = null;
-
-            //remove the action mod that was here if there was any
-            if (this.equippedSkills[index].actionMods[0] != null) {
-                this.removePoint(this.equippedSkills[index].actionMods[0], index);
-            }
+            if (this.equippedSkills[index].actionMods[0] != null) this.removePoint(this.equippedSkills[index].actionMods[0], index);
         }
 
-        //Remove action mod from equipped skills action mod array
-        if (skill instanceof ActionMod) {
-            var index: number;
+        if (skill instanceof ActionMod) {          //Remove action mod from equipped skills action mod array
+            let index: number;
+
             if (pos == null) {
                 index = this.equippedSkills[0].actionMods[0] == skill ? 0 : 1;
             } else {
@@ -96,7 +85,5 @@ export class Moze extends Character {
 
             this.equippedSkills[index].actionMods[0] = null;
         }
-
-        return true;
     }
 }
