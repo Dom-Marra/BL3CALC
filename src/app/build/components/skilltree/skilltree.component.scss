@@ -89,7 +89,7 @@
             &:hover {
                 cursor: pointer;
 
-                .action-mod-slot {
+                .slot-select {
                     display: block;
                 }
             }
@@ -103,7 +103,7 @@
                 width: 100%;
             }
 
-            .action-mod-slot {
+            .slot-select {
                 position: absolute;
                 top: 0;
                 z-index: 3;
