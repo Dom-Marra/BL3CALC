@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Amara } from '../core/classes/amara';
 import { Character } from '../core/classes/character';
-// import { Fl4k } from '../core/classes/fl4k';
-// import { Moze } from '../core/classes/moze';
-// import { Zane } from '../core/classes/zane';
+import { Fl4k } from '../core/classes/fl4k';
+import { Moze } from '../core/classes/moze';
+import { Zane } from '../core/classes/zane';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { CharacterService } from './services/character.service';
@@ -74,17 +74,17 @@ export class BuildComponent implements OnInit {
   public setCharacter(characterType: string) {
     switch (characterType) {
       case 'amara': {
-        this.characterService.currentCharacter.next(new Amara(this.baseCharacterData, this.amaraData));
+        this.characterService.currentCharacter.next(new Amara(JSON.parse(JSON.stringify(this.baseCharacterData)), JSON.parse(JSON.stringify(this.amaraData))));
         break;
-        // } case 'fl4k': {
-        //   this.characterService.currentCharacter.next(new Fl4k(1, 2, 1));
-        //   break;
-        // } case 'moze': {
-        //   this.characterService.currentCharacter.next(new Moze(2, 2, 0));
-        //   break;
-        // } case 'zane': {
-        //   this.characterService.currentCharacter.next(new Zane(2, 4, 0));
-        //   break;
+        } case 'fl4k': {
+          this.characterService.currentCharacter.next(new Fl4k(JSON.parse(JSON.stringify(this.baseCharacterData)), JSON.parse(JSON.stringify(this.fl4kData))));
+          break;
+        } case 'moze': {
+          this.characterService.currentCharacter.next(new Moze(JSON.parse(JSON.stringify(this.baseCharacterData)), JSON.parse(JSON.stringify(this.mozeData))));
+          break;
+        } case 'zane': {
+          this.characterService.currentCharacter.next(new Zane(JSON.parse(JSON.stringify(this.baseCharacterData)), JSON.parse(JSON.stringify(this.zaneData))));
+          break;
       } default: {
         this.characterService.currentCharacter.next(new Amara(this.baseCharacterData, this.amaraData));
       }
