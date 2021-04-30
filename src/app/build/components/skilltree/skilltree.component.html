@@ -28,11 +28,12 @@
             <app-edge-box 
                 *ngIf="skill.preReq <= skilltree.allocatedPoints &&
                         (skilltree.character.maxActionSkillPoints == 2 && 
-                        (isActionSkill(skill) && skilltree.character.equippedSkills[0].actionSkill != skill) ||
+                        (isActionSkill(skill) && skilltree.character.equippedSkills[0]?.actionSkill != skill) ||
 
                         (skill.requiredActionSkill != null && 
-                        (skill.requiredActionSkill == skilltree.character.equippedSkills[0].actionSkill ||
+                        (skill.requiredActionSkill == skilltree.character.equippedSkills[0]?.actionSkill ||
                         (skilltree.character.maxActionModPoints / skilltree.character.maxActionSkillPoints > 1 &&
+                        skill.requiredActionSkill == skilltree.character.equippedSkills[1]?.actionSkill &&
                         skilltree.character.equippedSkills[1]?.actionMods[0] != skill)) && 
 
                         skilltree.character.equippedSkills[0].actionMods[0] != skill))"
@@ -40,22 +41,23 @@
                 aria-label="Add to first slot" 
                 theme="accent"
                 (click)="isActionSkill(skill) ? 
-                            (skilltree.character.equippedSkills[0].actionSkill != skill ? addPoint(skill, 0) : null) :
+                            (skilltree.character.equippedSkills[0]?.actionSkill != skill ? addPoint(skill, 0) : null) :
                             isActionMod(skill) ? (skilltree.character.maxActionSkills > 1 ? 
-                            (skilltree.character.equippedSkills[1].actionSkill == skill.requiredActionSkill ? addPoint(skill, 1) : addPoint(skill, 0)) : 
+                            (skilltree.character.equippedSkills[1]?.actionSkill == skill.requiredActionSkill ? addPoint(skill, 1) : addPoint(skill, 0)) : 
                             addPoint(skill, 0)) : null"
-                class="action-mod-slot first"
+                class="slot-select first"
             >
                <p class="slot-text">First</p> 
             </app-edge-box>
             <app-edge-box 
-                *ngIf="skill.prereq <= skilltree.allocatedPoints &&
+                *ngIf="skill.preReq <= skilltree.allocatedPoints &&
                         (skilltree.character.maxActionSkillPoints == 2 && 
-                        (isActionSkill(skill) && skilltree.character.equippedSkills[1].actionSkill != skill) ||
+                        (isActionSkill(skill) && skilltree.character.equippedSkills[1]?.actionSkill != skill) ||
 
                         (skill.requiredActionSkill != null && 
-                        (skill.requiredActionSkill == skilltree.character.equippedSkills[1].actionSkill ||
+                        (skill.requiredActionSkill == skilltree.character.equippedSkills[1]?.actionSkill ||
                         (skilltree.character.maxActionModPoints / skilltree.character.maxActionSkillPoints > 1 &&
+                        skill.requiredActionSkill == skilltree.character.equippedSkills[0]?.actionSkill && 
                         skilltree.character.equippedSkills[0]?.actionMods[1] != skill)) && 
                         skilltree.character.equippedSkills[1]?.actionMods[1] != skill &&
 
@@ -65,11 +67,11 @@
                 aria-label="Add to second slot" 
                 theme="accent"
                 (click)="isActionSkill(skill) ? 
-                            (skilltree.character.equippedSkills[1].actionSkill != skill ? addPoint(skill, 1) : null) : 
+                            (skilltree.character.equippedSkills[1]?.actionSkill != skill ? addPoint(skill, 1) : null) : 
                             isActionMod(skill) ? (skilltree.character.maxActionSkills > 1 ? 
-                            (skilltree.character.equippedSkills[1].actionSkill == skill.requiredActionSkill ? addPoint(skill, 1) : addPoint(skill, 0)) : 
+                            (skilltree.character.equippedSkills[1]?.actionSkill == skill.requiredActionSkill ? addPoint(skill, 1) : addPoint(skill, 0)) : 
                             addPoint(skill, 1)) : null"
-                class="action-mod-slot second"
+                class="slot-select second"
             >
                 <p class="slot-text">Second</p> 
             </app-edge-box>
