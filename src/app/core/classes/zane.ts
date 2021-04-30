@@ -1,5 +1,4 @@
 import { Skill } from './skill';
-import { OtherSkill } from './otherskill';
 import { ActionSkill } from './actionskill';
 import { ActionMod } from './actionmod';
 import { Character } from './character';
@@ -30,69 +29,68 @@ export class Zane extends Character {
      * @param pos
      *        position of skill in equipped skills (only applies to action mods)
      */
-     public handleAdditionOfNonNormalSkill(skill: Skill, pos?: number): boolean {
+    public handleAdditionOfNonNormalSkill(skill: Skill, pos?: number) {
 
-	//Action Mod
-	if (skill instanceof ActionSkill) {
-        let otherPos = pos == 0 ? 1 : 0; //Other action skill position
-
-        //Check if this mod is already allocated in the other position, and remove it if it is
-        if (this.equippedSkills[otherPos].actionSkill == skill) {
-            this.removePoint(this.equippedSkills[otherPos].actionSkill);
+        if (skill instanceof ActionSkill) {
+            this.handleAdditionOfActionSkill(skill, pos);
         }
 
-	    //Check to see if an action mod is allocated already
-	    //If there is remove a point from its allocation and remove it from equipped skills
-	    if (this.equippedSkills[pos].actionSkill != skill && this.equippedSkills[pos].actionSkill != null)  {
-			this.removePoint(this.equippedSkills[pos].actionSkill);
-		
-
-			//remove the action mods that were here if there were any
-			if (this.equippedSkills[pos].actionMods[0] != null) {
-				this.removePoint(this.equippedSkills[pos].actionMods[0]);
-            }
-            if (this.equippedSkills[pos].actionMods[1] != null) {
-				this.removePoint(this.equippedSkills[pos].actionMods[1]);
-            }
-        } 
-
-	    //Add action skill to equipped skills
-	    this.equippedSkills[pos].actionSkill = skill;
-	} 
-
-	//Action Mod
-	if (skill instanceof ActionMod) {
-        let actionSkillPos = this.equippedSkills[0].actionSkill == skill.getRequiredActionSkill() ? 0 : 1;
-        let otherPos = pos == 0 ? 1 : 0; //Other action mods position
-        
-        //Check if this mod is already allocated in the other position, and remove it if it is
-        if (this.equippedSkills[actionSkillPos].actionMods[otherPos] == skill) {
-            this.removePoint(this.equippedSkills[actionSkillPos].actionMods[otherPos]);
+        if (skill instanceof ActionMod) {
+            this.handleAdditionOfActionMod(skill, pos);
         }
-        
-        //If a skill exists in this position, remove it from the equipped skills and remove a point from its allocation
-        if (this.equippedSkills[actionSkillPos].actionMods[pos] != skill && this.equippedSkills[actionSkillPos].actionMods[pos] != null)  {
+    }
+
+    /**
+     * Adds the action skill to the equipped skills,
+     * will remove an action mod if its taking the place of addition
+     * 
+     * @param skill 
+     *        ActionSkill: the action skill added
+     * @param pos 
+     *        number: index of equipped skills
+     */
+    private handleAdditionOfActionSkill(skill: ActionSkill, pos?: number) {
+        let otherPos = pos == 0 ? 1 : 0;                            //Other action skill position
+
+        if (this.equippedSkills[otherPos].actionSkill == skill) {   //Remove added skill in the other position and its mods
+            this.equippedSkills[otherPos].actionSkill = null;
+            
+            this.equippedSkills[otherPos].actionMods.forEach(skill => { if (skill) this.removePoint(skill) });
+        }
+
+        if (this.equippedSkills[pos].actionSkill != skill           //remove action skill in the position and its mods
+            && this.equippedSkills[pos].actionSkill != null) {
+            this.removePoint(this.equippedSkills[pos].actionSkill);
+
+            this.equippedSkills[pos].actionMods.forEach(skill => { if (skill) this.removePoint(skill) });
+        }
+
+        this.equippedSkills[pos].actionSkill = skill;
+    }
+
+    /**
+     * Manipulates the equipped skills based on the action mod added, 
+     * may remove another action mod if its in the place of the added action mod
+     * 
+     * @param skill 
+     *        ActionMod: the action mod added
+     * @param pos 
+     *        number: its position in the equipped skill action mod array
+     */
+    private handleAdditionOfActionMod(skill: ActionMod, pos?: number) {
+        let actionSkillPos: number = this.equippedSkills[0].actionSkill == skill.getRequiredActionSkill() ? 0 : 1;
+        let otherPos: number = pos == 0 ? 1 : 0;
+
+        if (this.equippedSkills[actionSkillPos].actionMods[otherPos] == skill) {    //remove added mod in the other position
+            this.equippedSkills[actionSkillPos].actionMods[otherPos] = null;
+        }
+
+        if (this.equippedSkills[actionSkillPos].actionMods[pos] != skill            //remove action mod in the position
+            && this.equippedSkills[actionSkillPos].actionMods[pos] != null) {
             this.removePoint(this.equippedSkills[actionSkillPos].actionMods[pos]);
-        } 
+        }
 
-        //Add mod to equipped skill in the specified position
         this.equippedSkills[actionSkillPos].actionMods[pos] = skill;
-	}
-
-	//Other skill
-	if (skill instanceof OtherSkill) {
-
-	    //Check to see if an other skill is allocated already
-	    //If there is remove a point from its allocation and remove it from equipped skills
-	    if (this.equippedSkills[0].otherSkill != skill && this.equippedSkills[0].otherSkill != null)  {
-			this.removePoint(this.equippedSkills[0].otherSkill);
-	    } 
-
-	    //Add other skill to equipped skills
-	    this.equippedSkills[0].otherSkill = skill;
-	};
-
-	return true;
     }
 
     /**
@@ -102,44 +100,50 @@ export class Zane extends Character {
      *              skill removed
      * 
      */
-     public handleRemovalOfNonNormalSkill(skill: Skill) {
+    public handleRemovalOfNonNormalSkill(skill: Skill) {
 
-        //remove first instance of action skill from equipped skills
-        if (skill instanceof ActionSkill)  {
-            var index: number = this.equippedSkills[0].actionSkill == skill ? 0 : 1;
-            this.equippedSkills[index].actionSkill = null;
-            
-            //remove the action mods that were here if there were any
-            if (this.equippedSkills[index].actionMods[0] != null) {
-                this.removePoint(this.equippedSkills[index].actionMods[0]);
-            }
-            if (this.equippedSkills[index].actionMods[1] != null) {
-                this.removePoint(this.equippedSkills[index].actionMods[1]);
-            }
-        } 
-
-        //Remove action mod from equipped skills action mod array
-        if (skill instanceof ActionMod) {
-            let actionSkillPos: number;
-            var actionModPos: number;
-            
-            if (this.equippedSkills[0].actionMods[0] == skill) {
-                actionSkillPos = 0;
-                actionModPos = 0;
-            } else if (this.equippedSkills[1].actionMods[0] == skill) {
-                actionSkillPos = 1;
-                actionModPos = 0;
-            } else if (this.equippedSkills[0].actionMods[1] == skill) {
-                actionSkillPos = 0;
-                actionModPos = 1;
-            } else {
-                actionSkillPos = 1;
-                actionModPos = 1;
-            }
-
-            this.equippedSkills[actionSkillPos].actionMods[actionModPos] = null;
+        if (skill instanceof ActionSkill) {
+            this.handleRemovalOfActionSkill(skill);
         }
-        
-        return true;
+
+        if (skill instanceof ActionMod) {
+            this.handleRemovalOfActionMod(skill)
+        }
+    }
+
+    /**
+     * Removes the action mod from the equipped skill array,
+     * and removes any allocated action mods
+     * 
+     * @param skill
+     *        ActionSkill: the action skill removed
+     */
+    private handleRemovalOfActionSkill(skill: ActionSkill) {
+        var pos: number = this.equippedSkills[0].actionSkill == skill ? 0 : 1;
+        this.equippedSkills[pos].actionSkill = null;
+
+        this.equippedSkills[pos].actionMods.forEach(skill => { if (skill) this.removePoint(skill) });
+    }
+
+    /**
+     * Removes the action mod from the equipped skills array
+     * 
+     * @param skill
+     *        ActionMod: the action mod removed
+     */
+    private handleRemovalOfActionMod(skill: ActionMod) {
+        let actionSkillPos: number;
+        var actionModPos: number;
+
+        this.equippedSkills.forEach((equippedSkill, actionIndex) => {
+            equippedSkill.actionMods.forEach((mod, modIndex) => {
+                if (skill == mod) {
+                    actionModPos = modIndex;
+                    actionSkillPos = actionIndex;
+                }
+            });
+        });
+
+        this.equippedSkills[actionSkillPos].actionMods[actionModPos] = null;
     }
 }
