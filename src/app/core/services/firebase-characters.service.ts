@@ -12,11 +12,13 @@ export class FirebaseCharactersService {
   constructor(private firestore: AngularFirestore) { 
   }
 
+  /**
+   * Gets all character data from the firestore
+   * 
+   * @returns 
+   *        a querysnapshot of documents
+   */
   public getAllCharacters() {
     return this.firestore.collection('characters').get();
-  }
-
-  public addCharacter(characterData: CharacterModel, name: string) {
-    this.firestore.collection(this.CHARACTER_COLLECTION).doc(name).set(characterData);
   }
 }
