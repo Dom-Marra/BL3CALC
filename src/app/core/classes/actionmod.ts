@@ -74,8 +74,8 @@ export class ActionMod extends Skill {
             case 'green': {
                 return "assets/images/skilltree/actionSkillModBoxGreen.png";
             }
-            case 'red': {
-                return "assets/images/skilltree/actionSkillModBoxRed.png";
+            case 'orange': {
+                return "assets/images/skilltree/actionSkillModBoxOrange.png";
             }
             default: {
                 return "assets/images/skilltree/actionSkillModBox.png";

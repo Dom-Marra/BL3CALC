@@ -64,8 +64,8 @@ export class OtherSkill extends Skill {
             case 'green': {
                 return "assets/images/skilltree/otherSkillBoxGreen.png";
             }
-            case 'red': {
-                return "assets/images/skilltree/otherSkillBoxRed.png";
+            case 'orange': {
+                return "assets/images/skilltree/otherSkillBoxOrange.png";
             }
             default: {
                 return "assets/images/skilltree/otherSkillBox.png";

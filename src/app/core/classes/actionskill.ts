@@ -66,8 +66,8 @@ export class ActionSkill extends Skill {
             case 'green': {
                 return "assets/images/skilltree/actionSkillBoxGreen.png";
             }
-            case 'red': {
-                return "assets/images/skilltree/actionSkillBoxRed.png";
+            case 'orange': {
+                return "assets/images/skilltree/actionSkillBoxOrange.png";
             }
             default: {
                 return "assets/images/skilltree/actionSkillBox.png";

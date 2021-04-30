@@ -74,8 +74,8 @@ export class NormalSkill extends Skill {
             case 'green': {
                 return "assets/images/skilltree/skillBoxGreen.png";
             }
-            case 'red': {
-                return "assets/images/skilltree/skillBoxRed.png";
+            case 'orange': {
+                return "assets/images/skilltree/skillBoxOrange.png";
             }
             default: {
                 return "assets/images/skilltree/skillBox.png";
