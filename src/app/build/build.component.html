@@ -136,11 +136,11 @@
         </div>
         <hr id="hr" />
         <div id="build-content-wrapper">
-            <div id="build-content">
+            <ng-scrollbar #toolTipParent id="build-content">
                 <app-build-details id="build-details" [character]="character"></app-build-details>
                 <router-outlet></router-outlet>
-                <app-tooltip></app-tooltip>
-            </div>
+                <app-tooltip [parent]="toolTipParent.viewport.nativeElement"></app-tooltip>
+            </ng-scrollbar>
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
