@@ -20,6 +20,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatInputModule } from '@angular/material/input';
 import { EquippedSkillsComponent } from './components/equipped-skills/equipped-skills.component';
 import { BuildDetailsComponent } from './components/build-details/build-details.component';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { BuildDetailsComponent } from './components/build-details/build-details.
     BuildRoutingModule,
     LayoutModule,
     MatInputModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    NgScrollbarModule
   ],
   exports: [
     BuildComponent
