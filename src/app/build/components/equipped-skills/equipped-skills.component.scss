@@ -1,16 +1,17 @@
 .equipped-skills-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 
     .skill-set {
         display: flex;
-
+        margin: 0 15px;
 
         .skill-container {
             margin: 10px;
             position: relative;
-            height: 60px;
-            width: 60px;
+            height: 50px;
+            width: 50px;
 
             .skill-box-img {
                 position: absolute;
