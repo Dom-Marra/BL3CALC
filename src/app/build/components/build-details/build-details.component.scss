@@ -4,14 +4,28 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin: 30px 25px;
+    justify-content: center;
 
     .detail {
-        margin: 10px 25px;
+        display: flex;
+        margin: 10px 2.5%;
         white-space: nowrap;
+
+        h3 {
+            margin: 0;
+        }
 
         .modified-text {
             color: mat-color($BL3CALC-accent, 500);
+            display: block;
+
+            &.level {
+                min-width: 40px;
+            }
+
+            &.allocated-points {
+                min-width: 75px;
+            }
         }
     }
 }
