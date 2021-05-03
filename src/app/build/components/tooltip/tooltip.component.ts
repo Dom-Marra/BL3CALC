@@ -130,8 +130,6 @@ export class TooltipComponent implements OnInit {
 
     top = hoveredElementYAvg - offsetHeight + this.parent.scrollTop;      //Set base top value so the tooltip is centered with the skill
 
-    console.log(this.parent.offsetHeight, offsetHeight, this.parent.scrollTop);
-
     if (this.parent.scrollTop > top) {                 //Top of the tooltip is cut off at the top
       
       let tooltipBottomUnder = top + offsetHeight    //Tooltip bottom value if positioned under the skill element
