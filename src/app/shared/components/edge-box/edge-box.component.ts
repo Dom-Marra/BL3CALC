@@ -14,6 +14,7 @@ export class EdgeBoxComponent implements OnInit {
   public height: number;
   public width: number;
   public bgID: string = 'bgImage-' + EdgeBoxComponent.counter++;
+  public shadowID: string = 'shadow-' + EdgeBoxComponent.counter++;
   private _color: string;
   public edgeLength: number = 0;
 
@@ -33,6 +34,7 @@ export class EdgeBoxComponent implements OnInit {
   @Input() bottomLeft: boolean = false;
   @Input() topRight: boolean = false;
   @Input() bottomRight: boolean = true;
+  @Input() dropShadow: boolean = false;
 
 
   constructor(private cd: ChangeDetectorRef) { }

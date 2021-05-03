@@ -1,7 +1,10 @@
 @import '../../../../materialtheme.scss';
 
 :host {
+    height: 100%;
     display: block;
+    box-sizing: border-box;
+    z-index: -1;
 }
 
 .edge-box {
@@ -15,17 +18,17 @@
     .content-container {
         position: relative;
         height: 100%;
-        //width: 100%;
         z-index: 1;
+        box-sizing: border-box;
     }
 
     .box-bg {
         position: absolute;
-        z-index: 0;
         top: 0;
         left: 0;
         fill: white;
         transition: fill 0.3s ease;
+        overflow: visible;
 
         &.accent {
             fill: mat-color($BL3CALC-accent, 500);
