@@ -5,10 +5,9 @@
 >
     <mat-sidenav 
         #characterSideNav 
-        opened="true" 
+        [opened]="!(mobileQuery | async).matches" 
         mode="side" 
         id="build-sidenav" 
-        [fixedInViewport]="'true'"
     >
         <div id="character-links-wrapper">
             <div #drawerContent id="character-links">
@@ -140,8 +139,8 @@
             <div id="build-content">
                 <app-build-details [character]="character"></app-build-details>
                 <router-outlet></router-outlet>
+                <app-tooltip></app-tooltip>
             </div>
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
-<app-tooltip></app-tooltip>
