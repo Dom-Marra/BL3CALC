@@ -148,6 +148,12 @@
                 overflow-x: hidden;
                 overflow-y: scroll;
                 background-color: mat-color($BL3CALC-primary, 500);
+
+                #build-details {
+                    display: block;
+                    margin: 40px 2.5%; 
+                    margin-bottom: 25px;
+                }
             }
         }
 
