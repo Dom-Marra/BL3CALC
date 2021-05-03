@@ -145,9 +145,11 @@
                 height: 100%;
                 width: 100%;
                 position: relative;
-                overflow-x: hidden;
-                overflow-y: scroll;
+                overflow: hidden;
                 background-color: mat-color($BL3CALC-primary, 500);
+                --scrollbar-thumb-color: #e4b83a;
+                --scrollbar-size: 4px;
+                --scrollbar-border-radius: 0px;
 
                 #build-details {
                     display: block;
