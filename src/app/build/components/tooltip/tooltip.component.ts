@@ -52,11 +52,12 @@ export class TooltipComponent implements OnInit {
 
   public skill: Skill;
   public el: ElementRef;
+  @Input() parent: HTMLElement;
 
   constructor(private tooltipService: ToolTipService, private tooltip: ElementRef) { }
 
   ngOnInit() {
-
+    if (!this.parent) this.parent = this.tooltip.nativeElement.parentElement;
   }
 
   ngAfterContentInit() {
@@ -118,26 +119,27 @@ export class TooltipComponent implements OnInit {
    *        TooltipYConfigs
    */
   private getYConfigs(): TooltipYConfigs {
-    let hoveredElement = this.el.nativeElement as HTMLElement;                //The hovered skill element         
-    let parentRef: HTMLElement = this.tooltip.nativeElement.parentElement;    //The parent of the tooltip
+    let hoveredElement = this.el.nativeElement as HTMLElement;                //The hovered skill element     
     let hoveredElementYAvg = ((hoveredElement.getBoundingClientRect().top     //The middle y pos of the skill relative to the parent
       + hoveredElement.getBoundingClientRect().bottom) / 2) 
-      - (window.innerHeight - parentRef.offsetHeight);
+      - (window.innerHeight - this.parent.offsetHeight);
     let offsetHeight: number = ((this.tooltip.nativeElement as HTMLElement).clientHeight / 2);   //Difference of height between parent and window
     let floatLeftOrRight: boolean = false;                                                       //Whether the x should be adjusted left or right
     let top: number;                                                                             //The top pos
-    let parentBottom: number = parentRef.offsetHeight + parentRef.scrollTop;                     //Bottom value of the parent view
+    let parentBottom: number = this.parent.offsetHeight + this.parent.scrollTop;                     //Bottom value of the parent view
 
-    top = hoveredElementYAvg - offsetHeight + parentRef.scrollTop;      //Set base top value so the tooltip is centered with the skill
+    top = hoveredElementYAvg - offsetHeight + this.parent.scrollTop;      //Set base top value so the tooltip is centered with the skill
 
-    if (parentRef.scrollTop > top) {                 //Top of the tooltip is cut off at the top
+    console.log(this.parent.offsetHeight, offsetHeight, this.parent.scrollTop);
+
+    if (this.parent.scrollTop > top) {                 //Top of the tooltip is cut off at the top
       
       let tooltipBottomUnder = top + offsetHeight    //Tooltip bottom value if positioned under the skill element
         + this.tooltip.nativeElement.clientHeight 
         + (hoveredElement.clientHeight / 2);
       
       let tooltipBottomNormal = top                  //Tooltip bottom not under skill
-        + (parentRef.scrollTop - top + 10) 
+        + (this.parent.scrollTop - top + 10) 
         + this.tooltip.nativeElement.clientHeight;
 
       if (tooltipBottomUnder < parentBottom) {                        //Bottom doesn't overflow parent view bottom
@@ -146,16 +148,16 @@ export class TooltipComponent implements OnInit {
         floatLeftOrRight = true;                                           //Tooltip now should be repositioned on x-axis
 
       } else if (tooltipBottomNormal < parentBottom) {                //Bottom doesn't overflow parent view bottom
-        top += (parentRef.scrollTop - top + 10);                           //Set new top
+        top += (this.parent.scrollTop - top + 10);                           //Set new top
       }
 
     } else if (this.tooltip.nativeElement.clientHeight + top >= parentBottom) {               //Bottom of tooltip is cutoff
 
-      if (parentRef.scrollTop < top - (offsetHeight + (hoveredElement.clientHeight / 2))) {   //Top of tooltip isn't cutoff if positioned above the skill
+      if (this.parent.scrollTop < top - (offsetHeight + (hoveredElement.clientHeight / 2))) {   //Top of tooltip isn't cutoff if positioned above the skill
         top -= (offsetHeight + (hoveredElement.clientHeight / 2));                            //Set top to be above the skill element
         floatLeftOrRight = true;                                                              //Tooltip now should be repositioned on x-axis
 
-      } else if (top - ((this.tooltip.nativeElement.clientHeight + top + 15) - (parentBottom)) > parentRef.scrollTop) {   //Top of tooltip isn't cutoff if positioned 15px above parent bottom
+      } else if (top - ((this.tooltip.nativeElement.clientHeight + top + 15) - (parentBottom)) > this.parent.scrollTop) {   //Top of tooltip isn't cutoff if positioned 15px above parent bottom
         top -= (this.tooltip.nativeElement.clientHeight + top + 15) - (parentBottom);                                     //Set new top to be positioned at current parent view bottom + 15px
       }
     }
@@ -171,21 +173,20 @@ export class TooltipComponent implements OnInit {
    */
   private getYConfigsAboveOrBelow(): TooltipYConfigs {
     let hoveredElement = this.el.nativeElement as HTMLElement;                  //The hovered skill element
-    let parentRef: HTMLElement = this.tooltip.nativeElement.parentElement;      //The parent of the tooltip
     let top: number;                                                            //The top position
 
     let tooltipBottom = (hoveredElement.getBoundingClientRect().bottom          //Get the bottom position of the tooltip, if placed below the skill element
-        - (window.innerHeight - parentRef.offsetHeight))
-        + parentRef.scrollTop
+        - (window.innerHeight - this.parent.offsetHeight))
+        + this.parent.scrollTop
         + this.tooltip.nativeElement.clientHeight;
     
     top = (hoveredElement.getBoundingClientRect().top                             //Set base top position   
-        - (window.innerHeight - parentRef.offsetHeight))
+        - (window.innerHeight - this.parent.offsetHeight))
         - this.tooltip.nativeElement.clientHeight
-        + parentRef.scrollTop;
+        + this.parent.scrollTop;
     
-    if (top < parentRef.scrollTop && tooltipBottom < parentRef.scrollHeight) {    //Set position to below the skill if there is room on the screen 
-      top = hoveredElement.getBoundingClientRect().bottom - (window.innerHeight - parentRef.offsetHeight) + parentRef.scrollTop;
+    if (top < this.parent.scrollTop && tooltipBottom < this.parent.scrollHeight) {    //Set position to below the skill if there is room on the screen 
+      top = hoveredElement.getBoundingClientRect().bottom - (window.innerHeight - this.parent.offsetHeight) + this.parent.scrollTop;
     }
 
     return { top: top };
@@ -200,8 +201,7 @@ export class TooltipComponent implements OnInit {
    */
   private getXConfigs(): TooltipXConfigs {
     let hoveredElement = this.el.nativeElement as HTMLElement;                  //Skill hovered
-    let parentRef: HTMLElement = this.tooltip.nativeElement.parentElement;      //Parent of the tooltip
-    let parentWidthOffset = window.innerWidth - parentRef.offsetWidth;          //The difference in width between the parent and window
+    let parentWidthOffset = window.innerWidth - this.parent.offsetWidth;          //The difference in width between the parent and window
     let hoveredElementXAvg = ((hoveredElement.getBoundingClientRect().left      //The middle of the skill hovered, in relation to the parent
       + hoveredElement.getBoundingClientRect().right) / 2) 
       - parentWidthOffset;
@@ -209,22 +209,22 @@ export class TooltipComponent implements OnInit {
     let left: number;                                                           //left pos
     let right: number;                                                          //right pos
 
-    if (hoveredElementXAvg < (parentRef.clientWidth / 2)) {      //Calculate the left position, if the skill is less than half the parent width
+    if (hoveredElementXAvg < (this.parent.clientWidth / 2)) {      //Calculate the left position, if the skill is less than half the parent width
       left = hoveredElement.getBoundingClientRect().left              //get base left postion          
         - parentWidthOffset 
         + hoveredElement.clientWidth;
 
-      if (left + this.tooltip.nativeElement.clientWidth + 10 > parentRef.clientWidth) {       //The skill overflows to the left
-        left -= left + (this.tooltip.nativeElement.clientWidth + 10) - parentRef.clientWidth;       //Adjust left so it doesn't
+      if (left + this.tooltip.nativeElement.clientWidth + 10 > this.parent.clientWidth) {       //The skill overflows to the left
+        left -= left + (this.tooltip.nativeElement.clientWidth + 10) - this.parent.clientWidth;       //Adjust left so it doesn't
         floatAboveOrBelow = true;                                                                   //Tooltip is covering skill so it must be adjusted
       }
     } else {                                                    //Calculate the right pos, if the skill is greater than half the parent width
-      right = parentRef.clientWidth                                  //Base right value                         
+      right = this.parent.clientWidth                                  //Base right value                         
         - ((hoveredElement.getBoundingClientRect().right - parentWidthOffset) 
         - hoveredElement.clientWidth);
 
-      if (right + this.tooltip.nativeElement.clientWidth + 10 > parentRef.clientWidth) {    //The skill overflows to the right
-        right -= right + (this.tooltip.nativeElement.clientWidth + 10) - parentRef.clientWidth;   //Adjust so it doesn't
+      if (right + this.tooltip.nativeElement.clientWidth + 10 > this.parent.clientWidth) {    //The skill overflows to the right
+        right -= right + (this.tooltip.nativeElement.clientWidth + 10) - this.parent.clientWidth;   //Adjust so it doesn't
         floatAboveOrBelow = true;                                                                 //Tooltip is covering skill so it must be adjusted
       }
     }
