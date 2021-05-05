@@ -9,3 +9,29 @@ body {
     height: 100%; 
     overflow: hidden;
 }
+
+.save-dialog {
+    width: 98%;
+    max-width: 450px !important;
+
+    .mat-dialog-container {
+        background-color: transparent;
+        box-shadow: none;
+        padding: 0;
+        border-radius: 0;
+    }
+}
+
+.edgebox-snackbar {
+    border-radius: 0px;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-label, .mat-form-field-appearance-legacy .mat-hint { 
+    color: black;
+}
+
+.mat-form-field-appearance-legacy .mat-hint { 
+    color: black !important;
+}
