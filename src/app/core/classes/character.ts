@@ -6,6 +6,8 @@ import { CharacterStat } from '../models/characterstat.model';
 import { SkillTree } from './skilltree';
 import { ConditionalInfo } from '../models/skilleffect.model';
 import { BaseCharacterModel } from '../models/basecharacter.model';
+import { Save } from '../models/save.model';
+import { CharacterModel } from '../models/character.model';
 
 export abstract class Character {
 
@@ -34,7 +36,9 @@ export abstract class Character {
         baseCharacterData: BaseCharacterModel,
         maxActionSkillPoints: number,
         maxActionModPoints: number,
-        maxOtherSkillPoints: number
+        maxOtherSkillPoints: number,
+        characterData: CharacterModel,
+        save?: Save
     ) {
         this.maxActionModPoints = maxActionModPoints;
         this.maxActionSkillPoints = maxActionSkillPoints;
@@ -46,6 +50,18 @@ export abstract class Character {
         this.MAX_NORMAL_SKILL_POINTS = baseCharacterData.maxPoints;
 
         this.initEquippedSkills();
+
+        this.addStats(characterData.stats);
+        this.addConditionals(characterData.conditionals);
+        if (save) this.addConditionals(save.conditionals);
+
+        this.greenTree = new SkillTree(characterData.trees.find(tree => tree.color == "green"), this, save?.greenTree);
+        this.orangeTree = new SkillTree(characterData.trees.find(tree => tree.color == "orange"), this, save?.orangeTree);
+        this.blueTree = new SkillTree(characterData.trees.find(tree => tree.color == "blue"), this, save?.blueTree);
+
+        this.greenTree.allocatePoints(save?.equippedSkills);
+        this.orangeTree.allocatePoints(save?.equippedSkills);
+        this.blueTree.allocatePoints(save?.equippedSkills);
     }
 
     /**
@@ -217,7 +233,7 @@ export abstract class Character {
                 let statTotal: number = total;
 
                 if (statInfo.isBaseStackValue) {
-                    let otherSkill = this.getAllSkills().find(other => skill != other && other.skillEffects.find(effect => effect.stats?.find(stat => stat.isBaseStackValue) && other.allocatedPoints > 0));
+                    let otherSkill = this.getAllSkills().find(other => skill != other && other?.skillEffects.find(effect => effect.stats?.find(stat => stat.isBaseStackValue) && other.allocatedPoints > 0));
                     if (otherSkill) return;
                 }
 
@@ -250,7 +266,7 @@ export abstract class Character {
      *          string: the key of the stat
      */
     private updateStatsBasedOnUpdatedMulti(previousMulti: CharacterStat, currentMulti: CharacterStat, multiKey: string) {
-        let skillsAffected = this.getAllSkills().filter(skill => skill.skillEffects.some(effect => effect.stats?.some(stat => stat.multipliers?.includes(multiKey))) && skill.allocatedPoints > 0);
+        let skillsAffected = this.getAllSkills().filter(skill => skill?.skillEffects?.some(effect => effect.stats?.some(stat => stat.multipliers?.includes(multiKey))) && skill.allocatedPoints > 0);
 
         skillsAffected.forEach(skill => {
             skill.skillEffects.forEach(effect => {
@@ -434,7 +450,13 @@ export abstract class Character {
      *          Array<Skill> 
      */
      private getAllSkills(): Array<Skill> {
-        return new Array().concat(this.greenTree.skills, this.orangeTree.skills, this.blueTree.skills);
+        let skills: Array<Skill> = [];
+
+        if (this.greenTree) skills = skills.concat(skills, this.greenTree.skills);
+        if (this.orangeTree) skills = skills.concat(skills, this.orangeTree.skills);
+        if (this.blueTree) skills = skills.concat(skills, this.blueTree.skills);
+
+        return skills;
     }
 
     /**
@@ -472,6 +494,75 @@ export abstract class Character {
         for (let key in stats) {
             this.stats[key] = stats[key];
         }
+    }
+
+    /**
+     * Returns the save data for the character
+     * 
+     * @returns 
+     *         Save: the save data
+     */
+    public getSave(): Save {
+
+        let save: Save = {          //Init the save
+            type: this.name
+        };
+
+        if (this.conditionalsInUse.size > 0) {
+            let conditionals: {[key: string]: Conditional} = {};        //Init save conditionals
+
+            this.conditionalsInUse.forEach((val, key) => {              //Populate save conitionals with conditionals in use
+                if (this.conditionals[key].isActive || this.conditionals[key].value) conditionals[key] = this.conditionals[key];
+            });
+
+            save.conditionals = conditionals;
+        }
+
+        if (this.orangeTree.totalAllocatedPoints > 0) save.orangeTree = this.orangeTree.getTreeAllocations();   //Add orange tree skill allocations to the save
+        if (this.blueTree.totalAllocatedPoints > 0) save.blueTree = this.blueTree.getTreeAllocations();         //Add blue tree skill allocations to the save
+        if (this.greenTree.totalAllocatedPoints > 0) save.greenTree = this.greenTree.getTreeAllocations();      //Add green tree skill allocations to the save
+
+        save.equippedSkills = new Array();              //Init save equipped skills
+
+        this.equippedSkills.forEach(val => {
+            let equippedSkillSet = {            //Init a new saved equipped skill set
+                actionSkill: null,
+                actionMods: [],
+                otherSkill: null
+            };
+
+
+            //Add action skill if present
+            if (val.actionSkill) equippedSkillSet.actionSkill = { color: val.actionSkill.color, index: this.getSkillIndex(val.actionSkill) };
+
+            //Add action mods
+            val.actionMods.forEach(skill => {
+                if (skill) equippedSkillSet.actionMods.push({color: skill.color, index: this.getSkillIndex(skill)})
+                else equippedSkillSet.actionMods.push(null)
+            });
+
+            //Add other skill
+            if (val.otherSkill) equippedSkillSet.otherSkill = {color: val.otherSkill.color, index: this.getSkillIndex(val.otherSkill)};
+
+            save.equippedSkills.push(equippedSkillSet);
+        });
+
+        return Object.keys(save).length > 2 ? save : null;      //Return the save if the keys are greater than two (the type, and equipped skills) since they are always present
+    }
+    
+    /**
+     * Gets the index of the specified skill in its tree
+     * 
+     * @param skill 
+     *        Skill: skill to get the index from
+     * 
+     * @returns
+     *        number: the skill index 
+     */
+    private getSkillIndex(skill: Skill): number {
+        if (skill.color == 'green') return this.greenTree.getIndexOfSkill(skill);
+        else if (skill.color == 'orange') return this.orangeTree.getIndexOfSkill(skill);
+        else return this.blueTree.getIndexOfSkill(skill);
     }
 
     public abstract handleAdditionOfNonNormalSkill(skill: Skill, pos?: number): void;
