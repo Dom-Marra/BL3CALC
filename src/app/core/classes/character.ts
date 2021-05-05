@@ -450,11 +450,7 @@ export abstract class Character {
      *          Array<Skill> 
      */
      private getAllSkills(): Array<Skill> {
-        let skills: Array<Skill> = [];
-
-        if (this.greenTree) skills = skills.concat(skills, this.greenTree.skills);
-        if (this.orangeTree) skills = skills.concat(skills, this.orangeTree.skills);
-        if (this.blueTree) skills = skills.concat(skills, this.blueTree.skills);
+        let skills: Array<Skill> = [].concat(this.greenTree.skills, this.orangeTree.skills, this.blueTree.skills);
 
         return skills;
     }
