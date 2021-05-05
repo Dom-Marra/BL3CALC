@@ -1,0 +1,30 @@
+@import '../../../../materialtheme.scss';
+
+#save-box {
+    overflow: hidden
+}
+
+.save-status {
+    margin-bottom: 20px;
+    text-align: center;
+    color: mat-color($BL3CALC-primary, 500);
+
+    &.error {
+        color: mat-color($BL3CALC-warn, 500);
+    }
+}
+
+#success-container {
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+
+    #save-link {
+        flex: 1;
+    }
+}
+
+#loader-container {
+    display: flex;
+    justify-content: center;
+}

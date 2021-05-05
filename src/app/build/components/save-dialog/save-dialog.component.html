@@ -1,0 +1,17 @@
+<app-edge-box theme="accent" id="save-box">
+    <h3 class="save-status {{status}}">{{status == 'loading' ? 'Saving...' : status == 'success' ? 'Saved!' : 'Error!'}}</h3>
+    <div *ngIf="status == 'success'" id="success-container">
+        <mat-form-field id="save-link">
+            <mat-label>Link!</mat-label>
+            <input matInput type="text" [value]="message" />
+            <button mat-icon-button matSuffix aria-label="Copy link" [cdkCopyToClipboard]="message" (cdkCopyToClipboardCopied)="this.copied = true"><mat-icon>content_copy</mat-icon></button>
+            <mat-hint *ngIf="copied">Copied!</mat-hint>
+        </mat-form-field>
+    </div>
+    <div *ngIf="status == 'error'">
+        <p>{{message}}</p>
+    </div>
+    <div *ngIf="status == 'loading'" id="loader-container">
+        <app-loader></app-loader>
+    </div> 
+</app-edge-box>
