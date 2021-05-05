@@ -1,3 +1,4 @@
+import { SavedEquippedSkillSet } from "../models/save.model";
 import { TreeModel } from "../models/tree.model";
 import { ActionMod } from "./actionmod";
 import { ActionSkill } from "./actionskill";
@@ -9,14 +10,15 @@ import { Skill } from "./skill";
 export class SkillTree {
 
     private readonly POINTS_PER_PREREQ: number = 5;         //The amount of points needed to get to the next pre-req
-    public allocatedPoints: number = 0;                     //Points Allocated in the tree
+    public allocatedPoints: number = 0;                     //Points Allocated in the tree not including action mods and skills
+    public totalAllocatedPoints: number = 0;                //Total allocated points including action mods and skills
 
     public skills: Array<Skill> = new Array<Skill>();       //Skills of the tree
     public name: string;                                    //Name of the tree
     public image: string;                                   //Tree image
     public color: string;                                   //Tree Color
 
-    constructor(private treeData: TreeModel, private character: Character) {
+    constructor(private treeData: TreeModel, private character: Character, private allocations?: Array<number>) {
         this.name = this.treeData.name;
         this.image = this.treeData.image;
         this.color = this.treeData.color;
@@ -34,6 +36,52 @@ export class SkillTree {
                 this.skills.push(new OtherSkill(skill))
             }
         });
+    }
+
+    /**
+     * Given an array of numbers, it will use those to add skill points to each skill with the same index as the number
+     * 
+     * @param equippedSkillAllocation 
+     *         Array<SavedEquippedSkillSet>: Contains placement of the equipped skills
+     */
+    public allocatePoints(equippedSkillAllocation: Array<SavedEquippedSkillSet>): void {
+        if (this.allocations && this.allocations.length == this.skills.length) {        //Only run if the allocations were supplied
+            this.sortSkills().forEach((skill, index) => {                               //Traverse sorted skill
+                for (let allocatedPoints = 0; allocatedPoints < this.allocations[index]; allocatedPoints++) {       //Loop up intil allocation amount
+                    
+                    if (!(skill instanceof NormalSkill) && !(skill instanceof OtherSkill)) {                        //Action mods and action skills need special alloction
+                        equippedSkillAllocation.forEach((val, equippedSkillindex) => {
+                            
+                            if (skill instanceof ActionSkill) {     //Add point for action skill at specified index as specified in equippedSkillAllocation
+                                if (val.actionSkill?.color == skill.color && val.actionSkill?.index == index) this.addPoint(skill, equippedSkillindex)
+                            } else if (skill instanceof ActionMod) {
+                                val.actionMods.forEach((mod, modIndex) => {     //Add action mods at specified index as specified in equippedSkillAllocation
+                                    if (mod?.color == skill.color && mod?.index == index) {
+                                        if (this.character.maxActionModPoints / this.character.maxActionSkillPoints > 1) {
+                                            this.addPoint(skill, modIndex)
+                                        } else {
+                                            this.addPoint(skill, equippedSkillindex)
+                                        }
+                                    }
+                                })
+                            }
+                        })
+                    } else this.addPoint(skill);    //Add points to normal and other skills normaly
+                }
+            });
+        } 
+    }
+
+    /**
+     * Returns the index of the a skill in this tree
+     * 
+     * @param skillToFind 
+     *        Skill: the skill to find
+     * @returns 
+     *         number: its index
+     */
+    public getIndexOfSkill(skillToFind: Skill): number {
+        return this.sortSkills().findIndex(skill => skill == skillToFind);
     }
 
     /**
@@ -59,6 +107,7 @@ export class SkillTree {
         //Add point
         this.allocatedPoints += this.character.addPoint(skill, pos);
 
+        this.totalAllocatedPoints++;
         //point addition successful
         return true;
     }
@@ -89,6 +138,7 @@ export class SkillTree {
         //Remove point
         this.allocatedPoints += this.character.removePoint(skill);
 
+        this.totalAllocatedPoints--;
         //point removal successful
         return true;
     }
@@ -168,6 +218,46 @@ export class SkillTree {
 
         //point can be removed
         return true;
+    }
+
+    /**
+     * Returns the allocations of the skills as an array of numbers, the 
+     * array is sorted from skill x,y placement on the tree top to bottom
+     * 
+     * @returns 
+     *          Array<number>: Skill allocations
+     */
+    public getTreeAllocations(): Array<number> {
+        let allocations: Array<number> = [];
+
+        this.sortSkills().forEach(skill => {
+            allocations.push(skill.allocatedPoints);
+        });
+
+        return allocations;
+    }
+
+    /**
+     * Sorts skills based on their x,y positions
+     * 
+     * @returns 
+     *        Array<Skill>: sorted skill array
+     */
+    private sortSkills(): Array<Skill> {
+        return this.skills.sort((skillA, skillB) => {
+            if (skillA.y < skillB.y) {
+                return -1;
+            } else if (skillA.y > skillB.y) {
+                return 1;
+            } else {
+
+                if (skillA.x > skillB.x) {
+                    return 1
+                } else {
+                    return -1
+                }
+            }
+        });
     }
 
     /**
