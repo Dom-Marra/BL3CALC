@@ -21,6 +21,10 @@ import { MatInputModule } from '@angular/material/input';
 import { EquippedSkillsComponent } from './components/equipped-skills/equipped-skills.component';
 import { BuildDetailsComponent } from './components/build-details/build-details.component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { SaveDialogComponent } from './components/save-dialog/save-dialog.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,8 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
     DigitsonlyDirective,
     StatfilterPipe,
     EquippedSkillsComponent,
-    BuildDetailsComponent
+    BuildDetailsComponent,
+    SaveDialogComponent
   ],
   imports: [
     CommonModule,
@@ -46,7 +51,10 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
     LayoutModule,
     MatInputModule,
     MatSlideToggleModule,
-    NgScrollbarModule
+    NgScrollbarModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    ClipboardModule
   ],
   exports: [
     BuildComponent
