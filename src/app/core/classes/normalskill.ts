@@ -1,11 +1,30 @@
+import { SkillModel } from '../models/skill.model';
 import { Skill } from './skill';
-import { SkillEffects } from './skill';
 
 export class NormalSkill extends Skill {
 
+    constructor(skillData: SkillModel) {
+        super(
+            skillData.name, 
+            skillData.description, 
+            skillData.image, 
+            skillData.x, 
+            skillData.y, 
+            skillData.maxPoints, 
+            skillData.preReq,
+            skillData.color, 
+            skillData.skillEffects
+        )
+    }
 
-    constructor(path: string, position: Array<number>, maxPoints: number, preReq: number, color: string, skillEffects?: SkillEffects) {
-        super(path, position, maxPoints, preReq, color, skillEffects);
+    public addPoint(): number {
+        super.addPoint();
+        return 1;
+    }
+
+    public removePoint(): number {
+        super.removePoint();
+        return -1;
     }
 
     /**
@@ -27,13 +46,13 @@ export class NormalSkill extends Skill {
         if (modification < -1 || modification > 1 || modification == 0) return false;
 
         //not enough pre-req points return false
-        if (allocatedSkillTreePoints < this.getPreReq()) return false;
+        if (allocatedSkillTreePoints < this.preReq) return false;
 
         //At max points and the modification is addition return false
-        if (this.getAllocatedPoints() == this.getMaxPoints() && modification > 0) return false;
+        if (this.allocatedPoints == this.maxPoints && modification > 0) return false;
 
         //At min points and the modification is subtraction return false
-        if (this.getAllocatedPoints() == this.MIN_POINTS && modification < 0) return false;
+        if (this.allocatedPoints == this.MIN_POINTS && modification < 0) return false;
 
         //Modification successful
         return true;
@@ -46,17 +65,17 @@ export class NormalSkill extends Skill {
      *          string
      */
     getSkillBoxPath(): string {
-        if (this.getAllocatedPoints() == 0) return "assets/images/skilltree/skillBox.png";
+        if (this.allocatedPoints == 0) return "assets/images/skilltree/skillBox.png";
 
-        switch (this.getColor().toLowerCase()) {
+        switch (this.color.toLowerCase()) {
             case 'blue': {
                 return "assets/images/skilltree/skillBoxBlue.png";
             }
             case 'green': {
                 return "assets/images/skilltree/skillBoxGreen.png";
             }
-            case 'red': {
-                return "assets/images/skilltree/skillBoxRed.png";
+            case 'orange': {
+                return "assets/images/skilltree/skillBoxOrange.png";
             }
             default: {
                 return "assets/images/skilltree/skillBox.png";

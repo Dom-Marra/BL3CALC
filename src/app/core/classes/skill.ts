@@ -1,167 +1,53 @@
-export interface SkillEffects {
-    name: string;
-    description: string;
-    effects: Array<{
-        name?: String,
-        names?: Array<string>,
-        type?: Array<{
-            accuracy?: boolean,
-            actionSkillCooldown?: boolean, 
-            actionSkillDmg?: boolean,
-            armorDmg?: boolean,
-            bonusDmg?: boolean,
-            bonusElementalDmg?: boolean,
-            bonusIncendiaryDmg?: boolean,
-            bonusShockDmg?: boolean, //new stat
-            bonusCryoDmg?: boolean, //new stat
-            chargeTime?: boolean,
-            corrosiveDmg?: boolean, 
-            criticalHitDmg?: boolean,
-            dmgIncrease?: boolean,
-            dmgReduction?: boolean,
-            elementalDmg?: boolean,
-            elementalDmgReduction?: boolean,
-            fireRate?: boolean,
-            gunDmg?: boolean,
-            handling?: boolean,
-            healthRegen_maxHealth?: boolean,
-            healthRegen_missingHealth?: boolean,
-            heatPerShot?: boolean, 
-            increasedIncendiaryDmg?: boolean,
-            lifeSteal?: boolean,
-            magSize?: boolean, 
-            maxHealth?: boolean,
-            maxShield?: boolean, 
-            meleeDmg?: boolean,
-            modeSwitchSpeed?: boolean,
-            movementSpeed?: boolean,
-            reloadSpeed?: boolean,
-            shieldRegenDelay?: boolean,
-            shieldRechargeRate?: boolean,
-            shockDmg?: boolean,
-            shockDmgResist?: boolean,
-            splashDmg?: boolean,
-            splashDmgReduction?: boolean,
-            statusEffectChance?: boolean,
-            statusEffectDmg?: boolean,
-            statusEffectDuration?: boolean,
-            weaponSwapSpeed?: boolean,
-            extraType?: any
-        }>,
-        hidden?: boolean,
-        conditional?: Object,
-        conditionals?: Array<Object>,
-        getActiveValueMulti?: Function,
-        getNotActiveValueMulti?: Function,
-        getActiveValueMultis?: Array<Function>,
-        getNotActiveValueMultis?: Array<Function>,
-        value?: any, 
-        values?:Array<any>}>;
-}
+import { SkillEffect } from "../models/skilleffect.model";
 
 export abstract class Skill {
     public readonly MIN_POINTS: number = 0;         //min number of points that can be allocated in the skill
-    
-    private allocatedPoints: number = 0;            //number of points allocated into the skill
-    private path: string;                           //Image path
-    private position: Array<number>;                //position on the tree [y, x]
-    private maxPoints: number;                      //max number of points that can be allocated in the skill
-    private preReq: number;                         //number of points required on the tree to allocate into this
-    private color: string;                          //The color group this skill belongs to 
-    private skillEffects: SkillEffects;             //The effects of the skill
+
+    public allocatedPoints: number = 0;            //number of points allocated into the skill
+    public name: string;                            //Name of the skill
+    public description: string;                     //Skill description
+    public image: string;                           //Image path
+    public x: number;                               //x position of the skill
+    public y: number;                               //y position of the skill
+    public maxPoints: number;                      //max number of points that can be allocated in the skill
+    public preReq: number;                         //number of points required on the tree to allocate into this
+    public color: string;                          //The color group this skill belongs to 
+    public skillEffects: Array<SkillEffect>;       //The effects of the skill
 
 
-    constructor(path: string, position: Array<number>, maxPoints: number, preReq: number, color: string, skillEffects: SkillEffects) {
-        this.path = path;                   
-        this.position = position;            
-        this.maxPoints = maxPoints;               
+    constructor(name: string,
+        description: string,
+        image: string,
+        x: number,
+        y: number,
+        maxPoints: number,
+        preReq: number,
+        color: string,
+        skillEffects: Array<SkillEffect>) {
+        this.name = name;
+        this.description = description;
+        this.image = image;
+        this.x = x;
+        this.y = y;
+        this.maxPoints = maxPoints;
         this.preReq = preReq;
         this.color = color;
         this.skillEffects = skillEffects;
-        
     }
 
     /**
      * Adds a point into this skill
      */
-    addPoint() {
+    addPoint(): number {
         this.allocatedPoints++;
+        return 0;
     }
-
     /**
      * Removes a point from this skill
      */
-    removePoint() {
+    removePoint(): number {
         this.allocatedPoints--;
-    }
-
-    /**
-     * Returns the pre-req amount of points to allocate into this skill
-     * 
-     * @returns
-     *          number
-     */
-    getPreReq(): number {
-        return this.preReq;
-    }
-
-    /**
-     * Returns the allocated points into this skill
-     * 
-     * @returns
-     *          number
-     */
-    getAllocatedPoints(): number {
-        return this.allocatedPoints;
-    }
-
-    /**
-     * Returns the position of this skill on tree [y][x]
-     * 
-     * @returns
-     *          array
-     */
-    getPosition(): Array<number> {
-        return this.position;
-    }
-
-    /**
-     * Returns the path for the image
-     * 
-     * @returns
-     *          string
-     */
-    getPath(): string {
-        return this.path;
-    }
-
-    /**
-     * The number of maximum number of points that can be allocated into this skill
-     * @returns
-     *          number
-     */
-    getMaxPoints(): number {
-        return this.maxPoints;
-    }
-
-    /**
-     * Returns the color group this skill belongs to
-     * 
-     * @returns
-     *          string
-     */
-    getColor(): string {
-        return this.color;
-    }
-
-    /**
-     * Returns the description of the skill, which includes its name and effects
-     * 
-     * @returns
-     *          SkillEffects
-     */
-    getSkillEffects(): SkillEffects {
-        return this.skillEffects;
+        return 0;
     }
 
     /**
@@ -172,7 +58,7 @@ export abstract class Skill {
      */
     abstract getSkillBoxPath(): string;
 
-    
+
     /**
      * Checks if the skill can have a poitn added or removed from it
      * 

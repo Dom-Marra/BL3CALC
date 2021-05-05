@@ -1,0 +1,36 @@
+#skilltrees {
+    height: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+
+    .skill-tree-wrapper {
+        position: relative;
+        flex: 0 1 368px;
+        margin: 50px auto;
+        min-width: 300px;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }   
+}
+
+#build-details {
+    width: 95%;
+    margin: 50px auto;
+
+    .equipped-skill-container {
+        display: flex;
+        height: auto;
+    }
+
+    .equipped-skill-wrapper {
+        height: 65px;
+
+        .equipped-skill-bg-image {
+            height: 100%;
+            width: auto;
+        }
+    }
+}

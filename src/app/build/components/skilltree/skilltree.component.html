@@ -1,0 +1,108 @@
+<div class="skilltree-container">
+    <img [src]="skilltree.image" class="skilltree-header-image" />
+    <app-edge-box 
+        class="edgebox" 
+        [color]="skilltree.color == 'blue' ? '#358ab0' : skilltree.color == 'green' ? '#69a624' : '#8a5720'"
+        edgeRatio="0.07"
+        noPadding="true"
+        topRight="true"
+        bottomLeft="true"
+    >
+        <div class="skilltree-progress-container">
+            <div class="skilltree-progress" [style.height]="skilltree.allocatedPoints < 25 ? (skilltree.allocatedPoints * (100 / 6 / 5) + (100 / 6)) + '%' : '100%'"></div>
+        </div>
+        <h4 class="tree-name" ScaleText>{{skilltree.name}}</h4>
+    </app-edge-box>
+    <div class="skills-container">
+        <div 
+            *ngFor="let skill of skilltree.skills.slice().reverse()" 
+            class="skill"
+            [style.top]="skill.y == -1 ? -(100/7/2) + '%' : (skill.y * (92/6) + 9) + '%'"
+            [style.left]="((skill.x + 1) * (100/5)) + 1 + '%'"
+            (click)="(skilltree.character.maxActionSkillPoints == 2 && isActionSkill(skill) || 
+                        skilltree.character.maxActionModPoints > 1 && isActionMod(skill)) ? null : addPoint(skill)"
+            (contextmenu)="$event.preventDefault(); removePoint(skill)"
+            displaySkill 
+            [skill]="skill"
+        >
+            <app-edge-box 
+                *ngIf="skill.preReq <= skilltree.allocatedPoints &&
+                        (skilltree.character.maxActionSkillPoints == 2 && 
+                        (isActionSkill(skill) && skilltree.character.equippedSkills[0]?.actionSkill != skill) ||
+
+                        (skill.requiredActionSkill != null && 
+                        (skill.requiredActionSkill == skilltree.character.equippedSkills[0]?.actionSkill ||
+                        (skilltree.character.maxActionModPoints / skilltree.character.maxActionSkillPoints > 1 &&
+                        skill.requiredActionSkill == skilltree.character.equippedSkills[1]?.actionSkill &&
+                        skilltree.character.equippedSkills[1]?.actionMods[0] != skill)) && 
+
+                        skilltree.character.equippedSkills[0].actionMods[0] != skill))"
+                role="button" 
+                aria-label="Add to first slot" 
+                theme="accent"
+                (click)="isActionSkill(skill) ? 
+                            (skilltree.character.equippedSkills[0]?.actionSkill != skill ? addPoint(skill, 0) : null) :
+                            isActionMod(skill) ? (skilltree.character.maxActionSkills > 1 ? 
+                            (skilltree.character.equippedSkills[1]?.actionSkill == skill.requiredActionSkill ? addPoint(skill, 1) : addPoint(skill, 0)) : 
+                            addPoint(skill, 0)) : null"
+                class="slot-select first"
+            >
+               <p class="slot-text">First</p> 
+            </app-edge-box>
+            <app-edge-box 
+                *ngIf="skill.preReq <= skilltree.allocatedPoints &&
+                        (skilltree.character.maxActionSkillPoints == 2 && 
+                        (isActionSkill(skill) && skilltree.character.equippedSkills[1]?.actionSkill != skill) ||
+
+                        (skill.requiredActionSkill != null && 
+                        (skill.requiredActionSkill == skilltree.character.equippedSkills[1]?.actionSkill ||
+                        (skilltree.character.maxActionModPoints / skilltree.character.maxActionSkillPoints > 1 &&
+                        skill.requiredActionSkill == skilltree.character.equippedSkills[0]?.actionSkill && 
+                        skilltree.character.equippedSkills[0]?.actionMods[1] != skill)) && 
+                        skilltree.character.equippedSkills[1]?.actionMods[1] != skill &&
+
+                        (skilltree.character.equippedSkills[1]?.actionMods[0] != skill || 
+                        skilltree.character.maxActionModPoints / skilltree.character.maxActionSkillPoints > 1)))"
+                role="button" 
+                aria-label="Add to second slot" 
+                theme="accent"
+                (click)="isActionSkill(skill) ? 
+                            (skilltree.character.equippedSkills[1]?.actionSkill != skill ? addPoint(skill, 1) : null) : 
+                            isActionMod(skill) ? (skilltree.character.maxActionSkills > 1 ? 
+                            (skilltree.character.equippedSkills[1]?.actionSkill == skill.requiredActionSkill ? addPoint(skill, 1) : addPoint(skill, 0)) : 
+                            addPoint(skill, 1)) : null"
+                class="slot-select second"
+            >
+                <p class="slot-text">Second</p> 
+            </app-edge-box>
+            <app-edge-box 
+                *ngIf="skill.x == 3 || skill.x == -1"
+                class="shelf" 
+                [color]="skilltree.color == 'blue' ? '#358ab0' : skilltree.color == 'green' ? '#69a624' : '#8a5720'"
+                edgeRatio="0.07"
+                noPadding="true"
+                [topRight]="skill.x == 3"
+                [bottomRight]="skill.x == 3"
+                [topLeft]="skill.x == -1"
+                [bottomLeft]="skill.x == -1"
+            >
+            </app-edge-box>
+            <img [src]="skill.image" class="skill-image" [class.unallocated]="skill.allocatedPoints == 0" [class.untargetable]="skilltree.allocatedPoints < skill.prereq" />
+            <img [src]="skill.getSkillBoxPath()" class="skill-background-image"  [class.untargetable]="skilltree.allocatedPoints < skill.prereq" />
+            <div 
+                *ngIf="isNormalSkill(skill)" 
+                class="points-container" 
+                [style.background-image]="'url(' + 
+                    (skill.allocatedPoints > 0 ? 
+                    (skill.color == 'blue' ? '../../../../assets/images/skilltree/pointBoxBlue.png' :
+                    (skill.color == 'green' ? '../../../../assets/images/skilltree/pointBoxGreen.png' : 
+                    '../../../../assets/images/skilltree/pointBoxOrange.png')) :
+                    '../../../../assets/images/skilltree/pointBox.png') + ')'"  
+                [class.untargetable]="skilltree.allocatedPoints < skill.prereq"
+            >
+                <p class="skill-points">{{skill.allocatedPoints + '/' + skill.maxPoints}}</p>
+            </div>
+        </div>
+    </div>
+    <button mat-icon-button aria-label="Reset tree" (click)="reset()" class="tree-reset"><mat-icon>replay</mat-icon></button>
+</div>

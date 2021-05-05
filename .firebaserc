@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "bl3calc"
+  },
+  "targets": {
+    "bl3calc": {
+      "hosting": {
+        "BL3CALC": [
+          "bl3calc"
+        ]
+      }
+    }
   }
 }

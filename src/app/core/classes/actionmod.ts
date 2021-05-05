@@ -1,14 +1,23 @@
+import { SkillModel } from '../models/skill.model';
+import { ActionSkill } from './actionskill';
 import { Skill } from './skill';
-import { SkillEffects } from './skill';
 
 export class ActionMod extends Skill {
 
-    private requiredActionSkill: Skill = null;      //Required active skill to allocate active skill mod
+    constructor(skillData: SkillModel, private requiredActionSkill?: ActionSkill) {
 
-    constructor(path: string, position: Array<number>, maxPoints: number, preReq: number, color: string, skillEffects?: SkillEffects, requiredActionSkill?: Skill) { 
-        super(path, position, maxPoints, preReq, color, skillEffects);
-        this.requiredActionSkill = requiredActionSkill;
-    }  
+        super(
+            skillData.name, 
+            skillData.description, 
+            skillData.image, 
+            skillData.x, 
+            skillData.y, 
+            skillData.maxPoints, 
+            skillData.preReq,
+            skillData.color, 
+            skillData.skillEffects
+        );
+    }
     
     /**
      * Checks if the skill can have a point added or removed from it
@@ -28,22 +37,22 @@ export class ActionMod extends Skill {
         if (modification < -1 || modification > 1 || modification == 0) return false;
 
         //not enough pre-req points return false
-        if (allocatedSkillTreePoints < this.getPreReq()) return false;
+        if (allocatedSkillTreePoints < this.preReq) return false;
     
         //Check if this skill has a required action skill to be allocated
         if (this.getRequiredActionSkill() != null) {
 
             //It does and it has no allocation, then return false
-            if (this.getRequiredActionSkill().getAllocatedPoints() < 0) return false;
+            if (this.getRequiredActionSkill().allocatedPoints < 0) return false;
         } 
         
         //At max points and the modification is addition remove a point from the skill
-        if (this.getAllocatedPoints() == this.getMaxPoints() && modification > 0) {
+        if (this.allocatedPoints == this.maxPoints && modification > 0) {
             this.removePoint();
         }
 
         //At min points and the modification is subtraction return false
-        if (this.getAllocatedPoints() == this.MIN_POINTS && modification < 0) return false;
+        if (this.allocatedPoints == this.MIN_POINTS && modification < 0) return false;
 
         //Modification successful
         return true;
@@ -56,17 +65,17 @@ export class ActionMod extends Skill {
      *          string
      */
     getSkillBoxPath(): string {
-        if (this.getAllocatedPoints() == 0) return "assets/images/skilltree/actionSkillModBox.png";
+        if (this.allocatedPoints == 0) return "assets/images/skilltree/actionSkillModBox.png";
 
-        switch (this.getColor().toLowerCase()) {
+        switch (this.color.toLowerCase()) {
             case 'blue': {
                 return "assets/images/skilltree/actionSkillModBoxBlue.png";
             }
             case 'green': {
                 return "assets/images/skilltree/actionSkillModBoxGreen.png";
             }
-            case 'red': {
-                return "assets/images/skilltree/actionSkillModBoxRed.png";
+            case 'orange': {
+                return "assets/images/skilltree/actionSkillModBoxOrange.png";
             }
             default: {
                 return "assets/images/skilltree/actionSkillModBox.png";

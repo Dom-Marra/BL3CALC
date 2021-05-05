@@ -1,31 +1,153 @@
-<div id="main-container" class="blue-background">
-    <div id="build-option-buttons" class="flex">
-        <button class="build-option-button" id="share-build" (click)="createBuildData()">Share Build</button>
-        <button class="build-option-button" id="import-build" (click)="importCharacter()">Import Build</button>
-    </div>
-    <div *ngIf="character != null" class="flex wrapped horizontal-align-around vertical-align-center" id="build-container">
-        <div id="skilltrees" class="flex wrapped horizontal-align-around vertical-align-center">
-            <div class="skill-tree-wrapper">
-                <app-skilltree class="skilltree" [treeName]='character.getBlueTreeName()' color='blue' index='0' [header]="character.getBlueTreeHeader()" [skills]="character.getBlueSkills()" [_character]="character" [loadedData]="loadedCharacterData"></app-skilltree>
+<mat-sidenav-container 
+    id="build-nav-container"
+    autosize
+    *ngIf="character"
+>
+    <mat-sidenav 
+        #characterSideNav 
+        [opened]="!(mobileQuery | async).matches" 
+        mode="side" 
+        id="build-sidenav" 
+    >
+        <div id="character-links-wrapper">
+            <div #drawerContent id="character-links">
+                <a>
+                    <app-edge-box
+                        aria-label="Amara Build Page" 
+                        class="character-link"
+                        role="button"
+                        bgImage="../../assets/images/amara/amara_icon.png"
+                        noPadding="true"
+                        [class.active]="characterType === 'amara'"
+                        [color]="character.name === 'Amara' ? null : 'rgba(0, 0, 0, 0.5)'"
+                        [theme]="character.name === 'Amara' ? 'accent' : null"
+                        (click)="setCharacter('amara')"
+                    >
+                    </app-edge-box>
+                </a>
+                <a>
+                    <app-edge-box
+                        aria-label="Stats Page" 
+                        class="character-link"
+                        role="button"
+                        bgImage="../../assets/images/fl4k/fl4k_icon.png"
+                        noPadding="true"
+                        [class.active]="characterType === 'fl4k'"
+                        [color]="character.name === 'FL4K' ? null : 'rgba(0, 0, 0, 0.5)'"
+                        [theme]="character.name === 'FL4K' ? 'accent' : null"
+                        (click)="setCharacter('fl4k')"
+                    >
+                    </app-edge-box>
+                </a>
+                <a>
+                    <app-edge-box
+                        aria-label="Stats Page" 
+                        class="character-link"
+                        role="button"
+                        bgImage="../../assets/images/moze/moze_icon.png"
+                        noPadding="true"
+                        [class.active]="characterType === 'moze'"
+                        [color]="character.name === 'Moze' ? null : 'rgba(0, 0, 0, 0.5)'"
+                        [theme]="character.name === 'Moze' ? 'accent' : null"
+                        (click)="setCharacter('moze')"
+                    >
+                    </app-edge-box>
+                </a>
+                <a>
+                    <app-edge-box
+                        aria-label="Stats Page" 
+                        class="character-link"
+                        role="button"
+                        bgImage="../../assets/images/zane/zane_icon.png"
+                        noPadding="true"
+                        [class.active]="characterType === 'zane'"
+                        [color]="character.name === 'Zane' ? null : 'rgba(0, 0, 0, 0.5)'"
+                        [theme]="character.name === 'Zane' ? 'accent' : null"
+                        (click)="setCharacter('zane')"
+                    >
+                    </app-edge-box>
+                </a>
             </div>
-            <div class="skill-tree-wrapper">
-                <app-skilltree class="skilltree" [treeName]='character.getGreenTreeName()' color='green' index='1' [header]="character.getGreenTreeHeader()" [skills]="character.getGreenSkills()" [_character]="character" [loadedData]="loadedCharacterData"></app-skilltree>
-            </div>
-            <div class="skill-tree-wrapper">
-                <app-skilltree class="skilltree" [treeName]='character.getRedTreeName()' color='red' index='2' [header]="character.getRedTreeHeader()" [skills]="character.getRedSkills()" [_character]="character" [loadedData]="loadedCharacterData"></app-skilltree>
-            </div>
-            
         </div>
-    
-        <app-stats [allocatedPoints]="character.getAllocatedNormalSkillPoints()"
-                   [equippedSkills]="character.getEquippedSkills()"
-                   [allocatedSkills]="character.getAllocatedSkills()"
-                   [maxActionSkills]="character.getMaxActionSkillPoints()"
-                   [maxActionMods]="{actionMods: character.getMaxActionModPoints(), actionSkills: character.getMaxActionSkillPoints()}"
-                   [maxOtherSkills]="character.getMaxOtherSkillPoints()"
-                   [characterStats]="character.getExtraTypes()"
-                   id="stats"></app-stats>
+    </mat-sidenav>
 
-        <app-tooltip></app-tooltip>
-    </div>
+    <mat-sidenav-content id="build-sidenav-content">
+        <div id="build-header" [class.opened]="pagesNavOpened">
+            <div id="build-header-main">
+                <div id="build-header-main-left">
+                    <button 
+                        id="character-drawer-toggle"
+                        mat-icon-button 
+                        aria-label="Open Character Menu" 
+                        (click)="characterSideNav.opened = !characterSideNav.opened"
+                    >
+                        <mat-icon>{{characterSideNav.opened ? 'menu_open' : 'menu'}}</mat-icon>
+                    </button>
+                </div>
+                
+
+                <h1 id="character-name">{{characterService.currentCharacter.value.name}}</h1>
+                
+                <div id="build-header-main-right">
+                    <button
+                        id="save-button"
+                        mat-icon-button
+                        aria-label="Save Build"
+                        (click)="save()"
+                    >
+                        <mat-icon>link</mat-icon>
+                    </button>
+                    <button
+                        id="page-buttons-toggle"
+                        mat-icon-button
+                        aria-label="Open Page Menu"
+                        *ngIf="(mobileQuery | async).matches"
+                        (click)="pagesNavOpened = !pagesNavOpened"
+                    >
+                        <mat-icon>{{pagesNavOpened ? 'expand_less' : 'expand_more'}}</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div id="build-page-buttons">
+                <app-edge-box 
+                    #skilltrees="routerLinkActive"
+                    aria-label="Skill Trees Page" 
+                    [routerLink]="'/build/skilltrees'"
+                    [routerLinkActive]="'activate-page'"
+                    class="page-button"
+                    role="button"
+                    [color]="skilltrees.isActive ? null : 'rgba(255, 255, 255, 0.5)'"
+                    [theme]="skilltrees.isActive ? 'accent' : null"
+                    queryParamsHandling="merge"
+                >
+                    <p class='page-name'>SKILL TREES</p>
+                </app-edge-box>
+                <app-edge-box
+                    #stats="routerLinkActive"
+                    aria-label="Stats Page" 
+                    [routerLink]="'/build/stats'"
+                    [routerLinkActive]="'activate-page'"
+                    class="page-button"
+                    role="button"
+                    [color]="stats.isActive ? null : 'rgba(255, 255, 255, 0.5)'"
+                    [theme]="stats.isActive ? 'accent' : null"
+                    queryParamsHandling="merge"
+                >
+                    <p class='page-name'>STATS</p>
+                </app-edge-box>
+            </div>
+        </div>
+        <hr id="hr" />
+        <div id="build-content-wrapper">
+            <ng-scrollbar #toolTipParent id="build-content">
+                <app-build-details id="build-details" [character]="character"></app-build-details>
+                <router-outlet></router-outlet>
+                <app-tooltip [parent]="toolTipParent.viewport.nativeElement"></app-tooltip>
+            </ng-scrollbar>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+<div *ngIf="!character" id="loader-container">
+    <app-loader theme="accent"></app-loader>
+    <h3>Loading... please wait</h3>
 </div>
