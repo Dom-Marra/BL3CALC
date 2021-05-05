@@ -1,94 +1,37 @@
-@font-face {
-    font-family: 'Compacta Bold';
-    src: url('./assets/fonts/Compacta\ Bold.otf') format("opentype");
-}
-
-@font-face {
-    font-family: 'Teko';
-    src: url('./assets/fonts/Teko-Medium.ttf') format("truetype");
-}
-
-$primary-color: rgb(49, 49, 49);
-$primary-accent-color: rgb(39, 39, 39);
-$primary-color-accent-light: rgb(58, 58, 58);
-
-$secondary-color: rgb(39, 39, 39);
-$text-color: rgb(255,215,0);
-
-@mixin borderlands-text {
-    font-family: 'Compacta Bold';
-    color: $text-color;
-    text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
-}
-
+@import './materialtheme.scss';
 
 html {
-    overflow-x: hidden;
-}
-
-body, html {
-    margin: 0;
     height: 100%;
 }
 
-.blue-background {
-    background-image: radial-gradient(#104172,#161616) !important;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+body {
+    margin: 0; 
+    height: 100%; 
+    overflow: hidden;
 }
 
-.doNotSelect {
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none; 
-     -khtml-user-select: none; 
-       -moz-user-select: none; 
-        -ms-user-select: none; 
-            user-select: none; 
+.save-dialog {
+    width: 98%;
+    max-width: 450px !important;
+
+    .mat-dialog-container {
+        background-color: transparent;
+        box-shadow: none;
+        padding: 0;
+        border-radius: 0;
+    }
 }
 
-.flex {
-    display: flex;
+.edgebox-snackbar {
+    border-radius: 0px;
+    background-color: transparent;
+    box-shadow: none;
 }
 
-.flex-grow {
-    flex-grow: 1;
+.mat-form-field-appearance-legacy .mat-form-field-label, .mat-form-field-appearance-legacy .mat-hint { 
+    color: black;
 }
 
-.wrapped {
-    flex-wrap: wrap;
-}
-
-.inline-flex {
-    display: inline-flex;
-}
-
-.vertical-align-center {
-    align-items: center;
-}
-
-.vertical-align-start {
-    align-items: flex-start;
-}
-
-.horizontal-align-between {
-    justify-content: space-between;
-}
-
-.horizontal-align-around {
-    justify-content: space-around;
-}
-
-.horizontal-align-start {
-    justify-content: flex-start;
-}
-
-.horizontal-align-center {
-    justify-content: center;
-}
-
-.horizontal-align-evenly {
-    justify-content: space-evenly;
+.mat-form-field-appearance-legacy .mat-hint { 
+    color: black !important;
 }

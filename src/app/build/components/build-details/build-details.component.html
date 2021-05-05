@@ -1,0 +1,11 @@
+<div class="build-datils-container">
+    <div class="detail">
+        <h3>Points:</h3>
+        <h3 class="modified-text allocated-points"> &nbsp; {{_character.allocatedPoints}} / {{_character.MAX_NORMAL_SKILL_POINTS}}</h3>
+    </div>
+    <div class="detail">
+        <h3>Level:</h3>
+        <h3 class="modified-text level"> &nbsp; {{2 + _character.allocatedPoints}}</h3>
+    </div>
+    <app-equipped-skills class="detail skills" [equippedSkills]="_character.equippedSkills"></app-equipped-skills>
+</div>
