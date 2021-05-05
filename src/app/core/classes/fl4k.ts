@@ -4,22 +4,15 @@ import { ActionSkill } from './actionskill';
 import { ActionMod } from './actionmod';
 import { Character } from './character';
 import { CharacterModel } from '../models/character.model';
-import { SkillTree } from './skilltree';
 import { BaseCharacterModel } from '../models/basecharacter.model';
+import { Save } from '../models/save.model';
 
 export class Fl4k extends Character {
 
-    constructor(baseCharacterData: BaseCharacterModel, characterData: CharacterModel) {
-        super(baseCharacterData, 1, 2, 1);
+    constructor(baseCharacterData: BaseCharacterModel, characterData: CharacterModel, save?: Save) {
+        super(baseCharacterData, 1, 2, 1, characterData, save);
 
         this.name = "FL4K";
-
-        this.greenTree = new SkillTree(characterData.trees.find(tree => tree.color == "green"), this);
-        this.orangeTree = new SkillTree(characterData.trees.find(tree => tree.color == "orange"), this);
-        this.blueTree = new SkillTree(characterData.trees.find(tree => tree.color == "blue"), this);
-
-        this.addConditionals(characterData.conditionals);
-        this.addStats(characterData.stats);
     }
 
     /**

@@ -4,21 +4,14 @@ import { ActionMod } from './actionmod';
 import { Character } from './character';
 import { BaseCharacterModel } from '../models/basecharacter.model';
 import { CharacterModel } from '../models/character.model';
-import { SkillTree } from './skilltree';
+import { Save } from '../models/save.model';
 
 export class Moze extends Character {
 
-    constructor(baseCharacterData: BaseCharacterModel, characterData: CharacterModel) {
-        super(baseCharacterData, 2, 2, 0);
+    constructor(baseCharacterData: BaseCharacterModel, characterData: CharacterModel, save?: Save) {
+        super(baseCharacterData, 2, 2, 0, characterData, save);
 
         this.name = "Moze";
-
-        this.greenTree = new SkillTree(characterData.trees.find(tree => tree.color == "green"), this);
-        this.orangeTree = new SkillTree(characterData.trees.find(tree => tree.color == "orange"), this);
-        this.blueTree = new SkillTree(characterData.trees.find(tree => tree.color == "blue"), this);
-
-        this.addConditionals(characterData.conditionals);
-        this.addStats(characterData.stats);
     }
 
     /**
@@ -30,7 +23,6 @@ export class Moze extends Character {
      *        position of skill in equipped skills (only applies to action mods)
      */
     public handleAdditionOfNonNormalSkill(skill: Skill, pos?: number) {
-
         if (skill instanceof ActionSkill) {
 
             if (this.equippedSkills[pos].actionSkill != skill               //remove action skill in the position

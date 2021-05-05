@@ -4,28 +4,22 @@ import { ActionSkill } from './actionskill';
 import { ActionMod } from './actionmod';
 import { Character } from './character';
 import { CharacterModel } from '../models/character.model';
-import { SkillTree } from './skilltree';
 import { BaseCharacterModel } from '../models/basecharacter.model';
+import { Save } from '../models/save.model';
 
 export class Amara extends Character {
 
   public readonly SHOCKRA: OtherSkill;
 
-  constructor(baseCharacterData: BaseCharacterModel, characterData: CharacterModel) {
-    super(baseCharacterData, 1, 1, 1);
+  constructor(baseCharacterData: BaseCharacterModel, characterData: CharacterModel, save?: Save) {
+    super(baseCharacterData, 1, 1, 1, characterData, save);
 
     this.name = "Amara";
 
-    this.greenTree = new SkillTree(characterData.trees.find(tree => tree.color == "green"), this);
-    this.orangeTree = new SkillTree(characterData.trees.find(tree => tree.color == "orange"), this);
-    this.blueTree = new SkillTree(characterData.trees.find(tree => tree.color == "blue"), this);
-
     this.SHOCKRA = new OtherSkill(characterData.defaultSkills.find(x => x.name == "SHOCKRA"));
-
-    this.addConditionals(characterData.conditionals);
-    this.addStats(characterData.stats);
-    this.addPoint(this.SHOCKRA);
+    if (this.equippedSkills[0].otherSkill == null) this.addPoint(this.SHOCKRA);
   }
+    
 
   /**
    * Adds the specified skill to the equipped skills,
