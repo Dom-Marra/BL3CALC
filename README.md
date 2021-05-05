@@ -1,3 +1,5 @@
 # BL3CALC
 
-An in development skill tree planner for borderlands 3
+Build planner for Borderlands 3.
+
+Check it out at www.bl3calc.com
