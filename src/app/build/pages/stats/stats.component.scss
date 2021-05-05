@@ -6,6 +6,8 @@
     margin: 35px auto;
     align-items: flex-start;
     width: 95%;
+    z-index: 1;
+    position: relative;
 
     .stats-page-item {
         flex: 1;
