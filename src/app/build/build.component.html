@@ -93,6 +93,7 @@
                         id="save-button"
                         mat-icon-button
                         aria-label="Save Build"
+                        (click)="save()"
                     >
                         <mat-icon>link</mat-icon>
                     </button>
@@ -117,6 +118,7 @@
                     role="button"
                     [color]="skilltrees.isActive ? null : 'rgba(255, 255, 255, 0.5)'"
                     [theme]="skilltrees.isActive ? 'accent' : null"
+                    queryParamsHandling="merge"
                 >
                     <p class='page-name'>SKILL TREES</p>
                 </app-edge-box>
@@ -129,6 +131,7 @@
                     role="button"
                     [color]="stats.isActive ? null : 'rgba(255, 255, 255, 0.5)'"
                     [theme]="stats.isActive ? 'accent' : null"
+                    queryParamsHandling="merge"
                 >
                     <p class='page-name'>STATS</p>
                 </app-edge-box>
@@ -144,3 +147,7 @@
         </div>
     </mat-sidenav-content>
 </mat-sidenav-container>
+<div *ngIf="!character" id="loader-container">
+    <app-loader theme="accent"></app-loader>
+    <h3>Loading... please wait</h3>
+</div>
