@@ -24,6 +24,8 @@
     font-size: mat-font-size(mat-typography-config(), body-2);
     width: 350px;
     max-width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
 
     .skill-effects-name {
         font-size: mat-font-size(mat-typography-config(), subheading-2);
