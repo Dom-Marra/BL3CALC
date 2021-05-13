@@ -140,9 +140,9 @@
         <hr id="hr" />
         <div id="build-content-wrapper">
             <ng-scrollbar #toolTipParent id="build-content">
+                <app-tooltip [parent]="toolTipParent.viewport.nativeElement"></app-tooltip>
                 <app-build-details id="build-details" [character]="character"></app-build-details>
                 <router-outlet></router-outlet>
-                <app-tooltip [parent]="toolTipParent.viewport.nativeElement"></app-tooltip>
             </ng-scrollbar>
         </div>
     </mat-sidenav-content>
