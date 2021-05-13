@@ -2,22 +2,15 @@
 
 :host {
     position: absolute;
-    z-index: -1;
     height: auto;
-    pointer-events: none;
     box-sizing: border-box;
     visibility: hidden;
     max-width: 95%;
 
     &.visible {
-        z-index: 1;
+        z-index: 2;
         visibility: visible;
     }
-}
-
-#tooltip {
-    z-index: -1;
-    height: 100%;
 }
 
 .skill-effects-container {
