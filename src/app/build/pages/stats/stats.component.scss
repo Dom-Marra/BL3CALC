@@ -1,127 +1,114 @@
 @import "../../../../styles.scss";
 
-#stats-page {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 35px auto;
-    align-items: flex-start;
-    width: 95%;
+.stats-section {
+    margin-bottom: 2rem;
 
-    .stats-page-item {
-        flex: 1;
-        max-width: 80%;
+    .configs,
+    .stat-container {
+        width: 90%;
+        margin: auto;
 
-        h3 {
+        h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 1.25rem;
         }
     }
 
-    #configs {
-        flex: 0;
-        margin: 0 auto;
-        min-width: 400px;
+    .configs {
+        max-width: 30rem;
 
-        #config-box {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            align-items: flex-start;
+        .config {
+            width: 100%;
+            margin: 0.75rem;
 
-            .config {
-                width: 100%;
-                margin: 12px;
+            .input {
+                box-sizing: border-box;
+                margin: 0.75rem;
+            }
+        }
+    }
 
-                .input {
-                    box-sizing: border-box;
-                    padding-left: 12px;
+    .stat-container {
+        margin-bottom: 1.25rem;
+
+        table {
+            color: black;
+            box-sizing: border-box;
+            text-align: left;
+            width: 100%;
+            margin: auto;
+            overflow: hidden;
+            border-collapse: collapse;
+
+            td {
+                padding: 1rem 0;
+            }
+
+            thead {
+
+                th {
+                    padding: 0 0.5rem;
+                    font-weight: 500;
+                    font-size: mat-font-size($BL3CALC-typography, subheading-1);
                 }
             }
-        }
-    }
 
-    #stats {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: stretch;
-        margin: 0 15px;
-
-        .stat-container {
-            margin-right: 20px;
-            margin-bottom: 20px;
-            flex: 1 375px;
-    
-            h3 {
-                color: back;
-            }
-    
-            table {
-                color: black;
-                box-sizing: border-box;
-                text-align: left;
-                width: 100%;
-                margin: auto;
-                border-radius: 3px;
-                overflow: hidden;
-                border-collapse: collapse;
+            tbody {
 
                 td {
-                    padding: 1em 0;
+                    padding: 0 0.5rem;
+                    font-weight: normal;
                 }
-    
-                thead {
-    
-                    th {
-                        padding: 0 5px;
-                        font-weight: 500;
-                        font-size: mat-font-size($BL3CALC-typography, subheading-1);
-                    }
-                }
-    
-                tbody {
-    
-                    td {
-                        padding: 0 5px;
-                        font-weight: normal;
-                    }
-                }
-                
             }
-        }   
-    }
+            
+        }
+    }   
 }
 
-@media only screen and (max-width: 1025px) { 
-    #stats-page { 
+@media only screen and (min-width: 64em) { 
+    .stats-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr minmax(30rem, 1fr);
+        grid-template-areas: 
+        "offensive offensive config"
+        "defensive defensive config"
+        "utility utility config";
+        row-gap: 2rem;
 
-        .stats-page-item {
-            max-width: 100%;
-        }
-
-        #stats { 
-            box-sizing: border-box;
-            flex: 1 0 100%;
-            width: 100%;
-            min-width: 275px;
+        .configs {
+            grid-area: config;
+            height: auto;
             margin: 0;
-
-            .stat-container { 
-                margin: 15px 10px;
-            }
+            margin-bottom: auto;
         }
 
-        #configs { 
-            margin-top: 15px;
+        .stat-container {
+            margin: 0 auto;
         }
+
+        .offensive {
+            grid-area: offensive;
+        }
+
+        .defensive {
+            grid-area: defensive;
+        }
+        
+        .utility {
+            grid-area: utility;
+        }
+        
     }
 }
 
-@media only screen and (max-width: 580px) {
-    #stats-page {
-        #configs { 
-            flex: 1 0 255px;
-            min-width: 255px;
-            margin: 15px 10px;
+@media only screen and (min-width: 100rem) {
+    .stats-section { 
+        display: flex;
+        align-items: flex-start;
+
+        .stat-container,
+        .configs {
+            margin: 0 1rem;
         }
     }
 }
