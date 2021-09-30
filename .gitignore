@@ -50,3 +50,6 @@ Thumbs.db
 
 #dev proxy
 proxy.conf.json
+
+#test data
+/src/app/build/testdata

@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import '../../../../materialtheme.scss';
 
 :host {
@@ -30,15 +31,15 @@
         stroke-width: 100px;
 
         &.accent {
-            fill: mat-color($BL3CALC-accent, 500);
+            fill: mat.get-color-from-palette($BL3CALC-accent, 500);
         }
 
         &.primary {
-            fill: mat-color($BL3CALC-primary, 500);
+            fill: mat.get-color-from-palette($BL3CALC-primary, 500);
         }
 
         &.warn {
-            fill: mat-color($BL3CALC-warn, 500);
+            fill: mat.get-color-from-palette($BL3CALC-warn, 500);
         }
     }
 }

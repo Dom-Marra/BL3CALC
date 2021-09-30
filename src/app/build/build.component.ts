@@ -26,8 +26,6 @@ export class BuildComponent implements OnInit {
 
   @ViewChild('drawerContent') drawerContent: ElementRef;    //Mat drawer
 
-  public activePage: 'trees' | 'stats' = 'trees';          //The active page
-
   public mobileQuery: Observable<BreakpointState>;         //Determines page breakpoints
   public pageNavOpened: boolean = false;                   //Page navigation state
   public character: Character = null;                      //Current Character
@@ -37,7 +35,6 @@ export class BuildComponent implements OnInit {
   private fl4kData: CharacterModel;                        //FL4K Data
   private mozeData: CharacterModel;                        //Moze Data
   private zaneData: CharacterModel;                        //Zane Data
-
 
   constructor(
     private breakObs: BreakpointObserver,
@@ -53,29 +50,29 @@ export class BuildComponent implements OnInit {
     this.firebase.getAllCharacters().subscribe(characters => {
 
       characters.forEach(doc => {       //Set Character data
-        if (doc.id == 'base') this.baseCharacterData = doc.data() as BaseCharacterModel;
-        else if (doc.id == 'amara') this.amaraData = doc.data() as CharacterModel;
-        else if (doc.id == 'fl4k') this.fl4kData = doc.data() as CharacterModel;
-        else if (doc.id == 'moze') this.mozeData = doc.data() as CharacterModel;
-        else if (doc.id == 'zane') this.zaneData = doc.data() as CharacterModel;
+        if (!doc.name) this.baseCharacterData = doc as BaseCharacterModel;
+        else if (doc.name === 'Amara') this.amaraData = doc as CharacterModel;
+        else if (doc.name === 'Fl4k') this.fl4kData = doc as CharacterModel;
+        else if (doc.name === 'Moze') this.mozeData = doc as CharacterModel;
+        else if (doc.name === 'Zane') this.zaneData = doc as CharacterModel;
       });
 
-      this.activeRoute.queryParamMap.subscribe(params => {    //Get Build provided in query params
-        if (params.has('build')) {
+      activeRoute.paramMap.subscribe(params => {   //Set Build if it exists
+        const buildQuery = params.get('build');
+        const character = params.get('character').toLowerCase();
+
+        if (buildQuery) {
           this.character = null;
-        
-          this.firebase.loadBuild(params.get('build')).subscribe(
-            doc => {
-              if (doc.exists) this.setCharacter((doc.data() as Save).type, doc.data() as Save);
+      
+          this.firebase.loadBuild(params.get('build')).then(doc => {
+              if (doc.exists()) this.setCharacter((doc.data() as Save).type, doc.data() as Save);
               else {
                 this.setCharacter('amara');
                 this.snackBar.openFromComponent(SnackbarComponent, {data: {message: 'Could not retrieve the build!', theme: 'accent'}, panelClass: 'edgebox-snackbar'});
               }
-            }
-          )
+          });
         } else {
-          if (this.character == null) this.setCharacter('amara');
-          else this.setCharacter(this.character.name.toLowerCase());
+          this.setCharacter(character);
         }
       });
     });
@@ -103,10 +100,17 @@ export class BuildComponent implements OnInit {
    */
   public setCharacter(characterType: string, save?: Save) {
 
+    const characterParam = this.activeRoute.snapshot.paramMap.get('character');
+    const buildQuery = save && this.activeRoute.snapshot.paramMap.get('build') ? `/${this.activeRoute.snapshot.paramMap.get('build')}` : '';
+
+    if (characterType.toLowerCase() !== characterParam) {
+      this.router.navigate([`build/${characterType.toLowerCase() + buildQuery}`]);
+    }
+
     switch (characterType.toLowerCase()) {
       case 'amara': {
-        this.characterService.currentCharacter.next(new Amara(JSON.parse(JSON.stringify(this.baseCharacterData)), JSON.parse(JSON.stringify(this.amaraData)), save));
-        break;
+          this.characterService.currentCharacter.next(new Amara(JSON.parse(JSON.stringify(this.baseCharacterData)), JSON.parse(JSON.stringify(this.amaraData)), save));
+          break;
         } case 'fl4k': {
           this.characterService.currentCharacter.next(new Fl4k(JSON.parse(JSON.stringify(this.baseCharacterData)), JSON.parse(JSON.stringify(this.fl4kData)), save));
           break;
@@ -117,13 +121,11 @@ export class BuildComponent implements OnInit {
           this.characterService.currentCharacter.next(new Zane(JSON.parse(JSON.stringify(this.baseCharacterData)), JSON.parse(JSON.stringify(this.zaneData)), save));
           break;
       } default: {
+        this.router.navigate(['build/amara']);
         this.characterService.currentCharacter.next(new Amara(this.baseCharacterData, this.amaraData));
       }
     }
-
-    if (this.activeRoute.snapshot.queryParamMap.keys.length > 0 && save == null) {    //Reset query params if no save was provided
-      this.router.navigate([], {relativeTo: this.activeRoute, queryParams: {}});
-    }
+    
   }
 
   /**
@@ -132,7 +134,7 @@ export class BuildComponent implements OnInit {
   public save() {
     let save: Save = this.character.getSave();
 
-    if (save) this.dialog.open(SaveDialogComponent, {data: this.firebase.saveBuild(save)});
+    if (save) this.dialog.open(SaveDialogComponent, {data: {firebase: this.firebase.saveBuild(save), save: save}});
     else this.snackBar.openFromComponent(SnackbarComponent, {data: {message: 'No data to save!', theme: 'accent'}, panelClass: 'edgebox-snackbar'})
   }
 }

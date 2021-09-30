@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import '../../../../materialtheme.scss';
 
 #save-box {
@@ -7,10 +8,10 @@
 .save-status {
     margin-bottom: 20px;
     text-align: center;
-    color: mat-color($BL3CALC-primary, 500);
+    color: mat.get-color-from-palette($BL3CALC-primary, 500);
 
     &.error {
-        color: mat-color($BL3CALC-warn, 500);
+        color: mat.get-color-from-palette($BL3CALC-warn, 500);
     }
 }
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { addDoc, doc, getDoc } from '@firebase/firestore';
 import { Save } from '../models/save.model';
 
 @Injectable({
@@ -10,7 +11,7 @@ export class FirebaseService {
   public readonly CHARACTER_COLLECTION: string = 'characters';
   public readonly BUILD_COLLECTION: string = 'builds';
 
-  constructor(private firestore: AngularFirestore) { 
+  constructor(private firestore: Firestore) { 
   }
 
   /**
@@ -20,7 +21,7 @@ export class FirebaseService {
    *        a querysnapshot of documents
    */
   public getAllCharacters() {
-    return this.firestore.collection('characters').get();
+    return collectionData(collection(this.firestore, 'characters'));
   }
 
   /**
@@ -30,7 +31,7 @@ export class FirebaseService {
    *        Save data
    */
   public saveBuild(save: Save) {
-    return this.firestore.collection(this.BUILD_COLLECTION).add(save);
+    return addDoc(collection(this.firestore, 'builds'), save);
   }
 
   /**
@@ -40,6 +41,6 @@ export class FirebaseService {
    *        string: document id
    */
   public loadBuild(buidID: string) {
-    return this.firestore.collection(this.BUILD_COLLECTION).doc(buidID).get();
+    return getDoc(doc(this.firestore, `${this.BUILD_COLLECTION}/${buidID}`));
   }
 }
