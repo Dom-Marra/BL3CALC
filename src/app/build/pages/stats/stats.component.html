@@ -1,116 +1,111 @@
-<div id="stats-page">
-    <div id="stats" class="stats-page-item">
-        
-        <app-edge-box
-            theme="accent"
-            class="offensive stat-container"
-            edgeRatio="0.1"
-            minEdge="20"
-        >
-            <h3>Offensive</h3>
-            <table *ngIf="(character.stats | statfilter:'offense') as offenseStats">
-                <thead>
-                    <th>Name</th>
-                    <th>Value</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let stat of offenseStats | keyvalue">
-                        <td>
-                            {{stat.value.text}}
-                        </td>
-                        <td>
-                            {{stat.value.value}}{{stat.value.valueType == 'percent' ? '%' : ''}}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </app-edge-box>
-
-        
-        <app-edge-box
-            theme="accent"
-            class="defensive stat-container"
-            edgeRatio="0.1"
-            minEdge="20"
-        >
-            <h3>Defensive</h3>
-            <table *ngIf="(character.stats | statfilter:'defense') as defenseStats">
-                <thead>
-                    <th>Name</th>
-                    <th>Value</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let stat of defenseStats | keyvalue">
-                        <td>
-                            {{stat.value.text}}
-                        </td>
-                        <td> 
-                            {{stat.value.value}}{{stat.value.valueType == 'percent' ? '%' : ''}}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </app-edge-box>
-
-        <app-edge-box
-            theme="accent"
-            class="utility stat-container"
-            edgeRatio="0.1"
-            minEdge="20"
-        >
-            <h3>Utility</h3>
-            <table *ngIf="(character.stats | statfilter:'utility') as utilityStats">
-                <thead>
-                    <th>Name</th>
-                    <th>Value</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let stat of utilityStats | keyvalue">
-                        <td>
-                            {{stat.value.text}}
-                        </td>
-                        <td>
-                            {{stat.value.value}}{{stat.value.valueType == 'percent' ? '%' : ''}}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </app-edge-box>
-    </div>
-
+<section class="stats-section">
+    
     <app-edge-box
-        class="stats-page-item"
         theme="accent"
-        id="configs"
+        class="offensive stat-container"
         edgeRatio="0.1"
         minEdge="20"
     >
-        <h3>Configurations</h3>
-
-        <div id="config-box">
-            <ng-container *ngFor="let conditional of character.conditionals | keyvalue">
-                <div class="config" *ngIf="character.conditionalsInUse.has(conditional.key)" [style.order]="conditional.value.usesStacks ? 1 : 0">
-                    <mat-slide-toggle 
-                        color="primary" 
-                        [checked]="conditional.value.isActive" 
-                        (change)="onConditionalChange(conditional.value, conditional.key, $event.checked)"
-                        class="conditional-toggle"
-                    >   
-                        <span *ngIf="!conditional.value.usesStacks">{{conditional.value.text}}</span>
-                    </mat-slide-toggle>
-                    <mat-form-field class="input" *ngIf="conditional.value.usesStacks" theme="primary">
-                        <mat-label>{{conditional.value.text}}</mat-label>
-                        <input 
-                            matInput
-                            digitsonly 
-                            defaultZero="true" 
-                            [maxValue]="this.character.stats[conditional.value.stackKey]?.value ? this.character.stats[conditional.value.stackKey].value : null" 
-                            [value]="conditional.value.value ? conditional.value.value : 0"
-                            (change)="onConditionalChange(conditional.value, conditional.key, null, $event.target.value)" 
-                        />
-                    </mat-form-field>
-                </div>
-            </ng-container>
-        </div>
+        <h2>Offensive</h2>
+        <table *ngIf="(character.stats | statfilter:'offense') as offenseStats">
+            <thead>
+                <th>Name</th>
+                <th>Value</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let stat of offenseStats | keyvalue">
+                    <td>
+                        {{stat.value.text}}
+                    </td>
+                    <td>
+                        {{stat.value.value}}{{stat.value.valueType == 'percent' ? '%' : ''}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </app-edge-box>
-</div>
+    
+    <app-edge-box
+        theme="accent"
+        class="defensive stat-container"
+        edgeRatio="0.1"
+        minEdge="20"
+    >
+        <h2>Defensive</h2>
+        <table *ngIf="(character.stats | statfilter:'defense') as defenseStats">
+            <thead>
+                <th>Name</th>
+                <th>Value</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let stat of defenseStats | keyvalue">
+                    <td>
+                        {{stat.value.text}}
+                    </td>
+                    <td> 
+                        {{stat.value.value}}{{stat.value.valueType == 'percent' ? '%' : ''}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </app-edge-box>
+
+    <app-edge-box
+        theme="accent"
+        class="utility stat-container"
+        edgeRatio="0.1"
+        minEdge="20"
+    >
+        <h2>Utility</h2>
+        <table *ngIf="(character.stats | statfilter:'utility') as utilityStats">
+            <thead>
+                <th>Name</th>
+                <th>Value</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let stat of utilityStats | keyvalue">
+                    <td>
+                        {{stat.value.text}}
+                    </td>
+                    <td>
+                        {{stat.value.value}}{{stat.value.valueType == 'percent' ? '%' : ''}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </app-edge-box>
+
+    <app-edge-box
+        theme="accent"
+        class="configs"
+        edgeRatio="0.1"
+        minEdge="20"
+    >
+        <h2>Configurations</h2>
+
+        <ng-container *ngFor="let conditional of character.conditionals | keyvalue">
+            <div class="config" *ngIf="character.conditionalsInUse.has(conditional.key)" [style.order]="conditional.value.usesStacks ? 1 : 0">
+                <mat-slide-toggle 
+                    color="primary" 
+                    [checked]="conditional.value.isActive" 
+                    (change)="onConditionalChange(conditional.value, conditional.key, $event.checked)"
+                    class="conditional-toggle"
+                    [aria-label]="conditional.value.usesStacks ? 'Toggle on the conditional: ' + conditional.value.text: null "
+                >   
+                    <span *ngIf="!conditional.value.usesStacks">{{conditional.value.text}}</span>
+                </mat-slide-toggle>
+                <mat-form-field class="input" *ngIf="conditional.value.usesStacks" theme="primary">
+                    <mat-label>{{conditional.value.text}}</mat-label>
+                    <input 
+                        matInput
+                        digitsonly 
+                        defaultZero="true" 
+                        [maxValue]="this.character.stats[conditional.value.stackKey]?.value ? this.character.stats[conditional.value.stackKey].value : null" 
+                        [value]="conditional.value.value ? conditional.value.value : 0"
+                        (change)="onConditionalChange(conditional.value, conditional.key, null, $event.target.value)" 
+                    />
+                </mat-form-field>
+            </div>
+        </ng-container>
+    </app-edge-box>
+</section>

@@ -1,30 +1,40 @@
+@use '~@angular/material' as mat;
 @import "../../../../styles.scss";
 
 .build-datils-container {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
+    max-width: 60rem;
+    width: 90%;
+    margin: auto;
+
+    .skills {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 
     .detail {
         display: flex;
-        margin: 10px 2.5%;
+        margin: 0.6rem;
         white-space: nowrap;
 
-        h3 {
+        p {
             margin: 0;
+            font-size: 1.5rem;
         }
 
         .modified-text {
-            color: mat-color($BL3CALC-accent, 500);
-            display: block;
+            color: mat.get-color-from-palette($BL3CALC-accent, 500);
+            display: inline-block;
 
             &.level {
-                min-width: 40px;
+                min-width: 2.5rem;
             }
 
             &.allocated-points {
-                min-width: 75px;
+                min-width: 4.7rem;
             }
         }
     }
