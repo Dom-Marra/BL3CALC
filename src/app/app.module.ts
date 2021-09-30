@@ -11,8 +11,9 @@ import { ApiKey } from './api-key';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 
-import { AngularFireModule } from '@angular/fire';
 import { environment } from '../environments/environment';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig)
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideFirestore(() => getFirestore())
   ],
   providers: [ApiKey],
   bootstrap: [AppComponent]

@@ -50,11 +50,11 @@ export class BuildComponent implements OnInit {
     this.firebase.getAllCharacters().subscribe(characters => {
 
       characters.forEach(doc => {       //Set Character data
-        if (doc.id == 'base') this.baseCharacterData = doc.data() as BaseCharacterModel;
-        else if (doc.id == 'amara') this.amaraData = doc.data() as CharacterModel;
-        else if (doc.id == 'fl4k') this.fl4kData = doc.data() as CharacterModel;
-        else if (doc.id == 'moze') this.mozeData = doc.data() as CharacterModel;
-        else if (doc.id == 'zane') this.zaneData = doc.data() as CharacterModel;
+        if (!doc.name) this.baseCharacterData = doc as BaseCharacterModel;
+        else if (doc.name === 'Amara') this.amaraData = doc as CharacterModel;
+        else if (doc.name === 'Fl4k') this.fl4kData = doc as CharacterModel;
+        else if (doc.name === 'Moze') this.mozeData = doc as CharacterModel;
+        else if (doc.name === 'Zane') this.zaneData = doc as CharacterModel;
       });
 
       activeRoute.paramMap.subscribe(params => {   //Set Build if it exists
@@ -64,8 +64,8 @@ export class BuildComponent implements OnInit {
         if (buildQuery) {
           this.character = null;
       
-          this.firebase.loadBuild(params.get('build')).subscribe(doc => {
-              if (doc.exists) this.setCharacter((doc.data() as Save).type, doc.data() as Save);
+          this.firebase.loadBuild(params.get('build')).then(doc => {
+              if (doc.exists()) this.setCharacter((doc.data() as Save).type, doc.data() as Save);
               else {
                 this.setCharacter('amara');
                 this.snackBar.openFromComponent(SnackbarComponent, {data: {message: 'Could not retrieve the build!', theme: 'accent'}, panelClass: 'edgebox-snackbar'});
@@ -109,8 +109,8 @@ export class BuildComponent implements OnInit {
 
     switch (characterType.toLowerCase()) {
       case 'amara': {
-        this.characterService.currentCharacter.next(new Amara(JSON.parse(JSON.stringify(this.baseCharacterData)), JSON.parse(JSON.stringify(this.amaraData)), save));
-        break;
+          this.characterService.currentCharacter.next(new Amara(JSON.parse(JSON.stringify(this.baseCharacterData)), JSON.parse(JSON.stringify(this.amaraData)), save));
+          break;
         } case 'fl4k': {
           this.characterService.currentCharacter.next(new Fl4k(JSON.parse(JSON.stringify(this.baseCharacterData)), JSON.parse(JSON.stringify(this.fl4kData)), save));
           break;
@@ -125,6 +125,7 @@ export class BuildComponent implements OnInit {
         this.characterService.currentCharacter.next(new Amara(this.baseCharacterData, this.amaraData));
       }
     }
+    
   }
 
   /**

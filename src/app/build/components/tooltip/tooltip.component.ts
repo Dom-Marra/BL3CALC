@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, Injectable } from '@angular/core';
 import { Directive } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import ResizeObserver from 'resize-observer-polyfill';
 import { NormalSkill } from 'src/app/core/classes/normalskill';
 import { Skill } from 'src/app/core/classes/skill';
 

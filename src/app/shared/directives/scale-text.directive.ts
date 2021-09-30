@@ -1,5 +1,4 @@
 import { Directive, ElementRef, Input } from '@angular/core';
-import ResizeObserver from 'resize-observer-polyfill';
 
 @Directive({
   selector: '[ScaleText]'
