@@ -9,6 +9,11 @@
     width: 90%;
     margin: auto;
 
+    .skills {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
     .detail {
         display: flex;
         margin: 0.6rem;
