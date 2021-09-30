@@ -139,12 +139,10 @@
     
         
                 .page-link {
-                    margin: 0;
-                    padding: 0.3rem 0.6rem;
+                    margin: 0.3rem 0.6rem;
                     color: black;
                     opacity: 0.75;
                     transition: all 0.35s ease-in-out;
-                    outline: none;
                     height: auto;
                     text-decoration: none;
                     
@@ -263,6 +261,12 @@
                         }
                     }
                 }
+
+                &.opened {
+                    .build-page-links {
+                        height: auto;
+                    }
+                }
     
                 .build-page-links {
                     width: auto;
@@ -271,67 +275,13 @@
                     background-color: transparent;
                     transition: none;
                     box-shadow: none;
+                    overflow: visible;
     
                     .page-link {
-                        margin: 0 15px;
-                        padding: 0;
+                        margin: 0 1rem;
                     }
                 }
             }
-
-            // .build-header {
-            //     height: auto;
-            //     flex-wrap: wrap;
-            //     max-height: 100%;
-        
-            //     .build-header-main {
-            //         width: 100%;
-
-            //         .build-header-main-left {
-            //             flex: 1;
-            //         }
-
-            //         .build-header-main-right {
-            //             display: flex;
-            //             justify-content: flex-end;
-            //             flex: 1;
-
-            //             .save-button {
-            //                 position: relative;
-            //                 right: initial;
-            //                 top: initial;
-            //                 transform: initial;
-            //             }
-            //         }
-        
-            //         .character-name {
-            //             flex: 2;
-            //             justify-content: center;
-            //         }
-            //     }
-        
-            //     &.opened {
-            //         .build-page-links {
-            //             height: 145px;
-            //         }
-            //     }
-            
-            //     .build-page-links {
-            //         width: 100%;
-            //         height: 0px;
-            //         overflow: hidden;
-            //         flex-direction: column;
-            //         justify-content: space-evenly;
-            //         background-color: #2E2E2E;
-            //         transition: height 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            //         box-shadow: inset 0 -5px 3px -4px rgb(0, 0, 0, 0.25), inset 0 5px 3px -3px rgb(0, 0, 0, 0.25);
-        
-            //         .page-link {
-            //             margin: 0;
-            //             padding: 5px 10px;
-            //         }
-            //     }
-            // }
         }
     }
 }
