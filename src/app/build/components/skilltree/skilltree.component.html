@@ -1,5 +1,5 @@
 <div class="skilltree-container">
-    <img [src]="skilltree.image" class="skilltree-header-image" />
+    <img [src]="skilltree.image" class="skilltree-header-image" alt="Header image for {{skilltree.name}} skilltree"/>
     <app-edge-box 
         class="edgebox" 
         [color]="skilltree.color == 'blue' ? '#358ab0' : skilltree.color == 'green' ? '#69a624' : '#8a5720'"
@@ -11,7 +11,7 @@
         <div class="skilltree-progress-container">
             <div class="skilltree-progress" [style.height]="skilltree.allocatedPoints < 25 ? (skilltree.allocatedPoints * (100 / 6 / 5) + (100 / 6)) + '%' : '100%'"></div>
         </div>
-        <h4 class="tree-name" ScaleText>{{skilltree.name}}</h4>
+        <h2 class="tree-name" ScaleText>{{skilltree.name}}</h2>
     </app-edge-box>
     <div class="skills-container">
         <div 
@@ -87,8 +87,8 @@
                 [bottomLeft]="skill.x == -1"
             >
             </app-edge-box>
-            <img [src]="skill.image" class="skill-image" [class.unallocated]="skill.allocatedPoints == 0" [class.untargetable]="skilltree.allocatedPoints < skill.prereq" />
-            <img [src]="skill.getSkillBoxPath()" class="skill-background-image"  [class.untargetable]="skilltree.allocatedPoints < skill.prereq" />
+            <img [src]="skill.image" class="skill-image" [class.unallocated]="skill.allocatedPoints == 0" [class.untargetable]="skilltree.allocatedPoints < skill.prereq" alt="Skill icon for {{skill.name}}" />
+            <img [src]="skill.getSkillBoxPath()" class="skill-background-image"  [class.untargetable]="skilltree.allocatedPoints < skill.prereq" alt="Skill icon background for {{skill.name}}" />
             <div 
                 *ngIf="isNormalSkill(skill)" 
                 class="points-container" 
