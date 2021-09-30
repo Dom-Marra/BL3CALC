@@ -133,7 +133,7 @@ export class BuildComponent implements OnInit {
   public save() {
     let save: Save = this.character.getSave();
 
-    if (save) this.dialog.open(SaveDialogComponent, {data: this.firebase.saveBuild(save)});
+    if (save) this.dialog.open(SaveDialogComponent, {data: {firebase: this.firebase.saveBuild(save), save: save}});
     else this.snackBar.openFromComponent(SnackbarComponent, {data: {message: 'No data to save!', theme: 'accent'}, panelClass: 'edgebox-snackbar'})
   }
 }
