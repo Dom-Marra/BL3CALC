@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import "../../../../styles.scss";
 
 .stats-section {
@@ -49,7 +50,7 @@
                 th {
                     padding: 0 0.5rem;
                     font-weight: 500;
-                    font-size: mat-font-size($BL3CALC-typography, subheading-1);
+                    font-size: mat.font-size($BL3CALC-typography, subheading-1);
                 }
             }
 

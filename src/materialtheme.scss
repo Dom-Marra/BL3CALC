@@ -1,7 +1,8 @@
+@use '~@angular/material' as mat;
 @import '~@angular/material/theming';
-@include mat-core();
+@include mat.core();
 
-$BL3CALC-primary: mat-palette((
+$BL3CALC-primary: mat.define-palette((
     50 : #e5e9f0,
     100 : #bec9da,
     200 : #93a5c1,
@@ -34,7 +35,7 @@ $BL3CALC-primary: mat-palette((
     )
 ));
 
-$BL3CALC-accent: mat-palette((
+$BL3CALC-accent: mat.define-palette((
     50 : #fcf6e7,
     100 : #f7eac4,
     200 : #f2dc9d,
@@ -67,20 +68,20 @@ $BL3CALC-accent: mat-palette((
     )
 ));
 
-$BL3CALC-warn: mat-palette($mat-red);
+$BL3CALC-warn: mat.define-palette(mat.$red-palette);
 
-$BL3CALC-theme: mat-light-theme($BL3CALC-primary,$BL3CALC-accent, $BL3CALC-warn);
+$BL3CALC-theme: mat.define-light-theme($BL3CALC-primary,$BL3CALC-accent, $BL3CALC-warn);
 
-$BL3CALC-typography: mat-typography-config(
+$BL3CALC-typography: mat.define-typography-config(
   $font-family: 'Saira Condensed',
-  $headline: mat-typography-level(2rem, 1.6, 500),
-  $title: mat-typography-level(1.4rem, 1.6, 500),
-  $subheading-2: mat-typography-level(1.25rem, 1.6, 500),
-  $subheading-1: mat-typography-level(1.15rem, 1.6, 500),
-  $body-1: mat-typography-level(1rem, 1.6, 500),
-  $caption: mat-typography-level(0.875rem, 1.6, 500),
+  $headline: mat.define-typography-level(2rem, 1.6, 500),
+  $title: mat.define-typography-level(1.4rem, 1.6, 500),
+  $subheading-2: mat.define-typography-level(1.25rem, 1.6, 500),
+  $subheading-1: mat.define-typography-level(1.15rem, 1.6, 500),
+  $body-1: mat.define-typography-level(1rem, 1.6, 500),
+  $caption: mat.define-typography-level(0.875rem, 1.6, 500),
 );
 
-@include angular-material-typography($BL3CALC-typography);
+@include mat.all-component-typographies($BL3CALC-typography);
 
-@include angular-material-theme($BL3CALC-theme);
+@include mat.all-component-themes($BL3CALC-theme);

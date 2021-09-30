@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import "../../../../styles.scss";
 
 :host {
@@ -36,6 +37,6 @@
     }
 
     .name {
-        color: mat-color($BL3CALC-primary, 500);
+        color: mat.get-color-from-palette($BL3CALC-primary, 500);
     }
 }
