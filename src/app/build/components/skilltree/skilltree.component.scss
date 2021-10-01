@@ -4,7 +4,8 @@
     position: relative;
     padding-bottom: 156%;
     width: 100%;
-    margin-bottom: 25px;
+    margin-bottom: 1.6rem;
+    -webkit-tap-highlight-color: transparent;
 
     .tree-reset {
         position: absolute;
@@ -89,6 +90,7 @@
             height: calc(100%/7);
             position: absolute;
             z-index: 1;
+            touch-action: manipulation;
 
             &:hover {
                 cursor: pointer;
@@ -136,6 +138,8 @@
                 width: 60%;
                 transform: translate(-50%, -50%);
                 z-index: 1;
+                -webkit-touch-callout: none;
+                pointer-events: none;
 
                 &.unallocated {
                     filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale");
@@ -149,6 +153,8 @@
                 left: 50%;
                 width: 90%;
                 transform: translate(-50%, -50%);
+                -webkit-touch-callout: none;
+                pointer-events: none;
             }
 
             .points-container {
@@ -164,6 +170,8 @@
                 background-repeat: no-repeat;
                 background-position: center;
                 z-index: 2;
+                -webkit-user-select: none;
+                user-select: none;
 
     
                 .skill-points {
