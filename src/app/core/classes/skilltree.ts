@@ -18,7 +18,7 @@ export class SkillTree {
     public image: string;                                   //Tree image
     public color: string;                                   //Tree Color
 
-    constructor(private treeData: TreeModel, private character: Character, private allocations?: Array<number>) {
+    constructor(private treeData: TreeModel, public character: Character, private allocations?: Array<number>) {
         this.name = this.treeData.name;
         this.image = this.treeData.image;
         this.color = this.treeData.color;
