@@ -19,11 +19,15 @@
             class="skill"
             [style.top]="skill.y == -1 ? -(100/7/2) + '%' : (skill.y * (92/6) + 9) + '%'"
             [style.left]="((skill.x + 1) * (100/5)) + 1 + '%'"
-            (click)="(skilltree.character.maxActionSkillPoints == 2 && isActionSkill(skill) || 
-                        skilltree.character.maxActionModPoints > 1 && isActionMod(skill)) ? null : addPoint(skill)"
-            (contextmenu)="$event.preventDefault(); removePoint(skill)"
+            (touchstart)="handleTouchStart($event, skill)"
+            (touchend)="handleTouchEnd($event, skill)"
+            (click)="handleClick($event, skill)"
+            (contextmenu)="handleContextMenu($event, skill)"
             displaySkill 
+            (blurred)="tooltipVisible = false"
             [skill]="skill"
+            role="button"
+            aria-label="Click to add a point into {{skill.name}}, or right click/touch and hold to remove a point"
         >
             <app-edge-box 
                 *ngIf="skill.preReq <= skilltree.allocatedPoints &&
