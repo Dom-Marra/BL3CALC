@@ -14,9 +14,90 @@ export class SkilltreeComponent implements OnInit {
 
   @Input() skilltree: SkillTree;
 
+  private contextMenuTimeout = null;        //Reference to the timeout for the press and hold
+  public tooltipVisible: boolean = false;   //Whether the tooltip is visible or not
+  public usedTouch: boolean = false;        //Whether the user used touch or not
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  /**
+   * Handles touch start events on skill buttons
+   * 
+   * @param e 
+   *        TouchEvent: The event
+   * @param skill 
+   *        Skill: the skill clicked
+   */
+  public handleTouchStart(e: TouchEvent, skill: Skill) {
+    this.usedTouch = true;
+    const clientY = (e.target as HTMLElement).getBoundingClientRect().y;
+
+    this.contextMenuTimeout = setTimeout(() => {
+      const clientYAfter = (e.target as HTMLElement).getBoundingClientRect().y;
+
+      this.contextMenuTimeout = null;
+      if (clientY !== clientYAfter) return;
+
+      this.removePoint(skill);
+    }, 600);
+  }
+
+  /**
+   * Handles touch end events on skill buttons
+   * 
+   * @param e 
+   *        TouchEvent: The event
+   * @param skill 
+   *        Skill: the skill clicked
+   */
+  public handleTouchEnd(e: Event, skill: Skill) {
+    if (!this.tooltipVisible) {
+      this.tooltipVisible = true;
+      clearTimeout(this.contextMenuTimeout);
+      console.log(this.tooltipVisible)
+      return;
+    }
+
+    if (this.contextMenuTimeout) {
+      clearTimeout(this.contextMenuTimeout);
+
+      if (!(this.skilltree.character.maxActionSkillPoints === 2 && this.isActionSkill(skill) || 
+        this.skilltree.character.maxActionModPoints > 1 && this.isActionMod(skill))) {
+        this.addPoint(skill);
+      }
+    }
+  }
+
+  /**
+   * Handles click events on skill buttons
+   * 
+   * @param skill 
+   *        Skill: the skill clicked
+   */
+  public handleClick(e: MouseEvent, skill: Skill): void {
+    if (this.usedTouch) return;
+
+    if (!(this.skilltree.character.maxActionSkillPoints === 2 && this.isActionSkill(skill) || 
+      this.skilltree.character.maxActionModPoints > 1 && this.isActionMod(skill))) {
+      this.addPoint(skill);
+    }
+  }
+
+  /**
+   * Handles context menu events on skill buttons
+   * 
+   * @param skill 
+   *        Skill: the skill clicked
+   */
+  public handleContextMenu(e: MouseEvent, skill: Skill): void {
+    e.preventDefault();
+    
+    if (e.button !== 2) return;
+
+    this.removePoint(skill);
   }
 
   /**
@@ -27,7 +108,7 @@ export class SkilltreeComponent implements OnInit {
    * @param pos 
    *        position of the skill
    */
-  public addPoint(skill: Skill, pos: number) {
+  public addPoint(skill: Skill, pos?: number) {
     this.skilltree.addPoint(skill, pos);
   }
 
