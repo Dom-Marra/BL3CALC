@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, ViewChild, Injectable } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, Injectable, HostListener, Output, EventEmitter} from '@angular/core';
 import { Directive } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { NormalSkill } from 'src/app/core/classes/normalskill';
@@ -241,12 +241,22 @@ export class TooltipComponent implements OnInit {
   selector: '[displaySkill]',
   host: {
     '(mouseenter)': 'onMouseEnter()',
+    '(touchstart)': 'onMouseEnter()',
     '(mouseleave)': 'onMouseLeave()'
   }
 })
 export class DisplaySkillDirective {
 
   @Input('skill') skill: Skill = null;
+  @Output() blurred: EventEmitter<void> = new EventEmitter();
+  @HostListener('document:touchstart', ['$event'])
+  documentClick(e: Event) {
+    if (!this.el.nativeElement.contains(e.target) && this.focused) {
+      this.onMouseLeave();
+    }
+  }
+
+  private focused: boolean = false;
 
   constructor(private el: ElementRef, private tooltipService: ToolTipService) { }
 
@@ -254,6 +264,11 @@ export class DisplaySkillDirective {
    * Sets the tooltip skill and hovered element 
    */
   private onMouseEnter(): void {
+    if (this.tooltipService.tooltipData.value.skill !== this.skill && this.tooltipService.tooltipData.value.skill) {
+      this.blurred.emit();
+    }
+
+    this.focused = true;
     this.tooltipService.updateToolTipData({ skill: this.skill, el: this.el });
   }
 
@@ -262,5 +277,7 @@ export class DisplaySkillDirective {
    */
   private onMouseLeave(): void {
     this.tooltipService.updateToolTipData({ skill: null, el: null });
+    this.blurred.emit();
+    this.focused = false;
   }
 }
